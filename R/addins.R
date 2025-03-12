@@ -12,6 +12,9 @@
 #'   insert_callout()
 #' }
 insert_callout <- function() {
+  library(shiny)
+  library(shinyFiles)
+
   ui <- fluidPage(
     titlePanel("Insert Callout"),
 
@@ -120,3 +123,77 @@ insert_margin <- function() {
   viewer <- shiny::dialogViewer("Insert Callout", width = 300, height = 250)
   shiny::runGadget(shinyApp(ui, server), viewer = viewer)
 }
+
+
+#' Shiny Addin for Creating a Project
+#'
+#' This function launches a Shiny app to create a project structure interactively.
+#'
+#' @export
+create_project_addin <- function() {
+  library(shiny)
+  library(shinyFiles)
+
+  ui <- fluidPage(
+    titlePanel("Create a New Project"),
+    sidebarLayout(
+      sidebarPanel(
+        textInput("project_name", "Project Name:", ""),
+        actionButton("browse", "Browse Directory"),
+        textOutput("selected_dir"),   # Displays chosen directory
+        selectInput("ext_name", "Project Type:", choices = list.files(system.file("ext_proj/_extensions", package = "thekidsbiostats"))),
+        checkboxInput("data_raw", "Include data_raw folder", TRUE),
+        checkboxInput("data", "Include data folder", TRUE),
+        checkboxInput("admin", "Include admin folder", TRUE),
+        checkboxInput("reports", "Include reports folder", TRUE),
+        checkboxInput("docs", "Include docs folder", TRUE),
+        actionButton("create", "Create Project")
+      ),
+      mainPanel(
+        verbatimTextOutput("status")
+      )
+    )
+  )
+
+  server <- function(input, output, session) {
+    project_path <- reactiveVal(NULL)
+
+    observeEvent(input$browse, {
+      selected_dir <- rstudioapi::selectDirectory(caption = "Select Project Folder")
+      if (!is.null(selected_dir) && selected_dir != "") {
+        project_path(selected_dir)
+      }
+    })
+
+    output$selected_dir <- renderText({
+      req(project_path())
+      paste("Selected Directory:", project_path())
+    })
+
+    observeEvent(input$create, {
+      if (is.null(project_path()) || input$project_name == "") {
+        showModal(modalDialog("Please select a directory and enter a project name.", easyClose = TRUE))
+        return()
+      }
+
+      tryCatch({
+        create_project_shiny(
+          path = project_path(),
+          project_name = input$project_name,
+          ext_name = input$ext_name,
+          data_raw = input$data_raw,
+          data = input$data,
+          admin = input$admin,
+          reports = input$reports,
+          docs = input$docs
+        )
+        output$status <- renderText(paste("Project created successfully at:", file.path(project_path(), input$project_name)))
+      }, error = function(e) {
+        showModal(modalDialog(title = "Error", e$message, easyClose = TRUE))
+      })
+    })
+  }
+
+  shinyApp(ui, server)
+}
+

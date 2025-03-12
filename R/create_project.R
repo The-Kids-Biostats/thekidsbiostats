@@ -91,3 +91,67 @@ create_project <- function(project_name,
     copy.mode = TRUE
   )
 }
+
+#' Create a New Project Structure with Extension (Shiny Compatible)
+#'
+#' This function creates a directory structure for a new project based on a specified extension.
+#' It allows specifying a directory instead of prompting the user.
+#'
+#' @param path A string. The directory where the project will be created.
+#' @param project_name A string. The name of the project to create.
+#' @param ext_name A string. The type of project to create. Defaults to `"basic"`.
+#' @param data_raw Logical. If `TRUE`, a `data_raw` directory will be created. Defaults to `TRUE`.
+#' @param data Logical. If `TRUE`, a `data` directory will be created. Defaults to `TRUE`.
+#' @param admin Logical. If `TRUE`, an `admin` directory will be created. Defaults to `TRUE`.
+#' @param reports Logical. If `TRUE`, a `reports` directory will be created. Defaults to `TRUE`.
+#' @param docs Logical. If `TRUE`, a `docs` directory will be created. Defaults to `TRUE`.
+#'
+#' @export
+create_project_shiny <- function(path,
+                                 project_name,
+                                 ext_name = "basic",
+                                 data_raw = TRUE,
+                                 data = TRUE,
+                                 admin = TRUE,
+                                 reports = TRUE,
+                                 docs = TRUE) {
+  if (!dir.exists(path)) {
+    stop("The specified directory does not exist.")
+  }
+
+  project_dir <- file.path(path, project_name)
+
+  if (dir.exists(project_dir)) {
+    stop("Project directory already exists. Choose a different name.")
+  }
+
+  valid_ext <- list.files(system.file("ext_proj/_extensions", package = "thekidsbiostats"))
+
+  if (!(ext_name %in% valid_ext)) {
+    stop("Selected extension is not available in the package.")
+  }
+
+  dir.create(project_dir, recursive = TRUE, showWarnings = FALSE)
+
+  sub_dirs <- c("data_raw" = data_raw, "data" = data, "admin" = admin, "reports" = reports, "docs" = docs)
+
+  for (dir_name in names(sub_dirs)) {
+    if (sub_dirs[[dir_name]]) {
+      dir.create(file.path(project_dir, dir_name), showWarnings = FALSE)
+    }
+  }
+
+  rproj_file <- file.path(project_dir, paste0(project_name, ".Rproj"))
+  writeLines("Version: 1.0", rproj_file)
+
+  message("Project structure and RProject file created at: ", project_dir)
+
+  ext_path <- system.file(paste0("ext_proj/_extensions/", ext_name), package = "thekidsbiostats")
+  files <- list.files(ext_path, full.names = TRUE)
+
+  file.copy(from = files, to = project_dir, overwrite = TRUE, recursive = TRUE)
+
+  message("Files copied from extension: ", ext_name)
+}
+
+

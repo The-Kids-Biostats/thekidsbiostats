@@ -7,3 +7,8 @@ Name: Insert Margin Comment
 Description: Inserts a Quarto margin comment at the current cursor position.
 Binding: insert_margin
 Interactive: true
+
+Name: Create Project (Shiny)
+Description: Launch a Shiny app to create a new project with a structured directory.
+Binding: create_project_addin
+Interactive: true
