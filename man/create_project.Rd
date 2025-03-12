@@ -39,6 +39,8 @@ This function helps set up the structure of a new project using a predefined ext
 optional additional directories. It ensures that the selected extension is valid by checking
 the available extensions from the \code{thekidsbiostats} package. After creating the necessary folders,
 the function copies the appropriate files from the package extension into the project.
+
+For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
 }
 \note{
 Ensure that the \code{thekidsbiostats} package is installed and contains the required extension

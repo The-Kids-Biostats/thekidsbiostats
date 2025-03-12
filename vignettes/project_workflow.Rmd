@@ -1,0 +1,37 @@
+---
+title: "Creating project workflows using `thekidsbiostats`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Creating project workflows using `thekidsbiostats`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+
+# Example
+
+## Step 1: Create folder structure
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(thekidsbiostats)
+```
+
+
+## Step 2: Create (Quarto) markdown template
+
+
+## Reproducibility Information
+
+```{r}
+sessionInfo()
+```
+

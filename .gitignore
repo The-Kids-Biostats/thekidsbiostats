@@ -2,3 +2,6 @@
 .Rhistory
 .Ruserdata
 testing
+inst/doc
+/doc/
+/Meta/

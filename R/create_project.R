@@ -18,6 +18,8 @@
 #' the available extensions from the `thekidsbiostats` package. After creating the necessary folders,
 #' the function copies the appropriate files from the package extension into the project.
 #'
+#' For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
+#'
 #' @note
 #' Ensure that the `thekidsbiostats` package is installed and contains the required extension
 #' in `ext_proj/_extensions/`.
