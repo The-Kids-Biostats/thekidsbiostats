@@ -5,6 +5,8 @@
 #' callout text into the current script.
 #'
 #' @return A Shiny application that runs within RStudio.
+#'
+#' @import shiny shinyFiles
 #' @export
 #'
 #' @examples
@@ -81,6 +83,8 @@ insert_callout <- function() {
 #' callout text into the current script.
 #'
 #' @return A Shiny application that runs within RStudio.
+#'
+#' @import shiny shinyFiles
 #' @export
 #'
 #' @examples
@@ -129,6 +133,7 @@ insert_margin <- function() {
 #'
 #' This function launches a Shiny app to create a project structure interactively.
 #'
+#' @import shiny shinyFiles
 #' @export
 create_project_addin <- function() {
   library(shiny)
