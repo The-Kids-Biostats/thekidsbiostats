@@ -144,7 +144,7 @@ create_project_addin <- function() {
     sidebarLayout(
       sidebarPanel(
         textInput("project_name", "Project Name:", ""),
-        actionButton("browse", "Browse Directory"),
+        shinyDirButton("dir", "Choose Directory", "Please select a directory"),
         textOutput("selected_dir"),   # Displays chosen directory
         selectInput("ext_name", "Project Type:", choices = list.files(system.file("ext_proj/_extensions", package = "thekidsbiostats"))),
         checkboxInput("data_raw", "Include data_raw folder", TRUE),
@@ -163,11 +163,16 @@ create_project_addin <- function() {
   server <- function(input, output, session) {
     project_path <- reactiveVal(NULL)
 
-    observeEvent(input$browse, {
-      selected_dir <- rstudioapi::selectDirectory(caption = "Select Project Folder")
-      if (!is.null(selected_dir) && selected_dir != "") {
-        project_path(selected_dir)
-      }
+    volumes = getVolumes()
+
+    # Set up the file chooser
+    shinyFiles::shinyDirChoose(input, "dir", roots = volumes,
+                               filetypes = c('', 'txt', 'bigWig', "tsv", "csv", "bw"),
+                               session = session)
+
+    observe({
+      req(input$dir)
+      project_path(shinyFiles::parseDirPath(c(home = "~"), input$dir))
     })
 
     output$selected_dir <- renderText({
@@ -199,6 +204,6 @@ create_project_addin <- function() {
     })
   }
 
-  shinyApp(ui, server)
+  runApp(list(ui = ui, server = server), launch.browser = TRUE)
 }
 
