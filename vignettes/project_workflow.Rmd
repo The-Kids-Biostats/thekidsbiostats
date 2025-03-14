@@ -1,5 +1,6 @@
 ---
 title: "Creating project workflows using `thekidsbiostats`"
+date: "`r format(Sys.time(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Creating project workflows using `thekidsbiostats`}
@@ -16,14 +17,19 @@ knitr::opts_chunk$set(
 
 # Overview
 
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(thekidsbiostats)
+```
 
 # Example
 
 ## Step 1: Create folder structure
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-library(thekidsbiostats)
+```{r echo=TRUE, eval=FALSE}
+create_project(project_name = "Project X", 
+               ext_name = "basic",)
 ```
+
 
 
 ## Step 2: Create (Quarto) markdown template
