@@ -1,5 +1,5 @@
 ---
-title: "Creating project workflows using `thekidsbiostats`"
+title: "Project Workflows and Shiny Helpers/addins using `thekidsbiostats`"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -13,6 +13,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(gifski)
+library(magick)
 ```
 
 # Overview
@@ -21,19 +24,50 @@ knitr::opts_chunk$set(
 library(thekidsbiostats)
 ```
 
-# Example
+# Organising Statistical Workflows
 
 ## Step 1: Create folder structure
 
++ Let's create the following project:
+  + Project is called "Project XYZ".
+  + I will not be leveraging Targets for this project so, in this instance, can set `ext_name = "basic"`.
+  + I would like all "default" folders (admin, data, data_raw, docs, reports).
+  + In addition to the above, I would like a folder for "protocols" and "papers".
+
 ```{r echo=TRUE, eval=FALSE}
-create_project(project_name = "Project X", 
-               ext_name = "basic",)
+create_project(project_name = "Project XYZ", 
+               ext_name = "basic",
+               other_folders = c("protocols", "papers"))
 ```
 
+![Figure 1: Prompt on selecting overall project folder.](screenshots/project_workflow/0-01-create_project.png){width=100%}
+
+![Figure 2: Creation of project file structure.](screenshots/project_workflow/0-02-create_project.png){width=100%}
 
 
 ## Step 2: Create (Quarto) markdown template
 
++ How I would like to generate a Quarto markdown document organise and present analysis.
+  + I would like to name this report "Analysis_Report_v1"
+
+```{r echo=TRUE, message=T, eval=FALSE}
+create_template(file_name = "Analysis_Report_v1",
+                ext_name = "html")
+```
+
+![Figure 3: Prompt on selecting where to save analysis report.](screenshots/project_workflow/1-01-create_template.png){width=100%}
+
+
+
+![Figure 4: Creation of skeleton report, with associated styling.](screenshots/project_workflow/1-02-create_template.png){width=100%}
+
+
+
+![Figure 5: Supporting files created for the themed html document.](screenshots/project_workflow/1-03-create_template.png){width=100%}
+
+![Figure 2: Rendered html Quarto report.](screenshots/project_workflow/1-04-create_template.png){width=100%}
+
+# Enhancing Report Readbility Using Add-Ins 
 
 ## Reproducibility Information
 

@@ -27,6 +27,8 @@
 #' is passed to \code{\link{thekids_model_output}} for further handling, allowing
 #' for streamlined customization of model outputs.
 #'
+#' For a more thorough example, see the \href{../doc/model_output.html}{vignette}.
+#'
 #' @examples
 #' # Example 1: Linear model
 #' data(mtcars)

@@ -17,6 +17,9 @@ object of class character"
 \description{
 A function, for vectors, to keep trailing zeroes when rounding numbers.
 }
+\details{
+For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+}
 \examples{
 round_vec(mtcars$wt, 2)
 

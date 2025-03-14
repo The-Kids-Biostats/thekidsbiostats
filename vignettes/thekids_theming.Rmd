@@ -1,0 +1,81 @@
+---
+title: "The Kids Theming"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Kids theming}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center",
+  fig.width = 6
+)
+```
+
+# Overview
+
+Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation. Code also looks a lot cleaner when those 10 lines of ggplot per plot are automated away. Importantly, these functions also ensure a polished and consistent appearance across our team, so that output looks the same irrespective of who generated it.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(thekidsbiostats)
+```
+
+All theming functions host a variety of other options that can tweak the overall look of plots and tables (including colours).
+
+Colours, consistent with "The Kids" brand guidelines, can be accessed directly via `thekidsbiostats::thekids_colours`:
+
+```{r}
+thekidsbiostats::thekids_colours
+```
+
+
+# `thekids_theme`
+
+The `thekids_theme` function applies consistent theming to ggplot2 visualizations. It uses a clean, minimal aesthetic with fonts and colours that align with "The Kids" branding. Here’s an example of a plot before theming:
+
+```{r echo=TRUE}
+ggplot(mtcars, 
+       aes(x = mpg, y = wt, col = factor(cyl))) +
+  geom_point(size = 3) +
+  labs(x = "Miles per Gallon", y = "Weight", col = "Cylinders")
+```
+
+```{r}
+ggplot(mtcars, 
+       aes(x = mpg, y = wt, col = factor(cyl))) +
+  geom_point(size = 3) +
+  labs(x = "Miles per Gallon", y = "Weight", col = "Cylinders") +
+  thekids_theme()
+```
+
+# `thekids_table`
+
+`thekids_table` produces tables styled with The Kids branding and is powered by the [flextable](https://cran.r-project.org/web/packages/flextable/index.html) package. This includes by default applying the Barlow font, compact formatting (our preference!), and zebra-striping for readability, though these can all be altered/disabled via parameters.
+
+For example, a raw table output from the mtcars dataset looks like this:
+
+```{r echo=TRUE}
+head(mtcars, 5)
+```
+
+Now, applying `thekids_table` transforms it into a clean, visually appealing format with branding elements:
+
+```{r echo=TRUE}
+head(mtcars, 5) %>%
+  thekids_table(colour = "Saffron", font.size = 10)
+```
+
+This outputs a compact, zebra-striped table ready for inclusion in Word or HTML reports. However, the padding and striped options can be changed if we would prefer some more space without any stripes:
+
+```{r echo=TRUE}
+head(mtcars, 5) %>%
+  thekids_table(colour = "Saffron", 
+                font.size = 10, 
+                padding = 4, 
+                striped = F)
+```
+

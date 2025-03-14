@@ -8,6 +8,9 @@
 #' @param rows (default "\\|") Regex defining row separator
 #' @param cols (default ",") Regex defining column separator
 #'
+#' @details
+#' For a more thorough example, see the \href{../doc/miscellaneous.html}{vignette}.
+#'
 #' @return 2 column tibble of factor levels ("key") and labels ("value")
 #'
 #' @importFrom tibble tibble
