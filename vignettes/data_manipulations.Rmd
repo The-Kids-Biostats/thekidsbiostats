@@ -21,9 +21,9 @@ library(thekidsbiostats)
 ```
 
 
+# Example Usage
 
-
-# Rounding Functions
+## Rounding Functions
 
 These two functions are examples where the sole purpose is keep code concise and to the point. Often when we present figures whether it is in plots, tables or in written form, we wish to preserve trailing zeroes when rounding numbers to a *x* decimal places.
 
@@ -54,9 +54,9 @@ data.frame(var1 = rnorm(n = 5, mean = 10, sd = 2),
 ```
 
 
-# Data Manipulation Functions
+## Data Manipulation Functions
 
-## `fct_case_when`
+### `fct_case_when`
 
 ```{r echo=TRUE}
 x <- 1:50

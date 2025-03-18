@@ -13,7 +13,7 @@ https://fonts.google.com/specimen/Barlow+Semi+Condensed
 The Kids Research Institute Australia biostats package (`thekidsbiostats`) can be installed with the following:
 
 ```         
-remotes::install_github("The-Kids-Biostats/thekidsbiostats")
+remotes::install_github("The-Kids-Biostats/thekidsbiostats", build_vignettes = TRUE)
 ```
 # Using the template
 

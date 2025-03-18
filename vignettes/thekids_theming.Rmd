@@ -33,7 +33,9 @@ thekidsbiostats::thekids_colours
 ```
 
 
-# `thekids_theme`
+# Example Usage
+
+## `thekids_theme`
 
 The `thekids_theme` function applies consistent theming to ggplot2 visualizations. It uses a clean, minimal aesthetic with fonts and colours that align with "The Kids" branding. Here’s an example of a plot before theming:
 
@@ -52,7 +54,7 @@ ggplot(mtcars,
   thekids_theme()
 ```
 
-# `thekids_table`
+## `thekids_table`
 
 `thekids_table` produces tables styled with The Kids branding and is powered by the [flextable](https://cran.r-project.org/web/packages/flextable/index.html) package. This includes by default applying the Barlow font, compact formatting (our preference!), and zebra-striping for readability, though these can all be altered/disabled via parameters.
 

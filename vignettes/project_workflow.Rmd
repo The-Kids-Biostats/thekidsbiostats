@@ -40,9 +40,9 @@ create_project(project_name = "Project XYZ",
                other_folders = c("protocols", "papers"))
 ```
 
-![Figure 1: Prompt on selecting overall project folder.](screenshots/project_workflow/0-01-create_project.png){width=100%}
+![Figure 1: Prompt on selecting overall project folder.](materials/project_workflow/0-01-create_project.png){width=100%}
 
-![Figure 2: Creation of project file structure.](screenshots/project_workflow/0-02-create_project.png){width=100%}
+![Figure 2: Creation of project file structure.](materials/project_workflow/0-02-create_project.png){width=100%}
 
 
 ## Step 2: Create (Quarto) markdown template
@@ -55,17 +55,17 @@ create_template(file_name = "Analysis_Report_v1",
                 ext_name = "html")
 ```
 
-![Figure 3: Prompt on selecting where to save analysis report.](screenshots/project_workflow/1-01-create_template.png){width=100%}
+![Figure 3: Prompt on selecting where to save analysis report.](materials/project_workflow/1-01-create_template.png){width=100%}
 
 
 
-![Figure 4: Creation of skeleton report, with associated styling.](screenshots/project_workflow/1-02-create_template.png){width=100%}
+![Figure 4: Creation of skeleton report, with associated styling.](materials/project_workflow/1-02-create_template.png){width=100%}
 
 
 
-![Figure 5: Supporting files created for the themed html document.](screenshots/project_workflow/1-03-create_template.png){width=100%}
+![Figure 5: Supporting files created for the themed html document.](materials/project_workflow/1-03-create_template.png){width=100%}
 
-![Figure 2: Rendered html Quarto report.](screenshots/project_workflow/1-04-create_template.png){width=100%}
+![Figure 2: Rendered html Quarto report.](materials/project_workflow/1-04-create_template.png){width=100%}
 
 # Enhancing Report Readbility Using Add-Ins 
 
