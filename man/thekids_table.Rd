@@ -29,6 +29,10 @@ thekids_table(
 
 \item{colour}{a colour platte from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'}
 
+\item{zebra}{puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to \code{F})}
+
+\item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows)}
+
 \item{...}{other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}}
 }
 \value{

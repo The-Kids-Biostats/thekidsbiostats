@@ -18,6 +18,8 @@
 #' @param line.spacing line spacing for the table, defaults to 1.5 (passed throught to set_flextable_defaults)
 #' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults)
 #' @param colour a colour platte from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'
+#' @param zebra puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to `F`)
+#' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows)
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}
 #'
 #' @return a flextable class object that will display in both html and word output
