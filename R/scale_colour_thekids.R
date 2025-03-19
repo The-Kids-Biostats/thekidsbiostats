@@ -1,4 +1,4 @@
-#' @title Color scale constructor for The Kids colours.
+#' @title Colour scale constructor for The Kids colours.
 #'
 #' @param palette Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"
 #' @param discrete Boolean indicating whether color aesthetic is discrete or not
@@ -18,3 +18,7 @@ scale_color_thekids <- function(palette = "primary", discrete = TRUE, reverse = 
     scale_color_gradientn(colours = pal(256), ...)
   }
 }
+
+#' @rdname scale_color_thekids
+#' @export
+scale_colour_thekids <- scale_color_thekids
