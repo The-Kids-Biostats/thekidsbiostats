@@ -15,24 +15,26 @@ knitr::opts_chunk$set(
 ```
 
 # Overview
+The R programming language has extensive functionality and the vast ecosystem of community-developed packages extends those capabilities well beyond the base language. Nonetheless, there is always room for additional helpful functions to be added to any R programmer's toolbelt and the sections below discuss some of those available within `thekidsbiostats`.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(thekidsbiostats)
 ```
 
+<br>
 
 # Example Usage
 
 ## Rounding Functions
 
-These two functions are examples where the sole purpose is keep code concise and to the point. Often when we present figures whether it is in plots, tables or in written form, we wish to preserve trailing zeroes when rounding numbers to a *x* decimal places.
+The following two functions (`round_vec` and `round_df`) are examples where the sole purpose is to keep code concise and to the point. Often when we present figures --- whether that be through plots, tables or in written form --- we wish to preserve trailing zeroes when rounding numbers to a specific *x* decimal places.
 
-We have two functions which can help with this:
+There are two functions that can help with this:
 
 + `round_vec` -- preserves trailing zeroes for vectors.
-+ `round_df` -- consistently rounds every numeric column in a dataframe or tibble.
++ `round_df` -- consistently rounds every numeric column in a `data.frame` or `tibble`.
 
-Below we demonstrate the difference between the base R `round()` and `round_vec()` when rounding to decimal places:
+Below we demonstrate the difference between the base R `round()` and `round_vec()` when rounding numerical values:
 
 ```{r echo = T}
 original <-  c(1.8003, 1.9998, 2.5812)
@@ -56,7 +58,10 @@ data.frame(var1 = rnorm(n = 5, mean = 10, sd = 2),
 
 ## Data Manipulation Functions
 
-### `fct_case_when`
+### `> fct_case_when`
+Factors are a useful data format for manipulating any categorical data because they preserve the ordinal nature inherent to those variables.
+
+Below is an example of working with ordinal data.
 
 ```{r echo=TRUE}
 x <- 1:50
@@ -70,6 +75,7 @@ case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
   levels()
 ```
 
+Note, however, the strange (*alphabetical*) ordering of the levels.
 If we would like to set a more logical ordering of these factors, we would also have to use `factor`:
 
 ```{r echo=TRUE}
@@ -85,7 +91,7 @@ case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
   levels()
 ```
 
-In comparison, `fct_case_when()` orders the factor levels based on the order of their appearance in the argument, to return an identical result to above:
+In comparison, `fct_case_when()` orders the factor levels simply based on the order of their appearance in the argument, to return an identical result to the above:
 
 ```{r echo=TRUE}
 x <- 1:50

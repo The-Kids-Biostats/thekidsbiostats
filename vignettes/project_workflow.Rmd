@@ -14,8 +14,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(gifski)
-library(magick)
 ```
 
 # Overview
@@ -24,15 +22,16 @@ library(magick)
 library(thekidsbiostats)
 ```
 
-# Organising Statistical Workflows
+## Organising Statistical Workflows
+The following section runs through the various functions for automating and/or simplifying regular/routine tasks performed through a project's workflow. These functions allow you to create a sensible/structured directory for your project as well as simplifying (and standardising) the creation of Quarto templates using The Kids theming.
 
 ## Step 1: Create folder structure
 
 + Let's create the following project:
   + Project is called "Project XYZ".
-  + I will not be leveraging Targets for this project so, in this instance, can set `ext_name = "basic"`.
-  + I would like all "default" folders (admin, data, data_raw, docs, reports).
-  + In addition to the above, I would like a folder for "protocols" and "papers".
+  + Set `ext_name = "basic"`, as I will not be leveraging Targets in this project.
+  + I would like all "default" folders (i.e. admin, data, data_raw, docs, reports).
+  + In addition to the above, I would like custom folders for "protocols" and "papers".
 
 ```{r echo=TRUE, eval=FALSE}
 create_project(project_name = "Project XYZ", 
@@ -42,13 +41,16 @@ create_project(project_name = "Project XYZ",
 
 ![Figure 1: Prompt on selecting overall project folder.](materials/project_workflow/0-01-create_project.png){width=100%}
 
+
+<br><br>
+
 ![Figure 2: Creation of project file structure.](materials/project_workflow/0-02-create_project.png){width=100%}
 
 
 ## Step 2: Create (Quarto) markdown template
+Quarto documents are versatile, reproducible file formats that supports Markdown and code chunks, enabling seamless blending of text, code, and outputs for reports, presentations, and interactive documents.
 
-+ How I would like to generate a Quarto markdown document organise and present analysis.
-  + I would like to name this report "Analysis_Report_v1"
+In this case, we would like to name the report "Analysis_Report_v1".
 
 ```{r echo=TRUE, message=T, eval=FALSE}
 create_template(file_name = "Analysis_Report_v1",
@@ -58,14 +60,21 @@ create_template(file_name = "Analysis_Report_v1",
 ![Figure 3: Prompt on selecting where to save analysis report.](materials/project_workflow/1-01-create_template.png){width=100%}
 
 
+<br><br>
 
-![Figure 4: Creation of skeleton report, with associated styling.](materials/project_workflow/1-02-create_template.png){width=100%}
+![Figure 4: Creation of skeleton report, with associated styling (in /_extensions).](materials/project_workflow/1-02-create_template.png){width=100%}
 
 
+<br><br>
 
 ![Figure 5: Supporting files created for the themed html document.](materials/project_workflow/1-03-create_template.png){width=100%}
 
-![Figure 2: Rendered html Quarto report.](materials/project_workflow/1-04-create_template.png){width=100%}
+
+<br><br>
+
+![Figure 6: Rendered html Quarto report.](materials/project_workflow/1-04-create_template.png){width=100%}
+
+<br><br>
 
 # Enhancing Report Readbility Using Add-Ins 
 

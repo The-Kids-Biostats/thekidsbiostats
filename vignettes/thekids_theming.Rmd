@@ -18,26 +18,50 @@ knitr::opts_chunk$set(
 
 # Overview
 
-Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation. Code also looks a lot cleaner when those 10 lines of ggplot per plot are automated away. Importantly, these functions also ensure a polished and consistent appearance across our team, so that output looks the same irrespective of who generated it.
+Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation. Code will also look much cleaner when those ~10 repeated lines of ggplot for each plot are automated away. Importantly, these functions also ensure a polished and consistent appearance across our team, so that outputs look the same irrespective of who generated it.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(thekidsbiostats)
 ```
 
-All theming functions host a variety of other options that can tweak the overall look of plots and tables (including colours).
+All theming functions host a variety of other options that can further tweak the overall look of plots and tables (including colours).
 
+## The Kids Colours
 Colours, consistent with "The Kids" brand guidelines, can be accessed directly via `thekidsbiostats::thekids_colours`:
 
-```{r}
+```{r echo=F, message=F}
 thekidsbiostats::thekids_colours
-```
 
+bind_rows(thekids_palettes, .id = "Category") %>%
+  filter(Category != "typography") %>% 
+  pivot_longer(-Category, names_to = "Color", values_to = "Hex") %>%
+  drop_na() %>%  # Remove NA rows
+  mutate(
+    Category = factor(Category, levels = c("primary", "tint50", "tint10")),
+    Color = factor(Color, levels = rev(names(thekids_palettes$primary))) # Maintain row order
+  ) %>% 
+  ggplot(aes(x = Category, y = Color, fill = Hex)) +
+  geom_tile(width = 0.45, height = 0.9) +  # Reduce width more than height to increase horizontal spacing
+  labs(x = NULL, y = NULL, title = "The Kids Palette") +
+  thekids_theme(base_size = 14) +
+  scale_fill_identity() +  # Use exact hex colors
+  scale_x_discrete(position = "top") +
+  theme(
+    axis.text.x = element_text(face = "bold"),  # Bold column headers
+    axis.text.y = element_text(face = "bold"),  # Bold row labels
+    panel.grid = element_blank(),  # Remove grid lines
+    axis.ticks = element_blank(),  # Remove axis ticks
+    legend.position = "none"
+  ) +
+  coord_fixed(ratio = 0.5)  # Increase ratio to add more horizontal space
+```
+<br><br>
 
 # Example Usage
 
-## `thekids_theme`
+## `> thekids_theme`
 
-The `thekids_theme` function applies consistent theming to ggplot2 visualizations. It uses a clean, minimal aesthetic with fonts and colours that align with "The Kids" branding. Here’s an example of a plot before theming:
+The `thekids_theme` function applies consistent theming to ggplot2 visualisations. It uses a clean, minimal aesthetic with fonts and colours that align with "The Kids" branding. Here’s an example of a plot before-and-after theming:
 
 ```{r echo=TRUE}
 ggplot(mtcars, 
@@ -53,10 +77,12 @@ ggplot(mtcars,
   labs(x = "Miles per Gallon", y = "Weight", col = "Cylinders") +
   thekids_theme()
 ```
+<br>
+Miles better! And as simple as just adding one line of code: `thekids_theme()`.
 
-## `thekids_table`
+## `> thekids_table`
 
-`thekids_table` produces tables styled with The Kids branding and is powered by the [flextable](https://cran.r-project.org/web/packages/flextable/index.html) package. This includes by default applying the Barlow font, compact formatting (our preference!), and zebra-striping for readability, though these can all be altered/disabled via parameters.
+`thekids_table` produces tables styled with The Kids branding and is powered by the [flextable](https://cran.r-project.org/web/packages/flextable/index.html) package. By default, this function applies the Barlow font, compact formatting (our preference!), and zebra-striping for readability. Note that these can all be altered/disabled via parameters (see `?thekids_table` documentation).
 
 For example, a raw table output from the mtcars dataset looks like this:
 
@@ -64,14 +90,16 @@ For example, a raw table output from the mtcars dataset looks like this:
 head(mtcars, 5)
 ```
 
-Now, applying `thekids_table` transforms it into a clean, visually appealing format with branding elements:
+Now, applying `thekids_table` transforms it into a clean, visually appealing format with branded elements:
 
 ```{r echo=TRUE}
 head(mtcars, 5) %>%
   thekids_table(colour = "Saffron", font.size = 10)
 ```
 
-This outputs a compact, zebra-striped table ready for inclusion in Word or HTML reports. However, the padding and striped options can be changed if we would prefer some more space without any stripes:
+This outputs a compact, zebra-striped table ready to be added to any Word or HTML reports.
+
+The `padding` and `striped` options can be changed if we would prefer more space and to lose the stripes:
 
 ```{r echo=TRUE}
 head(mtcars, 5) %>%

@@ -22,9 +22,9 @@ library(thekidsbiostats)
 
 # Example Usage
 
-The data used in the following examples is simulated using OpenAI's ChatGPT. Identifiable fields (full names, addresses, etc.) are also simulated. 
+The data used in the following examples are simulated using OpenAI's ChatGPT. Identifiable fields (full names, addresses, etc.) are also simulated. 
 
-## Using Extracts
+## Using Extracts (`> clean_REDCap`)
 
 First, we can use a (.csv) extract of the data and data dictionary from REDCap:
 
@@ -46,6 +46,7 @@ head(dat_raw, n = 10) %>%
 Similarly, we can visualise our standardised data dictionary extract from REDCap:
 
 ![Figure 1: Data dictionary extract.](materials/miscellaneous/00-data_dictionary.png){width=100%}
+<br>
 
 Clearly:
 
