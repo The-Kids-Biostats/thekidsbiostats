@@ -7,6 +7,8 @@
 #' @return A Shiny application that runs within RStudio.
 #' @export
 #'
+#' @import shiny
+#'
 #' @examples
 #' if (interactive()) {
 #'   insert_callout()

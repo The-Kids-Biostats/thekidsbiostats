@@ -8,18 +8,16 @@ author:
 date: "`r format(Sys.time(), '%d %B %Y')`"
 title-block-banner: "#1F3B73"
 format:
-  html:
-    embed-resources: true
-    code-fold: true
+  docx:
+    reference-doc: _extensions/word/thekids_quarto_template.docx
     toc: true
-    toc-location: left
-    html-table-processing: none
-    self-contained: true
-    mainfont: "Barlow"
+    toc-depth: 3
+    toc-title: Contents
+    mainfont: 'Orbitron'
     include-in-header: 
       text: |
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
         </style>
 reference-location: margin 
 citation-location: margin 
@@ -30,8 +28,7 @@ execute:
   echo: false
   warning: false
   message: false
-  error: false
-callout-icon: false
+  before: R thekidsbiostats:::.preprocess_qmd("{{ file }}")
 ---
 
 ```{r init, include = F}
@@ -48,40 +45,25 @@ A blurb describing the project, which team or individual is conducting the resea
 
 A succinct, specific research question to be answered in this report.
 
-::: {.callout-note}
-### Note
-This callout should have the colour scheme of **Azure Blue**.
-:::
-
-::: {.callout-tip}
-### Tip
-This callout should have the colour scheme of **Teal**.
-:::
-
-::: {.callout-warning}
-### Warning
-This callout should have the colour scheme of **Saffron**.
-:::
-
-::: {.callout-important}
-### Important
-This callout should have the colour scheme of **Pumpkin**.
+::: callout-important
+This must be confirmed with the researcher
 :::
 
 ## Data Summary
 
 Tables, explanatory plots, etc to examine the data prior to analysis.
 
+```{r echo=TRUE, fig.width=6, fig.height = 4}
+mtcars %>%
+  ggplot(aes(x = mpg, 
+             y = wt, 
+             col = factor(cyl))) +
+  geom_point() +
+  labs(title = "Test Plot") +
+  thekids_theme(base_size = 20, base_family = "Orbitron")
+```
 
 
 ## Analysis
 
 ## Supplementary Material
-
-
-## Reproducibility Information
-
-```{r}
-sessionInfo()
-```
-

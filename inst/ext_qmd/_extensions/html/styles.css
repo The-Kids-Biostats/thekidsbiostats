@@ -71,25 +71,25 @@
     color: #F56B00 !important; /* Pumpkin primary */
 }
 
-.column-margin {
-  border: 2px solid #426EA8; /* Ensure the border wraps everything */
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  background-color: #a1b7d4; /* Optional: Ensure background is consistent */
+/* Wrap the actual content in a bordered box */
+.column-margin > * {
+  border: 2px solid #1F3B73;
+  padding: 1em;
+  background-color: #f9f9f9;
+  margin-bottom: 1em;
   position: relative;
 }
 
-.column-margin::before {
-  content: "Comment";
+/* Add a header using a pseudo-element */
+.column-margin > *::before {
+  content: "Comments";
   display: block;
-  background-color: #426EA8; /* Header background color */
-  color: white; /* Header text color */
-  padding: 10px;
+  background-color: #1F3B73;
+  color: white;
+  padding: 0.5em;
+  font-weight: bold;
+  margin: -1em -1em 1em -1em;
   text-align: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  margin: -10px -10px 10px -10px; /* Ensure alignment within the box */
 }
 
 

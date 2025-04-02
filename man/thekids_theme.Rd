@@ -2,25 +2,41 @@
 % Please edit documentation in R/thekids_theme.R
 \name{thekids_theme}
 \alias{thekids_theme}
+\alias{theme_thekids}
 \title{Apply Institute Theme to ggplot2 Plots}
 \usage{
 thekids_theme(
   base_size = 11,
-  base_family = "Barlow Semi Condensed",
+  base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
   scale_colour_type = "discrete",
   scale_fill_type = "discrete",
   colour_theme = "viridis",
   fill_theme = "viridis",
-  rev_colour = F,
-  rev_fill = F
+  rev_colour = FALSE,
+  rev_fill = FALSE,
+  fig_dpi = 300
+)
+
+theme_thekids(
+  base_size = 11,
+  base_family = NULL,
+  base_line_size = base_size/22,
+  base_rect_size = base_size/22,
+  scale_colour_type = "discrete",
+  scale_fill_type = "discrete",
+  colour_theme = "viridis",
+  fill_theme = "viridis",
+  rev_colour = FALSE,
+  rev_fill = FALSE,
+  fig_dpi = 300
 )
 }
 \arguments{
 \item{base_size}{The base font size, given in points. Default is 11.}
 
-\item{base_family}{The base font family used for the text. Currently only \code{"Barlow Semi Condensed"} supported.}
+\item{base_family}{The base font family used for the text (default Barlow). Most Google Fonts are supported (see Note).}
 
 \item{base_line_size}{The base size for line elements (e.g., axis lines, grid lines). Calculated as \code{base_size/22} by default.}
 
@@ -37,12 +53,14 @@ thekids_theme(
 \item{rev_colour}{Logical. Should the colour palette be reversed? Default is \code{FALSE}.}
 
 \item{rev_fill}{Logical. Should the fill palette be reversed? Default is \code{FALSE}.}
+
+\item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
 }
 \value{
 A list of ggplot2 theme elements and scale adjustments.
 }
 \description{
-This function applies a custom theme to ggplot2 plots, incorporating specific fonts and colors to align with the institute's visual identity.
+This function applies a custom theme to ggplot2 plots, incorporating specific fonts and colours to align with the institute's visual identity.
 }
 \details{
 The function determines the operating system and selects appropriate font names for Windows or other systems. It applies a minimal theme with custom settings for plot title, axis title, and strip text, using the 'Barlow Semi Condensed' font family. It also adjusts color scales using the 'viridis' package.
@@ -50,37 +68,10 @@ The function determines the operating system and selects appropriate font names 
 For a more thorough example, see the \href{../doc/thekids_theming.html}{vignette}.
 }
 \note{
-To use this theme, you need to have the 'Barlow Semi Condensed' font family installed on your system.
-}
-\section{Installing Fonts}{
+If a Google font has not been loaded with the package, \code{thekids_theme} will load this function on your behalf.
 
-To install the 'Barlow Semi Condensed' font family:
-\enumerate{
-\item \strong{Windows}:
-\itemize{
-\item Download the fonts from \href{https://fonts.google.com/specimen/Barlow+Semi+Condensed}{Google Fonts}.
-On Windows, the location is C:\\Windows\\Fonts.
-(If you can’t move fonts there, use C:\\\\Users\Username\AppData\Local\Microsoft\Windows\Fonts
-to install fonts that can only be accessed by your own username.)
-\item Install the following font files:
-\itemize{
-\item \code{BarlowSemiCondensed-ExtraBold.ttf}
-\item \code{BarlowSemiCondensed-Medium.ttf}
+Supported Google Fonts are those that exist in \code{sysfonts::font_families_google()}.
 }
-\item Using the extrafont package, run font_import() followed by loadfonts(device = "win")
-}
-\item \strong{Mac OS and Linux}:
-\itemize{
-\item Download the fonts from \href{https://fonts.google.com/specimen/Barlow+Semi+Condensed}{Google Fonts}.
-\item Install the following font files:
-\itemize{
-\item \code{BarlowSemiCondensed-Bold.ttf}
-\item \code{BarlowSemiCondensed-Medium.ttf}
-}
-}
-}
-}
-
 \examples{
 \dontrun{
 # Install the required fonts first (see below)
@@ -100,5 +91,22 @@ p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
 
 print(p2)
 }
+\dontrun{
+# Install the required fonts first (see below)
+# Example usage with ggplot2
+library(ggplot2)
+library(viridis)
 
+p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
+  geom_point() +
+  theme_thekids()
+
+print(p)
+
+p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
+  geom_col() +
+  theme_thekids(fill_theme = "thekids_tint", rev_fill = T)
+
+print(p2)
+}
 }

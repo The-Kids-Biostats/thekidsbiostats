@@ -11,7 +11,8 @@ create_project(
   data = T,
   admin = T,
   reports = T,
-  docs = T
+  docs = T,
+  other_folders = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ create_project(
 \item{reports}{Logical. If \code{TRUE}, a \code{reports} directory will be created in the project. Defaults to \code{TRUE}.}
 
 \item{docs}{Logical. If \code{TRUE}, a \code{docs} directory will be created in the project. Defaults to \code{TRUE}.}
+
+\item{other_folders}{Vector of strings that contain any other folders that should also be created. Elements should be unique. Default \code{NULL}.}
 }
 \description{
 This function creates a directory structure for a new project based on a specified extension.
