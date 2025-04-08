@@ -1,0 +1,72 @@
+::: panel-tabset
+## Desc stats
+
+::: {.callout-warning collapse="true"}
+## What this shows
+
+This section provides descriptive statistics for each variable in the model dataset. If the main predictor is categorical, statistics are presented by group. For continuous predictors, overall means and standard deviations are shown.
+
+<a href="https://the-kids-biostats.github.io/model_guides/qmds/lm.html">Guide to linear regressions</a>
+:::
+
+```{r}
+get(model_name)$mod_desc %>% thekids_table(colour = "Saffron", padding = 10)
+```
+
+## Desc plot
+
+::: {.callout-warning collapse="true"}
+## What this shows
+
+This plot visualizes the relationship between the outcome variable and the main predictor. For categorical predictors, it displays violin plots with jittered data points and group means. For continuous predictors, it shows a scatterplot with a linear regression trend line. This helps assess the potential linearity and spread of data.
+
+<a href="https://the-kids-biostats.github.io/model_guides/qmds/lm.html">Guide to linear regressions</a>
+:::
+
+```{r}
+get(model_name)$mod_desc_plot
+```
+
+## Model diag
+
+::: {.callout-warning collapse="true"}
+## What this shows
+
+This section displays four diagnostic plots, which assess whether your linear model meets its core assumptions:
+
+- **Residuals vs Fitted**: This plot helps detect non-linearity and heteroscedasticity (non-constant variance). Ideally, residuals should be randomly scattered around zero without any clear pattern.
+
+- **Normal Q-Q Plot**: This plot checks the normality of residuals. Points should lie on the diagonal line if residuals are normally distributed. Systematic departures may suggest non-normality, which can affect inference for small samples.
+
+- **Scale-Location (Spread-Location)**: This plot examines homoscedasticity — constant variance of residuals across fitted values. A horizontal line with evenly spread points indicates this assumption holds. A funnel shape suggests heteroscedasticity.
+
+- **Residuals vs Leverage**: This identifies influential observations. Points with high leverage and large residuals may have a disproportionate impact on the model. Cook's distance lines help flag these points for further investigation.
+
+<a href="https://the-kids-biostats.github.io/model_guides/qmds/lm.html">Guide to linear regressions</a>
+:::
+
+```{r}
+get(model_name)$mod_diag
+```
+
+## Model output
+
+::: {.callout-warning collapse="true"}
+## What this shows
+
+This table presents the key results from the regression model, including coefficient estimates, confidence intervals, and p-values:
+
+- **Estimate**: The estimated change in the outcome variable for a one-unit increase in the predictor, holding all other predictors constant. For categorical predictors, this reflects the difference relative to the reference group.
+
+- **Confidence Interval (CI)**: The 95% confidence interval gives a range of values within which we are 95% confident the true population parameter lies, assuming the model is correctly specified. A CI that does not include 0 suggests a statistically meaningful association.
+
+- **p-value**: The probability of observing a result as extreme as the estimate (or more) if the null hypothesis were true (i.e., no association). A p-value below 0.05 is commonly interpreted as evidence against the null hypothesis, although practical significance should also be considered.
+
+<a href="https://the-kids-biostats.github.io/model_guides/qmds/lm.html">Guide to linear regressions</a>
+:::
+
+```{r}
+get(model_name)$mod_output %>% thekids_table(colour = "Saffron")
+```
+
+:::

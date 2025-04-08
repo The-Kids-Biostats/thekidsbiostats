@@ -19,6 +19,8 @@
 #' package's internal data to the `_extensions/` directory. Finally, it creates
 #' a new Quarto markdown file based on the extension template.
 #'
+#' For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
+#'
 #' @note
 #' The function assumes that the package `thekidsbiostats` contains the necessary extension files
 #' under `ext_qmd/_extensions/`.

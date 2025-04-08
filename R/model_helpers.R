@@ -14,6 +14,8 @@
 #' output method based on the class of the model object. The actual behavior
 #' is determined by the specific method implementation for the model type.
 #'
+#' @import patchwork
+#'
 #' @examples
 #' # Assuming `mod` is a fitted model object
 #' # thekids_model_output(mod)
@@ -99,6 +101,12 @@ thekids_model_output.lm <- function(mod, by, data = NULL, ...) {
 
   mod_diag <- ggfortify:::autoplot.lm(mod)
 
+  mod_diag <- map(mod_diag, ~. + thekids_theme())
+
+  library(patchwork)
+  mod_diag <- (mod_diag[[1]] + mod_diag[[2]]) /
+    (mod_diag[[3]] + mod_diag[[4]])
+
   mod_output <- mod %>%
     tbl_regression(intercept = T,
                    estimate_fun = function(x) style_number(x, digits = 1),
@@ -166,3 +174,5 @@ thekids_model_output.rq <- function(mod, ...) {
 thekids_model_output.default <- function(mod, ...) {
   stop("Unsupported model type: ", class(mod))
 }
+
+

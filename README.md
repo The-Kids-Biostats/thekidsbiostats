@@ -13,7 +13,7 @@ https://fonts.google.com/specimen/Barlow+Semi+Condensed
 The Kids Research Institute Australia biostats package (`thekidsbiostats`) can be installed with the following:
 
 ```         
-remotes::install_github("The-Kids-Biostats/thekidsbiostats")
+remotes::install_github("The-Kids-Biostats/thekidsbiostats", build_vignettes = TRUE)
 ```
 # Using the template
 
@@ -27,3 +27,23 @@ To use our quarto templates, run `thekidsbiostats::create_template(file_name = "
 The directory parameter of the `create_template()` function specifies where the .qmd file will be located. This is in the "reports" folder by default, which is created as part of `create_project()` above. 
 
 Other parameters for create_template() determine the type of template, e.g. html or word format. 
+
+# Accessing vignettes
+
+Vignettes have been built for some of the functions. These can be opened (using R, for now). The vignettes have the same name as the function.
+
+At the moment, vignettes exist for:
+
++ Data manipulation functions (`data_manipulations`)
++ Model output functions (`model_output`)
++ Project workflow functions (`project_workflow`)
++ "The Kids" theming functions (`thekids_theming`)
++ Miscellaneous functions (`miscellaneous`)
+
+Accessing these vignettes can be done two ways:
+
+1) Using `utils::browseVignettes(package = "thekidsbiostats")`
+     + Opens vignette via web browser.
+3) Using `vignette(x, package = "thekidsbiostats")` where x is the function name
+     + Opens the vignette in the "Help" tab of RStudio.
+

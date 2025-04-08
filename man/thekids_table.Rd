@@ -11,7 +11,8 @@ thekids_table(
   line.spacing = 1.5,
   padding = 2.5,
   colour = "CoolGrey",
-  striped = T,
+  zebra = F,
+  highlight = NULL,
   ...
 )
 }
@@ -26,7 +27,11 @@ thekids_table(
 
 \item{padding}{padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults)}
 
-\item{colour}{a colour platte from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzurBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'}
+\item{colour}{a colour platte from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'}
+
+\item{zebra}{puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to \code{F})}
+
+\item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows)}
 
 \item{...}{other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}}
 }
@@ -34,10 +39,18 @@ thekids_table(
 a flextable class object that will display in both html and word output
 }
 \description{
-Using flextable (as this originated with a focus on word documents), this applies The Kids branding as a theme to table output, include the use of the Barlow font.
+A function that accepts tabular data, in a range of formats, and outputs an object of class \code{flextable()} (intended) for display in html and word documents.
 }
 \details{
-It also has default settings which produce a relatively compact table, to avoid reports becoming excessively lengthy.
+The purpose of this function is easily coerce many different table structures in a consistent format (look and feel), with The Kids branding applied, that ultimately will look nice in either an html or word output.
+
+Default settings produce a relatively compact table, to avoid reports becoming excessively lengthy.
+
+The output can be piped (\verb{\%>\%}) into further \code{flextable()} functions for advance customisation of the appearance.
+
+Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think \code{summarise()}), \code{gtsummary()} output, \code{kable()} output, and \code{flextable()} output.
+
+Note: Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running \code{thekids_table()}.
 }
 \examples{
 
@@ -45,6 +58,16 @@ It also has default settings which produce a relatively compact table, to avoid 
 
 head(mtcars, 10) \%>\%
   thekids_table(colour = "Saffron")
+
+
+mtcars \%>\%
+  select(cyl, mpg, hp, wt, gear) \%>\%
+  group_by(cyl, gear) \%>\%
+  summarise(mean_mpg = mean(mpg),
+            mean_hp = mean(hp),
+            mean_wt = mean(wt)) \%>\%
+  thekids_table(colour = "CelestialBlue", highlight = c(4:6),
+                padding.left = 20, padding.right = 20)
 }
 
 }

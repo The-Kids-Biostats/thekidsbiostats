@@ -23,6 +23,9 @@ A vector of length 1 or n, of class factor, matching the length of the logical i
 \description{
 Essentially the same as dplyr::case_when but the variable is of class factor, ordered based on the order entered into the case_when statement
 }
+\details{
+For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+}
 \examples{
 
 \dontrun{

@@ -13,9 +13,14 @@ format:
     code-fold: true
     toc: true
     toc-location: left
-    theme: journal
     html-table-processing: none
     self-contained: true
+    mainfont: "Barlow"
+    include-in-header: 
+      text: |
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+        </style>
 reference-location: margin 
 citation-location: margin 
 css: _extensions/html/styles.css
@@ -26,14 +31,11 @@ execute:
   warning: false
   message: false
   error: false
-mainfont: Barlow
 callout-icon: false
 ---
 
 ```{r init, include = F}
 library(thekidsbiostats)
-
-
 ```
 
 ## Introduction
@@ -74,4 +76,18 @@ Tables, explanatory plots, etc to examine the data prior to analysis.
 
 ## Analysis
 
+```{r echo = T}
+mod <- thekidsbiostats::thekids_model(mtcars, y = "mpg", x = "cyl")
+```
+
+**Try out the "Insert Model Panel Tabs" addin with the mod object above!**
+
 ## Supplementary Material
+
+
+## Reproducibility Information
+
+```{r}
+sessionInfo()
+```
+

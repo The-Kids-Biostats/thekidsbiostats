@@ -12,3 +12,8 @@ Name: Create Project (Shiny)
 Description: Launch a Shiny app to create a new project with a structured directory.
 Binding: create_project_addin
 Interactive: true
+
+Name: Insert Model Panel Tabset
+Description: Insert Quarto tabset for model output with optional explanations
+Binding: insert_model_tabset
+Interactive: true

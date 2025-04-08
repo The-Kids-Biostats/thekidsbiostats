@@ -25,6 +25,9 @@ factor_table
 
 factor_table
 }
+\details{
+For a more thorough example, see the \href{../doc/miscellaneous.html}{vignette}.
+}
 \examples{
 \dontrun{ factor_table("0, No | 1, Yes") }
 

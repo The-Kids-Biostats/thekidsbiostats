@@ -2,9 +2,17 @@
 % Please edit documentation in R/scale_colour_thekids.R
 \name{scale_color_thekids}
 \alias{scale_color_thekids}
-\title{Color scale constructor for The Kids colours.}
+\alias{scale_colour_thekids}
+\title{Colour scale constructor for The Kids colours.}
 \usage{
 scale_color_thekids(palette = "primary", discrete = TRUE, reverse = FALSE, ...)
+
+scale_colour_thekids(
+  palette = "primary",
+  discrete = TRUE,
+  reverse = FALSE,
+  ...
+)
 }
 \arguments{
 \item{palette}{Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"}
@@ -17,5 +25,5 @@ scale_color_thekids(palette = "primary", discrete = TRUE, reverse = FALSE, ...)
 scale_color_gradientn(), used respectively when discrete is TRUE or FALSE}
 }
 \description{
-Color scale constructor for The Kids colours.
+Colour scale constructor for The Kids colours.
 }

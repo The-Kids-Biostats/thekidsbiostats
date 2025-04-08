@@ -7,6 +7,10 @@
 #'
 #' @return object of class character"
 #'
+#' @details
+#' For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+#'
+#'
 #' @import utils
 #'
 #' @examples

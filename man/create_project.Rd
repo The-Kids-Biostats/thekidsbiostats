@@ -11,7 +11,8 @@ create_project(
   data = T,
   admin = T,
   reports = T,
-  docs = T
+  docs = T,
+  other_folders = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ create_project(
 \item{reports}{Logical. If \code{TRUE}, a \code{reports} directory will be created in the project. Defaults to \code{TRUE}.}
 
 \item{docs}{Logical. If \code{TRUE}, a \code{docs} directory will be created in the project. Defaults to \code{TRUE}.}
+
+\item{other_folders}{Vector of strings that contain any other folders that should also be created. Elements should be unique. Default \code{NULL}.}
 }
 \description{
 This function creates a directory structure for a new project based on a specified extension.
@@ -39,6 +42,8 @@ This function helps set up the structure of a new project using a predefined ext
 optional additional directories. It ensures that the selected extension is valid by checking
 the available extensions from the \code{thekidsbiostats} package. After creating the necessary folders,
 the function copies the appropriate files from the package extension into the project.
+
+For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
 }
 \note{
 Ensure that the \code{thekidsbiostats} package is installed and contains the required extension

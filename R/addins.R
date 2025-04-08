@@ -9,6 +9,8 @@
 #' @import shiny shinyFiles
 #' @export
 #'
+#' @import shiny
+#'
 #' @examples
 #' if (interactive()) {
 #'   insert_callout()
@@ -128,7 +130,6 @@ insert_margin <- function() {
   shiny::runGadget(shinyApp(ui, server), viewer = viewer)
 }
 
-
 #' Shiny Addin for Creating a Project
 #'
 #' This function launches a Shiny app to create a project structure interactively.
@@ -202,3 +203,57 @@ create_project_addin <- function() {
   shinyApp(ui, server)
 }
 
+
+#' RStudio Addin: Insert child Quarto tabset for model output
+#'
+#' This Shiny gadget inserts a `model_name <- "mod"` line and a child chunk to include
+#' a preformatted tabset from an external Quarto file. It also copies the child file
+#' to the same directory as the currently open document.
+#'
+#' @return Inserts code into the active RStudio document and copies a child QMD file.
+#' @export
+#'
+#' @import shiny rstudioapi fs glue
+insert_model_tabset <- function() {
+  ui <- fluidPage(
+    titlePanel("Insert Model Output Tabs"),
+
+    textInput("modobj", "Model object name", value = "mod"),
+
+    actionButton("insert", "Insert into document")
+  )
+
+  server <- function(input, output, session) {
+    observeEvent(input$insert, {
+      model_name_line <- glue::glue('```{{r}}\nmodel_name <- "{input$modobj}"\n```')
+      child_chunk <- '{{< include model-tabs-lm.qmd >}}'
+
+      # Get active document path and directory
+      doc_path <- rstudioapi::getActiveDocumentContext()$path
+      if (doc_path == "") {
+        showNotification("No active file open in RStudio", type = "error")
+        return()
+      }
+
+      doc_dir <- fs::path_dir(doc_path)
+      target_path <- fs::path(doc_dir, "model-tabs-lm.qmd")
+
+      # Copy template child file
+      template_path <- system.file("quarto_templates/model-tabs-lm.qmd", package = "thekidsbiostats")
+      if (!fs::file_exists(template_path)) {
+        showNotification("Child template file not found in package.", type = "error")
+        return()
+      }
+      fs::file_copy(template_path, target_path, overwrite = FALSE)
+
+      # Insert model_name assignment and child chunk
+      insertion_text <- glue::glue("{model_name_line}\n\n{child_chunk}\n")
+      rstudioapi::insertText(insertion_text)
+
+      stopApp()
+    })
+  }
+
+  viewer <- shiny::dialogViewer("Insert Model Tabs", width = 500, height = 250)
+  shiny::runGadget(shinyApp(ui, server), viewer = viewer)
+}

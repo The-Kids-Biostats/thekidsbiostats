@@ -40,6 +40,8 @@ on the supplied arguments. The data is reduced to complete cases for the
 variables included in the formula before fitting the model. The fitted model
 is passed to \code{\link{thekids_model_output}} for further handling, allowing
 for streamlined customization of model outputs.
+
+For a more thorough example, see the \href{../doc/model_output.html}{vignette}.
 }
 \examples{
 # Example 1: Linear model

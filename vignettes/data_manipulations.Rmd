@@ -1,0 +1,108 @@
+---
+title: "Data Manipulation Tools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Manipulation Tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+The R programming language has extensive functionality and the vast ecosystem of community-developed packages extends those capabilities well beyond the base language. Nonetheless, there is always room for additional helpful functions to be added to any R programmer's toolbelt and the sections below discuss some of those available within `thekidsbiostats`.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(thekidsbiostats)
+```
+
+<br>
+
+# Example Usage
+
+## Rounding Functions
+
+The following two functions (`round_vec` and `round_df`) are examples where the sole purpose is to keep code concise and to the point. Often when we present figures --- whether that be through plots, tables or in written form --- we wish to preserve trailing zeroes when rounding numbers to a specific *x* decimal places.
+
+There are two functions that can help with this:
+
++ `round_vec` -- preserves trailing zeroes for vectors.
++ `round_df` -- consistently rounds every numeric column in a `data.frame` or `tibble`.
+
+Below we demonstrate the difference between the base R `round()` and `round_vec()` when rounding numerical values:
+
+```{r echo = T}
+original <-  c(1.8003, 1.9998, 2.5812)
+
+data.frame(original = original) %>%
+  mutate(round     = as.character(round(original, 2)),
+         round_vec = round_vec(original, 2)) %>%
+  thekids_table()
+```
+
+To illustrate `round_df`:
+
+```{r}
+data.frame(var1 = rnorm(n = 5, mean = 10, sd = 2),
+           var2 = rexp(n = 5, rate = 0.25),
+           var3 = rweibull(n = 5, shape = 4, scale = 7))  %>%
+  round_df(digits = 2) %>%
+  thekids_table()
+```
+
+
+## Data Manipulation Functions
+
+### `> fct_case_when`
+Factors are a useful data format for manipulating any categorical data because they preserve the ordinal nature inherent to those variables.
+
+Below is an example of working with ordinal data.
+
+```{r echo=TRUE}
+x <- 1:50
+case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
+          x %% 6  == 0 ~ "Likely",        # Multiple of 6
+          x %% 3  == 0 ~ "Neutral",       # Multiple of 3
+          x %% 2  == 0 ~ "Unlikely",      # Multiple of 2
+          TRUE         ~ "Very Unlikely"  # Default category) %>% 
+          ) %>% 
+  as.factor %>%
+  levels()
+```
+
+Note, however, the strange (*alphabetical*) ordering of the levels.
+If we would like to set a more logical ordering of these factors, we would also have to use `factor`:
+
+```{r echo=TRUE}
+x <- 1:50
+case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
+          x %% 6  == 0 ~ "Likely",        # Multiple of 6
+          x %% 3  == 0 ~ "Neutral",       # Multiple of 3
+          x %% 2  == 0 ~ "Unlikely",      # Multiple of 2
+          TRUE         ~ "Very Unlikely"  # Default category) %>% 
+          ) %>% 
+  factor(levels = c("Very Unlikely", "Unlikely", "Neutral", "Likely", "Very Likely")) %>%
+  as.factor %>%
+  levels()
+```
+
+In comparison, `fct_case_when()` orders the factor levels simply based on the order of their appearance in the argument, to return an identical result to the above:
+
+```{r echo=TRUE}
+x <- 1:50
+fct_case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
+              x %% 6  == 0 ~ "Likely",        # Multiple of 6
+              x %% 3  == 0 ~ "Neutral",       # Multiple of 3
+              x %% 2  == 0 ~ "Unlikely",      # Multiple of 2
+              TRUE         ~ "Very Unlikely"  # Default category) %>% 
+              ) %>% 
+  as.factor %>%
+  levels()
+```
+
+

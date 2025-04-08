@@ -11,12 +11,15 @@
 #' @param admin Logical. If `TRUE`, an `admin` directory will be created in the project. Defaults to `TRUE`.
 #' @param reports Logical. If `TRUE`, a `reports` directory will be created in the project. Defaults to `TRUE`.
 #' @param docs Logical. If `TRUE`, a `docs` directory will be created in the project. Defaults to `TRUE`.
+#' @param other_folders Vector of strings that contain any other folders that should also be created. Elements should be unique. Default `NULL`.
 #'
 #' @details
 #' This function helps set up the structure of a new project using a predefined extension and
 #' optional additional directories. It ensures that the selected extension is valid by checking
 #' the available extensions from the `thekidsbiostats` package. After creating the necessary folders,
 #' the function copies the appropriate files from the package extension into the project.
+#'
+#' For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
 #'
 #' @note
 #' Ensure that the `thekidsbiostats` package is installed and contains the required extension
@@ -36,7 +39,12 @@ create_project <- function(project_name,
                            data = T,
                            admin = T,
                            reports = T,
-                           docs = T) {
+                           docs = T,
+                           other_folders = NULL) {
+
+  if (length(unique(other_folders)) != length(other_folders)){
+    stop("The `other_folder` values specified are not unique! Project creation cancelled.")
+  }
 
   base_dir <- rstudioapi::selectDirectory(caption = "Select a location to create the new project folder")
               #tcltk::tk_choose.dir(default = getwd(),
@@ -71,6 +79,11 @@ create_project <- function(project_name,
   }
   if(docs) {
     if(!file.exists(file.path(project_dir, project_name, "docs"))) dir.create(file.path(project_dir, project_name, "docs"))
+  }
+  if (!is.null(other_folders)){
+    for (i in other_folders){
+      if (!file.exists(file.path(project_dir, project_name, i))) dir.create(file.path(project_dir, project_name, i))
+    }
   }
 
   # Create the R Project file in the selected directory

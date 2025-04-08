@@ -28,6 +28,8 @@ The function first checks whether a \verb{_extensions/} directory exists in the 
 directory. If not, it creates one. It then copies the necessary extension files from the
 package's internal data to the \verb{_extensions/} directory. Finally, it creates
 a new Quarto markdown file based on the extension template.
+
+For a more thorough example, see the \href{../doc/project_workflow.html}{vignette}.
 }
 \note{
 The function assumes that the package \code{thekidsbiostats} contains the necessary extension files
