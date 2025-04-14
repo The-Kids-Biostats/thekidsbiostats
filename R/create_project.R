@@ -98,7 +98,7 @@ create_project <- function(project_name,
   files <- list.files(system.file(paste0("ext_proj/_extensions/", ext_name), package = "thekidsbiostats"))
   file.copy(
     from = system.file(paste0("ext_proj/_extensions/", ext_name, "/", files), package = "thekidsbiostats"),
-    to = paste0("."),
+    to = file.path(project_dir, project_name),
     overwrite = TRUE,
     recursive = TRUE,
     copy.mode = TRUE
