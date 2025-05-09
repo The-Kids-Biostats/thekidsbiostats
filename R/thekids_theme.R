@@ -84,7 +84,7 @@ thekids_theme <- function(base_size = 11,
   }
 
   # Define color and fill functions
-  colour_function <- case_when(
+  colour_function <- dplyr::case_when(
     colour_theme == "viridis" & scale_colour_type == "discrete" ~
       list(scale_colour_viridis_d(option = "plasma", end = 0.85)),
     colour_theme == "viridis" & scale_colour_type == "continuous" ~
@@ -97,7 +97,7 @@ thekids_theme <- function(base_size = 11,
       list(scale_color_thekids(palette = "typography", reverse = rev_colour))
   )[[1]]
 
-  fill_function <- case_when(
+  fill_function <- dplyr::case_when(
     fill_theme == "viridis" & scale_fill_type == "discrete" ~
       list(scale_fill_viridis_d(option = "plasma", end = 0.85)),
     fill_theme == "viridis" & scale_fill_type == "continuous" ~
@@ -112,15 +112,15 @@ thekids_theme <- function(base_size = 11,
 
   # Return the theme and functions
   list(
-    theme_minimal(base_family = base_family, base_size = base_size,
+    ggplot2::theme_minimal(base_family = base_family, base_size = base_size,
                   base_line_size = base_line_size, base_rect_size = base_rect_size) +
-      theme(
-        panel.grid.minor = element_blank(),
-        plot.title = element_text(family = base_family, face = "bold"),
-        axis.title = element_text(family = base_family, face = "bold"),
-        strip.text = element_text(family = base_family, face = "bold", size = rel(1), hjust = 0),
-        plot.background = element_rect(fill = "white", colour = "white"),
-        strip.background = element_rect(fill = "grey80", colour = NA)
+      ggplot2::theme(
+        panel.grid.minor = ggplot2::element_blank(),
+        plot.title = ggplot2::element_text(family = base_family, face = "bold"),
+        axis.title = ggplot2::element_text(family = base_family, face = "bold"),
+        strip.text = ggplot2::element_text(family = base_family, face = "bold", size = rel(1), hjust = 0),
+        plot.background = ggplot2::element_rect(fill = "white", colour = "white"),
+        strip.background = ggplot2::element_rect(fill = "grey80", colour = NA)
       ),
     colour_function,
     fill_function
@@ -231,11 +231,11 @@ theme_institute <- function(base_size = 11, base_family = "Barlow Semi Condensed
                   "Barlow Semi Condensed Medium",
                   "BarlowSemiCondensed-Medium")
 
-  colour_function <- case_when(
+  colour_function <- dplyr::case_when(
     colour_theme == "viridis" & scale_colour_type == "discrete" ~
-      list(scale_colour_viridis_d(option = "plasma", end = 0.85)),
+      list(ggplot2::scale_colour_viridis_d(option = "plasma", end = 0.85)),
     colour_theme == "viridis" & scale_colour_type == "continuous" ~
-      list(scale_colour_viridis_c(option = "plasma", end = 0.85)),
+      list(ggplot2::scale_colour_viridis_c(option = "plasma", end = 0.85)),
     colour_theme == "thekids" ~
       list(scale_color_thekids(palette = "primary", reverse = rev_colour)),
     colour_theme == "thekids_tint" ~
@@ -244,11 +244,11 @@ theme_institute <- function(base_size = 11, base_family = "Barlow Semi Condensed
       list(scale_color_thekids(palette = "typography", reverse = rev_colour)),
   )[[1]]
 
-  fill_function <- case_when(
+  fill_function <- dplyr::case_when(
     fill_theme == "viridis" & scale_fill_type == "discrete" ~
-      list(scale_fill_viridis_d(option = "plasma", end = 0.85)),
+      list(ggplot2::scale_fill_viridis_d(option = "plasma", end = 0.85)),
     fill_theme == "viridis" & scale_fill_type == "continuous" ~
-      list(scale_fill_viridis_c(option = "plasma", end = 0.85)),
+      list(ggplot2::scale_fill_viridis_c(option = "plasma", end = 0.85)),
     fill_theme == "thekids" ~
       list(scale_fill_thekids(palette = "primary", reverse = rev_fill)),
     fill_theme == "thekids_tint" ~
@@ -258,23 +258,23 @@ theme_institute <- function(base_size = 11, base_family = "Barlow Semi Condensed
   )[[1]]
 
   list(
-    theme_minimal(base_family = "Barlow Semi Condensed",
+    ggplot2::theme_minimal(base_family = "Barlow Semi Condensed",
                   base_size = base_size,
                   base_line_size = base_line_size,
                   base_rect_size = base_rect_size) +
-      theme(panel.grid.minor = element_blank(),
-            plot.title = element_text(
+      ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),
+            plot.title = ggplot2::element_text(
               family = font1
             ),
-            axis.title = element_text(
+            axis.title = ggplot2::element_text(
               family = font2
             ),
-            strip.text = element_text(
+            strip.text = ggplot2::element_text(
               family = font1,
               size = rel(1), hjust = 0
             ),
-            plot.background = element_rect(fill = "white", colour = "white"),
-            strip.background = element_rect(fill = "grey80", colour = NA)),
+            plot.background = ggplot2::element_rect(fill = "white", colour = "white"),
+            strip.background = ggplot2::element_rect(fill = "grey80", colour = NA)),
     colour_function,
     fill_function
   )

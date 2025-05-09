@@ -180,7 +180,7 @@ create_project_addin <- function() {
           open_project = isTRUE(input$open_project)
         )
 
-        output$status <- shiny::renderText("✅ Project created successfully.")
+        output$status <- shiny::renderText("\u2705 Project created successfully.")
       }, error = function(e) {
         shiny::showModal(shiny::modalDialog("Error", e$message, easyClose = TRUE))
       })
@@ -241,7 +241,7 @@ create_template_addin <- function() {
           ext_name = input$ext_name,
           open_file = TRUE
         )
-        output$status <- shiny::renderText("✅ Report template created successfully.")
+        output$status <- shiny::renderText("\u2705 Report template created successfully.")
       }, error = function(e) {
         shiny::showModal(shiny::modalDialog("Error", e$message, easyClose = TRUE))
       })

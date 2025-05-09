@@ -46,72 +46,75 @@ thekids_model_output <- function(model, ...) {
 #' @exportS3Method thekidsbiostats::thekids_model_output
 thekids_model_output.lm <- function(mod, by, data = NULL, ...) {
 
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop("The 'patchwork' package is required.")
+  }
+
   if(is.null(data)) {
     mod_dat <- mod$model
   } else mod_dat <- data
 
-  y <- all.vars(formula(mod))[1]
+  y <- all.vars(stats::formula(mod))[1]
 
   if(is.character(mod_dat[[by]]) | is.factor(mod_dat[[by]])) {
     mod_desc <- mod_dat %>%
-      tbl_summary(by = by,
+      gtsummary::tbl_summary(by = by,
                   type = list(where(is.numeric) ~ "continuous"),
-                  statistic = list(all_continuous() ~ "{mean} ({sd}) [{N_nonmiss}]")) %>%
-      modify_header(label = by) %>%
-      add_p() %>%
-      bold_labels() %>%
+                  statistic = list(gtsummary::all_continuous() ~ "{mean} ({sd}) [{N_nonmiss}]")) %>%
+      gtsummary::modify_header(label = by) %>%
+      gtsummary::add_p() %>%
+      gtsummary::bold_labels() %>%
       suppressMessages() %>% suppressWarnings()
 
     mod_desc_plot <- mod_dat %>%
-      mutate(x = factor(.[[by]])) %>%
-      ggplot(aes(x = x, y = .data[[y]],
+      dplyr::mutate(x = factor(.[[by]])) %>%
+      ggplot2::ggplot(ggplot2::aes(x = x, y = .data[[y]],
                  colour = x, group = x, fill = x)) +
-      geom_violin(alpha = 0.1, width = 0.5) +
-      geom_jitter(height = 0, width = 0.05, alpha = 0.3) +
-      stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.05, colour = "red") +
-      stat_summary(fun = mean, colour = "red", geom="point", size = 4) +
-      stat_summary(fun = mean, colour = "black", geom="point", size = 3, shape = 4) +
+      ggplot2::geom_violin(alpha = 0.1, width = 0.5) +
+      ggplot2::geom_jitter(height = 0, width = 0.05, alpha = 0.3) +
+      ggplot2::stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.05, colour = "red") +
+      ggplot2::stat_summary(fun = mean, colour = "red", geom="point", size = 4) +
+      ggplot2::stat_summary(fun = mean, colour = "black", geom="point", size = 3, shape = 4) +
       thekids_theme() +
-      theme(plot.caption = element_text(size = 12, face = "italic"),
+      ggplot2::theme(plot.caption = ggplot2::element_text(size = 12, face = "italic"),
             legend.position = "none") +
-      labs(title = "Jittered dot and violin distribution plot",
+      ggplot2::labs(title = "Jittered dot and violin distribution plot",
            subtitle = paste0(y, " plotted by ", by),
            caption = "Black 'X' on red circle indicates mean (±SE)",
            x = by)
   } else {
     mod_desc <- mod_dat %>%
-      tbl_summary(type = list(where(is.numeric) ~ "continuous"),
-                  statistic = list(all_continuous() ~ "{mean} ({sd}) [{N_nonmiss}]")) %>%
-      bold_labels() %>%
+      gtsummary::tbl_summary(type = list(where(is.numeric) ~ "continuous"),
+                  statistic = list(gtsummary::all_continuous() ~ "{mean} ({sd}) [{N_nonmiss}]")) %>%
+      gtsummary::bold_labels() %>%
       suppressMessages() %>% suppressWarnings()
 
     mod_desc_plot <- mod_dat %>%
-      mutate(x = .[[by]]) %>%
-      ggplot(aes(x = x, y = .data[[y]])) +
-      geom_jitter(width = 0.05, height = 0.05, alpha = 0.5, size = 3,col = thekids_colours[[3]]) +
-      geom_smooth(fill = thekids_colours[[1]], col = thekids_colours[[1]],
+      dplyr::mutate(x = .[[by]]) %>%
+      ggplot2::ggplot(aes(x = x, y = .data[[y]])) +
+      ggplot2::geom_jitter(width = 0.05, height = 0.05, alpha = 0.5, size = 3,col = thekids_colours[[3]]) +
+      ggplot2::geom_smooth(fill = thekids_colours[[1]], col = thekids_colours[[1]],
                   method = "lm") +
       thekids_theme() +
-      theme(plot.caption = element_text(size = 12, face = "italic"),
+      ggplot2::theme(plot.caption = ggplot2::element_text(size = 12, face = "italic"),
             legend.position = "none") +
-      labs(title = "Scatterplot with line of best bit (method = \"lm\")",
+      ggplot2::labs(title = "Scatterplot with line of best bit (method = \"lm\")",
            subtitle = paste0(y, " plotted by ", by),
            x = by)
   }
 
   mod_diag <- ggfortify:::autoplot.lm(mod)
 
-  mod_diag <- map(mod_diag, ~. + thekids_theme())
+  mod_diag <- purrr::map(mod_diag, ~. + thekids_theme())
 
-  library(patchwork)
-  mod_diag <- (mod_diag[[1]] + mod_diag[[2]]) /
-    (mod_diag[[3]] + mod_diag[[4]])
+  mod_diag <- patchwork::wrap_plots((mod_diag[[1]] + mod_diag[[2]]) / (mod_diag[[3]] + mod_diag[[4]]),
+                                    ncol = 1)
 
   mod_output <- mod %>%
-    tbl_regression(intercept = T,
-                   estimate_fun = function(x) style_number(x, digits = 1),
-                   pvalue_fun = function(x) style_number(x, digits = 3)) %>%
-    modify_column_merge(
+    gtsummary::tbl_regression(intercept = T,
+                   estimate_fun = function(x) gtsummary::style_number(x, digits = 1),
+                   pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)) %>%
+    gtsummary::modify_column_merge(
       pattern = "{estimate} ({conf.low}, {conf.high})",
       rows = !is.na(estimate)
     )

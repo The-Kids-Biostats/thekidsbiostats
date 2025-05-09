@@ -61,24 +61,24 @@ thekids_model <- function(data, y, x, formula = "", model = "linear", ...){
 
   # Create formula from y, x, and formula arguments
   if(formula == ""){
-    form <- as.formula(paste0("`", y, "` ~ `", x, "`"))
+    form <- stats::as.formula(paste0("`", y, "` ~ `", x, "`"))
   } else {
-    form <- as.formula(paste0("`", y, "` ~ `", x, "` + ", formula))
+    form <- stats::as.formula(paste0("`", y, "` ~ `", x, "` + ", formula))
   }
 
   # Reduce data to only columns used in analysis and only complete-case rows.
   vars <- formula %>%
     str_split("\\+") %>%
-    flatten_chr() %>%
-    str_trim()
+    purrr::flatten_chr() %>%
+    stringr::str_trim()
 
   dat_mod <- data %>%
-    select({{y}}, {{x}}, any_of(vars)) %>%
-    na.omit()
+    dplyr::select({{y}}, {{x}}, dplyr::any_of(vars)) %>%
+    stats::na.omit()
 
   # Run model
   if(model == "linear") {
-    mod <- lm(formula = form, data = dat_mod, ...)
+    mod <- stats::lm(formula = form, data = dat_mod, ...)
   }
   if(model == "negbin") {
     mod <- MASS::glm.nb(formula = form, data = dat_mod, ...)
