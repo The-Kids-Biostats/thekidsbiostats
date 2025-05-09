@@ -12,7 +12,7 @@ Description: This package includes RMarkdown and ioslides templates that incorpo
     number of helper functions and data-sets are also available. Currently, this is
     in transition from previous branding to new branding, with added functionality.
 Date: 2025-05-02
-License: `use_mit_license()`
+License: MIT + file LICENSE
 LazyData: true
 Depends:
     R (>= 4.3),
