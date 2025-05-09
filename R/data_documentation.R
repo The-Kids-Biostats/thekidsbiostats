@@ -23,7 +23,7 @@
 #' Names correspond to "primary", "tint50", "tint10", and "typography" guidelines
 #'
 #' @examples
-#' names(thekids_pals)
+#' names(thekids_palettes)
 #' thekids_palettes$primary["Saffron"]
 #'
 #' @source The Kids Research Institute Australia style guide.

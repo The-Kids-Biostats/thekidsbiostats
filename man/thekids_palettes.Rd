@@ -21,7 +21,7 @@ Additional colour palettes and HEX codes consistent with Institute guidelines.
 Contains "primary" and "tinted" colours.
 }
 \examples{
-names(thekids_pals)
+names(thekids_palettes)
 thekids_palettes$primary["Saffron"]
 
 }
