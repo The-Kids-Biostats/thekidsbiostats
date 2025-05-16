@@ -38,6 +38,7 @@ Imports:
     rstudioapi (>= 0.17),
     shiny (>= 1.10),
     shinyFiles (>= 0.9.0),
+    shinyTree (>= 0.3),
     showtext (>= 0.9),
     stringr (>= 1.4.0),
     sysfonts (>= 0.8),

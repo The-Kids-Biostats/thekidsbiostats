@@ -131,11 +131,26 @@ create_project_addin <- function() {
         shiny::textInput("project_name", "Project Name:", ""),
         shiny::actionButton("browse", "Browse Parent Directory"),
         shiny::textOutput("selected_dir"),
-
+        shiny::br(),
         shiny::checkboxGroupInput("folders", "Folders to Include:",
           choices = c("data-raw", "data", "admin", "docs", "reports"),
-          selected = c("data-raw", "data", "admin", "docs", "reports")),
-
+          selected = c("data-raw", "data", "admin", "docs", "reports")
+        ),
+        shiny::fluidRow(
+          shiny::column(
+            width = 8,
+            shiny::textInput(
+              "custom_folders",
+              "Custom Folders",
+              placeholder = "comma-separated folders"
+            )
+          ),
+          shiny::column(
+            width = 2,
+            style = "margin-top: 25px;",  # aligns button with text input
+            shiny::actionButton("add_custom_folder", "Add", class='btn-primary')
+          )
+        ),
         shiny::checkboxInput("create_report", "Create report in reports folder?", FALSE),
         shiny::conditionalPanel(
           condition = "input.create_report == true",
@@ -144,11 +159,20 @@ create_project_addin <- function() {
             selected = "html")
         ),
 
-        shiny::checkboxInput("open_project", "Open new project", TRUE),
         shiny::actionButton("create", "Create Project", class = "btn-primary")
       ),
 
       shiny::mainPanel(
+        shiny::fluidRow(
+          shiny::column(
+            width = 9,
+            shiny::wellPanel(
+              shiny::tags$h4("Project Directory Structure"),
+              shiny::textOutput("selected_dir"),
+              shinyTree::shinyTree("tree", checkbox = FALSE)
+            )
+          )
+        ),
         shiny::verbatimTextOutput("status")
       )
     )
@@ -157,6 +181,8 @@ create_project_addin <- function() {
   server <- function(input, output, session) {
     project_path <- shiny::reactiveVal(NULL)
 
+    options(all_folders = c("data-raw", "data", "admin", "docs", "reports"))
+
     shiny::observeEvent(input$browse, {
       selected <- rstudioapi::selectDirectory("Choose folder")
       if (!is.null(selected)) project_path(selected)
@@ -164,7 +190,27 @@ create_project_addin <- function() {
 
     output$selected_dir <- shiny::renderText({
       req(project_path())
-      paste("Selected Directory:", project_path())
+      paste(" ", project_path())
+    })
+
+    shiny::observeEvent(input$add_custom_folder, {
+      new_folder <- trimws(input$custom_folders)
+
+      if (nzchar(new_folder)) {
+        current_choices <- isolate(input$folders)
+        all_choices <- isolate(getOption("all_folders", c("data-raw", "data", "admin", "docs", "reports")))
+
+        if (!(new_folder %in% all_choices)) {
+          updated_choices <- c(all_choices, new_folder)
+          options(all_folders = updated_choices)  # Save new state
+
+          shiny::updateCheckboxGroupInput(
+            inputId = "folders",
+            choices = updated_choices,
+            selected = c(current_choices, new_folder)
+          )
+        }
+      }
     })
 
     shiny::observeEvent(input$create, {
@@ -177,15 +223,78 @@ create_project_addin <- function() {
           folders = input$folders,
           create_report = isTRUE(input$create_report),
           ext_name = input$ext_name,
-          open_project = isTRUE(input$open_project)
+          open_project = FALSE #isTRUE(input$open_project)
         )
 
-        output$status <- shiny::renderText("\u2705 Project created successfully.")
+        output$status <- shiny::renderText("✅ Project created successfully.")
+
+        shiny::showModal(shiny::modalDialog(
+          title = "✅ Project Successfully Created",
+          "Would you like to open the project now?",
+          footer = shiny::tagList(
+            shiny::actionButton("cancel_open", "Close", class = "btn btn-danger"),
+            shiny::actionButton("confirm_open", "Open Project", class = "btn-primary")
+          )
+        ))
+
       }, error = function(e) {
         shiny::showModal(shiny::modalDialog("Error", e$message, easyClose = TRUE))
+        print("Fail")
       })
+
+
+
+    })
+
+    output$tree <- shinyTree::renderTree({
+      included_folders <- input$folders
+
+      tree <- list()
+
+      proj_name <- if (nzchar(input$project_name)) input$project_name else "[project-name]"
+      setNames(list(structure(tree, stopened = TRUE)), paste0(proj_name, "/"))
+
+      # Add folders conditionally
+      for (folder in included_folders) {
+        if (folder == "reports") {
+          if (input$create_report) {
+            report_file <- "report.qmd"
+            tree[[paste0(folder, "/")]] <- structure(
+              setNames(list(structure("", sticon = "file")), report_file),
+              stopened = TRUE
+            )
+          } else {
+            tree[[paste0(folder, "/")]] <- structure("", stopened = TRUE)
+          }
+        } else {
+          tree[[paste0(folder, "/")]] <- structure("", stopened = TRUE)
+        }
+      }
+
+      # Nest under the main project directory
+      setNames(list(structure(tree, stopened = TRUE)), paste0(input$project_name, "/"))
+    })
+
+
+    shiny::observeEvent(input$confirm_open, {
+      shiny::removeModal()
+
+      rproj_file <- file.path(project_path(),input$project_name, paste0(input$project_name, ".Rproj"))
+
+      if (file.exists(rproj_file) && rstudioapi::isAvailable()) {
+        rstudioapi::openProject(path = rproj_file, newSession = TRUE)
+      } else {
+        output$status <- renderText("⚠️ Could not open project (file missing or RStudio API unavailable).")
+      }
+
       shiny::stopApp()
     })
+
+    observeEvent(input$cancel_open, {
+      shiny::removeModal()
+      shiny::stopApp()
+    })
+
   }
 
   shiny::shinyApp(ui, server)
@@ -203,16 +312,17 @@ create_template_addin <- function() {
     shiny::titlePanel("Create Report Template"),
 
     shiny::sidebarLayout(
-      shiny::sidebarPanel(
-        shiny::textInput("file_name", "Report File Name:", value = "report"),
+      shiny::sidebarPanel(width=8,
+        shiny::textInput("file_name", "Report File Name:", value = "report", width = "50%"),
         shiny::selectInput("ext_name", "Report Type:",
           choices = list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats")),
-          selected = "html"),
+          selected = "html", width = "50%"),
         shiny::actionButton("browse", "Browse Output Folder"),
         shiny::textOutput("selected_dir"),
-        shiny::actionButton("create", "Create Template", class = "btn-success")
+        shiny::br(),
+        shiny::actionButton("create", "Create Template", class = "btn-primary")
       ),
-      shiny::mainPanel(
+      shiny::mainPanel(width=4,
         shiny::verbatimTextOutput("status")
       )
     )
