@@ -16,7 +16,8 @@ thekids_theme(
   fill_theme = "viridis",
   rev_colour = FALSE,
   rev_fill = FALSE,
-  fig_dpi = 300
+  fig_dpi = 300,
+  ...
 )
 
 theme_thekids(
@@ -30,7 +31,8 @@ theme_thekids(
   fill_theme = "viridis",
   rev_colour = FALSE,
   rev_fill = FALSE,
-  fig_dpi = 300
+  fig_dpi = 300,
+  ...
 )
 }
 \arguments{

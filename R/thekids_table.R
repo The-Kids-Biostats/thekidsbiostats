@@ -58,6 +58,12 @@ thekids_table <- function(x,
                           highlight = NULL,
                           ...){
 
+  # Standardise argument aliasing
+  call <- match.call()
+  std_call <- standardise_args(call)
+  if (!identical(names(call), names(std_call))) {
+    return(eval(std_call, parent.frame()))
+  }
 
   # Convert kable to tibble early, to facilitate nrow count for highlighting
 

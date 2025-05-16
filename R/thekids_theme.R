@@ -57,7 +57,15 @@ thekids_theme <- function(base_size = 11,
                           fill_theme = "viridis",
                           rev_colour = FALSE,
                           rev_fill = FALSE,
-                          fig_dpi = 300) {
+                          fig_dpi = 300,
+                          ...) {
+
+  # Standardise argument aliasing
+  call <- match.call()
+  std_call <- standardise_args(call)
+  if (!identical(names(call), names(std_call))) {
+    return(eval(std_call, parent.frame()))
+  }
 
   # Default font from options
   default_font <- "Barlow"  # No need for getOption()
