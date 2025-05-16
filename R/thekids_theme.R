@@ -18,6 +18,7 @@
 #' @param rev_colour Logical. Should the colour palette be reversed? Default is `FALSE`.
 #' @param rev_fill Logical. Should the fill palette be reversed? Default is `FALSE`.
 #' @param fig_dpi Base DPI for figure. Only applicable when Barlow font family (default) is *not* selected.
+#' @param ... Miscellaneous arguments necessary for parameter aliasing, etc.
 #'
 #' @note
 #' If a Google font has not been loaded with the package, `thekids_theme` will load this function on your behalf.

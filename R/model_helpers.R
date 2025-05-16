@@ -34,8 +34,10 @@ thekids_model_output <- function(model, ...) {
 #' @param mod A fitted linear model object of class \code{lm}.
 #' @param by Required. The main predictor of interest. Behaviour will
 #' differ when variable is continuous vs categorical
-#' @param mod_dat The data used to fit the model, passed from thekids_model
 #' @param ... Additional arguments (currently unused).
+#'
+#' @details
+#' Output derived from `mod_dat` which is supplied by `thekids_model`.
 #'
 #' @return A list of model-specific output.
 #'

@@ -44,15 +44,19 @@ for streamlined customization of model outputs.
 For a more thorough example, see the \href{../doc/model_output.html}{vignette}.
 }
 \examples{
-\dontrun{
 # Example 1: Linear model
+\dontrun{
 data(mtcars)
 thekids_model(mtcars, y = "mpg", x = "wt", model = "linear")
+}
 
 # Example 2: Linear model with factor
+\dontrun{
 thekids_model(mtcars \%>\% mutate(cyl = as.factor(cyl)), y = "mpg", x = "cyl", model = "linear")
+}
 
 # Example 3: Quantile regression
+\dontrun{
 library(quantreg)
 data(engel)
 thekids_model(engel, y = "foodexp", x = "income", model = "quantile", tau = 0.5)

@@ -13,13 +13,14 @@
 differ when variable is continuous vs categorical}
 
 \item{...}{Additional arguments (currently unused).}
-
-\item{mod_dat}{The data used to fit the model, passed from thekids_model}
 }
 \value{
 A list of model-specific output.
 }
 \description{
 Internal function to handle the output for objects of class \code{lm}.
+}
+\details{
+Output derived from \code{mod_dat} which is supplied by \code{thekids_model}.
 }
 \keyword{internal}

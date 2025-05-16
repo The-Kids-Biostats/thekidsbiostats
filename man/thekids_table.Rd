@@ -13,6 +13,7 @@ thekids_table(
   colour = "CoolGrey",
   zebra = F,
   highlight = NULL,
+  font_family = "Barlow",
   ...
 )
 }
@@ -33,6 +34,8 @@ thekids_table(
 
 \item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows)}
 
+\item{font_family}{string containing the font family to apply to the table. Default "Barlow", otherwise "sans".}
+
 \item{...}{other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}}
 }
 \value{
@@ -49,8 +52,11 @@ Default settings produce a relatively compact table, to avoid reports becoming e
 The output can be piped (\verb{\%>\%}) into further \code{flextable()} functions for advance customisation of the appearance.
 
 Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think \code{summarise()}), \code{gtsummary()} output, \code{kable()} output, and \code{flextable()} output.
+}
+\note{
+Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running \code{thekids_table()}.
 
-Note: Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running \code{thekids_table()}.
+Font family must be installed at a system level, otherwise the default ("sans") will be applied.
 }
 \examples{
 

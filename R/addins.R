@@ -252,7 +252,7 @@ create_project_addin <- function() {
       tree <- list()
 
       proj_name <- if (nzchar(input$project_name)) input$project_name else "[project-name]"
-      setNames(list(structure(tree, stopened = TRUE)), paste0(proj_name, "/"))
+      stats::setNames(list(structure(tree, stopened = TRUE)), paste0(proj_name, "/"))
 
       # Add folders conditionally
       for (folder in included_folders) {
@@ -260,7 +260,7 @@ create_project_addin <- function() {
           if (input$create_report) {
             report_file <- "report.qmd"
             tree[[paste0(folder, "/")]] <- structure(
-              setNames(list(structure("", sticon = "file")), report_file),
+              stats::setNames(list(structure("", sticon = "file")), report_file),
               stopened = TRUE
             )
           } else {
@@ -272,7 +272,7 @@ create_project_addin <- function() {
       }
 
       # Nest under the main project directory
-      setNames(list(structure(tree, stopened = TRUE)), paste0(input$project_name, "/"))
+      stats::setNames(list(structure(tree, stopened = TRUE)), paste0(input$project_name, "/"))
     })
 
 

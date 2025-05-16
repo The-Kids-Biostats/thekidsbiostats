@@ -10,7 +10,10 @@
 #'
 #' Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think `summarise()`), `gtsummary()` output, `kable()` output, and `flextable()` output.
 #'
-#' Note: Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running `thekids_table()`.
+#' @note
+#' Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running `thekids_table()`.
+#'
+#' Font family must be installed at a system level, otherwise the default ("sans") will be applied.
 #'
 #' @param x a table, typically a data.frame, tibble, or output from gtsummary
 #' @param font.size the font size for text in the body of the table, defaults to 8 (passed throught to set_flextable_defaults)
@@ -20,6 +23,7 @@
 #' @param colour a colour platte from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'
 #' @param zebra puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to `F`)
 #' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows)
+#' @param font_family string containing the font family to apply to the table. Default "Barlow", otherwise "sans".
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}
 #'
 #' @return a flextable class object that will display in both html and word output
@@ -56,7 +60,16 @@ thekids_table <- function(x,
                           colour = "CoolGrey",
                           zebra = F,
                           highlight = NULL,
+                          font_family = "Barlow",
                           ...){
+
+  # Font fallback if font is not available
+  if (requireNamespace("systemfonts", quietly = TRUE)) {
+    matched_font <- systemfonts::match_fonts(font_family)
+    if (is.na(matched_font$path)) font_family <- "sans"
+  } else {
+    font_family <- "sans"
+  }
 
   # Standardise argument aliasing
   call <- match.call()
@@ -73,7 +86,7 @@ thekids_table <- function(x,
       rvest::read_html() %>%
       rvest::html_node("table") %>%
       rvest::html_table(fill = TRUE) %>%
-      as_tibble
+      tidyr::as_tibble
   }
 
   # Checks for issues
@@ -88,7 +101,7 @@ thekids_table <- function(x,
 
   # Determine the number of rows based on the class of x
   n_rows <- if (inherits(x, "tbl_summary")) {
-    nrow(as_tibble(x))
+    nrow(tidyr::as_tibble(x))
   } else if(inherits(x, "flextable")){
     nrow_part(x, part = "header") + nrow_part(x, part = "body") + nrow_part(x, part = "footer")
   } else {
@@ -230,7 +243,7 @@ thekids_table <- function(x,
 
   if(zebra == TRUE){
     set_flextable_defaults(
-      font.family = "Barlow",
+      font.family = font_family,
       font.size = font.size,
       theme_fun = theme_thekids_zebra,
       line_spacing = line.spacing,
@@ -240,7 +253,7 @@ thekids_table <- function(x,
       ...)
   } else if(!is.null(highlight)){
     set_flextable_defaults(
-      font.family = "Barlow",
+      font.family = font_family,
       font.size = font.size,
       theme_fun = theme_thekids_highlight,
       line_spacing = line.spacing,
@@ -250,7 +263,7 @@ thekids_table <- function(x,
       ...)
   } else {
     set_flextable_defaults(
-      font.family = "Barlow",
+      font.family = font_family,
       font.size = font.size,
       theme_fun = theme_thekids_non_zebra,
       line_spacing = line.spacing,
@@ -266,7 +279,7 @@ thekids_table <- function(x,
     table_out <- x
   } else if(any(class(x) %in% c("gtsummary"))){
     table_out <- x %>%
-      as_flex_table()
+      gtsummary::as_flex_table()
   } else if(any(class(x) %in% c("gt_tbl"))){
     table_out <- x %>%
       data.frame %>%
@@ -287,4 +300,3 @@ thekids_table <- function(x,
     hline_bottom() %>%
     autofit()
 }
-

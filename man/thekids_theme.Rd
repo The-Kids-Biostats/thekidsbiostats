@@ -57,6 +57,8 @@ theme_thekids(
 \item{rev_fill}{Logical. Should the fill palette be reversed? Default is \code{FALSE}.}
 
 \item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
+
+\item{...}{Miscellaneous arguments necessary for parameter aliasing, etc.}
 }
 \value{
 A list of ggplot2 theme elements and scale adjustments.
