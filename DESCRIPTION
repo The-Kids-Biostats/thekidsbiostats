@@ -3,7 +3,8 @@ Title: Report Templates and general use functions - The Kids Research Institute 
 Version: 1.0.2
 Authors@R: c(person("Matt", "Cooper", email = "Matt.Cooper@thekids.org.au", role = c("aut", "cre")),
              person("Zac", "Dempsey", email = "Zac.Dempsey@thekids.org.au", role = c("aut")),
-             person("Wesley", "Billingham", email = "Wesley.Billingham@thekids.org.au", role = c("aut")))
+             person("Wesley", "Billingham", email = "Wesley.Billingham@thekids.org.au", role = c("aut")),
+             person("Robin", "Cook", email = "Robin.Cook@thekids.org.au", role = c("aut")))
 Description: This package includes RMarkdown and ioslides templates that incorporate
     the The Kid's style guide and emulate the Institutes Web theme.
     Currently, templates are available to produce stand-alone HTML reports
