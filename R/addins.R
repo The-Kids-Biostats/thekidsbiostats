@@ -366,8 +366,8 @@ create_template_addin <- function() {
 #' RStudio Addin: Insert child Quarto tabset for model output
 #'
 #' This Shiny gadget inserts a `model_name <- "mod"` line and a child chunk to include
-#' a preformatted tabset from an external Quarto file. It also copies the child file
-#' to the same directory as the currently open document.
+#' a preformatted tabset from an external Quarto file. It also optionally previews the
+#' output.
 #'
 #' @return Inserts code into the active RStudio document and copies a child QMD file.
 #' @export
@@ -379,10 +379,48 @@ insert_model_tabset <- function() {
 
     shiny::textInput("modobj", "Model object name", value = "mod"),
 
-    shiny::actionButton("insert", "Insert into document")
+    checkboxInput("preview", "Preview tabset below", value = FALSE),
+
+    actionButton("insert", "Insert into document"),
+    br(), br(),
+
+    conditionalPanel(
+      condition = "input.preview == true",
+      tabsetPanel(
+        tabPanel("Desc stats", tableOutput("desc")),
+        tabPanel("Desc plot", plotOutput("desc_plot")),
+        tabPanel("Model diag", plotOutput("diag_plot")),
+        tabPanel("Model output", tableOutput("mod_output"))
+      )
+    )
   )
 
   server <- function(input, output, session) {
+    # Safe accessor
+    get_mod_component <- function(name) {
+      req(input$modobj)
+      if (!exists(input$modobj, envir = .GlobalEnv)) return(NULL)
+      mod <- get(input$modobj, envir = .GlobalEnv)
+      if (!name %in% names(mod)) return(NULL)
+      mod[[name]]
+    }
+
+    output$desc <- renderTable({
+      get_mod_component("mod_desc")
+    })
+
+    output$desc_plot <- renderPlot({
+      get_mod_component("mod_desc_plot")
+    })
+
+    output$diag_plot <- renderPlot({
+      get_mod_component("mod_diag")
+    })
+
+    output$mod_output <- renderTable({
+      get_mod_component("mod_output")
+    })
+
     shiny::observeEvent(input$insert, {
       model_name_line <- glue::glue('```{{r}}\nmodel_name <- "{input$modobj}"\n```')
       child_chunk <- '{{< include model-tabs-lm.qmd >}}'
@@ -413,6 +451,6 @@ insert_model_tabset <- function() {
     })
   }
 
-  viewer <- shiny::dialogViewer("Insert Model Tabs", width = 500, height = 250)
+  viewer <- shiny::dialogViewer("Insert Model Tabs", width = 700, height = 700)
   shiny::runGadget(shinyApp(ui, server), viewer = viewer)
 }
