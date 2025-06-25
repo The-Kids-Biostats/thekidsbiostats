@@ -143,15 +143,17 @@ table_non_zebra <- function(x, colour) {
 #'
 #' @return A flextable object
 #' @noRd
-table_coerce <- function(x) {
+table_coerce <- function(x, date_fix) {
   if(any(class(x) %in% c("flextable"))){
     table_out <- x
   } else if(any(class(x) %in% c("gtsummary"))){
     table_out <- x %>%
+      date_format(x = ., date_fix = date_fix) %>%
       gtsummary::as_flex_table()
   } else if(any(class(x) %in% c("gt_tbl"))){
     table_out <- x %>%
       data.frame %>%
+      date_format(x = ., date_fix = date_fix) %>%
       flextable::flextable()
   } else if (any(class(x) %in% c("knitr_kable"))){
     if (length(as.character(x)) > 1){
@@ -167,10 +169,38 @@ table_coerce <- function(x) {
       rvest::html_node("table") %>%
       rvest::html_table(fill = TRUE) %>%
       tidyr::as_tibble() %>%
+      date_format(x = ., date_fix = date_fix) %>%
       flextable::flextable()
   } else {
     table_out <- x %>%
+      date_format(x = ., date_fix = date_fix) %>%
       flextable::flextable()
+  }
+}
+
+#' Re-wrap date-like variables to show on one line
+#'
+#' For any "date" object in a dataframe, replace "-" with "\u2011"
+#'
+#' @param x A tibble or dataframe.
+#' @param date_fix Logical denoting whether to reformulate date object or not.
+#'
+#' @return A formatted dataframe
+#' @noRd
+date_format <- function(x, date_fix, rep_char = "\u2011"){
+  if (date_fix == TRUE){
+    if (any(class(x) %in% c("data.frame"))){
+      x %>%
+        dplyr::mutate(dplyr::across(tidyselect::where(~is.character(.) || inherits(., "Date")),
+                                    ~gsub("-", rep_char, as.character(.))))
+    } else if (any(class(x) %in% c("gtsummary"))){
+      x %>%
+        modify_table_body(~dplyr::mutate(.x,
+                                         dplyr::across(dplyr::starts_with("stat_"),
+                                                       ~ gsub("-", rep_char, .x))))
+    }
+  } else if (date_fix == FALSE){
+    x
   }
 }
 
