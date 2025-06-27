@@ -18,6 +18,19 @@ The Kids Research Institute Australia biostats package (`thekidsbiostats`) can b
 ```         
 remotes::install_github("The-Kids-Biostats/thekidsbiostats", build_vignettes = TRUE)
 ```
+
+## Installing fonts
+
+Because the "Barlow" font is utilised by default on many machines, this font must be downloaded, installed, and then registered so R can recognise it. To register the font in R, simply run:
+
+```
+extrafont::font_import()
+```
+
+`thekids_table()` requires the font to be installed at a system level, else a default font family will be applied (sans).
+
+`theme_thekids()` can either call the font from the system (after registration), else a fall-back to install the font (using a Google API) will be called.
+
 # Using the template
 
 To make use of our project structure templates for a new project, follow the following steps:
