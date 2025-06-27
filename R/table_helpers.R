@@ -168,6 +168,7 @@ table_coerce <- function(x, date_fix) {
       rvest::read_html() %>%
       rvest::html_node("table") %>%
       rvest::html_table(fill = TRUE) %>%
+      kable_colnames(.) %>%
       tidyr::as_tibble() %>%
       date_format(x = ., date_fix = date_fix) %>%
       flextable::flextable()
@@ -176,6 +177,42 @@ table_coerce <- function(x, date_fix) {
       date_format(x = ., date_fix = date_fix) %>%
       flextable::flextable()
   }
+}
+
+#' Convert empty column names/rownames to unique column names in `knitr::kable()`
+#'
+#' In `knitr::kable()` tables, any rownames are preserved in the kable.
+#' This returns an empty column name, which cannot be coerced to a tibble_object.
+#'
+#' This function applies unique column names (with a warning) to such cases.
+#'
+#' @param x A partially coerced html_table converted from a `knitr::kable`.
+#'
+#' @return A formatted dataframe
+#' @noRd
+kable_colnames <- function(x, prefix = "col") {
+  if (!is.data.frame(x)) {
+    stop("`fix_empty_colnames()` expects a data frame.")
+  }
+
+  if (is.null(names(x))) {
+    names(x) <- paste0(prefix, seq_len(ncol(x)))
+    warning("All column names were missing and have been replaced with: ",
+            paste(names(x), collapse = ", "))
+  } else if (any(names(x) == "")) {
+    new_names <- names(x)
+    empty_idx <- which(new_names == "")
+    for (i in seq_along(empty_idx)) {
+      col_pos <- empty_idx[i]
+      new_name <- make.unique(c(new_names, paste0(prefix, col_pos)))[length(new_names) + 1]
+      warning(paste0(sprintf("Row names have been detected in column %d and have been renamed to '%s'.", col_pos, new_name),
+                     "\n\nTo silence this warning, please consider applying `tibble::rownames_to_column()` ahead of `knitr::kable()` coersion."))
+      new_names[col_pos] <- new_name
+    }
+    names(x) <- new_names
+  }
+
+  x
 }
 
 #' Re-wrap date-like variables to show on one line
@@ -195,9 +232,9 @@ date_format <- function(x, date_fix, rep_char = "\u2011"){
                                     ~gsub("-", rep_char, as.character(.))))
     } else if (any(class(x) %in% c("gtsummary"))){
       x %>%
-        modify_table_body(~dplyr::mutate(.x,
-                                         dplyr::across(dplyr::starts_with("stat_"),
-                                                       ~ gsub("-", rep_char, .x))))
+        gtsummary::modify_table_body(~dplyr::mutate(.x,
+                                                    dplyr::across(dplyr::starts_with("stat_"),
+                                                                  ~ gsub("-", rep_char, .x))))
     }
   } else if (date_fix == FALSE){
     x

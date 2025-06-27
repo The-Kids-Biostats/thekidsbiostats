@@ -135,7 +135,8 @@ thekids_table <- function(x,
 
   # Coerce x to flextable
   ## amended flextable defaults will be applied within function environment
-  table_out <- table_coerce(x)
+  table_out <- table_coerce(x,
+                            date_fix = date_fix)
 
   table_out <- table_out %>%
     flextable::fontsize(size = font.size.header, part = "header") %>%
