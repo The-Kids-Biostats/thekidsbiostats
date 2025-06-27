@@ -49,6 +49,7 @@ Imports:
     tibble (>= 3.0.1),
     tidyr (>= 1.1.0),
     tidyselect (>= 1.1.0),
+    tinytable (>= 0.8)
 Suggests:
     broom (>= 0.5.6),
     broom.mixed (>= 0.2.6),
@@ -67,7 +68,6 @@ Suggests:
     rmarkdown (>= 2.3),
     rvest (>= 1.0.0),
     testthat (>= 3.0.0),
-    tinytable (>= 0.8),
     withr (>= 2.4.2),
     XML (>= 3.99-0.3)
 VignetteBuilder: knitr
