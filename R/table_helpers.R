@@ -75,7 +75,7 @@ table_zebra <- function(x, colour) {
   table_theme(x,
               header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
               footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("odd" = thekids_palettes$tint50[[colour]], "even" = "transparent"))
+              body_bg   = c("even" = thekids_palettes$tint50[[colour]], "odd" = "transparent"))
 }
 
 
@@ -172,6 +172,19 @@ table_coerce <- function(x) {
     table_out <- x %>%
       flextable::flextable()
   }
+}
+
+
+#' Get number of body rows for various table types
+#'
+#' @param x A table-like object
+#'
+#' @return Number of rows in table body
+#' @noRd
+get_num_body_rows <- function(x) {
+  # first, coerce table to standard flextable
+  x <- table_coerce(x)
+  return(nrow(x$body$dataset))
 }
 
 

@@ -25,8 +25,8 @@
 #' @param colour a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'
 #' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
 #'  if TRUE, alternate each row's background with `colour`;
-#'  if positive integer, alternate row blocks of that size starting from the \strong{first row};
-#'  if negative integer, alternate row blocks of that size starting from the \strong{last row};
+#'  if an integer, alternate row blocks of this size are highlighted;
+#'  if negative, this will invert the sequence of highlighted blocks;
 #'  (defaults to `F`)
 #' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows)
 #' @param font_family string containing the font family to apply to the table. Default "Barlow", otherwise "sans".
@@ -116,13 +116,17 @@ thekids_table <- function(x,
                                       table.layout = "autofit",
                                       ...)
   } else if (is.numeric(zebra) && zebra == as.integer(zebra)) {
-    if (zebra > 0) {
-      highlight = unlist(lapply(seq(1, nrow(x), by = 2 * zebra), function(i) i:min(i + zebra - 1, nrow(x))))
-    } else if (zebra < 0){
-      highlight = unlist(lapply(seq(nrow(x), 1, by = 2 * zebra), function(i) max(i + zebra + 1, 1):i))
-    } else {
+    if (zebra == 0) {
       stop("zebra must be non-zero.")
+    } else {
+      pattern = if (zebra > 0) c(FALSE, TRUE) else c(TRUE, FALSE)
+      n_rows = get_num_body_rows(x)
+      if (abs(zebra) >= n_rows) {
+        warning("The 'zebra' value is greater than or equal to the number of body rows; highlighting may not work as intended.")
+      }
+      highlight = which(rep(rep(pattern, each = abs(zebra)), length.out = n_rows))
     }
+
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
                                       theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight),
