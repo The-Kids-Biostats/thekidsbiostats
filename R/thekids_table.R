@@ -23,7 +23,11 @@
 #' @param line.spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults)
 #' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults)
 #' @param colour a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'
-#' @param zebra puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to `F`)
+#' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
+#'  if TRUE, alternate each row's background with `colour`;
+#'  if positive integer, alternate row blocks of that size starting from the \strong{first row};
+#'  if negative integer, alternate row blocks of that size starting from the \strong{last row};
+#'  (defaults to `F`)
 #' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows)
 #' @param font_family string containing the font family to apply to the table. Default "Barlow", otherwise "sans".
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}
@@ -102,10 +106,26 @@ thekids_table <- function(x,
           add = TRUE)
 
   # NOW set the flextable defaults
-  if (zebra == TRUE){
+  if (isTRUE(zebra)){
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
                                       theme_fun = function(y) table_zebra(y, colour = colour),
+                                      line_spacing = line.spacing,
+                                      padding = padding,
+                                      big.mark = "",
+                                      table.layout = "autofit",
+                                      ...)
+  } else if (is.numeric(zebra) && zebra == as.integer(zebra)) {
+    if (zebra > 0) {
+      highlight = unlist(lapply(seq(1, nrow(x), by = 2 * zebra), function(i) i:min(i + zebra - 1, nrow(x))))
+    } else if (zebra < 0){
+      highlight = unlist(lapply(seq(nrow(x), 1, by = 2 * zebra), function(i) max(i + zebra + 1, 1):i))
+    } else {
+      stop("zebra must be non-zero.")
+    }
+    flextable::set_flextable_defaults(font.family = font_family,
+                                      font.size = font.size,
+                                      theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight),
                                       line_spacing = line.spacing,
                                       padding = padding,
                                       big.mark = "",
