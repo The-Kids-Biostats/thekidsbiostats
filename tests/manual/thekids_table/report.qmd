@@ -348,7 +348,106 @@ dat %>%
                 padding.bottom = 10)
 ```
 
-# e) Check all supported table classes function as expected
+# e) Check date parsing
+
+Simulate some date data:
+
+```{r}
+#| code-fold: false
+set.seed(123)
+
+dat2 <- tibble(row = 1:10) %>%
+  select(-row) %>%
+  bind_cols(
+    map_dfc(1:15, ~ tibble(!!paste0("date", .x) := 
+      as.Date("2020-01-01") + sample(0:1825, 10, replace = TRUE)))
+  ) %>%
+  mutate(strata = sample(1:5, n(), replace = TRUE),
+         .before = 1)
+```
+
+## 1) Dataframes
+
+Now, see how our package handles this:
+
+```{r}
+#| code-fold: false
+dat2 %>%
+  thekids_table(date_fix = F)
+```
+::: column-margin
+All staggered over 2 lines---ugly!
+:::
+
+Now, setting `date_fix=T` (default):
+
+```{r}
+#| code-fold: false
+
+dat2 %>%
+  thekids_table(date_fix = TRUE)
+```
+::: column-margin
+Nice!
+:::
+
+## 2) `tbl_summary`
+
+Stratifying by `strata` with `date_fix=F`:
+
+```{r}
+#| code-fold: false
+dat2 %>%
+  select(1:5) %>%
+  tbl_summary(by = strata,
+              statistic = all_continuous() ~ "{mean} ({min}, {max})") %>%
+  thekids_table(date_fix = F)
+```
+
+Stratifying by `strata` with `date_fix=T`:
+
+```{r}
+#| code-fold: false
+dat2 %>%
+  select(1:5) %>%
+  tbl_summary(by = strata,
+              statistic = all_continuous() ~ "{mean} ({min}, {max})") %>%
+  thekids_table(date_fix = T)
+```
+::: column-margin
+Better! There is no splitting within a date.
+:::
+
+## 3) `tbl_strata`
+
+With `date_fix=F`:
+
+```{r}
+dat2 %>%
+  pivot_longer(date1:date3, names_to = 'type', values_to = 'date') %>%
+  select(strata, type, date) %>%
+  tbl_strata(strata = strata,
+             .tbl_fun = ~.x %>%
+               tbl_summary(by = type,
+                           statistic = all_continuous() ~ "{mean} ({min}, {max})")) %>%
+  thekids_table(date_fix = F)
+```
+
+With `date_fix=T`:
+
+```{r}
+dat2 %>%
+  pivot_longer(date1:date3, names_to = 'type', values_to = 'date') %>%
+  select(strata, type, date) %>%
+  tbl_strata(strata = strata,
+             .tbl_fun = ~.x %>%
+               tbl_summary(by = type,
+                           statistic = all_continuous() ~ "{mean} ({min}, {max})")) %>%
+  thekids_table(date_fix = T)
+```
+
+
+# f) Check all supported table classes function as expected
 
 ## 1) `gtsummary`
 
@@ -419,13 +518,14 @@ tbl_stack(tbls = list(tab1, tab2)) %>%
 
 ## 2) `kable`
 
+We muist ensure the "rowname to column" functionality works.
+
 ### 2.1) `kable`
 
-```{r}
+```{r warning=TRUE}
 #| code-fold: false
 
 dat %>%
-  rownames_to_column() %>%
   knitr::kable(format = "html") %>%
   thekids_table()
 ```
@@ -434,11 +534,10 @@ dat %>%
 
 Should work irrespective of whether `format="html"` is specified or not.
 
-```{r}
+```{r warning=TRUE}
 #| code-fold: false
 
 dat %>%
-  rownames_to_column() %>%
   knitr::kable(format = "html") %>%
   kableExtra::kable_styling() %>%
   thekids_table()
@@ -448,9 +547,8 @@ dat %>%
 #| code-fold: false
 
 dat %>%
-  rownames_to_column() %>%
   knitr::kable() %>%
-  kableExtra::kable_styling() %>%
+  kableExtra::kable_styling()# %>%
   thekids_table()
 ```
 
