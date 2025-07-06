@@ -30,7 +30,11 @@ thekids_table(
 
 \item{colour}{a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'}
 
-\item{zebra}{puts and alternating 'colour then white' theming onto the table, based on the selected colouring (defaults to \code{F})}
+\item{zebra}{controls alternating highlighting of rows, logical or integer (defaults to \code{F});
+if TRUE, alternate each row's background with \code{colour};
+if an integer, alternate row blocks of this size are highlighted;
+if negative, this will invert the sequence of highlighted blocks;
+(defaults to \code{F})}
 
 \item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows)}
 
@@ -51,7 +55,7 @@ Default settings produce a relatively compact table, to avoid reports becoming e
 
 The output can be piped (\verb{\%>\%}) into further \code{flextable()} functions for advance customisation of the appearance.
 
-Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think \code{summarise()}), \code{gtsummary()} outputs. \code{kable()} output is not currently supported in general.
+Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think \code{summarise()}), \code{gtsummary}, and \code{kable} outputs.
 }
 \note{
 Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running \code{thekids_table()}.
