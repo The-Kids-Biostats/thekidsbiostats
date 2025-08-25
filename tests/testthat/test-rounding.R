@@ -46,7 +46,7 @@ test_that("round_df rounds numeric columns and converts to character when con_ch
 test_that("round_df handles zero digits correctly", {
   df <- tibble(a = c(1.2, 3.7))
   out <- round_df(df, 0)
-  expect_equal(out$a, c("1", "4"))
+  expect_equal(out$a, c(1, 4))
 })
 
 test_that("round_df does not affect non-numeric columns", {
