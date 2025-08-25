@@ -227,7 +227,7 @@ create_project_addin <- function() {
           #shiny::actionButton("browse_report_dir", "Folder to store report"),
           shiny::textOutput("selected_report_dir"),
           shiny::br(),
-          shiny::actionLink("toggle_advanced", "▶ Modify Report Header"),
+          shiny::actionLink("toggle_advanced", "\u25B6 Modify Report Header"),
 
           # Advanced options (initially hidden)
           shiny::div(
@@ -433,10 +433,10 @@ create_project_addin <- function() {
 
       # Toggle visibility
       if (show_advanced()) {
-        shiny::updateActionLink(session, "toggle_advanced", label = "▼ Modify Report Header")
+        shiny::updateActionLink(session, "toggle_advanced", label = "\u25BC Modify Report Header")
         shinyjs::show("advanced_ui")
       } else {
-        shiny::updateActionLink(session, "toggle_advanced", label = "▶ Modify Report Header")
+        shiny::updateActionLink(session, "toggle_advanced", label = "\u25B6 Modify Report Header")
         shinyjs::hide("advanced_ui")
       }
 
@@ -534,10 +534,10 @@ create_project_addin <- function() {
           #open_file = FALSE  # Already handled by create_project()
         )
 
-        output$status <- shiny::renderText("✅ Project created successfully.")
+        output$status <- shiny::renderText("\U00002705 Project created successfully.")
 
         shiny::showModal(shiny::modalDialog(
-          title = "✅ Project Successfully Created",
+          title = "\U00002705 Project Successfully Created",
           "Would you like to open the project now?",
           footer = shiny::tagList(
             shiny::actionButton("cancel_open", "Close", class = "btn btn-danger"),
@@ -547,7 +547,7 @@ create_project_addin <- function() {
 
       }, error = function(e) {
         shiny::showModal(shiny::modalDialog("Error", e$message, easyClose = TRUE))
-        output$status <- shiny::renderText("🛑 Project creation failed!")
+        output$status <- shiny::renderText("\U0001F6D1 Project creation failed!")
       })
 
     })
@@ -590,7 +590,7 @@ create_project_addin <- function() {
       if (file.exists(rproj_file) && rstudioapi::isAvailable()) {
         rstudioapi::openProject(path = rproj_file, newSession = TRUE)
       } else {
-        output$status <- shiny::renderText("⚠️ Could not open project (file missing or RStudio API unavailable).")
+        output$status <- shiny::renderText("\u26A0\uFE0F Could not open project (file missing or RStudio API unavailable).")
       }
 
       shiny::stopApp()
@@ -655,7 +655,7 @@ create_template_addin <- function() {
         shiny::actionButton("browse", "Select Folder"),
         shiny::textOutput("selected_dir"),
         shiny::br(),
-        shiny::actionLink("toggle_advanced", "▶ Modify Report Header"),
+        shiny::actionLink("toggle_advanced", "\u25B6 Modify Report Header"),
 
         # Advanced options (initially hidden)
         shiny::div(
@@ -814,10 +814,10 @@ create_template_addin <- function() {
 
       # Toggle visibility
       if (show_advanced()) {
-        shiny::updateActionLink(session, "toggle_advanced", label = "▼ Modify Report Header")
+        shiny::updateActionLink(session, "toggle_advanced", label = "\u25BC Modify Report Header")
         shinyjs::show("advanced_ui")
       } else {
-        shiny::updateActionLink(session, "toggle_advanced", label = "▶ Modify Report Header")
+        shiny::updateActionLink(session, "toggle_advanced", label = "\u25B6 Modify Report Header")
         shinyjs::hide("advanced_ui")
       }
 
@@ -832,7 +832,7 @@ create_template_addin <- function() {
       qmd_file <- file.path(output_path(), paste0(file_name, '.qmd'))
 
       if (file.exists(qmd_file)) {
-        output$status <- shiny::renderText(paste0("⚠️ Report file '", qmd_file, "' already exists. Skipping creation."))
+        output$status <- shiny::renderText(paste0("\u26A0\uFE0F Report file '", qmd_file, "' already exists. Skipping creation."))
       } else {
         tryCatch({
           create_template(
@@ -890,7 +890,7 @@ create_template_addin <- function() {
       qmd_file <- file.path(output_path(), paste0(file_name, '.qmd'))
 
       if (file.exists(qmd_file) && rstudioapi::isAvailable()) {
-        output$status <- shiny::renderText("📂 Opening template file.")
+        output$status <- shiny::renderText("\U0001F4C2 Opening template file.")
         rstudioapi::navigateToFile(qmd_file)
       }
 

@@ -73,9 +73,9 @@ table_theme <- function(x,
 #' @noRd
 table_zebra <- function(x, colour) {
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("even" = thekids_palettes$tint50[[colour]], "odd" = "transparent"))
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              body_bg   = c("even" = thekidsbiostats::thekids_palettes$tint50[[colour]], "odd" = "transparent"))
 }
 
 
@@ -111,9 +111,9 @@ table_highlight <- function(x, colour, highlight) {
   }
 
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("highlight" = thekids_palettes$tint50[[colour]], "other" = "transparent"),
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              body_bg   = c("highlight" = thekidsbiostats::thekids_palettes$tint50[[colour]], "other" = "transparent"),
               highlight = highlight)
 }
 
@@ -129,8 +129,8 @@ table_highlight <- function(x, colour, highlight) {
 #' @noRd
 table_non_zebra <- function(x, colour) {
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
               body_bg   = c("odd" = "transparent", "even" = "transparent"))
 }
 
@@ -148,12 +148,12 @@ table_coerce <- function(x, date_fix) {
     table_out <- x
   } else if(any(class(x) %in% c("gtsummary"))){
     table_out <- x %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       gtsummary::as_flex_table()
   } else if(any(class(x) %in% c("gt_tbl"))){
     table_out <- x %>%
       data.frame %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   } else if (any(class(x) %in% c("knitr_kable"))){
     if (length(as.character(x)) > 1){
@@ -168,13 +168,13 @@ table_coerce <- function(x, date_fix) {
       rvest::read_html() %>%
       rvest::html_node("table") %>%
       rvest::html_table(fill = TRUE) %>%
-      kable_colnames(.) %>%
+      kable_colnames() %>%
       tidyr::as_tibble() %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   } else {
     table_out <- x %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   }
 }

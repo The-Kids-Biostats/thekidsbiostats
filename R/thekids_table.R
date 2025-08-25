@@ -83,9 +83,9 @@ thekids_table <- function(x,
   }
 
   # Check colours are available
-  if (!colour %in% names(thekids_palettes$primary)) {
+  if (!colour %in% names(thekidsbiostats::thekids_palettes$primary)) {
     stop(sprintf("Invalid colour. Choose from: %s",
-                 paste(shQuote(names(thekids_palettes$primary)), collapse = ", ")))
+                 paste(shQuote(names(thekidsbiostats::thekids_palettes$primary)), collapse = ", ")))
   }
 
   # Check zebra vs highlight

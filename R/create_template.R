@@ -31,13 +31,13 @@ create_template <- function(file_name = NULL,
   valid_ext <- list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats"))
   stopifnot("Extension not in package" = ext_name %in% valid_ext)
 
-  message("📦 Using template extension: ", ext_name)
+  message("\U0001F4E6 Using template extension: ", ext_name)
 
   extfolder <- file.path(directory, "_extensions")
   dir.create(extfolder, showWarnings = FALSE)
   dir.create(file.path(extfolder, ext_name), showWarnings = FALSE)
 
-  message("📁 _extensions folder created: ", extfolder)
+  message("\U0001F4C1 _extensions folder created: ", extfolder)
 
   file.copy(
     from = system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats"),
@@ -46,12 +46,12 @@ create_template <- function(file_name = NULL,
     recursive = TRUE,
     copy.mode = TRUE
   )
-  message("📄 Template extension files copied to: ", file.path(extfolder, ext_name))
+  message("\U0001F4C4 Template extension files copied to: ", file.path(extfolder, ext_name))
 
   qmd_file <- file.path(directory, ifelse(endsWith(file_name, ".qmd"), file_name, paste0(file_name, ".qmd")))
 
   if (file.exists(qmd_file)) {
-    warning("⚠️ Report file already exists: ", qmd_file, ". Skipping creation.")
+    warning("\u26A0\uFE0F Report file already exists: ", qmd_file, ". Skipping creation.")
     return(invisible(NULL))
   }
 
@@ -67,10 +67,10 @@ create_template <- function(file_name = NULL,
 
   writeLines(qmd_lines, qmd_file)
 
-  message("📝 Report template created: ", qmd_file)
+  message("\U0001F4DD Report template created: ", qmd_file)
 
   if (open_file && rstudioapi::isAvailable()) {
-    message("📂 Opening report: ", qmd_file)
+    message("\U0001F4C2 Opening report: ", qmd_file)
     rstudioapi::navigateToFile(qmd_file)
   }
 

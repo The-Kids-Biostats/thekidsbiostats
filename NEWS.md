@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.3.1
+
+* Resolved non-ASCII characters in addins, create_project, create_template, model_helpers
+* Fixed thekids_model warnings, update DESCRIPTION
+* Fixed bug in round_df()
+* Fixed global binding variables model_helpers, thekids_showpalettes, thekids_table, table_helpers
+* Update release.yml
+
+
 # thekidsbiostats 1.3.0
 
 * Quality-of-life updates to create_template_addin()

@@ -32,18 +32,18 @@ create_project <- function(project_name,
 
   proj_dir <- file.path(path, project_name)
   dir.create(proj_dir, recursive = TRUE, showWarnings = FALSE)
-  message("📁 Project directory created: ", proj_dir)
+  message("\U0001F4C1 Project directory created: ", proj_dir)
 
   for (folder in folders) {
     subdir <- file.path(proj_dir, folder)
     dir.create(subdir, showWarnings = FALSE)
-    message("📂 Folder created: ", folder)
+    message("\U0001F4C2 Folder created: ", folder)
   }
 
   rproj_file <- file.path(proj_dir, paste0(project_name, ".Rproj"))
   if (create_rproj) {
     writeLines("Version: 1.0", con = rproj_file)
-    message("📄 .Rproj file created: ", basename(rproj_file))
+    message("\U0001F4C4 .Rproj file created: ", basename(rproj_file))
   }
 
   qmd_file <- NULL
@@ -51,7 +51,7 @@ create_project <- function(project_name,
     report_dir <- file.path(proj_dir, "reports")
     if (!dir.exists(report_dir)) {
       dir.create(report_dir)
-      message("📂 Report folder created: reports/")
+      message("\U0001F4C2 Report folder created: reports/")
     }
     qmd_file <- create_template(
       directory = report_dir,
@@ -62,7 +62,7 @@ create_project <- function(project_name,
   }
 
   if (open_project && file.exists(rproj_file) && rstudioapi::isAvailable()) {
-    message("🚀 Opening project in new RStudio session...")
+    message("\U0001F680 Opening project in new RStudio session...")
     rstudioapi::openProject(path = rproj_file, newSession = TRUE)
 
     if (!is.null(qmd_file) && file.exists(qmd_file)) {
@@ -70,6 +70,6 @@ create_project <- function(project_name,
     }
   }
 
-  message("✅ Project setup complete!")
+  message("\U00002705 Project setup complete!")
   invisible(proj_dir)
 }

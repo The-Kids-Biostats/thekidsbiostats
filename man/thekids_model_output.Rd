@@ -4,10 +4,14 @@
 \alias{thekids_model_output}
 \title{Generate Model Output for Specified Model Type}
 \usage{
-thekids_model_output(model, ...)
+thekids_model_output(model, by = NULL, data = NULL, ...)
 }
 \arguments{
 \item{model}{A fitted model object produced by \code{thekids_model} or another modeling function.}
+
+\item{by}{The main predictor of interest.}
+
+\item{data}{A data frame containing the variables to be used in the model.}
 
 \item{...}{Additional arguments passed to the output method for the specific model type.}
 }
@@ -25,7 +29,7 @@ output method based on the class of the model object. The actual behavior
 is determined by the specific method implementation for the model type.
 }
 \examples{
-# Assuming `mod` is a fitted model object
-# thekids_model_output(mod)
+# Assuming `model` is a fitted model object
+# thekids_model_output(model)
 
 }

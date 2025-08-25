@@ -4,10 +4,10 @@
 \alias{thekids_model_output.negbin}
 \title{Handle Output for Negative Binomial Models}
 \usage{
-\method{thekids_model_output}{negbin}(mod, ...)
+\method{thekids_model_output}{negbin}(model, ...)
 }
 \arguments{
-\item{mod}{A fitted negative binomial model object of class \code{negbin}.}
+\item{model}{A fitted negative binomial model object of class \code{negbin}.}
 
 \item{...}{Additional arguments (currently unused).}
 }

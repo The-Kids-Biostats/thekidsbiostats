@@ -4,10 +4,10 @@
 \alias{thekids_model_output.lm}
 \title{Handle output for Linear Models}
 \usage{
-\method{thekids_model_output}{lm}(mod, by, data = NULL, ...)
+\method{thekids_model_output}{lm}(model, by, data = NULL, ...)
 }
 \arguments{
-\item{mod}{A fitted linear model object of class \code{lm}.}
+\item{model}{A fitted linear model object of class \code{lm}.}
 
 \item{by}{Required. The main predictor of interest. Behaviour will
 differ when variable is continuous vs categorical}

@@ -136,13 +136,13 @@ mod_bwt$mod_output %>%
 The figure and table below show the predicted values (also known as the *estimated marginal mean*) for the outcome variable (infant birth weight) for each level of the exposure of interest (i.e., *no maternal smoking in pregnancy* or *maternal smoking in pregnancy*), along with a 95% confidence interval. Note, see table footnote for the values used for the other variables in the model.
 
 ```{r echo=TRUE, fig.height=4.5, fig.width=5, fig.align='center'}
-mod_bwt$mod %>% 
+mod_bwt$model %>% 
   ggeffects::predict_response("smoke") %>% 
   plot
 ```
 
 ```{r echo=TRUE}
-mod_bwt$mod %>% 
+mod_bwt$model %>% 
   ggeffects::predict_response("smoke") %>% 
   ggeffects::print_html()
 ```
@@ -151,4 +151,4 @@ mod_bwt$mod %>%
 For the example given above:
 
 -   There is evidence to suggest that smoking during pregnancy is associated with reduced birth weight.
--   Maternal smoking during pregnancy is associated with a `r round(coef(mod_bwt$mod)[2],2)`g lower birth weight (95% CI: `r round(confint(mod_bwt$mod)[2,1],1)`,`r round(confint(mod_bwt$mod)[2,2],1)`).
+-   Maternal smoking during pregnancy is associated with a `r round(coef(mod_bwt$model)[2],2)`g lower birth weight (95% CI: `r round(confint(mod_bwt$model)[2,1],1)`,`r round(confint(mod_bwt$model)[2,2],1)`).
