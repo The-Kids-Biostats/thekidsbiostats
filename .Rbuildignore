@@ -4,3 +4,6 @@
 ^Meta$
 ^LICENSE\.md$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
