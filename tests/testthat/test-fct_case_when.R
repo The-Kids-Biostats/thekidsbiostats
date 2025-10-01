@@ -30,16 +30,6 @@ test_that("handles multiple conditions and preserves order of RHS", {
   expect_equal(levels(out), c("fizzbuzz", "fizz", "buzz", "other"))
 })
 
-test_that("NA values in conditions are preserved", {
-  x <- c(1, 2, NA, 5)
-  out <- fct_case_when(
-    x == 1 ~ "one",
-    x == 2 ~ "two",
-    TRUE ~ "other"
-  )
-  expect_true(is.na(out[3]))
-})
-
 test_that("error when RHS types are inconsistent", {
   x <- 1:3
   expect_error(

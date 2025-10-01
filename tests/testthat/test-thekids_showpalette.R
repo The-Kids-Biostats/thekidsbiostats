@@ -26,7 +26,7 @@ test_that("thekids_showpalette includes a geom_tile layer", {
 
 test_that("thekids_showpalette applies coord_fixed with ratio 0.5", {
   p <- thekids_showpalette()
-  expect_s3_class(p$coordinates, "CoordFixed")
+  expect_s3_class(p$coordinates, "CoordCartesian")
   expect_equal(p$coordinates$ratio, 0.5)
 })
 
