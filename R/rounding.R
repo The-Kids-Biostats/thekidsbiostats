@@ -20,10 +20,7 @@
 #' @export
 
 round_vec <- function(x, digits = 2){
-  out <- ifelse(is.na(x),
-                NA_character_,
-                trimws(format(round(x, digits), nsmall = digits)))
-  return(out)
+  trimws(format(round(x, digits), nsmall = digits))
 }
 
 
