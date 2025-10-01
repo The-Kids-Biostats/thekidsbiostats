@@ -5,6 +5,7 @@
 ![R-CMD-check](https://github.com/The-Kids-Biostats/thekidsbiostats/actions/workflows/R-CMD-check.yaml/badge.svg)
 [![Codecov test coverage](https://codecov.io/gh/The-Kids-Biostats/thekidsbiostats/graph/badge.svg)](https://app.codecov.io/gh/The-Kids-Biostats/thekidsbiostats)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17240567.svg)](https://doi.org/10.5281/zenodo.17240567)
 
 Package with helper functions and formatting templates used by the Biostatistics team of The Kids Research Institute Australia.
 
