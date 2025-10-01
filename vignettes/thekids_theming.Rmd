@@ -44,7 +44,7 @@ bind_rows(thekids_palettes, .id = "Category") %>%
   geom_tile(width = 0.45, height = 0.9) +  # Reduce width more than height to increase horizontal spacing
   labs(x = NULL, y = NULL, title = "The Kids Palette") +
   thekids_theme(base_size = 14) +
-  scale_fill_identity() +  # Use exact hex colors
+  scale_fill_identity() +  # Use exact hex colours
   scale_x_discrete(position = "top") +
   theme(
     axis.text.x = element_text(face = "bold"),  # Bold column headers

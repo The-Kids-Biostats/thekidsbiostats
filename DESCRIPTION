@@ -1,5 +1,5 @@
 Package: thekidsbiostats
-Title: Report Templates and general use functions - The Kids Research Institute Australia, Biostatitics Team
+Title: Report Templates and general use functions - The Kids Research Institute Australia, Biostatistics Team
 Version: 1.3.1
 Authors@R: c(person("Matt", "Cooper", email = "Matt.Cooper@thekids.org.au", role = c("aut", "cre")),
              person("Zac", "Dempsey", email = "Zac.Dempsey@thekids.org.au", role = c("aut")),
@@ -72,9 +72,11 @@ Suggests:
     testthat (>= 3.0.0),
     tinytable (>= 0.8),
     withr (>= 2.4.2),
-    XML (>= 3.99-0.3)
+    XML (>= 3.99-0.3),
+    spelling
 VignetteBuilder: knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Config/testthat/edition: 3
+Language: en-GB

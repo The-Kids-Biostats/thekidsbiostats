@@ -27,7 +27,7 @@ clean_REDCap(
 cleaned data frame
 }
 \description{
-Clean a REDCap extract by applyly factor levels and convert column classes
+Clean a REDCap extract by applying factor levels and convert column classes
 per the REDCap data dictionary.
 }
 \examples{

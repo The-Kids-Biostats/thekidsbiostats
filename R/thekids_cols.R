@@ -1,4 +1,4 @@
-#' @title Function to extract The Kids colors as hex codes
+#' @title Function to extract The Kids colours as hex codes
 #'
 #' @param ... Character names of thekids_colours
 #'

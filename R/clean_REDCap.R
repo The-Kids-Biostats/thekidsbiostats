@@ -276,7 +276,7 @@ variable_labels <- function(d, dict) {
 #'
 #' @param d a data frame object
 #'
-#' @return a character vector of colulumn that are factors with levels: `c("Yes", "No")`
+#' @return a character vector of columns that are factors with levels: `c("Yes", "No")`
 #'
 #' @importFrom purrr map_lgl
 #'
@@ -308,7 +308,7 @@ yesno_vars <- function(d) {
 
 #' clean_REDCap
 #'
-#' Clean a REDCap extract by applyly factor levels and convert column classes
+#' Clean a REDCap extract by applying factor levels and convert column classes
 #' per the REDCap data dictionary.
 #'
 #' @param d REDCap (data frame)

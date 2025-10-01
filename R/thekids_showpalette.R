@@ -19,7 +19,7 @@ thekids_showpalette <- function() {
     ggplot2::geom_tile(width = 0.45, height = 0.9) +  # Reduce width more than height to increase horizontal spacing
     ggplot2::labs(x = NULL, y = NULL, title = "The Kids Palette") +
     thekids_theme(base_size = 14) +
-    ggplot2::scale_fill_identity() +  # Use exact hex colors
+    ggplot2::scale_fill_identity() +  # Use exact hex colours
     ggplot2::scale_x_discrete(position = "top") +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(face = "bold"),  # Bold column headers

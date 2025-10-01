@@ -10,7 +10,7 @@ yesno_vars(d)
 \item{d}{a data frame object}
 }
 \value{
-a character vector of colulumn that are factors with levels: \code{c("Yes", "No")}
+a character vector of columns that are factors with levels: \code{c("Yes", "No")}
 }
 \description{
 yesno_vars
