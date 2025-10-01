@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.4.1
+
+* Updated DESCRIPTION with pkgdown site url.
+* Updated README with R-universe badges.
+
+
 # thekidsbiostats 1.4.0
 
 * Established unit testing using testthat.
