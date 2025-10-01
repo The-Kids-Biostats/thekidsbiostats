@@ -1,5 +1,7 @@
 # thekidsbiostats
 
+[![name status badge](https://the-kids-biostats.r-universe.dev/badges/:name)](https://the-kids-biostats.r-universe.dev/)
+[![thekidsbiostats status badge](https://the-kids-biostats.r-universe.dev/thekidsbiostats/badges/version)](https://the-kids-biostats.r-universe.dev/thekidsbiostats)
 ![R-CMD-check](https://github.com/The-Kids-Biostats/thekidsbiostats/actions/workflows/R-CMD-check.yaml/badge.svg)
 [![Codecov test coverage](https://codecov.io/gh/The-Kids-Biostats/thekidsbiostats/graph/badge.svg)](https://app.codecov.io/gh/The-Kids-Biostats/thekidsbiostats)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
