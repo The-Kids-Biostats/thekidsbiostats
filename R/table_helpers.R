@@ -93,6 +93,12 @@ table_highlight <- function(x, colour, highlight) {
   # x must already be converted to a flextable
   stopifnot(inherits(x, "flextable"))
 
+  # Check colours are available
+  if (!colour %in% names(thekids_palettes$primary)) {
+    stop(sprintf("Invalid colour. Choose from: %s",
+                 paste(shQuote(names(thekids_palettes$primary)), collapse = ", ")))
+  }
+
   # Ensure the highlight value is in integer
   if (!is.null(highlight)) {
     if (!is.numeric(highlight) || any(highlight <= 0) || any(highlight != floor(highlight))) {
