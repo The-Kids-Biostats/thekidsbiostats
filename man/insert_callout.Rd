@@ -11,7 +11,7 @@ A Shiny application that runs within RStudio.
 }
 \description{
 Launches a Shiny app as an RStudio addin to insert a Quarto callout at the cursor position.
-The user selects a callout type from a dropdown, sees a preview color, and inserts formatted
+The user selects a callout type from a dropdown, sees a preview colour, and inserts formatted
 callout text into the current script.
 }
 \examples{

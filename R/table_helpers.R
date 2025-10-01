@@ -4,9 +4,9 @@
 #' with optional row highlighting.
 #'
 #' @param x A flextable object
-#' @param header_bg Named vector of background colors for header rows (`odd`, `even`)
-#' @param footer_bg Named vector of background colors for footer rows (`odd`, `even`)
-#' @param body_bg Named vector of background colors for body rows (`odd`, `even` or `highlight`, `other`)
+#' @param header_bg Named vector of background colours for header rows (`odd`, `even`)
+#' @param footer_bg Named vector of background colours for footer rows (`odd`, `even`)
+#' @param body_bg Named vector of background colours for body rows (`odd`, `even` or `highlight`, `other`)
 #' @param highlight Optional integer vector of row indices to highlight
 #'
 #' @return A styled flextable object
@@ -64,7 +64,7 @@ table_theme <- function(x,
 
 #' Zebra-themed table styling
 #'
-#' Applies alternating body striping to a flextable with Kids palette colors.
+#' Applies alternating body striping to a flextable with Kids palette colours.
 #'
 #' @param x A flextable object
 #' @param colour A valid colour name from `thekids_palettes$primary`

@@ -1,5 +1,15 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.3.3
+
+* Resolved small bug in `round_vec` with handling of NA values.
+
+
+# thekidsbiostats 1.3.2
+
+* Resolved minor spelling mistakes.
+
+
 # thekidsbiostats 1.3.1
 
 * Resolved non-ASCII characters in addins, create_project, create_template, model_helpers

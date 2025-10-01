@@ -13,7 +13,7 @@
 #'
 #' @details
 #' This function acts as a wrapper, delegating the call to the appropriate
-#' output method based on the class of the model object. The actual behavior
+#' output method based on the class of the model object. The actual behaviour
 #' is determined by the specific method implementation for the model type.
 #'
 #' @import patchwork
