@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.4.0
+
+* Established unit testing using testthat.
+* Added code coverage badge to README.
+* Established pkgdown site for package.
+
+
 # thekidsbiostats 1.3.3
 
 * Resolved small bug in `round_vec` with handling of NA values.
