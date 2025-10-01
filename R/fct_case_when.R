@@ -6,7 +6,7 @@
 #'
 #' <dynamic-dots> A sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value.
 #'
-#' The LHS must evaluate to a logical vector. The RHS does not need to be logical, but all RHSs must evaluate to the same type of vector.
+#' The LHS must evaluate to a logical vector. The RHS does not need to be logical, but all RHS must evaluate to the same type of vector.
 #'
 #' Both LHS and RHS may have the same length of either 1 or n. The value of n must be consistent across all cases. The case of n == 0 is treated as a variant of n != 1.
 #'

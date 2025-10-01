@@ -1,6 +1,6 @@
-#' @title Fill scale constructor for The Kids colors.
+#' @title Fill scale constructor for The Kids colours.
 #'
-#' @param palette Character name of palette in tehkids_palettes. Options are "primary", "tint50" and "typography"
+#' @param palette Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"
 #' @param discrete Boolean indicating whether color aesthetic is discrete or not
 #' @param reverse Boolean indicating whether the palette should be reversed
 #' @param ... Additional arguments passed to discrete_scale() or

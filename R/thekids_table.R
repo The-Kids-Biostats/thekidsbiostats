@@ -18,10 +18,10 @@
 #' Pre-specified formatting applied to 'flextable' objects (ahead of `thekids_table()`) may not carry over as expected. Please consider using `thekids_table() `in place of an explicit `flextable()` call, because our function already coerces the table to a flextable object.
 #'
 #' @param x a table, typically a data.frame, tibble, or output from gtsummary.
-#' @param font.size the font size for text in the body of the table, defaults to 8 (passed throught to set_flextable_defaults).
+#' @param font.size the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).
 #' @param font.size.header the font size for text in the header of the table, defaults to 10.
 #' @param line.spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).
-#' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults).
+#' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).
 #' @param colour a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.
 #' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
 #'  if TRUE, alternate each row's background with `colour`;

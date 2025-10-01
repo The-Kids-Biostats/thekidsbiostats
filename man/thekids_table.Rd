@@ -21,13 +21,13 @@ thekids_table(
 \arguments{
 \item{x}{a table, typically a data.frame, tibble, or output from gtsummary.}
 
-\item{font.size}{the font size for text in the body of the table, defaults to 8 (passed throught to set_flextable_defaults).}
+\item{font.size}{the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).}
 
 \item{font.size.header}{the font size for text in the header of the table, defaults to 10.}
 
 \item{line.spacing}{line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).}
 
-\item{padding}{padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults).}
+\item{padding}{padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).}
 
 \item{colour}{a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.}
 

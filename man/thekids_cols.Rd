@@ -2,7 +2,7 @@
 % Please edit documentation in R/thekids_cols.R
 \name{thekids_cols}
 \alias{thekids_cols}
-\title{Function to extract The Kids colors as hex codes}
+\title{Function to extract The Kids colours as hex codes}
 \usage{
 thekids_cols(...)
 }
@@ -10,5 +10,5 @@ thekids_cols(...)
 \item{...}{Character names of thekids_colours}
 }
 \description{
-Function to extract The Kids colors as hex codes
+Function to extract The Kids colours as hex codes
 }
