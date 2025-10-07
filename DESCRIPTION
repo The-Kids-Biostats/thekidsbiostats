@@ -17,12 +17,12 @@ License: MIT + file LICENSE
 LazyData: true
 Depends:
     R (>= 4.3),
-    extrafont (>= 0.1),
     tidyverse (>= 2.0.0),
     gtsummary (>= 2.0),
     flextable (>= 0.9)
 Imports:
     dplyr (>= 1.1.0),
+    extrafont (>= 0.1),
     fs (>= 1.6),
     ggfortify,
     ggplot2 (>= 3.4.0),
