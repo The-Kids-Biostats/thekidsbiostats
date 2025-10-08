@@ -1,4 +1,7 @@
 url: https://the-kids-biostats.github.io/thekidsbiostats/
 template:
   bootstrap: 5
-
+navbar:
+  right:
+    - text: "Blog"
+      href: "https://the-kids-biostats.github.io/"
