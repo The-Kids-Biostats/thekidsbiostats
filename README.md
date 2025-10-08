@@ -19,12 +19,12 @@ https://fonts.google.com/specimen/Barlow+Semi+Condensed
 
 The Kids Research Institute Australia biostats package can be installed from the R-universe with the following:
 ```
-install.packages("thekidsbiostats", repos = "https://the-kids-biostats.r-universe.dev")
+install.packages("thekidsbiostats", repos = "https://the-kids-biostats.r-universe.dev", dependencies = TRUE)
 ```
 
 Alternatively, the package can be installed via `remotes`:
 ```         
-remotes::install_github("The-Kids-Biostats/thekidsbiostats", build_vignettes = TRUE)
+remotes::install_github("The-Kids-Biostats/thekidsbiostats", build_vignettes = TRUE, dependencies = TRUE)
 ```
 
 ## Installing fonts

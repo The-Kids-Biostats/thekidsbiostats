@@ -51,9 +51,13 @@ thekids_model_output <- function(model, by = NULL, data = NULL, ...) {
 #' @exportS3Method thekidsbiostats::thekids_model_output
 thekids_model_output.lm <- function(model, by, data = NULL, ...) {
 
-  if (!requireNamespace("patchwork", quietly = TRUE)) {
-    stop("The 'patchwork' package is required.")
-  }
+  # Ensure broom.helpers is installed
+  rlang::check_installed("broom.helpers", reason = "needed for gtsummary::tbl_regression")
+
+  # Ensure patchwork is installed
+  rlang::check_installed("patchwork", reason = "needed for combining diagnostic plots")
+
+
 
   if(is.null(data)) {
     mod_dat <- model$model
