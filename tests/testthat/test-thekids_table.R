@@ -127,21 +127,3 @@ test_that("check_font_family returns a font name or fallback", {
 
   expect_true(defaults$font.family %in% c("DefinitelyNoSuchFont123", sys_fonts))
 })
-
-
-test_that("check_font_family applies fallback font and warns", {
-  missing_font <- "ThisFontDoesNotExist123"
-  fallback_font <- "sans"
-
-  # Expect a warning and also check the return value
-  expect_warning(
-    result <- thekidsbiostats:::check_font_family(
-      font_family = missing_font,
-      fallback_family = fallback_font
-    ),
-    regexp = "Font 'ThisFontDoesNotExist123' not found; falling back to 'sans'"
-  )
-
-  # Check that the fallback is returned
-  expect_equal(result, fallback_font)
-})

@@ -14,7 +14,6 @@ thekids_table(
   zebra = FALSE,
   highlight = NULL,
   font_family = "Barlow",
-  fallback_font_family = "sans",
   date_fix = TRUE,
   ...
 )
