@@ -16,17 +16,16 @@ Date: 2025-10-01
 License: MIT + file LICENSE
 LazyData: true
 Depends:
-    R (>= 4.3),
-    extrafont (>= 0.1),
-    tidyverse (>= 2.0.0),
-    gtsummary (>= 2.0),
-    flextable (>= 0.9)
+    R (>= 4.3)
 Imports:
     dplyr (>= 1.1.0),
+    extrafont (>= 0.1),
+    flextable (>= 0.9),
     fs (>= 1.6),
     ggfortify,
     ggplot2 (>= 3.4.0),
     glue (>= 1.8),
+    gtsummary (>= 2.0),
     janitor (>= 2.1.0),
     labelled (>= 2.8.0),
     later,
@@ -47,6 +46,7 @@ Imports:
     stringr (>= 1.4.0),
     sysfonts (>= 0.8),
     systemfonts (>= 1.2),
+    tidyverse (>= 2.0.0),
     tibble (>= 3.0.1),
     tidyr (>= 1.1.0),
     tidyselect (>= 1.1.0)
