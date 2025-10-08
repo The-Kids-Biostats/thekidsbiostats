@@ -161,3 +161,18 @@ test_that("check_font_family handles numeric input by coercion", {
   )
   expect_equal(result, "sans")
 })
+
+test_that("check_font_family returns requested font if installed", {
+  installed_fonts <- unique(systemfonts::system_fonts()$family)
+  good_font <- installed_fonts[1]  # guaranteed to exist
+
+  # Should not warn, should return the requested font
+  expect_silent(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = good_font,
+      fallback_family = "sans"
+    )
+  )
+
+  expect_equal(result, good_font)
+})
