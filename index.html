@@ -59,14 +59,14 @@
 <div class="page-header"><h1 id="thekidsbiostats">thekidsbiostats<a class="anchor" aria-label="anchor" href="#thekidsbiostats"></a>
 </h1></div>
 <p><a href="https://the-kids-biostats.r-universe.dev/" class="external-link"><img src="https://the-kids-biostats.r-universe.dev/badges/:name" alt="name status badge"></a> <a href="https://the-kids-biostats.r-universe.dev/thekidsbiostats" class="external-link"><img src="https://the-kids-biostats.r-universe.dev/thekidsbiostats/badges/version" alt="thekidsbiostats status badge"></a> <img src="https://github.com/The-Kids-Biostats/thekidsbiostats/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"><a href="https://app.codecov.io/gh/The-Kids-Biostats/thekidsbiostats" class="external-link"><img src="https://codecov.io/gh/The-Kids-Biostats/thekidsbiostats/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://doi.org/10.5281/zenodo.17240567" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17240567.svg" alt="DOI"></a></p>
-<p>Package with helper functions and formatting templates used by the Biostatistics team of The Kids Research Institute Australia.</p>
-<p>All templates and themes in this package use the “Barlow” font family which is not installed by default on many machines. It can be installed here: <a href="https://fonts.google.com/specimen/Barlow" class="external-link uri">https://fonts.google.com/specimen/Barlow</a> <a href="https://fonts.google.com/specimen/Barlow+Semi+Condensed" class="external-link uri">https://fonts.google.com/specimen/Barlow+Semi+Condensed</a></p>
+<p>This package contains formatting templates and a suite of helper functions used and developed by the Biostatistics team at The Kids Research Institute Australia.</p>
+<p>All templates and themes in this package use the “Barlow” font family which is not installed by default on many machines. It can be installed here: + <a href="https://fonts.google.com/specimen/Barlow" class="external-link uri">https://fonts.google.com/specimen/Barlow</a> + <a href="https://fonts.google.com/specimen/Barlow+Semi+Condensed" class="external-link uri">https://fonts.google.com/specimen/Barlow+Semi+Condensed</a></p>
 </div>
 <div class="section level1">
 <h1 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h1>
 <div class="section level2">
-<h2 id="installing">Installing<a class="anchor" aria-label="anchor" href="#installing"></a>
+<h2 id="installing-the-package">Installing the package<a class="anchor" aria-label="anchor" href="#installing-the-package"></a>
 </h2>
 <p>The Kids Research Institute Australia biostats package can be installed from the R-universe with the following:</p>
 <pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"thekidsbiostats"</span>, repos <span class="op">=</span> <span class="st">"https://the-kids-biostats.r-universe.dev"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
@@ -74,30 +74,20 @@
 <pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"The-Kids-Biostats/thekidsbiostats"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="installing-fonts">Installing fonts<a class="anchor" aria-label="anchor" href="#installing-fonts"></a>
+<h2 id="registering-fonts">Registering fonts<a class="anchor" aria-label="anchor" href="#registering-fonts"></a>
 </h2>
 <p>Because the “Barlow” font is utilised by default on many machines, this font must be downloaded, installed, and then registered so R can recognise it. To register the font in R, simply run:</p>
 <pre><code><span><span class="fu">extrafont</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
-<p><code><a href="reference/thekids_table.html">thekids_table()</a></code> requires the font to be installed at a system level, else a default font family will be applied (sans).</p>
-<p><code><a href="reference/thekids_theme.html">theme_thekids()</a></code> can either call the font from the system (after registration), else a fall-back to install the font (using a Google API) will be called.</p>
+<ul>
+<li>
+<code><a href="reference/thekids_table.html">thekids_table()</a></code> requires the font to be installed at a system level, else a default font family will be applied (sans).</li>
+<li>
+<code><a href="reference/thekids_theme.html">theme_thekids()</a></code> can either call the font from the system (after registration), else a fall-back to install the font (using a Google API) will be called.</li>
+</ul>
 </div>
-</div>
-<div class="section level1">
-<h1 id="using-the-template">Using the template<a class="anchor" aria-label="anchor" href="#using-the-template"></a>
-</h1>
-<p>To make use of our project structure templates for a new project, follow the following steps:</p>
-<ol style="list-style-type: decimal">
-<li>Create a new R project in a fresh directory and open it in RStudio.</li>
-<li>Run <code><a href="reference/create_project.html">thekidsbiostats::create_project()</a></code> function. This function has various parameters to tweak how you would like to set up your project structure which can be read in the documentation.</li>
-</ol>
-<p>To use our quarto templates, run <code>thekidsbiostats::create_template(file_name = "X")</code> in an existing R project. The file name parameter is mandatory and specifies the name of the .qmd file.</p>
-<p>The directory parameter of the <code><a href="reference/create_template.html">create_template()</a></code> function specifies where the .qmd file will be located. This is in the “reports” folder by default, which is created as part of <code><a href="reference/create_project.html">create_project()</a></code> above.</p>
-<p>Other parameters for create_template() determine the type of template, e.g. html or word format.</p>
-</div>
-<div class="section level1">
-<h1 id="accessing-vignettes">Accessing vignettes<a class="anchor" aria-label="anchor" href="#accessing-vignettes"></a>
-</h1>
-<p>Vignettes have been built for some of the functions. These can be opened (using R, for now). The vignettes have the same name as the function.</p>
+<div class="section level2">
+<h2 id="accessing-vignettes">Accessing vignettes<a class="anchor" aria-label="anchor" href="#accessing-vignettes"></a>
+</h2>
 <p>At the moment, vignettes exist for:</p>
 <ul>
 <li>Data manipulation functions (<code>data_manipulations</code>)</li>
@@ -108,6 +98,7 @@
 </ul>
 <p>Accessing these vignettes can be done two ways:</p>
 <ol style="list-style-type: decimal">
+<li>Via the <a href="https://the-kids-biostats.github.io/thekidsbiostats/">package website</a>.</li>
 <li>Using <code>utils::browseVignettes(package = "thekidsbiostats")</code>
 <ul>
 <li>Opens vignette via web browser.</li>
@@ -119,6 +110,52 @@
 </ul>
 </li>
 </ol>
+</div>
+</div>
+<div class="section level1">
+<h1 id="using-the-package">Using the package<a class="anchor" aria-label="anchor" href="#using-the-package"></a>
+</h1>
+<p>See <a href="https://the-kids-biostats.github.io/posts/2025-01-23_thekids_package/thekids_package.html" class="external-link">here</a> for a broad walkthough of the package and its functionalities.</p>
+<div class="section level2">
+<h2 id="workflow-creation">Workflow creation<a class="anchor" aria-label="anchor" href="#workflow-creation"></a>
+</h2>
+<p>To make use of our project structure templates for a new project, follow the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Open RStudio.</li>
+<li>Navigate to the “Create New Project” addin, or run <code><a href="reference/create_project.html">thekidsbiostats::create_project()</a></code>.
+<ul>
+<li>These functionalities contain various parameters to tweak how you would like to set up your project structure which can be read in the documentation.</li>
+<li>Branded Quarto templates can be created within the “Create Project” addin, directly via the “Create Report Template” addin or by running <code><a href="reference/create_template.html">thekidsbiostats::create_template()</a></code>.
+<ul>
+<li>Either <code>.html</code> or <code>.docx</code> templates can be created.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="theming">Theming<a class="anchor" aria-label="anchor" href="#theming"></a>
+</h2>
+<p>Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation.</p>
+<ul>
+<li>Formatting plots: <code><a href="reference/thekids_theme.html">theme_thekids()</a></code>
+</li>
+<li>Formatting tables: <code><a href="reference/thekids_table.html">thekids_table()</a></code>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a>
+</h2>
+<ul>
+<li><code><a href="reference/thekids_model.html">thekids_model()</a></code></li>
+<li>
+<code><a href="reference/round_vec.html">round_vec()</a></code> &amp; <code><a href="reference/round_df.html">round_df()</a></code>
+</li>
+<li><code><a href="reference/fct_case_when.html">fct_case_when()</a></code></li>
+</ul>
+</div>
 </div>
 
   </main><aside class="col-md-3"><div class="license">
