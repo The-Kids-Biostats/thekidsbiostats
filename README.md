@@ -67,7 +67,7 @@ To make use of our project structure templates for a new project, follow the fol
 1. Open RStudio.
 2. Navigate to the "Create New Project" addin, or run `thekidsbiostats::create_project()`. 
     + These functionalities contain various parameters to tweak how you would like to set up your project structure which can be read in the documentation. 
-    + A branded Quarto template can be created using the project creation addin, using the "Create Report Template" addin, or by running `thekidsbiostats::create_template()`.
+    + Branded Quarto templates can be created within the "Create Project" addin, directly via the "Create Report Template" addin or by running `thekidsbiostats::create_template()`.
       + Either `.html` or `.docx` templates can be created.
 
 
@@ -75,11 +75,11 @@ To make use of our project structure templates for a new project, follow the fol
 
 Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation.
 
-+ `theme_thekids()`
-+ `thekids_table()`
++ Formatting plots: `theme_thekids()`
++ Formatting tables: `thekids_table()`
 
 ## Helper functions
 
-+ `thekids_model`
-+ `round_vec` & `round_df`
-+ `fct_case_when`
++ `thekids_model()`
++ `round_vec()` & `round_df()`
++ `fct_case_when()`
