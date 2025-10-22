@@ -80,5 +80,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Config/testthat/edition: 3
-URL: https://the-kids-biostats.github.io/thekidsbiostats/
+URL: https://github.com/the-kids-biostats/thekidsbiostats, https://the-kids-biostats.github.io/thekidsbiostats/
+BugReports: https://github.com/the-kids-biostats/thekidsbiostats/issues
 Language: en-GB
