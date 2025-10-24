@@ -1,4 +1,4 @@
-# thekidsbiostats
+# thekidsbiostats <a href="https://the-kids-biostats.github.io/thekidsbiostats/"><img src="man/figures/logo.png" align="right" height="138" alt="thekidsbiostats website" /></a>
 
 [![name status badge](https://the-kids-biostats.r-universe.dev/badges/:name)](https://the-kids-biostats.r-universe.dev/)
 [![thekidsbiostats status badge](https://the-kids-biostats.r-universe.dev/thekidsbiostats/badges/version)](https://the-kids-biostats.r-universe.dev/thekidsbiostats)
