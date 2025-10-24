@@ -89,15 +89,15 @@
 <h2 id="installing-the-package">Installing the package<a class="anchor" aria-label="anchor" href="#installing-the-package"></a>
 </h2>
 <p>The Kids Research Institute Australia biostats package can be installed from the R-universe with the following:</p>
-<pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"thekidsbiostats"</span>, repos <span class="op">=</span> <span class="st">"https://the-kids-biostats.r-universe.dev"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"thekidsbiostats"</span>, <span class="at">repos =</span> <span class="st">"https://the-kids-biostats.r-universe.dev"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Alternatively, the package can be installed via <code>remotes</code>:</p>
-<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"The-Kids-Biostats/thekidsbiostats"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"The-Kids-Biostats/thekidsbiostats"</span>, <span class="at">build_vignettes =</span> <span class="cn">TRUE</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="registering-fonts">Registering fonts<a class="anchor" aria-label="anchor" href="#registering-fonts"></a>
 </h2>
 <p>Because the “Barlow” font is utilised by default on many machines, this font must be downloaded, installed, and then registered so R can recognise it. To register the font in R, simply run:</p>
-<pre><code><span><span class="fu">extrafont</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>extrafont<span class="sc">::</span><span class="fu">font_import</span>()</span></code></pre></div>
 <ul>
 <li>
 <code><a href="reference/thekids_table.html">thekids_table()</a></code> requires the font to be installed at a system level, else a default font family will be applied (sans).</li>
