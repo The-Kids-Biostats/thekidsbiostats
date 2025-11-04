@@ -27,6 +27,7 @@ Imports:
     glue (>= 1.8),
     gtsummary (>= 2.0),
     janitor (>= 2.1.0),
+    jsonlite (>= 2.0.0),
     labelled (>= 2.8.0),
     later,
     lubridate (>= 1.7.9),
