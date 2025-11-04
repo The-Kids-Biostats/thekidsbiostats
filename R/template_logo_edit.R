@@ -14,126 +14,263 @@
 template_logo_edit <- function() {
   META_FILENAME <- "logo_meta.json"
 
+  # ---- UI ----
   ui <- shiny::fluidPage(
     shinyjs::useShinyjs(),
-    shiny::titlePanel("Update Project Template Logo"),
-    shiny::sidebarLayout(
-      shiny::sidebarPanel(
+    shiny::titlePanel("Customise Project Template Formatting"),
+
+    shiny::fluidRow(
+      shiny::column(12,
         shiny::uiOutput("folder_ui"),
-        shiny::fileInput("logo", "Upload logo (PNG or JPG only)", accept = c(".png", ".jpg", ".jpeg")),
-        shiny::textInput("newname", "Save uploaded file as", value = "", placeholder = "Select a file first"),
-        shiny::actionButton("apply", "Update Logo"),
         shiny::hr(),
-        shiny::verbatimTextOutput("status")
-      ),
-      shiny::mainPanel(
-        shiny::h4("Preview (start of template.qmd)"),
-        shiny::verbatimTextOutput("qmd_preview")
+        shiny::tabsetPanel(
+          id = "tabs",
+          type = "pills",
+
+          # ---- Logo Tab ----
+          shiny::tabPanel("Logo",
+            shiny::h4("Current logo selection"),
+            shiny::imageOutput("logo_preview"),
+            shiny::fluidRow(
+              shiny::column(6, shiny::numericInput("logo_width", "Width (px)", value = 150, min = 10)),
+              shiny::column(6, shiny::numericInput("logo_height", "Height (px)", value = 150, min = 10))
+            ),
+            shiny::fileInput("logo", "Upload logo (PNG or JPG only)", accept = c(".png", ".jpg", ".jpeg")),
+            shiny::textInput("newname", "Save uploaded file as", value = "", placeholder = "Select a file first"),
+            shiny::actionButton("apply_logo", "Update Logo"),
+            shiny::actionButton("revert_logo", "Revert to Default"),
+            shiny::verbatimTextOutput("qmd_preview_logo"),
+            shiny::verbatimTextOutput("status_logo")
+          ),
+
+          # ---- Header Tab ----
+          shiny::tabPanel("Header",
+            colourpicker::colourInput("banner_colour", "Banner colour", value = NULL),
+            shiny::actionButton("apply_header", "Update Banner Colour"),
+            shiny::actionButton("revert_header", "Revert Banner Colour"),
+            shiny::verbatimTextOutput("qmd_preview_header")
+          ),
+
+          # ---- Styles Tab ----
+          shiny::tabPanel("Styles",
+            lapply(c("note","tip","warning","important"), function(t) {
+              colourpicker::colourInput(paste0("col_", t),
+                                        paste0("Callout ", t, " colour"),
+                                        value = NULL)
+            }),
+            shiny::actionButton("apply_styles", "Update Styles"),
+            shiny::actionButton("revert_styles", "Revert Styles")
+          )
+        )
       )
     )
   )
 
+  # ---- Server ----
   server <- function(input, output, session) {
-    mods <- shiny::reactiveVal(NULL)
-    ext_folder <- shiny::reactiveVal(NULL)
+    folder <- shiny::reactiveVal(NULL)
+    defaults <- shiny::reactiveVal(NULL)
+    logo_file <- shiny::reactiveVal(NULL)
 
-    shinyjs::disable("newname")
+    # ---- Helpers ----
+    parse_qmd_logo <- function(qmd_path) {
+      qmd <- readLines(qmd_path, warn = FALSE)
+      logo_line <- grep("logo:", qmd, value = TRUE)
+      if (length(logo_line)) gsub(".*logo:\\s*", "", logo_line[1]) else "thekids.png"
+    }
 
-    # Determine initial folder
-    default_folder <- file.path(getwd(), "reports", "_extensions", "html")
-    if (fs::dir_exists(default_folder)) {
-      ext_folder(default_folder)
-      output$folder_ui <- shiny::renderUI({
-        shiny::verbatimTextOutput("folder_path_display")
-      })
-      output$folder_path_display <- shiny::renderText({ ext_folder() })
-    } else {
+    parse_qmd_banner_colour <- function(qmd_path) {
+      qmd <- readLines(qmd_path, warn = FALSE)
+      line <- grep("^\\s*title-block-banner\\s*:\\s*", qmd, value = TRUE)
+      if (length(line)) sub("^\\s*title-block-banner\\s*:\\s*", "", line[1]) else NULL
+    }
+
+    parse_css_colors <- function(css_path) {
+      css <- readLines(css_path, warn = FALSE)
+      types <- c("note","tip","warning","important")
+      out <- setNames(vector("list", length(types)), types)
+      for (t in types) {
+        pattern <- paste0("\\.callout-", t, "\\s*\\{[^}]*background-color:\\s*([^;]+);")
+        m <- regmatches(css, regexec(pattern, css))
+        val <- unlist(lapply(m, function(x) if(length(x) >= 2) x[2]))
+        out[[t]] <- ifelse(length(val) > 0, val[1], NA)
+      }
+      out
+    }
+
+    read_defaults <- function(folder_html) {
+      qmd_path <- file.path(folder_html, "template.qmd")
+      css_path <- file.path(folder_html, "styles.css")
+      qmd_orig <- file.path(folder_html, "template.qmd.orig")
+      css_orig <- file.path(folder_html, "styles.css.orig")
+      if (!fs::file_exists(qmd_orig)) fs::file_copy(qmd_path, qmd_orig)
+      if (!fs::file_exists(css_orig)) fs::file_copy(css_path, css_orig)
+      list(
+        logo = parse_qmd_logo(qmd_path),
+        banner_colour = parse_qmd_banner_colour(qmd_path),
+        callout_colours = parse_css_colors(css_path),
+        qmd_path = qmd_path,
+        css_path = css_path
+      )
+    }
+
+    update_ui_from_defaults <- function(d) {
+      shiny::updateTextInput(session, "newname", value = d$logo)
+      colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+      for (t in names(d$callout_colours)) {
+        colourpicker::updateColourInput(session, paste0("col_", t), value = d$callout_colours[[t]])
+      }
+      logo_file(d$logo)
+    }
+
+    update_logo <- function(infile, newname, folder_html) {
+      dest_html <- file.path(folder_html, newname)
+      fs::file_copy(infile, dest_html, overwrite = TRUE)
+      folder_parent <- fs::path_norm(fs::path(folder_html, ".."))
+      dest_parent <- file.path(folder_parent, newname)
+      fs::file_copy(infile, dest_parent, overwrite = TRUE)
+      # Update template.qmd
+      qmd <- readLines(file.path(folder_html, "template.qmd"), warn = FALSE)
+      qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", newname), qmd)
+      writeLines(qmd_new, file.path(folder_html, "template.qmd"))
+      # Update styles.css
+      css <- readLines(file.path(folder_html, "styles.css"), warn = FALSE)
+      css_new <- gsub("url\\s*\\(\\s*[^)]+\\)", paste0("url(", newname, ")"), css)
+      writeLines(css_new, file.path(folder_html, "styles.css"))
+      # Save meta
+      meta <- list(logo = newname, modified_time = format(Sys.time(), tz = Sys.timezone(), usetz = TRUE))
+      writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE),
+                 file.path(folder_html, META_FILENAME))
+    }
+
+    logo_preview_path <- shiny::reactive({
+      if (!is.null(input$logo)) {
+        # uploaded file takes precedence
+        input$logo$datapath
+      } else if (!is.null(logo_file())) {
+        file.path(folder(), logo_file())
+      } else {
+        NULL
+      }
+    })
+
+    update_colors <- function(folder_html, banner_colour = NULL, callout_colours = NULL) {
+      if (!is.null(banner_colour)) {
+        qmd <- readLines(file.path(folder_html, "template.qmd"), warn = FALSE)
+        qmd_new <- gsub("title-block-banner:\\s*.*", paste0("title-block-banner: ", banner_colour), qmd)
+        writeLines(qmd_new, file.path(folder_html, "template.qmd"))
+      }
+      if (!is.null(callout_colours)) {
+        css <- readLines(file.path(folder_html, "styles.css"), warn = FALSE)
+        for (type in names(callout_colours)) {
+          pattern <- paste0("(\\.callout-", type, "\\s*\\{[^}]*background-color:\\s*)([^;]+)")
+          css <- gsub(pattern, paste0("\\1", callout_colours[[type]]), css)
+        }
+        writeLines(css, file.path(folder_html, "styles.css"))
+      }
+    }
+
+    revert_defaults <- function(folder_html) {
+      fs::file_copy(file.path(folder_html, "template.qmd.orig"), file.path(folder_html, "template.qmd"), overwrite = TRUE)
+      fs::file_copy(file.path(folder_html, "styles.css.orig"), file.path(folder_html, "styles.css"), overwrite = TRUE)
+      defaults(read_defaults(folder_html))
+      logo_file(defaults()$logo)
+      update_ui_from_defaults(defaults())
+    }
+
+    # ---- Folder Selection ----
+    shiny::observe({
+      default_folder <- file.path(getwd(), "reports", "_extensions", "html")
+      if (fs::dir_exists(default_folder)) {
+        folder(default_folder)
+        defaults(read_defaults(default_folder))
+        update_ui_from_defaults(defaults())
+      }
       output$folder_ui <- shiny::renderUI({
         shiny::tagList(
           shiny::actionButton("browse_folder", "Select project _extensions/html folder"),
           shiny::verbatimTextOutput("folder_path_display")
         )
       })
-    }
-
-    # Browse for folder
-    shiny::observeEvent(input$browse_folder, {
-      folder <- rstudioapi::selectDirectory()
-      if (!is.null(folder) && fs::dir_exists(folder)) {
-        ext_folder(folder)
-        shiny::showNotification(paste("Folder set to:", folder), type = "message")
-      } else {
-        shiny::showNotification("No folder selected or folder does not exist", type = "error")
-      }
     })
 
-    # Enable filename input and populate when file uploaded
+    shiny::observeEvent(input$browse_folder, {
+      f <- rstudioapi::selectDirectory()
+      if (!is.null(f) && fs::dir_exists(f)) {
+        folder(f)
+        defaults(read_defaults(f))
+        update_ui_from_defaults(defaults())
+        shiny::showNotification(paste("Folder set to:", f), type = "message")
+      } else shiny::showNotification("No folder selected or folder does not exist", type = "error")
+    })
+
+    output$folder_path_display <- shiny::renderText({ folder() })
+
+    # ---- Logo Preview Reactive ----
+    shiny::observe({
+      req(folder(), logo_file())
+      output$logo_preview <- shiny::renderImage({
+        req(logo_preview_path())
+        list(
+          src = logo_preview_path(),
+          width = 150,  # fixed small preview width
+          height = NULL # maintain aspect ratio
+        )
+      }, deleteFile = FALSE)
+    })
+
+    # Enable filename input and update current selection
     shiny::observeEvent(input$logo, {
-      shinyjs::enable("newname")
+      req(input$logo)
+      # Update the reactive logo file to the uploaded file temporarily
+      logo_file(input$logo$name)
+      # Set the 'newname' input to the uploaded filename
       shiny::updateTextInput(session, "newname", value = input$logo$name)
     })
 
-    # Display folder path
-    output$folder_path_display <- shiny::renderText({ ext_folder() })
-
-    # Apply logo update
-    shiny::observeEvent(input$apply, {
-      shiny::req(input$logo)
-      folder_html <- ext_folder()
-      if (is.null(folder_html)) {
-        shiny::showNotification("No folder selected", type = "error")
-        return()
-      }
-
-      ext <- tools::file_ext(input$logo$name)
-      if (!ext %in% c("png", "jpg", "jpeg")) {
-        shiny::showNotification("Invalid file type. Only PNG or JPG allowed.", type = "error")
-        return()
-      }
-
-      newname <- gsub("\\s+", "_", basename(input$newname))
+    # ---- Logo Upload/Apply ----
+    shiny::observeEvent(input$apply_logo, {
+      req(input$logo)
+      newname <- input$newname
       if (newname == "") newname <- input$logo$name
+      update_logo(input$logo$datapath, newname, folder())
+      logo_file(newname)
+      output$status_logo <- shiny::renderText({ paste("Logo updated:", newname) })
+    })
 
-      infile <- input$logo$datapath
+    shiny::observeEvent(input$revert_logo, {
+      revert_defaults(folder())
+      output$status_logo <- shiny::renderText({ "Logo reverted to default" })
+    })
 
-      # Copy to html folder
-      dest_html <- file.path(folder_html, newname)
-      fs::file_copy(infile, dest_html, overwrite = TRUE)
+    # ---- Header Apply/Revert ----
+    shiny::observeEvent(input$apply_header, {
+      req(folder(), input$banner_colour)
+      update_colors(folder(), banner_colour = input$banner_colour)
+      output$qmd_preview_header <- shiny::renderText({ head(readLines(file.path(folder(), "template.qmd")), 20) })
+    })
 
-      # Copy to parent _extensions folder (for Quarto render)
-      folder_parent <- fs::path_norm(fs::path(folder_html, ".."))
-      dest_parent <- file.path(folder_parent, newname)
-      fs::file_copy(infile, dest_parent, overwrite = TRUE)
+    shiny::observeEvent(input$revert_header, {
+      req(folder())
+      revert_defaults(folder())
+      colourpicker::updateColourInput(session, "banner_colour", value = defaults()$banner_colour)
+      output$qmd_preview_header <- shiny::renderText({ head(readLines(file.path(folder(), "template.qmd")), 20) })
+    })
 
-      # Update template.qmd in html folder
-      qmd_path <- file.path(folder_html, "template.qmd")
-      if (!fs::file_exists(qmd_path)) stop("template.qmd not found in selected folder.")
-      qmd <- readLines(qmd_path, warn = FALSE)
-      qmd_new <- gsub("thekids.png", newname, qmd, fixed = TRUE)
-      writeLines(qmd_new, qmd_path)
+    # ---- Styles Apply/Revert ----
+    shiny::observeEvent(input$apply_styles, {
+      req(folder())
+      callouts <- lapply(c("note","tip","warning","important"), function(t) input[[paste0("col_", t)]])
+      names(callouts) <- c("note","tip","warning","important")
+      update_colors(folder(), callout_colours = callouts)
+    })
 
-      # Update styles.css background-image
-      # Update styles.css background-image
-      css_path <- file.path(folder_html, "styles.css")
-      if (fs::file_exists(css_path)) {
-        css <- readLines(css_path, warn = FALSE)
-        css_new <- gsub("url\\s*\\(\\s*thekids\\.png\\s*\\)", paste0("url(", newname, ")"), css)
-        writeLines(css_new, css_path)
+    shiny::observeEvent(input$revert_styles, {
+      req(folder())
+      revert_defaults(folder())
+      for (t in names(defaults()$callout_colours)) {
+        colourpicker::updateColourInput(session, paste0("col_", t), value = defaults()$callout_colours[[t]])
       }
-
-      # Save metadata with local timezone
-      meta <- list(logo = newname, modified_time = format(Sys.time(), tz = Sys.timezone(), usetz = TRUE))
-      meta_path <- file.path(folder_html, META_FILENAME)
-      writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
-
-      mods(list(qmd_preview = paste(head(qmd_new, 200), collapse = "\n"),
-                last_saved_logo = dest_html))
-
-      output$qmd_preview <- shiny::renderText({ mods()$qmd_preview })
-      output$status <- shiny::renderText({
-        paste0("Logo successfully updated to: ", mods()$last_saved_logo,
-               "\nHeader in template.qmd and styles.css updated accordingly.")
-      })
     })
   }
 
