@@ -20,8 +20,10 @@ Research Institute Australia.
 
 All templates and themes in this package use the “Barlow” font family
 which is not installed by default on many machines. It can be installed
-here: + <https://fonts.google.com/specimen/Barlow> +
-<https://fonts.google.com/specimen/Barlow+Semi+Condensed>
+here:
+
+- <https://fonts.google.com/specimen/Barlow>
+- <https://fonts.google.com/specimen/Barlow+Semi+Condensed>
 
 # Getting started
 
