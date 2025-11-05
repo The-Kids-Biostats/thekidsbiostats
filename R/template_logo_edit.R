@@ -21,47 +21,43 @@ template_logo_edit <- function() {
 
     shiny::fluidRow(
       shiny::column(12,
-        shiny::uiOutput("folder_ui"),
-        shiny::hr(),
-        shiny::tabsetPanel(
-          id = "tabs",
-          type = "pills",
+                    shiny::uiOutput("folder_ui"),
+                    shiny::hr(),
+                    shiny::tabsetPanel(
+                      id = "tabs",
+                      type = "pills",
 
-          # ---- Logo Tab ----
-          shiny::tabPanel("Logo",
-            shiny::h4("Current logo selection"),
-            shiny::imageOutput("logo_preview"),
-            shiny::fluidRow(
-              shiny::column(6, shiny::numericInput("logo_width", "Width (px)", value = 150, min = 10)),
-              shiny::column(6, shiny::numericInput("logo_height", "Height (px)", value = 150, min = 10))
-            ),
-            shiny::fileInput("logo", "Upload logo (PNG or JPG only)", accept = c(".png", ".jpg", ".jpeg")),
-            shiny::textInput("newname", "Save uploaded file as", value = "", placeholder = "Select a file first"),
-            shiny::actionButton("apply_logo", "Update Logo"),
-            shiny::actionButton("revert_logo", "Revert to Default"),
-            shiny::verbatimTextOutput("qmd_preview_logo"),
-            shiny::verbatimTextOutput("status_logo")
-          ),
+                      # ---- Logo Tab ----
+                      shiny::tabPanel("Logo",
+                                      shiny::h4("Current logo selection"),
+                                      shiny::imageOutput("logo_preview"),
+                                      shiny::fluidRow(
+                                        shiny::column(6, shiny::numericInput("logo_width", "Width (px)", value = 150, min = 10)),
+                                        shiny::column(6, shiny::numericInput("logo_height", "Height (px)", value = 150, min = 10))
+                                      ),
+                                      shiny::fileInput("logo", "Upload logo (PNG or JPG only)", accept = c(".png", ".jpg", ".jpeg")),
+                                      shiny::textInput("newname", "Save uploaded file as", value = "", placeholder = "Select a file first"),
+                                      shiny::actionButton("apply_logo", "Update Logo"),
+                                      shiny::actionButton("revert_logo", "Revert to Default"),
+                                      shiny::verbatimTextOutput("qmd_preview_logo"),
+                                      shiny::verbatimTextOutput("status_logo")
+                      ),
 
-          # ---- Header Tab ----
-          shiny::tabPanel("Header",
-            colourpicker::colourInput("banner_colour", "Banner colour", value = NULL),
-            shiny::actionButton("apply_header", "Update Banner Colour"),
-            shiny::actionButton("revert_header", "Revert Banner Colour"),
-            shiny::verbatimTextOutput("qmd_preview_header")
-          ),
+                      # ---- Header Tab ----
+                      shiny::tabPanel("Header",
+                                      colourpicker::colourInput("banner_colour", "Banner colour", value = NULL),
+                                      shiny::actionButton("apply_header", "Update Banner Colour"),
+                                      shiny::actionButton("revert_header", "Revert Banner Colour"),
+                                      shiny::verbatimTextOutput("qmd_preview_header")
+                      ),
 
-          # ---- Styles Tab ----
-          shiny::tabPanel("Styles",
-            lapply(c("note","tip","warning","important"), function(t) {
-              colourpicker::colourInput(paste0("col_", t),
-                                        paste0("Callout ", t, " colour"),
-                                        value = NULL)
-            }),
-            shiny::actionButton("apply_styles", "Update Styles"),
-            shiny::actionButton("revert_styles", "Revert Styles")
-          )
-        )
+                      # ---- Styles Tab ----
+                      shiny::tabPanel("Styles",
+                                      shiny::uiOutput("callout_ui"),
+                                      shiny::actionButton("apply_styles", "Update Styles"),
+                                      shiny::actionButton("revert_styles", "Revert Styles")
+                      )
+                    )
       )
     )
   )
@@ -72,205 +68,207 @@ template_logo_edit <- function() {
     defaults <- shiny::reactiveVal(NULL)
     logo_file <- shiny::reactiveVal(NULL)
 
-    # ---- Helpers ----
-    parse_qmd_logo <- function(qmd_path) {
-      qmd <- readLines(qmd_path, warn = FALSE)
-      logo_line <- grep("logo:", qmd, value = TRUE)
-      if (length(logo_line)) gsub(".*logo:\\s*", "", logo_line[1]) else "thekids.png"
-    }
-
-    parse_qmd_banner_colour <- function(qmd_path) {
-      qmd <- readLines(qmd_path, warn = FALSE)
-      line <- grep("^\\s*title-block-banner\\s*:\\s*", qmd, value = TRUE)
-      if (length(line)) sub("^\\s*title-block-banner\\s*:\\s*", "", line[1]) else NULL
-    }
-
-    parse_css_colors <- function(css_path) {
-      css <- readLines(css_path, warn = FALSE)
-      types <- c("note","tip","warning","important")
-      out <- setNames(vector("list", length(types)), types)
-      for (t in types) {
-        pattern <- paste0("\\.callout-", t, "\\s*\\{[^}]*background-color:\\s*([^;]+);")
-        m <- regmatches(css, regexec(pattern, css))
-        val <- unlist(lapply(m, function(x) if(length(x) >= 2) x[2]))
-        out[[t]] <- ifelse(length(val) > 0, val[1], NA)
-      }
-      out
-    }
-
-    read_defaults <- function(folder_html) {
-      qmd_path <- file.path(folder_html, "template.qmd")
-      css_path <- file.path(folder_html, "styles.css")
-      qmd_orig <- file.path(folder_html, "template.qmd.orig")
-      css_orig <- file.path(folder_html, "styles.css.orig")
-      if (!fs::file_exists(qmd_orig)) fs::file_copy(qmd_path, qmd_orig)
-      if (!fs::file_exists(css_orig)) fs::file_copy(css_path, css_orig)
-      list(
-        logo = parse_qmd_logo(qmd_path),
-        banner_colour = parse_qmd_banner_colour(qmd_path),
-        callout_colours = parse_css_colors(css_path),
-        qmd_path = qmd_path,
-        css_path = css_path
-      )
-    }
-
-    update_ui_from_defaults <- function(d) {
-      shiny::updateTextInput(session, "newname", value = d$logo)
-      colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
-      for (t in names(d$callout_colours)) {
-        colourpicker::updateColourInput(session, paste0("col_", t), value = d$callout_colours[[t]])
-      }
-      logo_file(d$logo)
-    }
-
-    update_logo <- function(infile, newname, folder_html) {
-      dest_html <- file.path(folder_html, newname)
-      fs::file_copy(infile, dest_html, overwrite = TRUE)
-      folder_parent <- fs::path_norm(fs::path(folder_html, ".."))
-      dest_parent <- file.path(folder_parent, newname)
-      fs::file_copy(infile, dest_parent, overwrite = TRUE)
-      # Update template.qmd
-      qmd <- readLines(file.path(folder_html, "template.qmd"), warn = FALSE)
-      qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", newname), qmd)
-      writeLines(qmd_new, file.path(folder_html, "template.qmd"))
-      # Update styles.css
-      css <- readLines(file.path(folder_html, "styles.css"), warn = FALSE)
-      css_new <- gsub("url\\s*\\(\\s*[^)]+\\)", paste0("url(", newname, ")"), css)
-      writeLines(css_new, file.path(folder_html, "styles.css"))
-      # Save meta
-      meta <- list(logo = newname, modified_time = format(Sys.time(), tz = Sys.timezone(), usetz = TRUE))
-      writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE),
-                 file.path(folder_html, META_FILENAME))
-    }
-
     logo_preview_path <- shiny::reactive({
-      if (!is.null(input$logo)) {
-        # uploaded file takes precedence
-        input$logo$datapath
-      } else if (!is.null(logo_file())) {
-        file.path(folder(), logo_file())
-      } else {
-        NULL
-      }
+      if (!is.null(input$logo)) input$logo$datapath
+      else if (!is.null(logo_file())) file.path(folder(), logo_file())
+      else NULL
     })
 
-    update_colors <- function(folder_html, banner_colour = NULL, callout_colours = NULL) {
-      if (!is.null(banner_colour)) {
-        qmd <- readLines(file.path(folder_html, "template.qmd"), warn = FALSE)
-        qmd_new <- gsub("title-block-banner:\\s*.*", paste0("title-block-banner: ", banner_colour), qmd)
-        writeLines(qmd_new, file.path(folder_html, "template.qmd"))
-      }
-      if (!is.null(callout_colours)) {
-        css <- readLines(file.path(folder_html, "styles.css"), warn = FALSE)
-        for (type in names(callout_colours)) {
-          pattern <- paste0("(\\.callout-", type, "\\s*\\{[^}]*background-color:\\s*)([^;]+)")
-          css <- gsub(pattern, paste0("\\1", callout_colours[[type]]), css)
-        }
-        writeLines(css, file.path(folder_html, "styles.css"))
-      }
-    }
+    # ---- Folder UI ----
+    output$folder_ui <- shiny::renderUI({
+      shiny::tagList(
+        shiny::actionButton("browse_folder", "Select project _extensions/html folder"),
+        shiny::verbatimTextOutput("folder_path_display")
+      )
+    })
+    output$folder_path_display <- shiny::renderText({ folder() })
 
-    revert_defaults <- function(folder_html) {
-      fs::file_copy(file.path(folder_html, "template.qmd.orig"), file.path(folder_html, "template.qmd"), overwrite = TRUE)
-      fs::file_copy(file.path(folder_html, "styles.css.orig"), file.path(folder_html, "styles.css"), overwrite = TRUE)
-      defaults(read_defaults(folder_html))
-      logo_file(defaults()$logo)
-      update_ui_from_defaults(defaults())
-    }
-
-    # ---- Folder Selection ----
-    shiny::observe({
-      default_folder <- file.path(getwd(), "reports", "_extensions", "html")
-      if (fs::dir_exists(default_folder)) {
-        folder(default_folder)
-        defaults(read_defaults(default_folder))
-        update_ui_from_defaults(defaults())
-      }
-      output$folder_ui <- shiny::renderUI({
-        shiny::tagList(
-          shiny::actionButton("browse_folder", "Select project _extensions/html folder"),
-          shiny::verbatimTextOutput("folder_path_display")
-        )
-      })
+    # ---- Current defaults reactive ----
+    current_defaults <- shiny::reactive({
+      req(folder())
+      read_defaults(folder(), META_FILENAME)
     })
 
+    # ---- Observe folder selection ----
     shiny::observeEvent(input$browse_folder, {
       f <- rstudioapi::selectDirectory()
       if (!is.null(f) && fs::dir_exists(f)) {
         folder(f)
-        defaults(read_defaults(f))
-        update_ui_from_defaults(defaults())
         shiny::showNotification(paste("Folder set to:", f), type = "message")
-      } else shiny::showNotification("No folder selected or folder does not exist", type = "error")
+      } else {
+        shiny::showNotification("No folder selected or folder does not exist", type = "error")
+      }
     })
 
-    output$folder_path_display <- shiny::renderText({ folder() })
+    # ---- UI updates whenever defaults change ----
+    shiny::observe({
+      req(current_defaults())
+      d <- current_defaults()
+      defaults(d)
+      logo_file(d$logo)
 
-    # ---- Logo Preview Reactive ----
+      shiny::updateTextInput(session, "newname", value = d$logo)
+      colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+
+      # Callouts
+      output$callout_ui <- shiny::renderUI({
+        lapply(c("note","tip","warning","important"), function(t) {
+          shiny::wellPanel(
+            shiny::h4(paste("Callout", t)),
+            colourpicker::colourInput(
+              paste0("col_", t, "_header"),
+              "Header colour",
+              value = d$callout_colours[[t]]$header
+            ),
+            colourpicker::colourInput(
+              paste0("col_", t, "_bg"),
+              "Background colour",
+              value = d$callout_colours[[t]]$background
+            )
+          )
+        })
+      })
+    })
+
+        # ---- Enable/disable "save as" and "update logo" based on upload ----
+    shiny::observe({
+      if (!is.null(input$logo)) {
+        shiny::updateTextInput(session, "newname", value = input$logo$name)
+        shinyjs::enable("newname")
+        shinyjs::enable("apply_logo")
+      } else {
+        shiny::updateTextInput(session, "newname", value = "")
+        shinyjs::disable("newname")
+        shinyjs::disable("apply_logo")
+      }
+    })
+
+    # ---- Logo Preview ----
     shiny::observe({
       req(folder(), logo_file())
       output$logo_preview <- shiny::renderImage({
         req(logo_preview_path())
-        list(
-          src = logo_preview_path(),
-          width = 150,  # fixed small preview width
-          height = NULL # maintain aspect ratio
-        )
+        list(src = logo_preview_path(), width = input$logo_width, height = input$logo_height)
       }, deleteFile = FALSE)
     })
 
-    # Enable filename input and update current selection
-    shiny::observeEvent(input$logo, {
-      req(input$logo)
-      # Update the reactive logo file to the uploaded file temporarily
-      logo_file(input$logo$name)
-      # Set the 'newname' input to the uploaded filename
-      shiny::updateTextInput(session, "newname", value = input$logo$name)
-    })
-
-    # ---- Logo Upload/Apply ----
+    # ---- Logo Apply/Revert ----
     shiny::observeEvent(input$apply_logo, {
       req(input$logo)
-      newname <- input$newname
-      if (newname == "") newname <- input$logo$name
-      update_logo(input$logo$datapath, newname, folder())
+      newname <- ifelse(input$newname == "", input$logo$name, input$newname)
+      update_logo(input$logo$datapath, newname, folder(), META_FILENAME)
       logo_file(newname)
       output$status_logo <- shiny::renderText({ paste("Logo updated:", newname) })
     })
-
     shiny::observeEvent(input$revert_logo, {
-      revert_defaults(folder())
-      output$status_logo <- shiny::renderText({ "Logo reverted to default" })
+      req(folder())
+      revert_defaults(folder(), META_FILENAME, session, logo_file)
+      output$status_logo <- shiny::renderText({ "Reverted to defaults from JSON" })
     })
 
     # ---- Header Apply/Revert ----
     shiny::observeEvent(input$apply_header, {
       req(folder(), input$banner_colour)
       update_colors(folder(), banner_colour = input$banner_colour)
-      output$qmd_preview_header <- shiny::renderText({ head(readLines(file.path(folder(), "template.qmd")), 20) })
+      output$qmd_preview_header <- shiny::renderText({
+        head(readLines(file.path(folder(), "template.qmd")), 20)
+      })
     })
-
     shiny::observeEvent(input$revert_header, {
       req(folder())
-      revert_defaults(folder())
-      colourpicker::updateColourInput(session, "banner_colour", value = defaults()$banner_colour)
-      output$qmd_preview_header <- shiny::renderText({ head(readLines(file.path(folder(), "template.qmd")), 20) })
+      revert_defaults(folder(), META_FILENAME, session, logo_file)
+      output$qmd_preview_header <- shiny::renderText({
+        head(readLines(file.path(folder(), "template.qmd")), 20)
+      })
     })
 
     # ---- Styles Apply/Revert ----
     shiny::observeEvent(input$apply_styles, {
       req(folder())
-      callouts <- lapply(c("note","tip","warning","important"), function(t) input[[paste0("col_", t)]])
+      callouts <- lapply(c("note","tip","warning","important"), function(t) {
+        list(background = input[[paste0("col_", t, "_bg")]],
+             header = input[[paste0("col_", t, "_header")]])
+      })
       names(callouts) <- c("note","tip","warning","important")
       update_colors(folder(), callout_colours = callouts)
     })
 
     shiny::observeEvent(input$revert_styles, {
       req(folder())
-      revert_defaults(folder())
-      for (t in names(defaults()$callout_colours)) {
-        colourpicker::updateColourInput(session, paste0("col_", t), value = defaults()$callout_colours[[t]])
+
+      # Load JSON defaults
+      meta_path <- file.path(folder(), META_FILENAME)
+      d <- jsonlite::fromJSON(meta_path)
+
+      # Read CSS
+      css_path <- file.path(folder(), "styles.css")
+      css <- readLines(css_path, warn = FALSE)
+
+      for (t in names(d$callout_colours)) {
+        # find all .callout-<t> block starts
+        bg_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s*\\{\\s*$"), css, perl = TRUE))
+        if (length(bg_starts)) {
+          for (start in bg_starts) {
+            # look ahead safely from start+1 to end
+            if (start < length(css)) {
+              tail_idx <- seq.int(start + 1, length(css))
+              # find first background-color line in the block
+              brace_close_rel <- which(grepl("^\\s*\\}", css[tail_idx], perl = TRUE))
+              block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
+              if (block_end_rel >= 1) {
+                block_lines_idx <- tail_idx[seq_len(block_end_rel)]
+                bg_rel <- which(grepl("background-color\\s*:", css[block_lines_idx], perl = TRUE))
+                if (length(bg_rel)) {
+                  idx <- block_lines_idx[bg_rel[1]]
+                  # preserve trailing text like "!important;" by replacing only the value
+                  css[idx] <- sub(
+                    "(background-color\\s*:\\s*)[^;]+",
+                    paste0("\\1", d$callout_colours[[t]]$background),
+                    css[idx],
+                    perl = TRUE
+                  )
+                }
+              }
+            }
+          }
+        }
+
+        # find all .callout-<t> .callout-header starts
+        header_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s+\\.callout-header\\s*\\{\\s*$"), css, perl = TRUE))
+        if (length(header_starts)) {
+          for (start in header_starts) {
+            if (start < length(css)) {
+              tail_idx <- seq.int(start + 1, length(css))
+              brace_close_rel <- which(grepl("^\\s*\\}", css[tail_idx], perl = TRUE))
+              block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
+              if (block_end_rel >= 1) {
+                block_lines_idx <- tail_idx[seq_len(block_end_rel)]
+                bg_rel <- which(grepl("background-color\\s*:", css[block_lines_idx], perl = TRUE))
+                if (length(bg_rel)) {
+                  idx <- block_lines_idx[bg_rel[1]]
+                  css[idx] <- sub(
+                    "(background-color\\s*:\\s*)[^;]+",
+                    paste0("\\1", d$callout_colours[[t]]$header),
+                    css[idx],
+                    perl = TRUE
+                  )
+                }
+              }
+            }
+          }
+        }
       }
+
+      # Write back CSS
+      writeLines(css, css_path)
+
+      # Update Shiny UI inputs
+      for (t in names(d$callout_colours)) {
+        colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
+        colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
+      }
+      #req(folder())
+      #revert_defaults(folder(), META_FILENAME, session, logo_file)
     })
   }
 

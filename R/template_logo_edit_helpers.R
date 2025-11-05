@@ -1,0 +1,232 @@
+parse_qmd_logo <- function(qmd_path) {
+  qmd <- readLines(qmd_path, warn = FALSE)
+  logo_line <- grep("logo:", qmd, value = TRUE)
+  if (length(logo_line)) gsub(".*logo:\\s*", "", logo_line[1]) else "thekids.png"
+}
+
+parse_qmd_banner_colour <- function(qmd_path) {
+  qmd <- readLines(qmd_path, warn = FALSE)
+  line <- grep("^\\s*title-block-banner\\s*:\\s*", qmd, value = TRUE)
+  if (length(line)) {
+    val <- sub("^\\s*title-block-banner\\s*:\\s*", "", line[1])
+    gsub("^['\"]|['\"]$", "", val)
+  } else NULL
+}
+
+parse_css_colors <- function(css_path) {
+  css <- paste(readLines(css_path, warn = FALSE), collapse = "\n")
+  types <- c("note","tip","warning","important")
+  out <- setNames(vector("list", length(types)), types)
+  for (t in types) {
+    bg_pattern <- paste0("\\.callout-", t, "\\s*\\{[^}]*?background-color:\\s*([^;]+);")
+    bg_match <- regmatches(css, regexec(bg_pattern, css, perl = TRUE))[[1]]
+    bg <- if(length(bg_match) >= 2) sub("\\s*!important.*", "", bg_match[2]) else NA
+
+    header_pattern <- paste0("\\.callout-", t, "\\s+\\.callout-header\\s*\\{[^}]*?background-color:\\s*([^;]+);")
+    header_match <- regmatches(css, regexec(header_pattern, css, perl = TRUE))[[1]]
+    header <- if(length(header_match) >= 2) sub("\\s*!important.*", "", header_match[2]) else NA
+
+    out[[t]] <- list(background = bg, header = header)
+  }
+  out
+}
+
+read_defaults <- function(folder_html, META_FILENAME) {
+  meta_path <- file.path(folder_html, META_FILENAME)
+  qmd_path <- file.path(folder_html, "template.qmd")
+  css_path <- file.path(folder_html, "styles.css")
+
+  # Parse current qmd and css
+  logo <- parse_qmd_logo(qmd_path)
+  banner_colour <- parse_qmd_banner_colour(qmd_path)
+  callout_colours <- parse_css_colors(css_path)
+
+  if (fs::file_exists(meta_path)) {
+    meta_json <- jsonlite::fromJSON(meta_path)
+    # Ensure default_logo exists
+    if (is.null(meta_json$default_logo)) meta_json$default_logo <- logo
+    meta <- c(
+      list(
+        logo = meta_json$logo %||% logo,
+        default_logo = meta_json$default_logo,
+        banner_colour = banner_colour,
+        callout_colours = callout_colours
+      ),
+      meta_json[setdiff(names(meta_json), c("logo","default_logo","banner_colour","callout_colours"))]
+    )
+  } else {
+    # First-time initialization
+    meta <- list(
+      logo = logo,
+      default_logo = logo,
+      banner_colour = banner_colour,
+      callout_colours = callout_colours
+    )
+    writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
+  }
+
+  meta$qmd_path <- qmd_path
+  meta$css_path <- css_path
+  meta
+}
+
+update_ui_from_defaults <- function(d, session, logo_file) {
+  shiny::updateTextInput(session, "newname", value = d$logo)
+  colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+  for (t in names(d$callout_colours)) {
+    colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
+    colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
+  }
+  logo_file(d$logo)
+}
+
+update_logo <- function(infile, file_name, folder_html, METAFILE_NAME) {
+  meta_path <- file.path(folder_html, METAFILE_NAME)
+
+  # Save user logo in folder
+  dest_html <- file.path(folder_html, file_name)
+  fs::file_copy(infile, dest_html, overwrite = TRUE)
+
+  # Also copy to parent folder if needed
+  folder_parent <- fs::path_norm(fs::path(folder_html, ".."))
+  dest_parent <- file.path(folder_parent, file_name)
+  fs::file_copy(infile, dest_parent, overwrite = TRUE)
+
+  # Update template.qmd logo line
+  qmd_path <- file.path(folder_html, "template.qmd")
+  qmd <- readLines(qmd_path, warn = FALSE)
+  qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", file_name), qmd)
+  writeLines(qmd_new, qmd_path)
+
+  # Update styles.css background-image
+  css_path <- file.path(folder_html, "styles.css")
+  css <- readLines(css_path, warn = FALSE)
+  css_new <- gsub("background-image\\s*:\\s*url\\([^)]*\\)", paste0("background-image: url(", file_name, ")"), css)
+  writeLines(css_new, css_path)
+
+  # Update JSON: only change the current logo, keep default_logo untouched
+  meta <- if (fs::file_exists(meta_path)) jsonlite::fromJSON(meta_path) else list()
+  meta$logo <- file_name
+  meta$modified_time <- format(Sys.time(), tz = Sys.timezone(), usetz = TRUE)
+  writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
+}
+
+update_colors <- function(folder_html, banner_colour = NULL, callout_colours = NULL) {
+  css_path <- file.path(folder_html, "styles.css")
+  css <- readLines(css_path, warn = FALSE)
+
+  if (!is.null(callout_colours)) {
+    for (t in names(callout_colours)) {
+      in_block <- FALSE
+      for (i in seq_along(css)) {
+        line <- css[i]
+        # detect callout block start
+        if (grepl(paste0("\\.callout-", t, "\\s*\\{"), line)) {
+          in_block <- TRUE
+        } else if (in_block && grepl("\\}", line)) {
+          in_block <- FALSE
+        }
+        # update background-color in block
+        if (in_block && grepl("background-color\\s*:", line)) {
+          css[i] <- sub(
+            "background-color\\s*:\\s*#[0-9A-Fa-f]+",
+            paste0("background-color: ", callout_colours[[t]]$background),
+            line
+          )
+        }
+        # update header background-color
+        if (grepl(paste0("\\.callout-", t, "\\s+\\.callout-header"), line)) {
+          j <- i + 1
+          while(j <= length(css) && !grepl("\\}", css[j])) {
+            if (grepl("background-color\\s*:", css[j])) {
+              css[j] <- sub(
+                "background-color\\s*:\\s*#[0-9A-Fa-f]+",
+                paste0("background-color: ", callout_colours[[t]]$header),
+                css[j]
+              )
+            }
+            j <- j + 1
+          }
+        }
+      }
+    }
+    writeLines(css, css_path)
+  }
+
+  # update banner colour in template.qmd
+  if (!is.null(banner_colour)) {
+    qmd_path <- file.path(folder_html, "template.qmd")
+    qmd <- readLines(qmd_path, warn = FALSE)
+    qmd <- gsub(
+      "^\\s*title-block-banner\\s*:\\s*.*",
+      paste0("title-block-banner: \"", banner_colour, "\""),
+      qmd
+    )
+    writeLines(qmd, qmd_path)
+  }
+}
+
+
+revert_defaults <- function(folder_html, META_FILENAME, session, logo_file) {
+  meta_path <- file.path(folder_html, META_FILENAME)
+  if (!fs::file_exists(meta_path)) stop("JSON defaults not found")
+
+  d <- jsonlite::fromJSON(meta_path)
+
+  # ---- Update template.qmd banner and logo ----
+  qmd_path <- file.path(folder_html, "template.qmd")
+  qmd <- readLines(qmd_path, warn = FALSE)
+
+  # Update banner colour (in quotes)
+  qmd <- gsub(
+    "^\\s*title-block-banner\\s*:\\s*.*",
+    paste0("title-block-banner: \"", d$banner_colour, "\""),
+    qmd
+  )
+  # Update logo
+  qmd <- gsub(
+    "^\\s*logo\\s*:\\s*.*",
+    paste0("logo: ", d$default_logo),
+    qmd
+  )
+  writeLines(qmd, qmd_path)
+
+  # ---- Update styles.css logo ----
+  css_path <- file.path(folder_html, "styles.css")
+  css <- readLines(css_path, warn = FALSE)
+  css <- gsub("background-image\\s*:\\s*url\\([^)]*\\)",
+              paste0("background-image: url(", d$default_logo, ")"),
+              css)
+  writeLines(css, css_path)
+
+  # ---- Update styles.css callouts ----
+  css_path <- file.path(folder_html, "styles.css")
+  css <- readLines(css_path, warn = FALSE)
+  for (t in names(d$callout_colours)) {
+    # background
+    pattern_bg <- paste0("(\\.callout-", t, "\\s*\\{[^}]*background-color:\\s*)([^;]+)")
+    css <- gsub(pattern_bg, paste0("\\1", d$callout_colours[[t]]$background), css)
+    # header
+    pattern_header <- paste0("(\\.callout-", t, "\\s+\\.callout-header\\s*\\{[^}]*background-color:\\s*)([^;]+)")
+    css <- gsub(pattern_header, paste0("\\1", d$callout_colours[[t]]$header), css)
+  }
+  writeLines(css, css_path)
+
+  # ---- Update Shiny reactives and inputs ----
+  logo_file(d$default_logo)
+  shiny::updateTextInput(session, "newname", value = d$default_logo)
+  colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+  for (t in names(d$callout_colours)) {
+    colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
+    colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
+  }
+
+  # ---- Restore logo PNG in folder ----
+  src_logo <- file.path(folder_html, d$default_logo)
+  if (!fs::file_exists(src_logo)) {
+    default_logo_path <- file.path(folder_html, "_defaults", d$default_logo)  # adjust path as needed
+    if (fs::file_exists(default_logo_path)) {
+      fs::file_copy(default_logo_path, src_logo, overwrite = TRUE)
+    }
+  }
+}
