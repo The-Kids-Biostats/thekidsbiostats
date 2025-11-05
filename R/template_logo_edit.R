@@ -14,7 +14,7 @@
 template_logo_edit <- function() {
   META_FILENAME <- "logo_meta.json"
 
-  # ---- UI ----
+  # 1) Establish UI
   ui <- shiny::fluidPage(
     shinyjs::useShinyjs(),
     shiny::titlePanel("Customise Project Template Formatting"),
@@ -32,37 +32,50 @@ template_logo_edit <- function() {
                                       shiny::h4("Current logo selection"),
                                       shiny::imageOutput("logo_preview"),
                                       shiny::fluidRow(
-                                        shiny::column(6, shiny::numericInput("logo_width", "Width (px)", value = 150, min = 10)),
-                                        shiny::column(6, shiny::numericInput("logo_height", "Height (px)", value = 150, min = 10))
-                                      ),
-                                      shiny::fileInput("logo", "Upload logo (PNG or JPG only)", accept = c(".png", ".jpg", ".jpeg")),
-                                      shiny::textInput("newname", "Save uploaded file as", value = "", placeholder = "Select a file first"),
-                                      shiny::actionButton("apply_logo", "Update Logo"),
-                                      shiny::actionButton("revert_logo", "Revert to Default"),
+                                        shiny::column(6,
+                                                      shiny::numericInput("logo_width", "Width (px)",
+                                                                          value = 150, min = 10)),
+                                        shiny::column(6, shiny::numericInput("logo_height",
+                                                                             "Height (px)",
+                                                                             value = 150,
+                                                                             min = 10))),
+                                      shiny::fileInput("logo", "Upload logo (PNG or JPG only)",
+                                                       accept = c(".png", ".jpg", ".jpeg")),
+                                      shiny::textInput("newname",
+                                                       "Save uploaded file as",
+                                                       value = "",
+                                                       placeholder = "Select a file first"),
+                                      shiny::actionButton("apply_logo",
+                                                          "Update Logo"),
+                                      shiny::actionButton("revert_logo",
+                                                          "Revert to Default"),
                                       shiny::verbatimTextOutput("qmd_preview_logo"),
-                                      shiny::verbatimTextOutput("status_logo")
-                      ),
+                                      shiny::verbatimTextOutput("status_logo")),
 
                       # ---- Header Tab ----
                       shiny::tabPanel("Header",
-                                      colourpicker::colourInput("banner_colour", "Banner colour", value = NULL),
-                                      shiny::actionButton("apply_header", "Update Banner Colour"),
-                                      shiny::actionButton("revert_header", "Revert Banner Colour"),
-                                      shiny::verbatimTextOutput("qmd_preview_header")
-                      ),
+                                      colourpicker::colourInput("banner_colour",
+                                                                "Banner colour",
+                                                                value = NULL),
+                                      shiny::actionButton("apply_header",
+                                                          "Update Banner Colour"),
+                                      shiny::actionButton("revert_header",
+                                                          "Revert Banner Colour"),
+                                      shiny::verbatimTextOutput("qmd_preview_header")),
 
                       # ---- Styles Tab ----
                       shiny::tabPanel("Styles",
                                       shiny::uiOutput("callout_ui"),
-                                      shiny::actionButton("apply_styles", "Update Styles"),
-                                      shiny::actionButton("revert_styles", "Revert Styles")
-                      )
+                                      shiny::actionButton("apply_styles",
+                                                          "Update Styles"),
+                                      shiny::actionButton("revert_styles",
+                                                          "Revert Styles"))
+                    )
                     )
       )
     )
-  )
 
-  # ---- Server ----
+  # 2) Establish server
   server <- function(input, output, session) {
     folder <- shiny::reactiveVal(NULL)
     defaults <- shiny::reactiveVal(NULL)
@@ -77,7 +90,8 @@ template_logo_edit <- function() {
     # ---- Folder UI ----
     output$folder_ui <- shiny::renderUI({
       shiny::tagList(
-        shiny::actionButton("browse_folder", "Select project _extensions/html folder"),
+        shiny::actionButton("browse_folder",
+                            "Select project _extensions/html folder"),
         shiny::verbatimTextOutput("folder_path_display")
       )
     })
@@ -94,9 +108,11 @@ template_logo_edit <- function() {
       f <- rstudioapi::selectDirectory()
       if (!is.null(f) && fs::dir_exists(f)) {
         folder(f)
-        shiny::showNotification(paste("Folder set to:", f), type = "message")
+        shiny::showNotification(paste("Folder set to:", f),
+                                type = "message")
       } else {
-        shiny::showNotification("No folder selected or folder does not exist", type = "error")
+        shiny::showNotification("No folder selected or folder does not exist",
+                                type = "error")
       }
     })
 
@@ -107,8 +123,11 @@ template_logo_edit <- function() {
       defaults(d)
       logo_file(d$logo)
 
-      shiny::updateTextInput(session, "newname", value = d$logo)
-      colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+      shiny::updateTextInput(session, "newname",
+                             value = d$logo)
+      colourpicker::updateColourInput(session,
+                                      "banner_colour",
+                                      value = d$banner_colour)
 
       # Callouts
       output$callout_ui <- shiny::renderUI({
@@ -133,11 +152,15 @@ template_logo_edit <- function() {
         # ---- Enable/disable "save as" and "update logo" based on upload ----
     shiny::observe({
       if (!is.null(input$logo)) {
-        shiny::updateTextInput(session, "newname", value = input$logo$name)
+        shiny::updateTextInput(session,
+                               "newname",
+                               value = input$logo$name)
         shinyjs::enable("newname")
         shinyjs::enable("apply_logo")
       } else {
-        shiny::updateTextInput(session, "newname", value = "")
+        shiny::updateTextInput(session,
+                               "newname",
+                               value = "")
         shinyjs::disable("newname")
         shinyjs::disable("apply_logo")
       }
@@ -148,27 +171,40 @@ template_logo_edit <- function() {
       req(folder(), logo_file())
 
       # Always parse the active logo from styles.css
-      css_path <- file.path(folder(), "styles.css")
-      css_lines <- readLines(css_path, warn = FALSE)
+      css_path <- file.path(folder(),
+                            "styles.css")
+      css_lines <- readLines(css_path,
+                             warn = FALSE)
       logo_name <- css_lines %>%
-        grep("background-image", ., value = TRUE) %>%
+        grep("background-image",
+             .,
+             value = TRUE) %>%
         sub('.*url\\(([^)]+)\\).*', '\\1', .)
 
-      logo_path <- file.path(folder(), logo_name)
-      list(src = logo_path, width = input$logo_width, height = input$logo_height)
+      logo_path <- file.path(folder(),
+                             logo_name)
+      list(src = logo_path,
+           width = input$logo_width,
+           height = input$logo_height)
     }, deleteFile = FALSE)
 
     # ---- Logo Apply/Revert ----
     shiny::observeEvent(input$apply_logo, {
       req(input$logo)
       newname <- ifelse(input$newname == "", input$logo$name, input$newname)
-      update_logo(input$logo$datapath, newname, folder(), META_FILENAME)
+      update_logo(input$logo$datapath,
+                  newname,
+                  folder(),
+                  META_FILENAME)
       logo_file(newname)
       output$status_logo <- shiny::renderText({ paste("Logo updated:", newname) })
     })
     shiny::observeEvent(input$revert_logo, {
       req(folder())
-      revert_defaults(folder(), META_FILENAME, session, logo_file)
+      revert_defaults(folder(),
+                      META_FILENAME,
+                      session,
+                      logo_file)
 
       # Reset file upload and 'save as' input
       shinyjs::reset("logo")                    # clears uploaded file
@@ -190,7 +226,10 @@ template_logo_edit <- function() {
     })
     shiny::observeEvent(input$revert_header, {
       req(folder())
-      revert_defaults(folder(), META_FILENAME, session, logo_file)
+      revert_defaults(folder(),
+                      META_FILENAME,
+                      session,
+                      logo_file)
       output$qmd_preview_header <- shiny::renderText({
         head(readLines(file.path(folder(), "template.qmd")), 20)
       })
@@ -204,7 +243,8 @@ template_logo_edit <- function() {
              header = input[[paste0("col_", t, "_header")]])
       })
       names(callouts) <- c("note","tip","warning","important")
-      update_colors(folder(), callout_colours = callouts)
+      update_colors(folder(),
+                    callout_colours = callouts)
     })
 
     shiny::observeEvent(input$revert_styles, {
@@ -220,18 +260,24 @@ template_logo_edit <- function() {
 
       for (t in names(d$callout_colours)) {
         # find all .callout-<t> block starts
-        bg_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s*\\{\\s*$"), css, perl = TRUE))
+        bg_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s*\\{\\s*$"),
+                                 css,
+                                 perl = TRUE))
         if (length(bg_starts)) {
           for (start in bg_starts) {
             # look ahead safely from start+1 to end
             if (start < length(css)) {
               tail_idx <- seq.int(start + 1, length(css))
               # find first background-color line in the block
-              brace_close_rel <- which(grepl("^\\s*\\}", css[tail_idx], perl = TRUE))
+              brace_close_rel <- which(grepl("^\\s*\\}",
+                                             css[tail_idx],
+                                             perl = TRUE))
               block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
               if (block_end_rel >= 1) {
                 block_lines_idx <- tail_idx[seq_len(block_end_rel)]
-                bg_rel <- which(grepl("background-color\\s*:", css[block_lines_idx], perl = TRUE))
+                bg_rel <- which(grepl("background-color\\s*:",
+                                      css[block_lines_idx],
+                                      perl = TRUE))
                 if (length(bg_rel)) {
                   idx <- block_lines_idx[bg_rel[1]]
                   # preserve trailing text like "!important;" by replacing only the value
@@ -253,11 +299,15 @@ template_logo_edit <- function() {
           for (start in header_starts) {
             if (start < length(css)) {
               tail_idx <- seq.int(start + 1, length(css))
-              brace_close_rel <- which(grepl("^\\s*\\}", css[tail_idx], perl = TRUE))
+              brace_close_rel <- which(grepl("^\\s*\\}",
+                                             css[tail_idx],
+                                             perl = TRUE))
               block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
               if (block_end_rel >= 1) {
                 block_lines_idx <- tail_idx[seq_len(block_end_rel)]
-                bg_rel <- which(grepl("background-color\\s*:", css[block_lines_idx], perl = TRUE))
+                bg_rel <- which(grepl("background-color\\s*:",
+                                      css[block_lines_idx],
+                                      perl = TRUE))
                 if (length(bg_rel)) {
                   idx <- block_lines_idx[bg_rel[1]]
                   css[idx] <- sub(
@@ -278,13 +328,16 @@ template_logo_edit <- function() {
 
       # Update Shiny UI inputs
       for (t in names(d$callout_colours)) {
-        colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
-        colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
+        colourpicker::updateColourInput(session,
+                                        paste0("col_", t, "_bg"),
+                                        value = d$callout_colours[[t]]$background)
+        colourpicker::updateColourInput(session,
+                                        paste0("col_", t, "_header"),
+                                        value = d$callout_colours[[t]]$header)
       }
-      #req(folder())
-      #revert_defaults(folder(), META_FILENAME, session, logo_file)
     })
   }
 
-  shiny::runApp(list(ui = ui, server = server), launch.browser = rstudioapi::viewer)
+  shiny::runApp(list(ui = ui, server = server),
+                launch.browser = rstudioapi::viewer)
 }

@@ -1,9 +1,7 @@
-parse_qmd_logo <- function(qmd_path) {
-  qmd <- readLines(qmd_path, warn = FALSE)
-  logo_line <- grep("logo:", qmd, value = TRUE)
-  if (length(logo_line)) gsub(".*logo:\\s*", "", logo_line[1]) else "thekids.png"
-}
+# i) Helper function with default logo name
+default_logo_name <- function() "thekids.png"
 
+# ii) Helper function to extract `title-block-banner` from qmd YAML
 parse_qmd_banner_colour <- function(qmd_path) {
   qmd <- readLines(qmd_path, warn = FALSE)
   line <- grep("^\\s*title-block-banner\\s*:\\s*", qmd, value = TRUE)
@@ -13,6 +11,7 @@ parse_qmd_banner_colour <- function(qmd_path) {
   } else NULL
 }
 
+# iii) Helper function to extract callout colours from styles.css
 parse_css_colors <- function(css_path) {
   css <- paste(readLines(css_path, warn = FALSE), collapse = "\n")
   types <- c("note","tip","warning","important")
@@ -31,34 +30,36 @@ parse_css_colors <- function(css_path) {
   out
 }
 
-read_defaults <- function(folder_html, META_FILENAME) {
+# iv) Helper function to extract all defaults into list, and compile metadata (.json) file of defaults
+## Metadata file enables the reversion of choices back to default
+read_defaults <- function(folder_html,
+                          META_FILENAME) {
   meta_path <- file.path(folder_html, META_FILENAME)
   qmd_path <- file.path(folder_html, "template.qmd")
   css_path <- file.path(folder_html, "styles.css")
 
   # Parse current qmd and css
-  logo <- parse_qmd_logo(qmd_path)
   banner_colour <- parse_qmd_banner_colour(qmd_path)
   callout_colours <- parse_css_colors(css_path)
 
   if (fs::file_exists(meta_path)) {
     meta_json <- jsonlite::fromJSON(meta_path)
+
     # Ensure default_logo exists
-    if (is.null(meta_json$default_logo)) meta_json$default_logo <- logo
-    meta <- c(
-      list(
-        logo = meta_json$logo %||% logo,
-        default_logo = meta_json$default_logo,
-        banner_colour = banner_colour,
-        callout_colours = callout_colours
-      ),
-      meta_json[setdiff(names(meta_json), c("logo","default_logo","banner_colour","callout_colours"))]
-    )
+    default_logo <- meta_json$default_logo %||% default_logo_name()
+    logo <- meta_json$default_logo %||% default_logo_name()
+
+    meta <- c(list(logo = logo,
+                   default_logo = default_logo,
+                   banner_colour = banner_colour,
+                   callout_colours = callout_colours),
+              meta_json[setdiff(names(meta_json), c("logo","default_logo","banner_colour","callout_colours"))])
+
   } else {
     # First-time initialization
     meta <- list(
-      logo = logo,
-      default_logo = logo,
+      logo = default_logo_name(),
+      default_logo = default_logo_name(),
       banner_colour = banner_colour,
       callout_colours = callout_colours
     )
@@ -70,17 +71,29 @@ read_defaults <- function(folder_html, META_FILENAME) {
   meta
 }
 
-update_ui_from_defaults <- function(d, session, logo_file) {
+# v) Helper function to update shiny UI based on default values
+## So logo, colours are by default selected in the app
+update_ui_from_defaults <- function(d,
+                                    session,
+                                    logo_file) {
   shiny::updateTextInput(session, "newname", value = d$logo)
   colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
   for (t in names(d$callout_colours)) {
-    colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
-    colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
+    colourpicker::updateColourInput(session,
+                                    paste0("col_", t, "_header"),
+                                    value = d$callout_colours[[t]]$header)
+    colourpicker::updateColourInput(session,
+                                    paste0("col_", t, "_bg"),
+                                    value = d$callout_colours[[t]]$background)
   }
   logo_file(d$logo)
 }
 
-update_logo <- function(infile, file_name, folder_html, METAFILE_NAME) {
+# vi) Helper function to update the logo
+update_logo <- function(infile,
+                        file_name,
+                        folder_html,
+                        METAFILE_NAME) {
   meta_path <- file.path(folder_html, METAFILE_NAME)
 
   # Save user logo in folder
@@ -92,16 +105,12 @@ update_logo <- function(infile, file_name, folder_html, METAFILE_NAME) {
   dest_parent <- file.path(folder_parent, file_name)
   fs::file_copy(infile, dest_parent, overwrite = TRUE)
 
-  # Update template.qmd logo line
-  #qmd_path <- file.path(folder_html, "template.qmd")
-  #qmd <- readLines(qmd_path, warn = FALSE)
-  #qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", file_name), qmd)
-  #writeLines(qmd_new, qmd_path)
-
   # Update styles.css background-image
   css_path <- file.path(folder_html, "styles.css")
   css <- readLines(css_path, warn = FALSE)
-  css_new <- gsub("background-image\\s*:\\s*url\\([^)]*\\)", paste0("background-image: url(", file_name, ")"), css)
+  css_new <- gsub("background-image\\s*:\\s*url\\([^)]*\\)",
+                  paste0("background-image: url(", file_name, ")"),
+                  css)
   writeLines(css_new, css_path)
 
   # Update JSON: only change the current logo, keep default_logo untouched
@@ -111,7 +120,10 @@ update_logo <- function(infile, file_name, folder_html, METAFILE_NAME) {
   writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
 }
 
-update_colors <- function(folder_html, banner_colour = NULL, callout_colours = NULL) {
+# vii) Helper function to update the colours
+update_colors <- function(folder_html,
+                          banner_colour = NULL,
+                          callout_colours = NULL) {
   css_path <- file.path(folder_html, "styles.css")
   css <- readLines(css_path, warn = FALSE)
 
@@ -166,8 +178,11 @@ update_colors <- function(folder_html, banner_colour = NULL, callout_colours = N
   }
 }
 
-
-revert_defaults <- function(folder_html, META_FILENAME, session, logo_file) {
+# viii) Helper function to revert selections back to defaults (as stored in metadata file)
+revert_defaults <- function(folder_html,
+                            META_FILENAME,
+                            session,
+                            logo_file) {
   meta_path <- file.path(folder_html, META_FILENAME)
   if (!fs::file_exists(meta_path)) stop("JSON defaults not found")
 
