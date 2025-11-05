@@ -93,10 +93,10 @@ update_logo <- function(infile, file_name, folder_html, METAFILE_NAME) {
   fs::file_copy(infile, dest_parent, overwrite = TRUE)
 
   # Update template.qmd logo line
-  qmd_path <- file.path(folder_html, "template.qmd")
-  qmd <- readLines(qmd_path, warn = FALSE)
-  qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", file_name), qmd)
-  writeLines(qmd_new, qmd_path)
+  #qmd_path <- file.path(folder_html, "template.qmd")
+  #qmd <- readLines(qmd_path, warn = FALSE)
+  #qmd_new <- gsub("logo:\\s*.*", paste0("logo: ", file_name), qmd)
+  #writeLines(qmd_new, qmd_path)
 
   # Update styles.css background-image
   css_path <- file.path(folder_html, "styles.css")
@@ -178,8 +178,6 @@ revert_defaults <- function(folder_html, META_FILENAME, session, logo_file) {
   qmd <- readLines(qmd_path, warn = FALSE)
   qmd <- gsub("^\\s*title-block-banner\\s*:\\s*.*",
               paste0("title-block-banner: \"", d$banner_colour, "\""), qmd)
-  qmd <- gsub("^\\s*logo\\s*:\\s*.*",
-              paste0("logo: ", d$default_logo), qmd)
   writeLines(qmd, qmd_path)
 
   # ---- Update styles.css ----
@@ -195,25 +193,24 @@ revert_defaults <- function(folder_html, META_FILENAME, session, logo_file) {
   }
   writeLines(css, css_path)
 
-  # ---- Restore default logo PNG ----
+  # ---- Restore default logo PNG in _extensions and remove old uploaded logo ----
   folder_parent <- fs::path_norm(fs::path(folder_html, ".."))
   dest_parent <- file.path(folder_parent, d$default_logo)
 
-  # Copy the default logo from _extensions/html to _extensions
+  # Copy default logo from _extensions/html to _extensions
   src_logo <- file.path(folder_html, d$default_logo)
   if (fs::file_exists(src_logo)) {
     fs::file_copy(src_logo, dest_parent, overwrite = TRUE)
   }
+
+  # Delete previous uploaded logo if different from default
   old_logo <- file.path(folder_parent, d$logo)
   if (fs::file_exists(old_logo) && d$logo != d$default_logo) {
     fs::file_delete(old_logo)
   }
 
-
-
-
   # ---- Update Shiny reactives/UI ----
-  logo_file(d$default_logo)
+  logo_file(d$default_logo)   # <- ensures the reactive points to default
   shiny::updateTextInput(session, "newname", value = d$default_logo)
   colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
   for (t in names(d$callout_colours)) {

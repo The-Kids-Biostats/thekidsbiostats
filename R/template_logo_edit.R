@@ -144,14 +144,19 @@ template_logo_edit <- function() {
     })
 
     # ---- Logo Preview ----
-    shiny::observe({
+    output$logo_preview <- shiny::renderImage({
       req(folder(), logo_file())
-      output$logo_preview <- shiny::renderImage({
-        req(folder(), logo_file())
-        logo_path <- file.path(folder(), logo_file())   # reactive depends on logo_file()
-        list(src = logo_path, width = input$logo_width, height = input$logo_height)
-      }, deleteFile = FALSE)
-    })
+
+      # Always parse the active logo from styles.css
+      css_path <- file.path(folder(), "styles.css")
+      css_lines <- readLines(css_path, warn = FALSE)
+      logo_name <- css_lines %>%
+        grep("background-image", ., value = TRUE) %>%
+        sub('.*url\\(([^)]+)\\).*', '\\1', .)
+
+      logo_path <- file.path(folder(), logo_name)
+      list(src = logo_path, width = input$logo_width, height = input$logo_height)
+    }, deleteFile = FALSE)
 
     # ---- Logo Apply/Revert ----
     shiny::observeEvent(input$apply_logo, {
@@ -164,6 +169,14 @@ template_logo_edit <- function() {
     shiny::observeEvent(input$revert_logo, {
       req(folder())
       revert_defaults(folder(), META_FILENAME, session, logo_file)
+
+      # Reset file upload and 'save as' input
+      shinyjs::reset("logo")                    # clears uploaded file
+      shiny::updateTextInput(session, "newname", value = "")
+      shinyjs::disable("newname")               # disable until user uploads a new file
+      shinyjs::disable("apply_logo")            # grey out update button
+
+
       output$status_logo <- shiny::renderText({ "Reverted to defaults from JSON" })
     })
 
