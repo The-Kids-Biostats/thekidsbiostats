@@ -147,8 +147,9 @@ template_logo_edit <- function() {
     shiny::observe({
       req(folder(), logo_file())
       output$logo_preview <- shiny::renderImage({
-        req(logo_preview_path())
-        list(src = logo_preview_path(), width = input$logo_width, height = input$logo_height)
+        req(folder(), logo_file())
+        logo_path <- file.path(folder(), logo_file())   # reactive depends on logo_file()
+        list(src = logo_path, width = input$logo_width, height = input$logo_height)
       }, deleteFile = FALSE)
     })
 
