@@ -64,12 +64,13 @@ template_logo_edit <- function() {
                                       shiny::verbatimTextOutput("qmd_preview_header")),
 
                       # ---- Styles Tab ----
-                      shiny::tabPanel("Styles",
+                      shiny::tabPanel("Callouts",
                                       shiny::uiOutput("callout_ui"),
                                       shiny::actionButton("apply_styles",
                                                           "Update Styles"),
                                       shiny::actionButton("revert_styles",
-                                                          "Revert Styles"))
+                                                          "Revert Styles"),
+                                      shiny::verbatimTextOutput("status_styles"))
                     )
                     )
       )
@@ -149,7 +150,56 @@ template_logo_edit <- function() {
       })
     })
 
-        # ---- Enable/disable "save as" and "update logo" based on upload ----
+    # ---- Enable/disable Callouts "Update" and "Revert" buttons ----
+    shiny::observe({
+      req(folder())
+
+      current_callouts <- lapply(c("note","tip","warning","important"), function(t) {
+        list(
+          background = input[[paste0("col_", t, "_bg")]],
+          header     = input[[paste0("col_", t, "_header")]]
+        )
+      })
+      names(current_callouts) <- c("note","tip","warning","important")
+
+      defaults_callouts <- current_defaults()$callout_colours
+
+      changed <- sapply(names(current_callouts), function(t) {
+        !identical(current_callouts[[t]]$background, defaults_callouts[[t]]$background) ||
+          !identical(current_callouts[[t]]$header, defaults_callouts[[t]]$header)
+      })
+
+      if (any(changed)) {
+        shinyjs::enable("apply_styles")
+        shinyjs::enable("revert_styles")
+      } else {
+        shinyjs::disable("apply_styles")
+      }
+    })
+
+    # Conditionally grey out update banner buttons
+    shiny::observe({
+      req(current_defaults(), folder())
+
+      # JSON default
+      default_banner <- current_defaults()$banner_colour
+      # Actual banner in template.qmd
+      template_banner <- parse_qmd_banner_colour(file.path(folder(), "template.qmd"))
+      # What the user currently sees/input
+      selected <- input$banner_colour
+
+      # Initialize input if NULL
+      if (is.null(selected) && !is.null(template_banner)) {
+        colourpicker::updateColourInput(session, "banner_colour", value = template_banner)
+        selected <- template_banner
+      }
+
+      # Apply button: differs from template.qmd
+      shinyjs::toggleState("apply_header", !identical(selected, template_banner))
+
+    })
+
+    # ---- Enable/disable "save as" and "update logo" based on upload ----
     shiny::observe({
       if (!is.null(input$logo)) {
         shiny::updateTextInput(session,
@@ -221,7 +271,7 @@ template_logo_edit <- function() {
       req(folder(), input$banner_colour)
       update_colors(folder(), banner_colour = input$banner_colour)
       output$qmd_preview_header <- shiny::renderText({
-        head(readLines(file.path(folder(), "template.qmd")), 20)
+        "Banner colour successfully changed!"
       })
     })
     shiny::observeEvent(input$revert_header, {
@@ -231,7 +281,7 @@ template_logo_edit <- function() {
                       session,
                       logo_file)
       output$qmd_preview_header <- shiny::renderText({
-        head(readLines(file.path(folder(), "template.qmd")), 20)
+        "Banner colour successfully reverted to default!"
       })
     })
 
@@ -245,6 +295,8 @@ template_logo_edit <- function() {
       names(callouts) <- c("note","tip","warning","important")
       update_colors(folder(),
                     callout_colours = callouts)
+
+
     })
 
     shiny::observeEvent(input$revert_styles, {
