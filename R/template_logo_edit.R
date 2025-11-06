@@ -134,21 +134,8 @@ template_logo_edit <- function() {
 
       # Callouts
       output$callout_ui <- shiny::renderUI({
-        lapply(c("note","tip","warning","important"), function(t) {
-          shiny::wellPanel(
-            shiny::h4(paste("Callout", t)),
-            colourpicker::colourInput(
-              paste0("col_", t, "_header"),
-              "Header colour",
-              value = d$callout_colours[[t]]$header
-            ),
-            colourpicker::colourInput(
-              paste0("col_", t, "_bg"),
-              "Background colour",
-              value = d$callout_colours[[t]]$background
-            )
-          )
-        })
+        req(current_defaults())
+        callout_ui(current_defaults()$callout_colours)
       })
     })
 
@@ -156,20 +143,11 @@ template_logo_edit <- function() {
     shiny::observe({
       req(folder())
 
-      current_callouts <- lapply(c("note","tip","warning","important"), function(t) {
-        list(
-          background = input[[paste0("col_", t, "_bg")]],
-          header     = input[[paste0("col_", t, "_header")]]
-        )
-      })
-      names(current_callouts) <- c("note","tip","warning","important")
+      current_callouts <- get_current_callouts(input)
 
       defaults_callouts <- current_defaults()$callout_colours
 
-      changed <- sapply(names(current_callouts), function(t) {
-        !identical(current_callouts[[t]]$background, defaults_callouts[[t]]$background) ||
-          !identical(current_callouts[[t]]$header, defaults_callouts[[t]]$header)
-      })
+      changed <- callouts_changed(current_callouts, defaults_callouts)
 
       if (any(changed)) {
         shinyjs::enable("apply_styles")
@@ -198,7 +176,6 @@ template_logo_edit <- function() {
 
       # Apply button: differs from template.qmd
       shinyjs::toggleState("apply_header", !identical(selected, template_banner))
-
     })
 
     # ---- Enable/disable "save as" and "update logo" based on upload ----
@@ -221,17 +198,9 @@ template_logo_edit <- function() {
     # ---- Logo Preview ----
     output$logo_preview <- shiny::renderImage({
       req(folder(), logo_file())
+      logo_path <- get_active_logo(folder())
+      req(logo_path)
 
-      # Always parse the active logo from styles.css
-      css_path <- file.path(folder(),
-                            "styles.css")
-      css_lines <- readLines(css_path,
-                             warn = FALSE)
-      bg_lines <- grep("background-image", css_lines, value = TRUE)
-      logo_name <- sub('.*url\\(([^)]+)\\).*', '\\1', bg_lines)
-
-      logo_path <- file.path(folder(),
-                             logo_name)
       list(src = logo_path,
            width = input$logo_width,
            height = input$logo_height)
@@ -248,6 +217,7 @@ template_logo_edit <- function() {
       logo_file(newname)
       output$status_logo <- shiny::renderText({ paste("Logo updated:", newname) })
     })
+
     shiny::observeEvent(input$revert_logo, {
       req(folder())
       revert_defaults(folder(),
@@ -273,6 +243,7 @@ template_logo_edit <- function() {
         "Banner colour successfully changed!"
       })
     })
+
     shiny::observeEvent(input$revert_header, {
       req(folder())
       revert_defaults(folder(),
@@ -287,105 +258,19 @@ template_logo_edit <- function() {
     # ---- Styles Apply/Revert ----
     shiny::observeEvent(input$apply_styles, {
       req(folder())
-      callouts <- lapply(c("note","tip","warning","important"), function(t) {
-        list(background = input[[paste0("col_", t, "_bg")]],
-             header = input[[paste0("col_", t, "_header")]])
-      })
-      names(callouts) <- c("note","tip","warning","important")
+      current_callouts <- get_current_callouts(input)
       update_colors(folder(),
                     callout_colours = callouts)
-
-
-    })
+      })
 
     shiny::observeEvent(input$revert_styles, {
       req(folder())
-
-      # Load JSON defaults
       meta_path <- file.path(folder(), META_FILENAME)
       d <- jsonlite::fromJSON(meta_path)
-
-      # Read CSS
       css_path <- file.path(folder(), "styles.css")
-      css <- readLines(css_path, warn = FALSE)
 
-      for (t in names(d$callout_colours)) {
-        # find all .callout-<t> block starts
-        bg_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s*\\{\\s*$"),
-                                 css,
-                                 perl = TRUE))
-        if (length(bg_starts)) {
-          for (start in bg_starts) {
-            # look ahead safely from start+1 to end
-            if (start < length(css)) {
-              tail_idx <- seq.int(start + 1, length(css))
-              # find first background-color line in the block
-              brace_close_rel <- which(grepl("^\\s*\\}",
-                                             css[tail_idx],
-                                             perl = TRUE))
-              block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
-              if (block_end_rel >= 1) {
-                block_lines_idx <- tail_idx[seq_len(block_end_rel)]
-                bg_rel <- which(grepl("background-color\\s*:",
-                                      css[block_lines_idx],
-                                      perl = TRUE))
-                if (length(bg_rel)) {
-                  idx <- block_lines_idx[bg_rel[1]]
-                  # preserve trailing text like "!important;" by replacing only the value
-                  css[idx] <- sub(
-                    "(background-color\\s*:\\s*)[^;]+",
-                    paste0("\\1", d$callout_colours[[t]]$background),
-                    css[idx],
-                    perl = TRUE
-                  )
-                }
-              }
-            }
-          }
-        }
-
-        # find all .callout-<t> .callout-header starts
-        header_starts <- which(grepl(paste0("^\\s*\\.callout-", t, "\\s+\\.callout-header\\s*\\{\\s*$"), css, perl = TRUE))
-        if (length(header_starts)) {
-          for (start in header_starts) {
-            if (start < length(css)) {
-              tail_idx <- seq.int(start + 1, length(css))
-              brace_close_rel <- which(grepl("^\\s*\\}",
-                                             css[tail_idx],
-                                             perl = TRUE))
-              block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
-              if (block_end_rel >= 1) {
-                block_lines_idx <- tail_idx[seq_len(block_end_rel)]
-                bg_rel <- which(grepl("background-color\\s*:",
-                                      css[block_lines_idx],
-                                      perl = TRUE))
-                if (length(bg_rel)) {
-                  idx <- block_lines_idx[bg_rel[1]]
-                  css[idx] <- sub(
-                    "(background-color\\s*:\\s*)[^;]+",
-                    paste0("\\1", d$callout_colours[[t]]$header),
-                    css[idx],
-                    perl = TRUE
-                  )
-                }
-              }
-            }
-          }
-        }
-      }
-
-      # Write back CSS
-      writeLines(css, css_path)
-
-      # Update Shiny UI inputs
-      for (t in names(d$callout_colours)) {
-        colourpicker::updateColourInput(session,
-                                        paste0("col_", t, "_bg"),
-                                        value = d$callout_colours[[t]]$background)
-        colourpicker::updateColourInput(session,
-                                        paste0("col_", t, "_header"),
-                                        value = d$callout_colours[[t]]$header)
-      }
+      revert_callouts_css(css_path, d$callout_colours)
+      update_callout_inputs(session, d$callout_colours)
     })
   }
 

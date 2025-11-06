@@ -233,3 +233,96 @@ revert_defaults <- function(folder_html,
     colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
   }
 }
+
+get_active_logo <- function(folder, css_file = "styles.css") {
+  css_path <- file.path(folder, css_file)
+  if (!fs::file_exists(css_path)) return(NULL)
+
+  css_lines <- readLines(css_path, warn = FALSE)
+  bg_lines <- grep("background-image", css_lines, value = TRUE)
+  if (length(bg_lines) == 0) return(NULL)
+
+  logo_name <- sub('.*url\\(([^)]+)\\).*', '\\1', bg_lines[1])
+  file.path(folder, logo_name)
+}
+
+# Helper: revert callout colours in a CSS file based on metadata
+revert_callouts_css <- function(css_path, callout_colours) {
+  css <- readLines(css_path, warn = FALSE)
+
+  for (t in names(callout_colours)) {
+    # Function to update a block (generalized)
+    update_block <- function(pattern_start, new_value) {
+      starts <- which(grepl(pattern_start, css, perl = TRUE))
+      for (start in starts) {
+        if (start < length(css)) {
+          tail_idx <- seq.int(start + 1, length(css))
+          brace_close_rel <- which(grepl("^\\s*\\}", css[tail_idx], perl = TRUE))
+          block_end_rel <- if (length(brace_close_rel)) brace_close_rel[1] - 1 else length(tail_idx)
+          if (block_end_rel >= 1) {
+            block_lines_idx <- tail_idx[seq_len(block_end_rel)]
+            bg_rel <- which(grepl("background-color\\s*:", css[block_lines_idx], perl = TRUE))
+            if (length(bg_rel)) {
+              idx <- block_lines_idx[bg_rel[1]]
+              css[idx] <- sub("(background-color\\s*:\\s*)[^;]+", paste0("\\1", new_value), css[idx], perl = TRUE)
+            }
+          }
+        }
+      }
+    }
+
+    # Update background
+    update_block(paste0("^\\s*\\.callout-", t, "\\s*\\{\\s*$"), callout_colours[[t]]$background)
+    # Update header
+    update_block(paste0("^\\s*\\.callout-", t, "\\s+\\.callout-header\\s*\\{\\s*$"), callout_colours[[t]]$header)
+  }
+
+  writeLines(css, css_path)
+}
+
+# Helper: update Shiny inputs for callouts
+update_callout_inputs <- function(session, callout_colours) {
+  for (t in names(callout_colours)) {
+    colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = callout_colours[[t]]$background)
+    colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = callout_colours[[t]]$header)
+  }
+}
+
+
+get_current_callouts <- function(input) {
+  callouts <- lapply(c("note","tip","warning","important"), function(t) {
+    list(
+      background = input[[paste0("col_", t, "_bg")]],
+      header = input[[paste0("col_", t, "_header")]]
+    )
+  })
+  names(callouts) <- c("note","tip","warning","important")
+  callouts
+}
+
+callouts_changed <- function(current, defaults) {
+  any(sapply(names(current), function(t) {
+    !identical(current[[t]]$background, defaults[[t]]$background) ||
+      !identical(current[[t]]$header, defaults[[t]]$header)
+  }))
+}
+
+callout_ui <- function(callout_colours) {
+  shiny::tagList(
+    lapply(names(callout_colours), function(t) {
+      shiny::wellPanel(
+        shiny::h4(paste("Callout", t)),
+        colourpicker::colourInput(
+          paste0("col_", t, "_header"),
+          "Header colour",
+          value = callout_colours[[t]]$header
+        ),
+        colourpicker::colourInput(
+          paste0("col_", t, "_bg"),
+          "Background colour",
+          value = callout_colours[[t]]$background
+        )
+      )
+    })
+  )
+}
