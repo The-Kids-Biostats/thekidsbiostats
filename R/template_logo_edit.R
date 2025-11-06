@@ -30,7 +30,8 @@ template_logo_edit <- function() {
                       # ---- Logo Tab ----
                       shiny::tabPanel("Logo",
                                       shiny::h4("Current logo selection"),
-                                      shiny::imageOutput("logo_preview"),
+                                      shiny::imageOutput("logo_preview",
+                                                         height = "150px"),
                                       shiny::fluidRow(
                                         shiny::column(6,
                                                       shiny::numericInput("logo_width", "Width (px)",
