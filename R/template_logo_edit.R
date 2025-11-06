@@ -92,7 +92,8 @@ template_logo_edit <- function() {
     output$folder_ui <- shiny::renderUI({
       shiny::tagList(
         shiny::actionButton("browse_folder",
-                            "Select project _extensions/html folder"),
+                            "Select Quarto styling folder"),
+        shiny::tags$p("Please select the folder where the Quarto theming documents are currently stored. If `thekidsbiostats::create_template()` was used, this is the _extensions folder."),
         shiny::verbatimTextOutput("folder_path_display")
       )
     })
@@ -225,11 +226,8 @@ template_logo_edit <- function() {
                             "styles.css")
       css_lines <- readLines(css_path,
                              warn = FALSE)
-      logo_name <- css_lines %>%
-        grep("background-image",
-             .,
-             value = TRUE) %>%
-        sub('.*url\\(([^)]+)\\).*', '\\1', .)
+      bg_lines <- grep("background-image", css_lines, value = TRUE)
+      logo_name <- sub('.*url\\(([^)]+)\\).*', '\\1', bg_lines)
 
       logo_path <- file.path(folder(),
                              logo_name)
