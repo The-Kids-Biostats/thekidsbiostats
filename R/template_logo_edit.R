@@ -32,14 +32,6 @@ template_logo_edit <- function() {
                                       shiny::h4("Current logo selection"),
                                       shiny::imageOutput("logo_preview",
                                                          height = "150px"),
-                                      shiny::fluidRow(
-                                        shiny::column(6,
-                                                      shiny::numericInput("logo_width", "Width (px)",
-                                                                          value = 150, min = 10)),
-                                        shiny::column(6, shiny::numericInput("logo_height",
-                                                                             "Height (px)",
-                                                                             value = 150,
-                                                                             min = 10))),
                                       shiny::fileInput("logo", "Upload logo (PNG or JPG only)",
                                                        accept = c(".png", ".jpg", ".jpeg")),
                                       shiny::textInput("newname",
@@ -92,9 +84,9 @@ template_logo_edit <- function() {
     # ---- Folder UI ----
     output$folder_ui <- shiny::renderUI({
       shiny::tagList(
+        shiny::tags$p("Please select the folder where the Quarto theming documents are currently stored. If `thekidsbiostats::create_template()` was used, this is the _extensions folder."),
         shiny::actionButton("browse_folder",
                             "Select Quarto styling folder"),
-        shiny::tags$p("Please select the folder where the Quarto theming documents are currently stored. If `thekidsbiostats::create_template()` was used, this is the _extensions folder."),
         shiny::verbatimTextOutput("folder_path_display")
       )
     })
