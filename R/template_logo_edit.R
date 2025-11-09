@@ -194,8 +194,9 @@ template_logo_edit <- function() {
       req(logo_path)
 
       list(src = logo_path,
-           width = input$logo_width,
-           height = input$logo_height)
+           width = 150#input$logo_width,
+           #height = input$logo_height
+           )
     }, deleteFile = FALSE)
 
     # ---- Logo Apply/Revert ----
