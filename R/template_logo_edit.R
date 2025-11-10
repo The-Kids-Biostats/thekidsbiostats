@@ -63,7 +63,38 @@ template_logo_edit <- function() {
                                                           "Update Styles"),
                                       shiny::actionButton("revert_styles",
                                                           "Revert Styles"),
-                                      shiny::verbatimTextOutput("status_styles"))
+                                      shiny::verbatimTextOutput("status_styles")),
+
+                      # ---- Column Margin Tab ----
+                      shiny::tabPanel(
+                        "Column Margins",
+                        # ---- Header settings first ----
+                        shiny::wellPanel(
+                          shiny::tags$h4("Header settings"),
+                          colourpicker::colourInput("colmargin_header_bg", "Background colour", value = NULL),
+                          shiny::textInput("colmargin_header_text", "Text colour", value = NULL),
+                          shiny::numericInput("colmargin_header_padding", "Padding (em)", value = NULL, step = 0.5),
+                          shiny::textInput("colmargin_header_content", "Title", value = NULL),
+                          shiny::selectInput("colmargin_header_weight",
+                                             "Font weight",
+                                             choices = c("bold"),
+                                             selected = NULL
+                                             )
+                        ),
+
+                        # ---- Box settings ----
+                        shiny::wellPanel(
+                          shiny::tags$h4("Box settings"),
+                          shiny::numericInput("colmargin_border_width", "Border width (px)", value = NULL),
+                          colourpicker::colourInput("colmargin_border_color", "Border colour", value = NULL),
+                          shiny::numericInput("colmargin_padding", "Padding (em)", value = NULL),
+                          colourpicker::colourInput("colmargin_bg_color", "Background colour", value = NULL)
+                        ),
+
+                        # ---- Apply / Revert buttons ----
+                        shiny::actionButton("apply_colmargin", "Update Column Margin"),
+                        shiny::actionButton("revert_colmargin", "Revert Column Margin")
+                      )
                     )
                     )
       )
@@ -105,6 +136,8 @@ template_logo_edit <- function() {
         folder(f)
         shiny::showNotification(paste("Folder set to:", f),
                                 type = "message")
+        req(current_defaults())
+        update_ui_from_defaults(current_defaults(), session, logo_file)
       } else {
         shiny::showNotification("No folder selected or folder does not exist",
                                 type = "error")
@@ -264,6 +297,22 @@ template_logo_edit <- function() {
 
       revert_callouts_css(css_path, d$callout_colours)
       update_callout_inputs(session, d$callout_colours)
+    })
+    shiny::observeEvent(input$apply_colmargin, {
+      req(folder())
+      current_colmargin <- get_column_margin(input)
+      update_colors(folder(),
+                    column_margin = current_colmargin)
+    })
+
+    shiny::observeEvent(input$revert_colmargin, {
+      req(folder())
+      meta_path <- file.path(folder(), META_FILENAME)
+      d <- jsonlite::fromJSON(meta_path)
+      css_path <- file.path(folder(), "styles.css")
+
+      revert_callouts_css(css_path, d$column_margin)
+      update_callout_inputs(session, d$column_margin)
     })
   }
 

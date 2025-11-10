@@ -30,6 +30,53 @@ parse_css_colors <- function(css_path) {
   out
 }
 
+parse_column_margin <- function(css_path) {
+  css <- readLines(css_path, warn = FALSE)
+  css <- trimws(css)
+
+  # --- Box block ---
+  start_box <- grep("^\\.column-margin > \\*\\s*\\{", css)
+  end_box <- grep("^\\}", css)
+  end_box <- end_box[end_box > start_box[1]][1]
+  block_box <- css[(start_box+1):(end_box-1)]
+
+  get_prop <- function(prop, block, default = NA) {
+    line <- grep(paste0("^", prop, "\\s*:"), block, value = TRUE)
+    if (length(line) == 0) return(default)
+    val <- sub(paste0("^", prop, "\\s*:\\s*"), "", line[1])
+    val <- sub(";.*", "", val)
+    val
+  }
+
+  border_val <- get_prop("border", block_box)
+  border_width <- as.numeric(sub("px.*", "", border_val))
+  border_color <- sub(".*solid\\s*", "", border_val)
+
+  box <- list(
+    border_width = border_width,
+    border_color = border_color,
+    padding = as.numeric(sub("em.*", "", get_prop("padding", block_box))),
+    background_color = get_prop("background-color", block_box)
+  )
+
+  # --- Header block (::before) ---
+  start_hdr <- grep("^\\.column-margin > \\*::before\\s*\\{", css)
+  end_hdr <- grep("^\\}", css)
+  end_hdr <- end_hdr[end_hdr > start_hdr[1]][1]
+  block_hdr <- css[(start_hdr+1):(end_hdr-1)]
+
+  # Helper for header properties
+  header <- list(
+    background_color = get_prop("background-color", block_hdr),
+    text_color = get_prop("color", block_hdr),
+    padding = as.numeric(sub("em.*", "", get_prop("padding", block_hdr))),
+    content = gsub('^["\']|["\']$', '', get_prop("content", block_hdr, "")),  # strip quotes properly
+    font_weight = get_prop("font-weight", block_hdr, "")
+  )
+
+  list(box = box, header = header)
+}
+
 # iv) Helper function to extract all defaults into list, and compile metadata (.json) file of defaults
 ## Metadata file enables the reversion of choices back to default
 read_defaults <- function(folder_html,
@@ -41,6 +88,7 @@ read_defaults <- function(folder_html,
   # Parse current qmd and css
   banner_colour <- parse_qmd_banner_colour(qmd_path)
   callout_colours <- parse_css_colors(css_path)
+  column_margin <- parse_column_margin(css_path)
 
   if (fs::file_exists(meta_path)) {
     meta_json <- jsonlite::fromJSON(meta_path)
@@ -52,8 +100,14 @@ read_defaults <- function(folder_html,
     meta <- c(list(logo = logo,
                    default_logo = default_logo,
                    banner_colour = banner_colour,
-                   callout_colours = callout_colours),
-              meta_json[setdiff(names(meta_json), c("logo","default_logo","banner_colour","callout_colours"))])
+                   callout_colours = callout_colours,
+                   column_margin = column_margin),
+              meta_json[setdiff(names(meta_json),
+                                c("logo",
+                                  "default_logo",
+                                  "banner_colour",
+                                  "callout_colours",
+                                  "column_margin"))])
 
   } else {
     # First-time initialization
@@ -61,7 +115,8 @@ read_defaults <- function(folder_html,
       logo = default_logo_name(),
       default_logo = default_logo_name(),
       banner_colour = banner_colour,
-      callout_colours = callout_colours
+      callout_colours = callout_colours,
+      column_margin = column_margin
     )
     writeLines(jsonlite::toJSON(meta, auto_unbox = TRUE, pretty = TRUE), meta_path)
   }
@@ -76,8 +131,13 @@ read_defaults <- function(folder_html,
 update_ui_from_defaults <- function(d,
                                     session,
                                     logo_file) {
+  # Logo
   shiny::updateTextInput(session, "newname", value = d$logo)
+
+  # Banner Colour
   colourpicker::updateColourInput(session, "banner_colour", value = d$banner_colour)
+
+  # Callouts
   for (t in names(d$callout_colours)) {
     colourpicker::updateColourInput(session,
                                     paste0("col_", t, "_header"),
@@ -86,6 +146,20 @@ update_ui_from_defaults <- function(d,
                                     paste0("col_", t, "_bg"),
                                     value = d$callout_colours[[t]]$background)
   }
+
+  # Column margin — box
+  shiny::updateNumericInput(session, "colmargin_border_width", value = d$column_margin$box$border_width)
+  colourpicker::updateColourInput(session, "colmargin_border_color", value = d$column_margin$box$border_color)
+  shiny::updateNumericInput(session, "colmargin_padding", value = d$column_margin$box$padding)
+  colourpicker::updateColourInput(session, "colmargin_bg_color", value = d$column_margin$box$background_color)
+
+  # Column margin — header (::before)
+  colourpicker::updateColourInput(session, "colmargin_header_bg", value = d$column_margin$header$background_color)
+  shiny::updateTextInput(session, "colmargin_header_text", value = d$column_margin$header$text_color)
+  shiny::updateNumericInput(session, "colmargin_header_padding", value = d$column_margin$header$padding)
+  shiny::updateTextInput(session, "colmargin_header_content", value = d$column_margin$header$content)
+  shiny::updateTextInput(session, "colmargin_header_weight", value = d$column_margin$header$font_weight)
+
   logo_file(d$logo)
 }
 
@@ -123,7 +197,8 @@ update_logo <- function(infile,
 # vii) Helper function to update the colours
 update_colors <- function(folder_html,
                           banner_colour = NULL,
-                          callout_colours = NULL) {
+                          callout_colours = NULL,
+                          column_margin = NULL) {
   css_path <- file.path(folder_html, "styles.css")
   css <- readLines(css_path, warn = FALSE)
 
@@ -162,8 +237,88 @@ update_colors <- function(folder_html,
         }
       }
     }
-    writeLines(css, css_path)
+    #writeLines(css, css_path)
   }
+
+  # ---- Update column-margin ----
+  if (!is.null(column_margin)) {
+    # box
+    start_box <- grep("^\\.column-margin > \\*\\s*\\{", css)
+    if (length(start_box)) {
+      end_box <- grep("^\\}", css)
+      end_box <- end_box[end_box > start_box[1]][1]
+      block_idx <- (start_box+1):(end_box-1)
+      for (i in block_idx) {
+        line <- css[i]
+        if (grepl("border\\s*:", line) && !is.null(column_margin$box$border_color)) {
+          css[i] <- sub("border\\s*:\\s*[^;]+;",
+                        paste0("border: ", column_margin$box$border_width, "px solid ", column_margin$box$border_color, ";"),
+                        line)
+        }
+        if (grepl("padding\\s*:", line) && !is.null(column_margin$box$padding)) {
+          css[i] <- sub("padding\\s*:[^;]+;",
+                        paste0("padding: ", column_margin$box$padding, "em;"),
+                        line)
+        }
+        if (grepl("background-color\\s*:", line) && !is.null(column_margin$box$background_color)) {
+          css[i] <- sub("background-color\\s*:[^;]+;",
+                        paste0("background-color: ", column_margin$box$background_color, ";"),
+                        line)
+        }
+      }
+    }
+
+    # header (::before)
+    start_hdr <- grep("^\\.column-margin > \\*::before\\s*\\{", css)
+    if (length(start_hdr)) {
+      end_hdr <- grep("^\\}", css)
+      end_hdr <- end_hdr[end_hdr > start_hdr[1]][1]
+      block_idx <- (start_hdr+1):(end_hdr-1)
+      for (i in block_idx) {
+        line <- css[i]
+
+
+        #########
+        if (grepl("background-color\\s*:", line)) {
+          cat("Line before substitution:", line, "\n")
+          cat("Value to write:", column_margin$header$background_color, "\n")
+        }
+        ############
+
+
+        if (grepl("background-color\\s*:", line) && nzchar(column_margin$header$background_color)) {
+          css[i] <- sub("background-color\\s*:[^;]+;",
+                        paste0("background-color: ", column_margin$header$background_color, ";"),
+                        line)
+          cat("Line after substitution:", css[i], "\n")   # DEBUG
+        }
+        if (grepl("color\\s*:", line) && !is.null(column_margin$header$text_color)) {
+          css[i] <- sub("color\\s*:[^;]+;",
+                        paste0("color: ", column_margin$header$text_color, ";"),
+                        line)
+        }
+        if (grepl("padding\\s*:", line) && !is.null(column_margin$header$padding)) {
+          css[i] <- sub("padding\\s*:[^;]+;",
+                        paste0("padding: ", column_margin$header$padding, "em;"),
+                        line)
+        }
+        if (grepl("content\\s*:", line) && !is.null(column_margin$header$content)) {
+          css[i] <- sub("content\\s*:[^;]+;",
+                        paste0("content: \"", column_margin$header$content, "\";"),
+                        line)
+        }
+        if (grepl("font-weight\\s*:", line) && !is.null(column_margin$header$font_weight)) {
+          css[i] <- sub("font-weight\\s*:[^;]+;",
+                        paste0("font-weight: ", column_margin$header$font_weight, ";"),
+                        line)
+        }
+      }
+    }
+  }
+
+  # Write updated CSS
+  writeLines(css, css_path)
+
 
   # update banner colour in template.qmd
   if (!is.null(banner_colour)) {
@@ -206,6 +361,65 @@ revert_defaults <- function(folder_html,
     css <- gsub(paste0("(\\.callout-", t, "\\s+\\.callout-header\\s*\\{[^}]*background-color:\\s*)([^;]+)"),
                 paste0("\\1", d$callout_colours[[t]]$header), css)
   }
+  start_box <- grep("^\\.column-margin > \\*\\s*\\{", css)
+  if (length(start_box)) {
+    end_box <- grep("^\\}", css)
+    end_box <- end_box[end_box > start_box[1]][1]
+    block_idx <- (start_box+1):(end_box-1)
+    for (i in block_idx) {
+      line <- css[i]
+      if (grepl("border\\s*:", line)) {
+        css[i] <- sub("border\\s*:[^;]+;",
+                      paste0("border: ", d$column_margin$box$border_width, "px solid ", d$column_margin$box$border_color, ";"),
+                      line)
+      }
+      if (grepl("padding\\s*:", line)) {
+        css[i] <- sub("padding\\s*:[^;]+;",
+                      paste0("padding: ", d$column_margin$box$padding, "em;"),
+                      line)
+      }
+      if (grepl("background-color\\s*:", line)) {
+        css[i] <- sub("background-color\\s*:[^;]+;",
+                      paste0("background-color: ", d$column_margin$box$background_color, ";"),
+                      line)
+      }
+    }
+  }
+  # Reset column-margin header (::before)
+  start_hdr <- grep("^\\.column-margin > \\*::before\\s*\\{", css)
+  if (length(start_hdr)) {
+    end_hdr <- grep("^\\}", css)
+    end_hdr <- end_hdr[end_hdr > start_hdr[1]][1]
+    block_idx <- (start_hdr+1):(end_hdr-1)
+    for (i in block_idx) {
+      line <- css[i]
+      if (grepl("background-color\\s*:", line)) {
+        css[i] <- sub("background-color\\s*:[^;]+;\\s*",
+                      paste0("background-color: ", d$column_margin$header$background_color, ";"),
+                      line)
+      }
+      if (grepl("color\\s*:", line)) {
+        css[i] <- sub("color\\s*:[^;]+;",
+                      paste0("color: ", d$column_margin$header$text_color, ";"),
+                      line)
+      }
+      if (grepl("padding\\s*:", line)) {
+        css[i] <- sub("padding\\s*:[^;]+;",
+                      paste0("padding: ", d$column_margin$header$padding, "em;"),
+                      line)
+      }
+      if (grepl("content\\s*:", line)) {
+        css[i] <- sub("content\\s*:[^;]+;",
+                      paste0("content: \"", d$column_margin$header$content, "\";"),
+                      line)
+      }
+      if (grepl("font-weight\\s*:", line)) {
+        css[i] <- sub("font-weight\\s*:[^;]+;",
+                      paste0("font-weight: ", d$column_margin$header$font_weight, ";"),
+                      line)
+      }
+    }
+  }
   writeLines(css, css_path)
 
   # ---- Restore default logo PNG in _extensions and remove old uploaded logo ----
@@ -232,6 +446,16 @@ revert_defaults <- function(folder_html,
     colourpicker::updateColourInput(session, paste0("col_", t, "_bg"), value = d$callout_colours[[t]]$background)
     colourpicker::updateColourInput(session, paste0("col_", t, "_header"), value = d$callout_colours[[t]]$header)
   }
+  # Update column-margin UI
+  shiny::updateNumericInput(session, "colmargin_border_width", value = d$column_margin$box$border_width)
+  colourpicker::updateColourInput(session, "colmargin_border_color", value = d$column_margin$box$border_color)
+  shiny::updateNumericInput(session, "colmargin_padding", value = d$column_margin$box$padding)
+  colourpicker::updateColourInput(session, "colmargin_bg_color", value = d$column_margin$box$background_color)
+  colourpicker::updateColourInput(session, "colmargin_header_bg", value = d$column_margin$header$background_color)
+  colourpicker::updateColourInput(session, "colmargin_header_text", value = d$column_margin$header$text_color)
+  shiny::updateNumericInput(session, "colmargin_header_padding", value = d$column_margin$header$padding)
+  shiny::updateTextInput(session, "colmargin_header_content", value = d$column_margin$header$content)
+  shiny::updateTextInput(session, "colmargin_header_weight", value = d$column_margin$header$font_weight)
 }
 
 get_active_logo <- function(folder, css_file = "styles.css") {
@@ -305,6 +529,24 @@ callouts_changed <- function(current, defaults) {
     !identical(current[[t]]$background, defaults[[t]]$background) ||
       !identical(current[[t]]$header, defaults[[t]]$header)
   }))
+}
+
+get_column_margin <- function(input) {
+  list(
+    box = list(
+      border_color = input$colmargin_border_color,
+      border_width = input$colmargin_border_width,
+      padding = input$colmargin_padding,
+      background_color = input$colmargin_bg_color
+    ),
+    header = list(
+      background_color = input$colmargin_header_bg,
+      text_color = input$colmargin_header_text,
+      padding = input$colmargin_header_padding,
+      content = input$colmargin_header_content,
+      font_weight = input$colmargin_header_weight
+    )
+  )
 }
 
 callout_ui <- function(callout_colours) {
