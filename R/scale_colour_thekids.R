@@ -9,15 +9,31 @@
 #' @import ggplot2
 #'
 #' @export
-scale_color_thekids <- function(palette = "primary", discrete = TRUE, reverse = FALSE, ...) {
-  pal <- thekids_pal(palette = palette, reverse = reverse)
+scale_color_thekids <- function(palette = "primary", discrete = NULL, reverse = FALSE, ...) {
 
-  if (discrete) {
-    discrete_scale("colour", paste0("thekids_", palette), palette = pal, ...)
+  palette_names <- thekids_palettes |> (\(x) keep(x, is.list))() |> map(names) |> unlist()
+  if (is.character(palette)){
+    if (!palette %in% palette_names) {
+      stop(
+        sprintf(
+          "Palette '%s' not recognised. Please select from: %s",
+          palette,
+          paste(strwrap(palette_names, width = 60), collapse = ", ")
+        ),
+        call. = FALSE
+      )
+    } else {
+      pal <- thekids_pal(palette)  # returns a function that accepts parameter `n` as levels.
+    }
+
   } else {
-    scale_color_gradientn(colours = pal(256), ...)
+    print('ding')
   }
+
+  discrete_scale(aesthetics = "color", palette = pal, ...)
+
 }
+
 
 #' @rdname scale_color_thekids
 #' @export

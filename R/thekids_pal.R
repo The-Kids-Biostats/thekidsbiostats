@@ -1,20 +1,32 @@
-#' @title Return function to interpolate a The Kids color palette
+#' @title Generates a function, which when supplied to ggplot2 will return the appropriate colour palette, depending on the number of levels.
 #'
 #' @param palette Character name of palette in thekids_palettes
 #' @param reverse Boolean indicating whether the palette should be reversed
-#' @param ... Additional arguments to pass to colorRampPalette()
-#'
-#' @importFrom grDevices colorRampPalette
 #'
 #' @export
-thekids_pal <- function(palette = "primary", reverse = FALSE, ...) {
+thekids_pal <- function(palette, reverse=FALSE) {
 
-  pal <- thekidsbiostats::thekids_palettes[[palette]][c(1, 2, 4, 7)]
+  if (palette %in% c('primary', 'tint50', 'tint10')) {
+    function(n) {
+      if (n <= 6) {
+        pal <- unname(thekids_palettes[[palette]][c('MidnightBlue', 'Saffron', 'Teal', 'Pumpkin', 'CelestialBlue', 'CoolGrey')])
+        cols <- pal[seq_len(n)]
+      } else {
+        pal <-
+        cols <- pal(n)
+      }
 
-  if (reverse) pal <- rev(pal)
-
-  colorRampPalette(pal, ...)
-
+      if (reverse) cols <- rev(cols)
+      cols
+    }
+  } else {
+    function(n) {
+      pal <- thekids_palettes[[palette]]
+      cols <- pal(n)
+      if (reverse) cols <- rev(cols)
+      cols
+    }
+  }
 }
 
 

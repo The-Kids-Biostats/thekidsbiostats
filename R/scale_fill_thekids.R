@@ -1,18 +1,33 @@
 #' @title Fill scale constructor for The Kids colours.
 #'
-#' @param palette Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"
+#' @param palette Character name of palette in thekids_palettes.
 #' @param discrete Boolean indicating whether color aesthetic is discrete or not
 #' @param reverse Boolean indicating whether the palette should be reversed
 #' @param ... Additional arguments passed to discrete_scale() or
 #'            scale_fill_gradientn(), used respectively when discrete is TRUE or FALSE
 #'
 #' @export
-scale_fill_thekids <- function(palette = "primary", discrete = TRUE, reverse = FALSE, ...) {
-  pal <- thekids_pal(palette = palette, reverse = reverse)
+scale_fill_thekids <- function(palette = "primary", discrete = NULL, reverse = FALSE, ...) {
 
-  if (discrete) {
-    discrete_scale("fill", paste0("thekids_", palette), palette = pal, ...)
+  palette_names <- thekids_palettes |> (\(x) keep(x, is.list))() |> map(names) |> unlist()
+  if (is.character(palette)){
+    if (!palette %in% palette_names) {
+      stop(
+        sprintf(
+          "Palette '%s' not recognised. Please select from: %s",
+          palette,
+          paste(strwrap(palette_names, width = 60), collapse = ", ")
+        ),
+        call. = FALSE
+      )
+    } else {
+      pal <- thekids_pal(palette)  # returns a function that accepts parameter `n` as levels.
+    }
+
   } else {
-    scale_fill_gradientn(colours = pal(256), ...)
+    print('ding')
   }
+
+  discrete_scale( aesthetics = "fill", palette = pal, ...)
+
 }
