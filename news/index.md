@@ -1,5 +1,12 @@
 # Changelog
 
+## thekidsbiostats 1.5.0
+
+- Update thekids_table fallback font handling
+- Additional font tests for thekids_table()
+- Add blog link to pkgdown site
+- Enhance pkgdown structure
+
 ## thekidsbiostats 1.4.3
 
 - Re-structure readme
