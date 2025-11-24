@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.4.3
+
+* Re-structure readme
+* Update README.md
+
+
 # thekidsbiostats 1.4.2
 
 * Implement a suite of changes with how dependencies are installed by the package.
