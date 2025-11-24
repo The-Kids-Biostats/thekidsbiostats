@@ -13,7 +13,7 @@
 #' @param hline specifies a horizontal line above label cells.
 #'   Can be an \code{fp_border} object, a color string (e.g., \code{"red"}), or a logical
 #'   value (\code{TRUE} for default border, \code{FALSE} for no line).
-#'   Note that \code{j} is ignored for \code{hline}, use \code(border) to apply to specific columns only.
+#'   Note that \code{j} is ignored for \code{hline}, use \code{border} to apply to specific columns only.
 #' @param bold Logical; make label text bold.
 #' @param italic Logical; make label text italic.
 #' @param color Character; text colour of the label cells.

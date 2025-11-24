@@ -43,7 +43,7 @@ be applied, which by default is \code{label_col}.}
 \item{hline}{specifies a horizontal line above label cells.
 Can be an \code{fp_border} object, a color string (e.g., \code{"red"}), or a logical
 value (\code{TRUE} for default border, \code{FALSE} for no line).
-Note that \code{j} is ignored for \code{hline}, use \code(border) to apply to specific columns only.}
+Note that \code{j} is ignored for \code{hline}, use \code{border} to apply to specific columns only.}
 
 \item{bold}{Logical; make label text bold.}
 
