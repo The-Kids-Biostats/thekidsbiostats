@@ -18,9 +18,9 @@ table_theme <- function(x,
                         highlight = NULL) {
   stopifnot(inherits(x, "flextable"))
 
-  h_n <- nrow_part(x, "header")
-  f_n <- nrow_part(x, "footer")
-  b_n <- nrow_part(x, "body")
+  h_n <- flextable::nrow_part(x, "header")
+  f_n <- flextable::nrow_part(x, "footer")
+  b_n <- flextable::nrow_part(x, "body")
 
   x <- flextable::border_remove(x)
   x <- flextable::align(x, align = "center", part = "header")
@@ -271,10 +271,14 @@ get_num_body_rows <- function(x) {
 #'
 #' @return A character string of the validated or fallback font
 #' @noRd
-check_font_family <- function(font_family, fallback_family = "sans") {
-  if (requireNamespace("systemfonts", quietly = TRUE)) {
-    matched <- systemfonts::match_fonts(font_family)
-    if (!is.na(matched$path)) return(font_family)
+check_font_family <- function(font_family, fallback_family) {
+  # Get all available system font families
+  installed <- unique(systemfonts::system_fonts()$family)
+
+  if (font_family %in% installed) {
+    return(font_family)
+  } else {
+    warning(sprintf("Font '%s' not found; falling back to '%s'.", font_family, fallback_family))
+    return(fallback_family)
   }
-  fallback_family
 }
