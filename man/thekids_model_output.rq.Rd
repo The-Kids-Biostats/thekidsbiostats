@@ -4,10 +4,10 @@
 \alias{thekids_model_output.rq}
 \title{Handle Output for Quantile Regression Models}
 \usage{
-\method{thekids_model_output}{rq}(mod, ...)
+\method{thekids_model_output}{rq}(model, ...)
 }
 \arguments{
-\item{mod}{A fitted quantile regression model object of class \code{rq}.}
+\item{model}{A fitted quantile regression model object of class \code{rq}.}
 
 \item{...}{Additional arguments (currently unused).}
 }

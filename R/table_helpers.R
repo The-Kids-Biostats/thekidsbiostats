@@ -4,9 +4,9 @@
 #' with optional row highlighting.
 #'
 #' @param x A flextable object
-#' @param header_bg Named vector of background colors for header rows (`odd`, `even`)
-#' @param footer_bg Named vector of background colors for footer rows (`odd`, `even`)
-#' @param body_bg Named vector of background colors for body rows (`odd`, `even` or `highlight`, `other`)
+#' @param header_bg Named vector of background colours for header rows (`odd`, `even`)
+#' @param footer_bg Named vector of background colours for footer rows (`odd`, `even`)
+#' @param body_bg Named vector of background colours for body rows (`odd`, `even` or `highlight`, `other`)
 #' @param highlight Optional integer vector of row indices to highlight
 #'
 #' @return A styled flextable object
@@ -18,9 +18,9 @@ table_theme <- function(x,
                         highlight = NULL) {
   stopifnot(inherits(x, "flextable"))
 
-  h_n <- nrow_part(x, "header")
-  f_n <- nrow_part(x, "footer")
-  b_n <- nrow_part(x, "body")
+  h_n <- flextable::nrow_part(x, "header")
+  f_n <- flextable::nrow_part(x, "footer")
+  b_n <- flextable::nrow_part(x, "body")
 
   x <- flextable::border_remove(x)
   x <- flextable::align(x, align = "center", part = "header")
@@ -64,7 +64,7 @@ table_theme <- function(x,
 
 #' Zebra-themed table styling
 #'
-#' Applies alternating body striping to a flextable with Kids palette colors.
+#' Applies alternating body striping to a flextable with Kids palette colours.
 #'
 #' @param x A flextable object
 #' @param colour A valid colour name from `thekids_palettes$primary`
@@ -73,9 +73,9 @@ table_theme <- function(x,
 #' @noRd
 table_zebra <- function(x, colour) {
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("even" = thekids_palettes$tint50[[colour]], "odd" = "transparent"))
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              body_bg   = c("even" = thekidsbiostats::thekids_palettes$tint50[[colour]], "odd" = "transparent"))
 }
 
 
@@ -92,6 +92,12 @@ table_zebra <- function(x, colour) {
 table_highlight <- function(x, colour, highlight) {
   # x must already be converted to a flextable
   stopifnot(inherits(x, "flextable"))
+
+  # Check colours are available
+  if (!colour %in% names(thekids_palettes$primary)) {
+    stop(sprintf("Invalid colour. Choose from: %s",
+                 paste(shQuote(names(thekids_palettes$primary)), collapse = ", ")))
+  }
 
   # Ensure the highlight value is in integer
   if (!is.null(highlight)) {
@@ -111,9 +117,9 @@ table_highlight <- function(x, colour, highlight) {
   }
 
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("highlight" = thekids_palettes$tint50[[colour]], "other" = "transparent"),
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              body_bg   = c("highlight" = thekidsbiostats::thekids_palettes$tint50[[colour]], "other" = "transparent"),
               highlight = highlight)
 }
 
@@ -129,8 +135,8 @@ table_highlight <- function(x, colour, highlight) {
 #' @noRd
 table_non_zebra <- function(x, colour) {
   table_theme(x,
-              header_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekids_palettes$primary[[colour]], "even" = "transparent"),
+              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
               body_bg   = c("odd" = "transparent", "even" = "transparent"))
 }
 
@@ -148,12 +154,12 @@ table_coerce <- function(x, date_fix) {
     table_out <- x
   } else if(any(class(x) %in% c("gtsummary"))){
     table_out <- x %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       gtsummary::as_flex_table()
   } else if(any(class(x) %in% c("gt_tbl"))){
     table_out <- x %>%
       data.frame %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   } else if (any(class(x) %in% c("knitr_kable"))){
     if (length(as.character(x)) > 1){
@@ -168,13 +174,13 @@ table_coerce <- function(x, date_fix) {
       rvest::read_html() %>%
       rvest::html_node("table") %>%
       rvest::html_table(fill = TRUE) %>%
-      kable_colnames(.) %>%
+      kable_colnames() %>%
       tidyr::as_tibble() %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   } else {
     table_out <- x %>%
-      date_format(x = ., date_fix = date_fix) %>%
+      date_format(date_fix = date_fix) %>%
       flextable::flextable()
   }
 }
@@ -265,10 +271,14 @@ get_num_body_rows <- function(x) {
 #'
 #' @return A character string of the validated or fallback font
 #' @noRd
-check_font_family <- function(font_family, fallback_family = "sans") {
-  if (requireNamespace("systemfonts", quietly = TRUE)) {
-    matched <- systemfonts::match_fonts(font_family)
-    if (!is.na(matched$path)) return(font_family)
+check_font_family <- function(font_family, fallback_family) {
+  # Get all available system font families
+  installed <- unique(systemfonts::system_fonts()$family)
+
+  if (font_family %in% installed) {
+    return(font_family)
+  } else {
+    warning(sprintf("Font '%s' not found; falling back to '%s'.", font_family, fallback_family))
+    return(fallback_family)
   }
-  fallback_family
 }

@@ -8,6 +8,11 @@ create_template(
   file_name = NULL,
   directory = "reports",
   ext_name = "html",
+  title = NULL,
+  subtitle = NULL,
+  author = NULL,
+  affiliation = NULL,
+  include_reproducibility = TRUE,
   open_file = TRUE
 )
 }
@@ -18,7 +23,17 @@ create_template(
 
 \item{ext_name}{Name of the template extension (e.g. "html", "word").}
 
-\item{open_file}{Whether to open the file after creation.}
+\item{title}{Title of the report.}
+
+\item{subtitle}{Subtitle of the report.}
+
+\item{author}{Author name (defaults to \code{Sys.info()[['user']]}).}
+
+\item{affiliation}{Affiliation of the author.}
+
+\item{include_reproducibility}{Whether or not to include a 'Reproducibility Information' section, which outputs the R session information (default: TRUE).}
+
+\item{open_file}{Whether to open the file after creation (default: TRUE).}
 }
 \value{
 Invisibly returns path to created .qmd file, or NULL if skipped.

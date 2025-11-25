@@ -2,12 +2,12 @@
 % Please edit documentation in R/scale_fill_thekids.R
 \name{scale_fill_thekids}
 \alias{scale_fill_thekids}
-\title{Fill scale constructor for The Kids colors.}
+\title{Fill scale constructor for The Kids colours.}
 \usage{
 scale_fill_thekids(palette = "primary", discrete = TRUE, reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Character name of palette in tehkids_palettes. Options are "primary", "tint50" and "typography"}
+\item{palette}{Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"}
 
 \item{discrete}{Boolean indicating whether color aesthetic is discrete or not}
 
@@ -17,5 +17,5 @@ scale_fill_thekids(palette = "primary", discrete = TRUE, reverse = FALSE, ...)
 scale_fill_gradientn(), used respectively when discrete is TRUE or FALSE}
 }
 \description{
-Fill scale constructor for The Kids colors.
+Fill scale constructor for The Kids colours.
 }

@@ -4,10 +4,10 @@
 \alias{thekids_model_output.default}
 \title{Handle Output for Unsupported Model Types}
 \usage{
-\method{thekids_model_output}{default}(mod, ...)
+\method{thekids_model_output}{default}(model, ...)
 }
 \arguments{
-\item{mod}{A model object of an unsupported class.}
+\item{model}{A model object of an unsupported class.}
 
 \item{...}{Additional arguments (currently unused).}
 }

@@ -1,5 +1,75 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.6.1
+
+- Same as previous version.
+
+
+# thekidsbiostats 1.6.0
+
+* Added modify_labels()
+* Added unit testing for modify_labels()
+
+
+# thekidsbiostats 1.5.0
+
+* Update thekids_table fallback font handling
+* Additional font tests for thekids_table()
+* Add blog link to pkgdown site
+* Enhance pkgdown structure
+
+
+# thekidsbiostats 1.4.3
+
+* Re-structure readme
+* Update README.md
+
+
+# thekidsbiostats 1.4.2
+
+* Implement a suite of changes with how dependencies are installed by the package.
+* Updates to README, DESCRIPTION.
+* Remove large packages from Depends to an .onLoad() file.
+
+
+# thekidsbiostats 1.4.1
+
+* Updated DESCRIPTION with pkgdown site url.
+* Updated README with R-universe badges.
+
+
+# thekidsbiostats 1.4.0
+
+* Established unit testing using testthat.
+* Added code coverage badge to README.
+* Established pkgdown site for package.
+
+
+# thekidsbiostats 1.3.3
+
+* Resolved small bug in `round_vec` with handling of NA values.
+
+
+# thekidsbiostats 1.3.2
+
+* Resolved minor spelling mistakes.
+
+
+# thekidsbiostats 1.3.1
+
+* Resolved non-ASCII characters in addins, create_project, create_template, model_helpers
+* Fixed thekids_model warnings, update DESCRIPTION
+* Fixed bug in round_df()
+* Fixed global binding variables model_helpers, thekids_showpalettes, thekids_table, table_helpers
+* Update release.yml
+
+
+# thekidsbiostats 1.3.0
+
+* Quality-of-life updates to create_template_addin()
+* Added extra functionality to create_template_addin()
+
+
 # thekidsbiostats 1.2.1
 
 - Same as previous version.

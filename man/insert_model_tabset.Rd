@@ -11,6 +11,6 @@ Inserts code into the active RStudio document and copies a child QMD file.
 }
 \description{
 This Shiny gadget inserts a \code{model_name <- "mod"} line and a child chunk to include
-a preformatted tabset from an external Quarto file. It also copies the child file
-to the same directory as the currently open document.
+a preformatted tabset from an external Quarto file. It also optionally previews the
+output.
 }

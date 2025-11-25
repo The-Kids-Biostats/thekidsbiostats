@@ -162,7 +162,7 @@ theme_thekids <- thekids_theme
 
 #' Apply Institute Theme to ggplot2 Plots
 #'
-#' This function applies a custom theme to ggplot2 plots, incorporating specific fonts and colors to align with the institute's visual identity.
+#' This function applies a custom theme to ggplot2 plots, incorporating specific fonts and colours to align with the institute's visual identity.
 #'
 #' @details
 #' The function determines the operating system and selects appropriate font names for Windows or other systems. It applies a minimal theme with custom settings for plot title, axis title, and strip text, using the 'Barlow Semi Condensed' font family. It also adjusts color scales using the 'viridis' package.

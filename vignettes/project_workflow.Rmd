@@ -76,7 +76,7 @@ create_template(file_name = "Analysis_Report_v1",
 
 <br><br>
 
-# Enhancing Report Readbility Using Add-Ins 
+# Enhancing Report Readability Using Add-Ins 
 
 ## Reproducibility Information
 

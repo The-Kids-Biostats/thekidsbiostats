@@ -31,41 +31,34 @@ create_template <- function(file_name = NULL,
   valid_ext <- list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats"))
   stopifnot("Extension not in package" = ext_name %in% valid_ext)
 
-  message("📦 Using template extension: ", ext_name)
+  message("\U0001F4E6 Using template extension: ", ext_name)
 
   # Define source and destination extension folders
   ext_src <- system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats")
   ext_dest <- file.path(directory, "_extensions", ext_name)
 
-  # Copy entire extension directory to the destination
-  dir.create(dirname(ext_dest), showWarnings = FALSE, recursive = TRUE)
-  if (!dir.exists(ext_dest)) {
-    dir.create(ext_dest)
-  }
+  message("\U0001F4C1 _extensions folder created: ", extfolder)
 
-  # Copy all files and subdirectories recursively
-  copied <- file.copy(from = list.files(ext_src, full.names = TRUE),
-                      to = ext_dest,
-                      recursive = TRUE,
-                      overwrite = TRUE)
-
-  if (any(!copied)) {
-    warning("⚠️ Some extension files could not be copied.")
-  } else {
-    message("📁 Extension files copied to: ", ext_dest)
-  }
+  file.copy(
+    from = system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats"),
+    to = extfolder,
+    overwrite = TRUE,
+    recursive = TRUE,
+    copy.mode = TRUE
+  )
+  message("\U0001F4C4 Template extension files copied to: ", file.path(extfolder, ext_name))
 
   # Set up qmd file
   qmd_file <- file.path(directory, ifelse(endsWith(file_name, ".qmd"), file_name, paste0(file_name, ".qmd")))
 
   if (file.exists(qmd_file)) {
-    warning("⚠️ Report file already exists: ", qmd_file, ". Skipping creation.")
+    warning("\u26A0\uFE0F Report file already exists: ", qmd_file, ". Skipping creation.")
     return(invisible(NULL))
   }
 
   qmd_lines <- readLines(file.path(system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats"), 'template.qmd'))
   qmd_lines <- update_qmd_template(
-    line = qmd_lines,
+    lines = qmd_lines,
     title = title,
     subtitle = subtitle,
     author = author,
@@ -75,10 +68,10 @@ create_template <- function(file_name = NULL,
 
   writeLines(qmd_lines, qmd_file)
 
-  message("📝 Report template created: ", qmd_file)
+  message("\U0001F4DD Report template created: ", qmd_file)
 
   if (open_file && rstudioapi::isAvailable()) {
-    message("📂 Opening report: ", qmd_file)
+    message("\U0001F4C2 Opening report: ", qmd_file)
     rstudioapi::navigateToFile(qmd_file)
   }
 

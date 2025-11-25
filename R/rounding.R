@@ -20,7 +20,9 @@
 #' @export
 
 round_vec <- function(x, digits = 2){
-  trimws(format(round(x, digits), nsmall = digits))
+  ifelse(is.na(x),
+         NA_character_,
+         trimws(format(round(x, digits), nsmall = digits)))
 }
 
 
@@ -52,6 +54,6 @@ round_df <- function(x, digits = 2, con_char = F) {
       dplyr::mutate_if(is.numeric, round, digits)
   } else {
     x %>%
-      dplyr::mutate(dplyr::across(utils::globalVariables("where")(is.numeric), ~ trimws(format(round(., digits), nsmall = digits))))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~ trimws(format(round(., digits), nsmall = digits))))
   }
 }

@@ -18,10 +18,10 @@
 #' Pre-specified formatting applied to 'flextable' objects (ahead of `thekids_table()`) may not carry over as expected. Please consider using `thekids_table() `in place of an explicit `flextable()` call, because our function already coerces the table to a flextable object.
 #'
 #' @param x a table, typically a data.frame, tibble, or output from gtsummary.
-#' @param font.size the font size for text in the body of the table, defaults to 8 (passed throught to set_flextable_defaults).
+#' @param font.size the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).
 #' @param font.size.header the font size for text in the header of the table, defaults to 10.
 #' @param line.spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).
-#' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed throught to set_flextable_defaults).
+#' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).
 #' @param colour a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.
 #' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
 #'  if TRUE, alternate each row's background with `colour`;
@@ -29,7 +29,8 @@
 #'  if negative, this will invert the sequence of highlighted blocks;
 #'  (defaults to `F`)
 #' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows).
-#' @param font_family string containing the font family to apply to the table. Default "Barlow", otherwise "sans".
+#' @param font_family string containing the font family to apply to the table. Default "Barlow".
+#' @param fallback_font_family fallback font family if `font_family` is does not exist. Default is "sans".
 #' @param date_fix re-wraps date objects to strictly occupy one line, instead of splitting (defaults to `T`).
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}.
 #'
@@ -68,12 +69,14 @@ thekids_table <- function(x,
                           zebra = FALSE,
                           highlight = NULL,
                           font_family = "Barlow",
+                          fallback_font_family = "sans",
                           date_fix = TRUE,
                           ...) {
 
 
   # Check font family availability
-  font_family <- check_font_family(font_family)
+  font_family <- check_font_family(font_family = font_family,
+                                   fallback_family = fallback_font_family)
 
   # Standardise argument aliasing
   call <- match.call()
@@ -83,9 +86,9 @@ thekids_table <- function(x,
   }
 
   # Check colours are available
-  if (!colour %in% names(thekids_palettes$primary)) {
+  if (!colour %in% names(thekidsbiostats::thekids_palettes$primary)) {
     stop(sprintf("Invalid colour. Choose from: %s",
-                 paste(shQuote(names(thekids_palettes$primary)), collapse = ", ")))
+                 paste(shQuote(names(thekidsbiostats::thekids_palettes$primary)), collapse = ", ")))
   }
 
   # Check zebra vs highlight
