@@ -1,5 +1,10 @@
 # Changelog
 
+## thekidsbiostats 1.6.0
+
+- Added modify_labels()
+- Added unit testing for modify_labels()
+
 ## thekidsbiostats 1.5.0
 
 - Update thekids_table fallback font handling
