@@ -23,9 +23,9 @@
 #' @param font Character; font family name of the label cells.
 #' @param rotation Numeric; rotation of label text, can be one of "lrtb", "tbrl", "btlr".
 #' @param align Character; text alignment of label (\code{"left"}, \code{"center"}, \code{"right"} or \code{"justify"}).
-#' @param border, border.top, border.left, border.bottom, border.right Optional \code{fp_border} objects
+#' @param border @param border.top @param border.left @param border.bottom @param border.right Optional \code{fp_border} objects
 #'   to set cell borders.
-#' @param padding, padding.top, padding.left, padding.bottom, padding.right Optional numeric values
+#' @param padding @param padding.top @param padding.left @param padding.bottom @param padding.right Optional numeric values
 #'   to set cell padding.
 #'
 #' @return A \code{flextable} object with the specified modifications applied to the label cells.
@@ -51,7 +51,7 @@ modify_labels <- function(x, label_col=1, j=NULL, hline=NULL, bold=NULL, italic=
                           padding=NULL, padding.top=NULL, padding.left=NULL, padding.bottom=NULL, padding.right=NULL) {
 
   if(!inherits(x, "flextable")) {
-    stop("Error: the table is not a flextable. Please first run `thekids_table()` or `flextable()`.")
+    stop("Error: the table is not a flextable object. Please first run `thekids_table()` or `flextable()`.")
   }
 
   if (is.null(j)) { # If j is not specified, use label_col
@@ -76,7 +76,7 @@ modify_labels <- function(x, label_col=1, j=NULL, hline=NULL, bold=NULL, italic=
     } else {
       stop("Invalid 'hline' argument: expected an fp_border() object, a colour character string or a logical value (TRUE/FALSE).")
     }
-    x <- flextable::border(x, i=label_rows, j=c(1,2), border.top = border_line)
+    x <- flextable::border(x, i=label_rows, j=1:ncol(x$body$dataset), border.top = border_line)
   }
 
   if (!is.null(bold)) {
