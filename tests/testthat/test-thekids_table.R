@@ -112,18 +112,67 @@ test_that("thekids_table restores flextable defaults after execution", {
   expect_equal(old_defaults, new_defaults)
 })
 
-# Can probably be improved
-#test_that("check_font_family returns a font name or fallback", {
-#  out <- thekids_table(mtcars[1:5, ], font_family = "DefinitelyNoSuchFont123")
-#  defaults <- flextable::get_flextable_defaults()
-#  expect_true(defaults$font.family %in% c("sans", "DefinitelyNoSuchFont123", "Arial"))
-#})
-test_that("check_font_family returns a font name or fallback", {
-  out <- thekids_table(mtcars[1:5, ], font_family = "DefinitelyNoSuchFont123")
-  defaults <- flextable::get_flextable_defaults()
+test_that("check_font_family applies fallback font and warns", {
+  missing_font <- "ThisFontDoesNotExist123"
+  fallback_font <- "sans"
 
-  # Get system font list
-  sys_fonts <- systemfonts::system_fonts()$family
+  # Expect a warning and also check the return value
+  expect_warning(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = missing_font,
+      fallback_family = fallback_font
+    ),
+    regexp = "Font 'ThisFontDoesNotExist123' not found; falling back to 'sans'"
+  )
 
-  expect_true(defaults$font.family %in% c("DefinitelyNoSuchFont123", sys_fonts))
+  # Check that the fallback is returned
+  expect_equal(result, fallback_font)
+})
+
+test_that("check_font_family handles empty string input", {
+  expect_warning(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = "",
+      fallback_family = "sans"
+    ),
+    regexp = "falling back to 'sans'"
+  )
+  expect_equal(result, "sans")
+})
+
+test_that("check_font_family handles NA input", {
+  expect_warning(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = NA,
+      fallback_family = "sans"
+    ),
+    regexp = "falling back to 'sans'"
+  )
+  expect_equal(result, "sans")
+})
+
+test_that("check_font_family handles numeric input by coercion", {
+  expect_warning(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = 123,
+      fallback_family = "sans"
+    ),
+    regexp = "falling back to 'sans'"
+  )
+  expect_equal(result, "sans")
+})
+
+test_that("check_font_family returns requested font if installed", {
+  installed_fonts <- unique(systemfonts::system_fonts()$family)
+  good_font <- installed_fonts[1]  # guaranteed to exist
+
+  # Should not warn, should return the requested font
+  expect_silent(
+    result <- thekidsbiostats:::check_font_family(
+      font_family = good_font,
+      fallback_family = "sans"
+    )
+  )
+
+  expect_equal(result, good_font)
 })
