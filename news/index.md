@@ -1,5 +1,9 @@
 # Changelog
 
+## thekidsbiostats 1.6.1
+
+- Same as previous version.
+
 ## thekidsbiostats 1.6.0
 
 - Added modify_labels()
