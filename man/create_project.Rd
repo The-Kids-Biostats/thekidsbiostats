@@ -7,7 +7,7 @@
 create_project(
   project_name,
   path = NULL,
-  folders = c("data-raw", "data", "admin", "docs", "reports"),
+  folders = c("data-raw", "data", "admin", "docs", "reports", "scripts"),
   ext_name = "html",
   create_report = FALSE,
   create_rproj = TRUE,

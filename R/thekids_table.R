@@ -10,6 +10,10 @@
 #'
 #' Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think `summarise()`), `gtsummary`, and `kable` outputs.
 #'
+#' @details
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html).
+#'
+#'
 #' @note
 #' Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running `thekids_table()`.
 #'
