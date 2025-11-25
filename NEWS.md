@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.6.2
+
+* updated logo css for wrapping
+* fix create_template merge issues
+
+
 # thekidsbiostats 1.6.1
 
 - Same as previous version.
