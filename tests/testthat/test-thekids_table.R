@@ -176,3 +176,63 @@ test_that("check_font_family returns requested font if installed", {
 
   expect_equal(result, good_font)
 })
+
+test_that("invalid colour triggers error", {
+  expect_error(
+    thekids_table(head(mtcars), colour = "notacolour"),
+    "Invalid colour"
+  )
+})
+
+test_that("zebra and highlight together trigger error", {
+  expect_error(
+    thekids_table(head(mtcars), zebra = TRUE, highlight = c(1, 2)),
+    "Cannot use both zebra striping"
+  )
+})
+
+test_that("zebra=0 triggers error", {
+  expect_error(
+    thekids_table(head(mtcars), zebra = 0),
+    "zebra must be non-zero"
+  )
+})
+
+test_that("flextable input triggers warning", {
+  ft <- flextable(head(mtcars))
+  expect_warning(
+    thekids_table(ft),
+    "Object of class 'flextable' detected"
+  )
+})
+
+test_that("zebra numeric larger than n_rows triggers warning", {
+  x <- head(mtcars)
+  expect_warning(
+    thekids_table(x, zebra = 10),
+    "greater than or equal to the number of body rows"
+  )
+})
+
+test_that("integer zebra positive/negative handled correctly", {
+  x <- head(mtcars)
+  # Positive zebra
+  res1 <- thekids_table(x, zebra = 2)
+  expect_s3_class(res1, "flextable")
+
+  # Negative zebra
+  res2 <- thekids_table(x, zebra = -2)
+  expect_s3_class(res2, "flextable")
+})
+
+test_that("non-standard argument name triggers re-evaluation path", {
+  expect_s3_class(
+    thekids_table(head(mtcars), color = "Saffron"),
+    "flextable"
+  )
+})
+
+test_that("zebra = TRUE applies zebra theme defaults", {
+  res <- thekids_table(head(mtcars), zebra = TRUE, colour = "Saffron")
+  expect_s3_class(res, "flextable")
+})

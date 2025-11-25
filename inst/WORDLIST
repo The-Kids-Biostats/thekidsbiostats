@@ -46,6 +46,8 @@ lubridate
 md
 modeling
 mtcars
+onLoad
+pkgdown
 preformatted
 qmd
 rect
@@ -53,11 +55,13 @@ roxygen
 shinyFiles
 showpalettes
 tabset
+testthat
 thekids
 tibble
 tibbles
 toolbelt
 vars
 vec
+walkthough
 yesno
 yml
