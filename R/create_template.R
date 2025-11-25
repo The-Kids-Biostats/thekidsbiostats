@@ -33,9 +33,9 @@ create_template <- function(file_name = NULL,
 
   message("\U0001F4E6 Using template extension: ", ext_name)
 
-  # Define source and destination extension folders
-  ext_src <- system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats")
-  ext_dest <- file.path(directory, "_extensions", ext_name)
+  extfolder <- file.path(directory, "_extensions")
+  dir.create(extfolder, showWarnings = FALSE)
+  dir.create(file.path(extfolder, ext_name), showWarnings = FALSE)
 
   message("\U0001F4C1 _extensions folder created: ", extfolder)
 
@@ -48,7 +48,6 @@ create_template <- function(file_name = NULL,
   )
   message("\U0001F4C4 Template extension files copied to: ", file.path(extfolder, ext_name))
 
-  # Set up qmd file
   qmd_file <- file.path(directory, ifelse(endsWith(file_name, ".qmd"), file_name, paste0(file_name, ".qmd")))
 
   if (file.exists(qmd_file)) {
