@@ -28,6 +28,8 @@
   : Insert Margin Block at Cursor
 - [`insert_model_tabset()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/insert_model_tabset.md)
   : RStudio Addin: Insert child Quarto tabset for model output
+- [`modify_labels()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/modify_labels.md)
+  : Modify flextable Labels
 - [`preprocess_qmd()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/preprocess_qmd.md)
   : Preprocess font changes to Quarto (.qmd) HTML reports
 - [`round_df()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/round_df.md)

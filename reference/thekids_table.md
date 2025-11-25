@@ -1,8 +1,9 @@
 # The Kids themed table output
 
 A function that accepts tabular data, in a range of formats, and outputs
-an object of class `flextable()` (intended) for display in html and word
-documents.
+an object of class
+[`flextable()`](https://davidgohel.github.io/flextable/reference/flextable.html)
+(intended) for display in html and word documents.
 
 ## Usage
 
@@ -97,8 +98,9 @@ word output.
 Default settings produce a relatively compact table, to avoid reports
 becoming excessively lengthy.
 
-The output can be piped (`%>%`) into further `flextable()` functions for
-advance customisation of the appearance.
+The output can be piped (`%>%`) into further
+[`flextable()`](https://davidgohel.github.io/flextable/reference/flextable.html)
+functions for advance customisation of the appearance.
 
 Currently the function works well with input in the form of data frames,
 tibbles, dplyr pipes (think `summarise()`), `gtsummary`, and `kable`
@@ -116,8 +118,10 @@ Font family must be installed at a system level, otherwise the default
 
 Pre-specified formatting applied to 'flextable' objects (ahead of
 `thekids_table()`) may not carry over as expected. Please consider using
-`thekids_table() `in place of an explicit `flextable()` call, because
-our function already coerces the table to a flextable object.
+`thekids_table() `in place of an explicit
+[`flextable()`](https://davidgohel.github.io/flextable/reference/flextable.html)
+call, because our function already coerces the table to a flextable
+object.
 
 ## Examples
 

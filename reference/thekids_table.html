@@ -48,7 +48,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>A function that accepts tabular data, in a range of formats, and outputs an object of class <code>flextable()</code> (intended) for display in html and word documents.</p>
+    <p>A function that accepts tabular data, in a range of formats, and outputs an object of class <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable()</a></code> (intended) for display in html and word documents.</p>
     </div>
 
     <div class="section level2">
@@ -129,14 +129,14 @@ if negative, this will invert the sequence of highlighted blocks;
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The purpose of this function is easily coerce many different table structures in a consistent format (look and feel), with The Kids branding applied, that ultimately will look nice in either an html or word output.</p>
 <p>Default settings produce a relatively compact table, to avoid reports becoming excessively lengthy.</p>
-<p>The output can be piped (<code>%&gt;%</code>) into further <code>flextable()</code> functions for advance customisation of the appearance.</p>
+<p>The output can be piped (<code>%&gt;%</code>) into further <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable()</a></code> functions for advance customisation of the appearance.</p>
 <p>Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think <code>summarise()</code>), <code>gtsummary</code>, and <code>kable</code> outputs.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running <code>thekids_table()</code>.</p>
 <p>Font family must be installed at a system level, otherwise the default ("sans") will be applied.</p>
-<p>Pre-specified formatting applied to 'flextable' objects (ahead of <code>thekids_table()</code>) may not carry over as expected. Please consider using <code>thekids_table() </code>in place of an explicit <code>flextable()</code> call, because our function already coerces the table to a flextable object.</p>
+<p>Pre-specified formatting applied to 'flextable' objects (ahead of <code>thekids_table()</code>) may not carry over as expected. Please consider using <code>thekids_table() </code>in place of an explicit <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable()</a></code> call, because our function already coerces the table to a flextable object.</p>
     </div>
 
     <div class="section level2">
