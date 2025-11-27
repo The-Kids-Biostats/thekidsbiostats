@@ -158,8 +158,8 @@ create_project_addin <- function() {
           shiny::textOutput("selected_dir"),
           shiny::br(),
           shiny::checkboxGroupInput("folders", "Folders to Include:",
-                                    choices = c("data-raw", "data", "admin", "docs", "reports"),
-                                    selected = c("data-raw", "data", "admin", "docs", "reports")
+                                    choices = c("data-raw", "data", "admin", "docs", "reports", "scripts"),
+                                    selected = c("data-raw", "data", "admin", "docs", "reports", "scripts")
           ),
           shiny::tags$head(
             shiny::tags$style(shiny::HTML("
@@ -297,7 +297,7 @@ create_project_addin <- function() {
       )
     })
 
-    options(all_folders = c("data-raw", "data", "admin", "docs", "reports"))
+    options(all_folders = c("data-raw", "data", "admin", "docs", "reports", "scripts"))
 
     # Initialise visibility
     shiny::observe({
@@ -397,7 +397,7 @@ create_project_addin <- function() {
 
       if (nzchar(new_folder)) {
         current_choices <- shiny::isolate(input$folders)
-        all_choices <- shiny::isolate(getOption("all_folders", c("data-raw", "data", "admin", "docs", "reports")))
+        all_choices <- shiny::isolate(getOption("all_folders", c("data-raw", "data", "admin", "docs", "reports", "scripts")))
 
         if (!(new_folder %in% all_choices)) {
           updated_choices <- c(all_choices, new_folder)

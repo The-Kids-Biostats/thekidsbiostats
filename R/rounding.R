@@ -8,7 +8,7 @@
 #' @return object of class character"
 #'
 #' @details
-#' For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/data_manipulations.html).
 #'
 #'
 #' @import utils
