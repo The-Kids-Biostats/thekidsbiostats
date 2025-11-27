@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.6.3
+
+* Updated vignette hyperlinks in function documentation.
+
+
 # thekidsbiostats 1.6.2
 
 * updated logo css for wrapping
