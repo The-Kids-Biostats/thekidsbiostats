@@ -23,10 +23,9 @@
 #' @param font Character; font family name of the label cells.
 #' @param rotation Numeric; rotation of label text, can be one of "lrtb", "tbrl", "btlr".
 #' @param align Character; text alignment of label (\code{"left"}, \code{"center"}, \code{"right"} or \code{"justify"}).
-#' @param border @param border.top @param border.left @param border.bottom @param border.right Optional \code{fp_border} objects
+#' @param border,border.top,border.left,border.bottom,border.right Optional \code{fp_border} objects
 #'   to set cell borders.
-#' @param padding @param padding.top @param padding.left @param padding.bottom @param padding.right Optional numeric values
-#'   to set cell padding.
+#' @param padding,padding.top,padding.left,padding.bottom,padding.right Optional numeric values to set cell padding.
 #'
 #' @return A \code{flextable} object with the specified modifications applied to the label cells.
 #'
