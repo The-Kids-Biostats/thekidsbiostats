@@ -1,5 +1,40 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.6.4
+
+* Fixed R-CMD-CHECK notes and warnings.
+
+
+# thekidsbiostats 1.6.3
+
+* Updated vignette hyperlinks in function documentation.
+
+
+# thekidsbiostats 1.6.2
+
+* updated logo css for wrapping
+* fix create_template merge issues
+
+
+# thekidsbiostats 1.6.1
+
+- Same as previous version.
+
+
+# thekidsbiostats 1.6.0
+
+* Added modify_labels()
+* Added unit testing for modify_labels()
+
+
+# thekidsbiostats 1.5.0
+
+* Update thekids_table fallback font handling
+* Additional font tests for thekids_table()
+* Add blog link to pkgdown site
+* Enhance pkgdown structure
+
+
 # thekidsbiostats 1.4.3
 
 * Re-structure readme

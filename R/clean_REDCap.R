@@ -9,7 +9,7 @@
 #' @param cols (default ",") Regex defining column separator
 #'
 #' @details
-#' For a more thorough example, see the \href{../doc/miscellaneous.html}{vignette}.
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/miscellaneous.html).
 #'
 #' @return 2 column tibble of factor levels ("key") and labels ("value")
 #'

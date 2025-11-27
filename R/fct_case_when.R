@@ -13,7 +13,7 @@
 #' NULL inputs are ignored.
 #'
 #' @details
-#' For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/data_manipulations.html).
 #'
 #'
 #' @return A vector of length 1 or n, of class factor, matching the length of the logical input or output vectors. Inconsistent lengths or types will generate an error.
