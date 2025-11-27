@@ -12,6 +12,8 @@ test_that("create_template_addin returns a shiny gadget object", {
 })
 
 test_that("UI contains expected inputs and buttons", {
+  skip_if_not_installed("htmltools")
+
   stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) list(ui = ui, server = server, viewer = viewer))
   app <- create_template_addin()
 
@@ -24,6 +26,8 @@ test_that("UI contains expected inputs and buttons", {
 })
 
 test_that("Advanced section is initially hidden", {
+  skip_if_not_installed("htmltools")
+
   stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) list(ui = ui, server = server, viewer = viewer))
   app <- create_template_addin()
 

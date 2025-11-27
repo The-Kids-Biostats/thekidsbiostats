@@ -22,9 +22,11 @@ Rproj
 addin
 addins
 biostats
+btlr
 callout
 color
 colorRampPalette
+css
 csv
 df
 dplyr
@@ -42,6 +44,7 @@ ioslides
 kable
 lable
 loadfonts
+lrtb
 lubridate
 md
 modeling
@@ -55,6 +58,7 @@ roxygen
 shinyFiles
 showpalettes
 tabset
+tbrl
 testthat
 thekids
 tibble

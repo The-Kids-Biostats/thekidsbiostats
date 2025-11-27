@@ -19,6 +19,8 @@ test_that("thekids_table coerces gtsummary object to flextable", {
 })
 
 test_that("table_coerce converts gt_tbl object to flextable", {
+  skip_if_not_installed("gt")
+
   gt_tbl <- gt::gt(head(mtcars))
   out <- thekids_table(gt_tbl)
   expect_s3_class(out, "flextable")

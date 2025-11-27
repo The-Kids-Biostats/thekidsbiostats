@@ -63,11 +63,10 @@ Note that \code{j} is ignored for \code{hline}, use \code{border} to apply to sp
 
 \item{align}{Character; text alignment of label (\code{"left"}, \code{"center"}, \code{"right"} or \code{"justify"}).}
 
-\item{border}{@param border.top @param border.left @param border.bottom @param border.right Optional \code{fp_border} objects
+\item{border, border.top, border.left, border.bottom, border.right}{Optional \code{fp_border} objects
 to set cell borders.}
 
-\item{padding}{@param padding.top @param padding.left @param padding.bottom @param padding.right Optional numeric values
-to set cell padding.}
+\item{padding, padding.top, padding.left, padding.bottom, padding.right}{Optional numeric values to set cell padding.}
 }
 \value{
 A \code{flextable} object with the specified modifications applied to the label cells.
