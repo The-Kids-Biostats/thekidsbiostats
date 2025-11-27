@@ -96,15 +96,13 @@ modify_labels(
   Character; text alignment of label (`"left"`, `"center"`, `"right"` or
   `"justify"`).
 
-- border:
+- border, border.top, border.left, border.bottom, border.right:
 
-  @param border.top @param border.left @param border.bottom @param
-  border.right Optional `fp_border` objects to set cell borders.
+  Optional `fp_border` objects to set cell borders.
 
-- padding:
+- padding, padding.top, padding.left, padding.bottom, padding.right:
 
-  @param padding.top @param padding.left @param padding.bottom @param
-  padding.right Optional numeric values to set cell padding.
+  Optional numeric values to set cell padding.
 
 ## Value
 
