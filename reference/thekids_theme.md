@@ -111,7 +111,7 @@ custom settings for plot title, axis title, and strip text, using the
 the 'viridis' package.
 
 For a more thorough example, see the
-[vignette](https://the-kids-biostats.github.io/thekidsbiostats/doc/thekids_theming.md).
+[vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html).
 
 ## Note
 

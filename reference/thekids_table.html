@@ -110,7 +110,11 @@ if negative, this will invert the sequence of highlighted blocks;
 
 
 <dt id="arg-font-family">font_family<a class="anchor" aria-label="anchor" href="#arg-font-family"></a></dt>
-<dd><p>string containing the font family to apply to the table. Default "Barlow", otherwise "sans".</p></dd>
+<dd><p>string containing the font family to apply to the table. Default "Barlow".</p></dd>
+
+
+<dt id="arg-fallback-font-family">fallback_font_family<a class="anchor" aria-label="anchor" href="#arg-fallback-font-family"></a></dt>
+<dd><p>fallback font family if <code>font_family</code> is does not exist. Default is "sans".</p></dd>
 
 
 <dt id="arg-date-fix">date_fix<a class="anchor" aria-label="anchor" href="#arg-date-fix"></a></dt>
@@ -131,6 +135,7 @@ if negative, this will invert the sequence of highlighted blocks;
 <p>Default settings produce a relatively compact table, to avoid reports becoming excessively lengthy.</p>
 <p>The output can be piped (<code>%&gt;%</code>) into further <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable()</a></code> functions for advance customisation of the appearance.</p>
 <p>Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think <code>summarise()</code>), <code>gtsummary</code>, and <code>kable</code> outputs.</p>
+<p>For a more thorough example, see the <a href="https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html">vignette</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>

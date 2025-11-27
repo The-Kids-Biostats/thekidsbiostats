@@ -35,7 +35,7 @@ factor_table(x, rows = "\\|", cols = ",")
 ## Details
 
 For a more thorough example, see the
-[vignette](https://the-kids-biostats.github.io/thekidsbiostats/doc/miscellaneous.md).
+[vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/miscellaneous.html).
 
 ## Examples
 

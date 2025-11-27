@@ -38,7 +38,7 @@ generate an error.
 ## Details
 
 For a more thorough example, see the
-[vignette](https://the-kids-biostats.github.io/thekidsbiostats/doc/data_manipulations.md).
+[vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/data_manipulations.html).
 
 ## Examples
 

@@ -72,7 +72,12 @@ thekids_table(
 - font_family:
 
   string containing the font family to apply to the table. Default
-  "Barlow", otherwise "sans".
+  "Barlow".
+
+- fallback_font_family:
+
+  fallback font family if `font_family` is does not exist. Default is
+  "sans".
 
 - date_fix:
 
@@ -105,6 +110,9 @@ functions for advance customisation of the appearance.
 Currently the function works well with input in the form of data frames,
 tibbles, dplyr pipes (think `summarise()`), `gtsummary`, and `kable`
 outputs.
+
+For a more thorough example, see the
+[vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html).
 
 ## Note
 
