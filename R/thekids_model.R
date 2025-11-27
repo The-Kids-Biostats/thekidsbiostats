@@ -27,7 +27,7 @@
 #' is passed to \code{\link{thekids_model_output}} for further handling, allowing
 #' for streamlined customization of model outputs.
 #'
-#' For a more thorough example, see the \href{../doc/model_output.html}{vignette}.
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/model_output.html).
 #'
 #' @examples
 #' # Example 1: Linear model

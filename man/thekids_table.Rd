@@ -40,7 +40,9 @@ if negative, this will invert the sequence of highlighted blocks;
 
 \item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows).}
 
-\item{font_family}{string containing the font family to apply to the table. Default "Barlow", otherwise "sans".}
+\item{font_family}{string containing the font family to apply to the table. Default "Barlow".}
+
+\item{fallback_font_family}{fallback font family if \code{font_family} is does not exist. Default is "sans".}
 
 \item{date_fix}{re-wraps date objects to strictly occupy one line, instead of splitting (defaults to \code{T}).}
 
@@ -60,6 +62,8 @@ Default settings produce a relatively compact table, to avoid reports becoming e
 The output can be piped (\verb{\%>\%}) into further \code{flextable()} functions for advance customisation of the appearance.
 
 Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think \code{summarise()}), \code{gtsummary}, and \code{kable} outputs.
+
+For a more thorough example, see the \href{https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html}{vignette}.
 }
 \note{
 Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running \code{thekids_table()}.
