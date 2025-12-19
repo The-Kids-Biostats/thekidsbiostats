@@ -2,7 +2,7 @@
 % Please edit documentation in R/thekids_save.R
 \name{thekids_save}
 \alias{thekids_save}
-\title{Save a ggplot with common practical defauls}
+\title{Save a ggplot with common practical defaults}
 \usage{
 thekids_save(
   plot = ggplot2::last_plot(),

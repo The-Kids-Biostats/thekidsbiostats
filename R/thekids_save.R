@@ -1,4 +1,4 @@
-#' Save a ggplot with common practical defauls
+#' Save a ggplot with common practical defaults
 #'
 #' This function saves ggplot2 plots to common pre-specified sizes and ratios.
 #'
@@ -34,23 +34,23 @@ thekids_save <- function(plot = ggplot2::last_plot(),
                          dpi = 300,
                          ...) {
 
-    if (!all(layout %in% unique(save_params$size))) {
+    if (!all(layout %in% unique(thekidsbiostats::save_params$size))) {
       stop(paste0("Your selection for 'layout' must be from the list: ",
-                  paste0("'", unique(save_params$size), "'",
+                  paste0("'", unique(thekidsbiostats::save_params$size), "'",
                          collapse = ", "),
                   "."))
     }
 
-    if (!all(device %in% unique(save_params$device))) {
+    if (!all(device %in% unique(thekidsbiostats::save_params$device))) {
       stop(paste0("Your selection for 'device' must be from the list: ",
-                  paste0("'", unique(save_params$device), "'",
+                  paste0("'", unique(thekidsbiostats::save_params$device), "'",
                          collapse = ", "),
                   "."))
     }
 
     dir.create(path, showWarnings = FALSE, recursive = TRUE)
 
-    sel <- save_params[save_params$size %in% layout & save_params$device %in% device, ]
+    sel <- thekidsbiostats::save_params[thekidsbiostats::save_params$size %in% layout & thekidsbiostats::save_params$device %in% device, ]
 
     for (i in seq_len(nrow(sel))) {
       args <- sel[i, ]
