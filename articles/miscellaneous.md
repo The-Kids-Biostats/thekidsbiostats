@@ -102,6 +102,10 @@ dat_raw %>%
   thekids_table()
 #> Warning in check_font_family(font_family = font_family, fallback_family =
 #> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+#> Factor levels (in order): Completed High School, TAFE or Trade, Higher Degree, Bachelor Degree
+#> Factor levels (in order): <80000, 80000-120000, 120000-160000, 160000-200000, >200000
+#> Factor levels (in order): No, Yes
+#> Factor levels (in order): No, Yes
 #> 100 missing rows in the "med_hist_cvd" column have been
 #> removed.
 ```

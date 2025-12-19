@@ -6,10 +6,15 @@ factor, ordered based on the order entered into the case_when statement
 ## Usage
 
 ``` r
-fct_case_when(...)
+fct_case_when(message = T, ...)
 ```
 
 ## Arguments
+
+- message:
+
+  prints the resulting factor levels. This is TRUE by default as output
+  may often not be as expected
 
 - ...:
 
@@ -54,6 +59,7 @@ if (FALSE) { # \dontrun{
   ) %>% table
 
   fct_case_when(
+    message = F,
     x %% 35 == 0 ~ "fizz buzz",
     x %% 5 == 0 ~ "fizz",
     x %% 7 == 0 ~ "buzz",

@@ -126,6 +126,7 @@ fct_case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
               ) %>% 
   as.factor %>%
   levels()
+#> Factor levels (in order): Very Likely, Likely, Neutral, Unlikely, Very Unlikely
 #> [1] "Very Likely"   "Likely"        "Neutral"       "Unlikely"     
 #> [5] "Very Unlikely"
 ```
