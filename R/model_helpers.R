@@ -71,7 +71,9 @@ thekids_model_output.lm <- function(model, by, data = NULL, ...) {
                   type = list(where(is.numeric) ~ "continuous"),
                   statistic = list(gtsummary::all_continuous() ~ "{mean} ({sd}) [{N_nonmiss}]")) %>%
       gtsummary::modify_header(label = by) %>%
-      gtsummary::add_p() %>%
+      gtsummary::add_p(
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)
+      ) %>%
       gtsummary::bold_labels() %>%
       suppressMessages() %>% suppressWarnings()
 
@@ -122,7 +124,7 @@ thekids_model_output.lm <- function(model, by, data = NULL, ...) {
   mod_output <- model %>%
     gtsummary::tbl_regression(intercept = T,
                    estimate_fun = function(x) gtsummary::style_number(x, digits = 1),
-                   pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)) %>%
+                   pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)) %>%
     gtsummary::modify_column_merge(
       pattern = "{estimate} ({conf.low}, {conf.high})",
       rows = !is.na(.data$estimate)
