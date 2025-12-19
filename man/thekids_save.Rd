@@ -8,7 +8,7 @@ thekids_save(
   plot = ggplot2::last_plot(),
   filename,
   path = "output",
-  output = "full portrait",
+  layout = "full portrait",
   device = "pdf",
   dpi = 300,
   ...
@@ -21,7 +21,7 @@ thekids_save(
 
 \item{path}{Path of the directory to save plot to.}
 
-\item{output}{Size to save plot to. Can be a vector of strings. Default "full portrait".}
+\item{layout}{Size to save plot to. Can be a vector of strings. Default "full portrait".}
 
 \item{device}{Device to use. Can be a vector of strings. Default "pdf".}
 
@@ -38,11 +38,11 @@ gg <- ggplot(mtcars, aes(hp, mpg, color = as.factor(cyl))) +
 geom_point() +
 theme_thekids()
 
-thekids_save("example", output = "half landscape", device = "png")
-thekids_save("example", output = "half portrait", device = "png")
-thekids_save("example", output = "full landscape", device = "png")
+thekids_save("example", layout = "half landscape", device = "png")
+thekids_save("example", layout = "half portrait", device = "png")
+thekids_save("example", layout = "full landscape", device = "png")
 
-thekids_save("example", output = c("half landscape", "half portrait"))
+thekids_save("example", layout = c("half landscape", "half portrait"))
 thekids_save("example", device = c("png", "pdf"))
 }
 
