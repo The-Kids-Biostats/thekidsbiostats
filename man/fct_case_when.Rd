@@ -4,9 +4,11 @@
 \alias{fct_case_when}
 \title{fct_case_when}
 \usage{
-fct_case_when(...)
+fct_case_when(message = T, ...)
 }
 \arguments{
+\item{message}{prints the resulting factor levels. This is TRUE by default as output may often not be as expected}
+
 \item{...}{as per dplyr::case_when, essentially all input is passed through to dplyr::case_when
 
 \if{html}{\out{<dynamic-dots>}} A sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value.
@@ -39,6 +41,7 @@ For a more thorough example, see the \href{https://the-kids-biostats.github.io/t
   ) \%>\% table
 
   fct_case_when(
+    message = F,
     x \%\% 35 == 0 ~ "fizz buzz",
     x \%\% 5 == 0 ~ "fizz",
     x \%\% 7 == 0 ~ "buzz",
