@@ -45,15 +45,16 @@
 #' @export
 #'
 
-fct_case_when <- function(message = T, ...) {
+fct_case_when <- function(..., message = T) {
   mc <- match.call(expand.dots = TRUE)
   mc$message <- NULL # Ignore message argument for levels determination
+
   args <- as.list(mc)[-1]
   levels <- sapply(args, function(f) f[[3]])  # extract RHS of formula
   levels <- levels[!is.na(levels)]
   out <- factor(dplyr::case_when(...), levels=levels)
 
-  if (message) {
+  if (isTRUE(message)) {
     lvls <- levels(out)
     message(
       "Factor levels (in order): ",
