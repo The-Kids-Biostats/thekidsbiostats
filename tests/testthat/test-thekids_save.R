@@ -47,3 +47,54 @@ test_that("default behaviour uses last_plot() when plot is omitted", {
 
   expect_true(file.exists(file.path(td, "from_lastplot_full_portrait.png")))
 })
+
+test_that("overwrite branch when askYesNo returns TRUE", {
+  td <- withr::local_tempdir()
+
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(hp, mpg)) +
+    ggplot2::geom_point()
+  print(p)
+
+  thekids_save(
+    filename = "x",
+    path = td,
+    layout = "full portrait",
+    device = "png"
+  )
+
+  testthat::with_mocked_bindings(askYesNo = function(...) TRUE,
+                                 .package = "utils", {
+                                   expect_message(
+                                     thekids_save(
+                                       filename = "x",
+                                       path = td,
+                                       layout = "full portrait",
+                                       device = "png"),
+                                     "Overwriting:")
+    }
+  )
+
+  testthat::with_mocked_bindings(askYesNo = function(...) FALSE,
+                                 .package = "utils", {
+                                   expect_message(
+                                     thekids_save(
+                                       filename = "x",
+                                       path = td,
+                                       layout = "full portrait",
+                                       device = "png"),
+                                     "Skipping:")
+    }
+  )
+
+  testthat::with_mocked_bindings(askYesNo = function(...) NA,
+                                 .package = "utils", {
+                                   expect_error(
+                                     thekids_save(
+                                       filename = "x",
+                                       path = td,
+                                       layout = "full portrait",
+                                       device = "png"),
+                                     "Save cancelled by user.")
+                                   }
+                                 )
+})
