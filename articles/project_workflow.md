@@ -117,10 +117,10 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] thekidsbiostats_1.6.4 extrafont_0.20        flextable_0.9.10     
+#>  [1] thekidsbiostats_1.7.0 extrafont_0.20        flextable_0.9.10     
 #>  [4] gtsummary_2.5.0       lubridate_1.9.4       forcats_1.0.1        
 #>  [7] stringr_1.6.0         dplyr_1.1.4           purrr_1.2.0          
-#> [10] readr_2.1.6           tidyr_1.3.1           tibble_3.3.0         
+#> [10] readr_2.1.6           tidyr_1.3.2           tibble_3.3.0         
 #> [13] ggplot2_4.0.1         tidyverse_2.0.0      
 #> 
 #> loaded via a namespace (and not attached):
@@ -144,7 +144,7 @@ sessionInfo()
 #> [52] rmarkdown_2.30          officer_0.7.2           otel_0.2.0             
 #> [55] hms_1.1.4               askpass_1.2.1           ragg_1.5.0             
 #> [58] shiny_1.12.1            evaluate_1.0.5          haven_2.5.5            
-#> [61] knitr_1.50              rlang_1.1.6             Rcpp_1.1.0             
+#> [61] knitr_1.51              rlang_1.1.6             Rcpp_1.1.0             
 #> [64] xtable_1.8-4            glue_1.8.0              xml2_1.5.1             
 #> [67] rstudioapi_0.17.1       jsonlite_2.0.0          R6_2.6.1               
 #> [70] systemfonts_1.3.1       fs_1.6.6                shinyFiles_0.9.3

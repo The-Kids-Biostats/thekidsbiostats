@@ -1,5 +1,12 @@
 # Changelog
 
+## thekidsbiostats 1.7.0
+
+- Added message argument to fct_case_when
+- Format p-values in thekids_model
+- Removed tests/manual folder
+- Ignoring example_reports htmls
+
 ## thekidsbiostats 1.6.4
 
 - Fixed R-CMD-CHECK notes and warnings.
