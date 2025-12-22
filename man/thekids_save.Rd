@@ -7,8 +7,8 @@
 thekids_save(
   plot = ggplot2::last_plot(),
   filename,
-  path = "output",
-  layout = "full portrait",
+  path = ".",
+  layout = "full landscape",
   device = "pdf",
   dpi = 300,
   ...
@@ -19,9 +19,9 @@ thekids_save(
 
 \item{filename}{File name to create on disk.}
 
-\item{path}{Path of the directory to save plot to.}
+\item{path}{Path of the directory to save plot to. Defaults to current working directory.}
 
-\item{layout}{Size to save plot to. Can be a vector of strings. Default "full portrait".}
+\item{layout}{Size to save plot to. Can be a vector of strings. Default "full landscape". See details.}
 
 \item{device}{Device to use. Can be a vector of strings. Default "pdf".}
 
@@ -31,6 +31,11 @@ thekids_save(
 }
 \description{
 This function saves ggplot2 plots to common pre-specified sizes and ratios.
+}
+\details{
+Plot layouts can take the values "quarter", "half portrait", "half landscape,
+"full portrait", "full landscape". Each of these are based on the dimensions of a
+standard A4 page.
 }
 \examples{
 \dontrun{

@@ -36,4 +36,4 @@
 #' and "png" devices included.
 #'
 #' @format data.frame
-"save_params"
+"layout_params"

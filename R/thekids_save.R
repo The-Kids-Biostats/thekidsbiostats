@@ -3,12 +3,18 @@
 #' This function saves ggplot2 plots to common pre-specified sizes and ratios.
 #'
 #' @param filename File name to create on disk.
-#' @param path Path of the directory to save plot to.
+#' @param path Path of the directory to save plot to. Defaults to current working directory.
 #' @param plot Plot to save; defaults to last plot displayed.
-#' @param layout Size to save plot to. Can be a vector of strings. Default "full portrait".
+#' @param layout Size to save plot to. Can be a vector of strings. Default "full landscape". See details.
 #' @param device Device to use. Can be a vector of strings. Default "pdf".
 #' @param dpi Plot resolution. Default 300.
 #' @param ... Other defaults passed to ggsave.
+#'
+#' @details
+#' Plot layouts can take the values "quarter", "half portrait", "half landscape,
+#' "full portrait", "full landscape". Each of these are based on the dimensions of a
+#' standard A4 page.
+#'
 #'
 #' @examples
 #' \dontrun{
@@ -28,33 +34,35 @@
 
 thekids_save <- function(plot = ggplot2::last_plot(),
                          filename,
-                         path = "output",
-                         layout = "full portrait",
+                         path = ".",
+                         layout = "full landscape",
                          device = "pdf",
                          dpi = 300,
                          ...) {
 
-    if (!all(layout %in% unique(thekidsbiostats::save_params$size))) {
+    if (!all(layout %in% unique(thekidsbiostats::layout_params$size))) {
       stop(paste0("Your selection for 'layout' must be from the list: ",
-                  paste0("'", unique(thekidsbiostats::save_params$size), "'",
+                  paste0("'", unique(thekidsbiostats::layout_params$size), "'",
                          collapse = ", "),
                   "."))
     }
 
-    if (!all(device %in% unique(thekidsbiostats::save_params$device))) {
+    if (!all(device %in% unique(thekidsbiostats::layout_params$device))) {
       stop(paste0("Your selection for 'device' must be from the list: ",
-                  paste0("'", unique(thekidsbiostats::save_params$device), "'",
+                  paste0("'", unique(thekidsbiostats::layout_params$device), "'",
                          collapse = ", "),
                   "."))
     }
 
     dir.create(path, showWarnings = FALSE, recursive = TRUE)
 
-    sel <- thekidsbiostats::save_params[thekidsbiostats::save_params$size %in% layout & thekidsbiostats::save_params$device %in% device, ]
+    sel <- thekidsbiostats::layout_params[thekidsbiostats::layout_params$size %in% layout & thekidsbiostats::layout_params$device %in% device, ]
+
+    base_name <- tools::file_path_sans_ext(basename(filename))
 
     for (i in seq_len(nrow(sel))) {
       args <- sel[i, ]
-      out_fname <- paste0(filename, args$suffix, ".", args$device)
+      out_fname <- paste0(base_name, args$suffix, ".", args$device)
       out_full <- file.path(path, out_fname)
 
       if (file.exists(out_full)) {
