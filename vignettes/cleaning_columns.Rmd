@@ -1,0 +1,113 @@
+---
+title: "Cleaning Columns"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cleaning Columns}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+Datasets rarely come with cleaned, tidy formatting in their column names and hence it is common practice to rename the original column names to those that are more code-friendly (i.e. lower-case, no spaces or special characters and unique).
+Alongside the code-friendly renamed columns, it's also very practical to store `label` attributes, which act as a human-readable version of each column that can be used for displaying in tables and figures.
+Whilst there already exists functions for renaming columns (e.g. `dplyr::rename()`) and applying labels (e.g. `labelled` or `Hmisc`), there is much leg work that needs to be applied in setting up the inputs for these functions.
+
+This vignette demonstrates how to use **column dictionaries** to expediate the process of standardising and labelling columns in a dataset. We will use two main functions from `mypackage`: 
+- `make_column_dict()` – create a copy-pasteable column dictionary template
+- `update_columns()` – rename and label columns using a column dictionary.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(thekidsbiostats)
+```
+
+<br>
+
+## Creating a column dictionary template: `make_column_dict()`
+
+Suppose we have the following dataset:
+
+```{r}
+
+data_patients <- data.frame(
+  "Patient ID#"         = 101:105,
+  "DOB [YYYY-MM-DD]"    = as.Date(c("1980-05-12", "1992-08-03", "1975-12-25", "2000-01-01", "1985-07-07")),
+  "Sex (0=Male, 1=Female)" = c("0", "1", "1", "0", "1"),
+  "HEIGHT (cm)"         = c(175, 160, 180, 165, 170),
+  "WEIGHT (kg)"         = c(70, 55, 80, 60, 75),
+  "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?"             = c(TRUE, FALSE, FALSE, TRUE, FALSE),
+  "bp (mmHg)"           = c("120/80", "110/70", "130/85", "115/75", "125/82"),
+  "Cholesterol / mmolL"  = c(5.2, 4.8, 6.1, 5.0, 5.5),
+  check.names = FALSE  # setting this to FALSE to highlight problems with bad names
+)
+
+data_patients |> as_flextable()
+
+```
+
+Beyond this dataset visually looking messy, it can also be tricky to reference these column names when attempting to use them in operations. For example, let's try to calculate the BMI of individuals and recode the `Sex` column by replacing `0/1` with `Male/Female`.
+
+```{r}
+data_patients$`Sex (0=Male, 1=Female)` = case_when(
+  data_patients$`Sex (0=Male, 1=Female)` == 0 ~ "Male",
+  data_patients$`Sex (0=Male, 1=Female)` == 1 ~ "Female",
+  T ~ NA_character_
+)
+
+bmi = data_patients$`WEIGHT (kg)` / (data_patients$`HEIGHT (cm)` / 100.0)^2
+print(bmi)
+```
+The *spaces*, *equal signs* and *parentheses* in the column names requires us to use backticks (\` \`) to avoid R interpreting these symbols literally. Functions such as `janitor::clean_names()` can be very useful for standardising such column names into syntactic names. However, for situations like our column `"Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?"`, the "cleaned" version is arguably just as unwieldy.
+
+Nonetheless, the consequence of renaming columns for easy manipulation in code is likely dropping any potentially useful formatting of the columns (e.g. units and symbols). Ideally, we want to both rename the columns and simultaneously retain their human-readable labels for presentation.
+
+<br>
+
+The solution is therefore to manually set up a dictionary that maps the old column names to newly formatted column names as well as a apply `$label` attributes to each column that are use for visual presentation only.
+
+The **`make_column_dict()`** function makes this process slightly easier by creating a ready-to-fill template based on the column names that exist with the data. For example:
+
+```{r}
+dict <- make_column_dict(data_patients, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
+```
+  which we can either modify directly or copy-paste into our code and modify as needed:
+
+```{r}
+dict_patients <- tribble(
+  ~old, ~new, ~label,
+  'Patient ID#', 'patient_id', 'Patient ID#',
+  'DOB [YYYY-MM-DD]', 'dob', 'Date of Birth',
+  'Sex (0=Male, 1=Female)', 'sex', 'Sex',
+  'HEIGHT (cm)', 'height_cm', 'Height (cm)',
+  'WEIGHT (kg)', 'weight_kg', 'Weight (kg)',
+  'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'smoke_current', 'Current Smoker',
+  'bp (mmHg)', 'bp_mmhg', 'Blood Pressure (mmHg)',
+  'Cholesterol / mmolL', 'cholesterol_mmoll', 'Cholesterol (mmol L)',
+) 
+```
+
+
+<br>
+<br>
+
+## Apply column dictionary: `update_columns()`
+Now after having defined the column dictionary above, we can simply use the **`update_columns()`** function to apply these changes in a single line.
+
+```{r}
+data_clean <- update_columns(data_patients, dict = dict_patients)
+data_clean |> flextable()
+```
+
+
+### Writing/Loading column dictionaries from file
+Both of these helper functions can accept file paths as input or output for the column dictionary. This is handled slightly differently for each:
+
+  + `make_column_dict()`: the `file` argument accepts a character string defining the file path to write the dictionary to. The extensions '.csv', '.txt', '.rds' and '.xlsx' are accepted.
+  + `update_columns()`: providing a file path in the form of a character string to the `dict` argument will attempt to load the dictionary directly from the file. In addition, the `old`, `new` and `label` parameters can be used to explicitly specify the names of the relevant columns if they are named differently.

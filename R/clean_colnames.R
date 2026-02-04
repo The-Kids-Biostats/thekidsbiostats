@@ -144,17 +144,17 @@ make_column_dict <- function(data, auto_clean=TRUE, file=NULL, quiet=FALSE) {
     )"
   )
 
+  dict <- data.frame(
+    old = old_names,
+    new = new_names,
+    label = "",
+    stringsAsFactors = FALSE
+  )
+
   # Optionally save as CSV
   if (!is.null(file)) {
 
     ext <- tolower(tools::file_ext(file))
-
-    dict <- data.frame(
-      old = old_names,
-      new = new_names,
-      label = "",
-      stringsAsFactors = FALSE
-    )
 
     if (ext %in% c("csv", "txt")) {
       utils::write.csv(dict, file = file, row.names = FALSE, )
@@ -172,6 +172,6 @@ make_column_dict <- function(data, auto_clean=TRUE, file=NULL, quiet=FALSE) {
 
   if (!quiet) cat(txt, "\n")
 
-  invisible(txt)
+  invisible(dict)
 }
 
