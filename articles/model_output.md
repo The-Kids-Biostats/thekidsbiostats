@@ -80,7 +80,7 @@ mod_bwt <- dat_bwt %>%
 #> ℹ Please use `broom::augment(<lm>)` instead.
 #> ℹ The deprecated feature was likely used in the ggfortify package.
 #>   Please report the issue at <https://github.com/sinhrks/ggfortify/issues>.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
@@ -88,14 +88,14 @@ mod_bwt <- dat_bwt %>%
 #> ℹ See also `vignette("ggplot2-in-packages")` for more information.
 #> ℹ The deprecated feature was likely used in the ggfortify package.
 #>   Please report the issue at <https://github.com/sinhrks/ggfortify/issues>.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 #> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 #> ℹ Please use `linewidth` instead.
 #> ℹ The deprecated feature was likely used in the ggfortify package.
 #>   Please report the issue at <https://github.com/sinhrks/ggfortify/issues>.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 ```

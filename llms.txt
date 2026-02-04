@@ -148,6 +148,8 @@ interpretation.
   : Insert Margin Block at Cursor
 - [`insert_model_tabset()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/insert_model_tabset.md)
   : RStudio Addin: Insert child Quarto tabset for model output
+- [`layout_params`](https://the-kids-biostats.github.io/thekidsbiostats/reference/layout_params.md)
+  : Image Size Parameters for Save Function
 - [`modify_labels()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/modify_labels.md)
   : Modify flextable Labels
 - [`preprocess_qmd()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/preprocess_qmd.md)
@@ -173,6 +175,8 @@ interpretation.
   : Return function to interpolate a The Kids color palette
 - [`thekids_palettes`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_palettes.md)
   : The Kids Research Institute Australia Colour Palettes
+- [`thekids_save()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_save.md)
+  : Save a ggplot with common practical defaults
 - [`thekids_showpalette()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_showpalette.md)
   : Function to display the available colours in The Kids palette
 - [`thekids_table()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_table.md)

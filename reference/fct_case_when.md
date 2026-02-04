@@ -6,15 +6,10 @@ factor, ordered based on the order entered into the case_when statement
 ## Usage
 
 ``` r
-fct_case_when(message = T, ...)
+fct_case_when(..., message = T)
 ```
 
 ## Arguments
-
-- message:
-
-  prints the resulting factor levels. This is TRUE by default as output
-  may often not be as expected
 
 - ...:
 
@@ -33,6 +28,11 @@ fct_case_when(message = T, ...)
   treated as a variant of n != 1.
 
   NULL inputs are ignored.
+
+- message:
+
+  prints the resulting factor levels. This is TRUE by default as output
+  may often not be as expected
 
 ## Value
 
