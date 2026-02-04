@@ -37,6 +37,7 @@ fct
 flextable
 ggeffects
 ggplot
+ggsave
 gradientn
 gtsummary
 huxtable
@@ -51,6 +52,7 @@ modeling
 mtcars
 onLoad
 pkgdown
+png
 preformatted
 qmd
 rect

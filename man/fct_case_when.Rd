@@ -4,11 +4,9 @@
 \alias{fct_case_when}
 \title{fct_case_when}
 \usage{
-fct_case_when(message = T, ...)
+fct_case_when(..., message = T)
 }
 \arguments{
-\item{message}{prints the resulting factor levels. This is TRUE by default as output may often not be as expected}
-
 \item{...}{as per dplyr::case_when, essentially all input is passed through to dplyr::case_when
 
 \if{html}{\out{<dynamic-dots>}} A sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value.
@@ -18,6 +16,8 @@ The LHS must evaluate to a logical vector. The RHS does not need to be logical, 
 Both LHS and RHS may have the same length of either 1 or n. The value of n must be consistent across all cases. The case of n == 0 is treated as a variant of n != 1.
 
 NULL inputs are ignored.}
+
+\item{message}{prints the resulting factor levels. This is TRUE by default as output may often not be as expected}
 }
 \value{
 A vector of length 1 or n, of class factor, matching the length of the logical input or output vectors. Inconsistent lengths or types will generate an error.

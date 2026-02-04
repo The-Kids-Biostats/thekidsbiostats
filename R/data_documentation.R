@@ -28,3 +28,12 @@
 #'
 #' @source The Kids Research Institute Australia style guide.
 "thekids_palettes"
+
+#' Image Size Parameters for Save Function
+#'
+#' Size parameters (mm) for a standard A4 page with "quarter", "half portrait",
+#' "half landscape", #' "full portrait", "full landscape". Identifiers for "pdf"
+#' and "png" devices included.
+#'
+#' @format data.frame
+"layout_params"
