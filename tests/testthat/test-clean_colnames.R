@@ -2,7 +2,7 @@ library(testthat)
 library(dplyr)
 
 ### update_colnames() tests
-test_that("columns are renamed and labels are applied", {
+test_that("update_columns() columns are renamed and labels are applied", {
 
   data <- data.frame(
     a = 1:3,
@@ -39,7 +39,7 @@ test_that("columns are renamed and labels are applied", {
 })
 
 
-test_that("custom dictionary column names work", {
+test_that("update_columns() custom dictionary column names work", {
 
   data <- data.frame(x = 1, y = 2)
 
@@ -63,7 +63,7 @@ test_that("custom dictionary column names work", {
 })
 
 
-test_that("dictionary rows for missing columns are ignored", {
+test_that("update_columns() dictionary rows for missing columns are ignored", {
 
   data <- data.frame(a = c(1, 2, 3))
 
@@ -80,7 +80,7 @@ test_that("dictionary rows for missing columns are ignored", {
 })
 
 
-test_that("columns already named correctly are not renamed", {
+test_that("update_columns() columns already named correctly are not renamed", {
 
   data <- data.frame(alpha = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -97,7 +97,7 @@ test_that("columns already named correctly are not renamed", {
 })
 
 
-test_that("duplicate $old entries error", {
+test_that("update_columns() duplicate $old entries error", {
 
   data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -114,7 +114,7 @@ test_that("duplicate $old entries error", {
 })
 
 
-test_that("duplicate $new entries error", {
+test_that("update_columns() duplicate $new entries error", {
 
   data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -131,7 +131,7 @@ test_that("duplicate $new entries error", {
 })
 
 
-test_that("missing dictionary columns error", {
+test_that("update_columns() missing dictionary columns error", {
 
   data <- data.frame(a = 1)
 
@@ -147,7 +147,7 @@ test_that("missing dictionary columns error", {
 })
 
 
-test_that("data must be data.frame-like or file path", {
+test_that("update_columns() data must be data.frame-like or file path", {
 
   data <- c(a = 1)
 
@@ -164,7 +164,7 @@ test_that("data must be data.frame-like or file path", {
 })
 
 
-test_that("dict must be data.frame-like or file path", {
+test_that("update_columns() dict must be data.frame-like or file path", {
 
   data <- data.frame(a = 1)
 
@@ -175,7 +175,7 @@ test_that("dict must be data.frame-like or file path", {
 })
 
 
-test_that("NA labels are skipped", {
+test_that("update_columns() NA labels are skipped", {
 
   data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -192,7 +192,7 @@ test_that("NA labels are skipped", {
 })
 
 
-test_that("reorder argument works as expected", {
+test_that("update_columns() reorder argument works as expected", {
   data <- data.frame(a = c(1, 2, 3), b = c(4, 5, 6), c = c(7, 8, 9))
 
   dict <- data.frame(
@@ -212,7 +212,7 @@ test_that("reorder argument works as expected", {
 })
 
 
-test_that("errors on unsupported dictionary file extension", {
+test_that("update_columns() errors on unsupported dictionary file extension", {
   data <- data.frame(A = 1)
   tmp <- tempfile(fileext = ".pdf")
   writeLines("not a dict", tmp)
@@ -224,7 +224,7 @@ test_that("errors on unsupported dictionary file extension", {
 })
 
 
-test_that("errors when loaded dict is not data.frame-like", {
+test_that("update_columns() errors when loaded dict is not data.frame-like", {
   data <- data.frame(A = 1)
 
   tmp <- tempfile(fileext = ".rds")
@@ -237,7 +237,7 @@ test_that("errors when loaded dict is not data.frame-like", {
 })
 
 
-test_that("reads dictionary from csv file", {
+test_that("update_columns() reads dictionary from csv file", {
   data <- data.frame(a = 1)
 
   dict <- data.frame(
@@ -257,7 +257,7 @@ test_that("reads dictionary from csv file", {
 })
 
 
-test_that("reads dictionary from rds file", {
+test_that("update_columns() reads dictionary from rds file", {
   data <- data.frame(a = 1)
 
   dict <- data.frame(
@@ -277,7 +277,7 @@ test_that("reads dictionary from rds file", {
 })
 
 
-test_that("reads dictionary from xlsx file", {
+test_that("update_columns() reads dictionary from xlsx file", {
   skip_if_not_installed("openxlsx")
 
   data <- data.frame(a = 1)
@@ -300,27 +300,38 @@ test_that("reads dictionary from xlsx file", {
 
 
 ### make_column_dict() tests
-test_that("returns a character string", {
 
-  data <- data.frame(a = 1, b = 2)
+test_that("make_column_dict() returns a correctly structured data.frame", {
+  data <- data.frame(
+    "A" = 1:3,
+    "B" = c(70, 60, 80)
+  )
 
-  out <- make_column_dict(data, quiet = TRUE)
+  # Call function
+  dict <- make_column_dict(data, quiet = TRUE)
 
-  expect_type(out, "character")
-  expect_length(out, 1)
-})
+  # Check class
+  expect_s3_class(dict, "data.frame")
 
+  # Check columns exist
+  expect_true(all(c("old", "new", "label") %in% colnames(dict)))
 
-test_that("output contains a tribble dictionary template", {
+  # Check types
+  expect_type(dict$old, "character")
+  expect_type(dict$new, "character")
+  expect_type(dict$label, "character")
 
-  data <- data.frame(a = 1, b = 2)
+  # Check number of rows
+  expect_equal(nrow(dict), ncol(data))
 
-  out <- make_column_dict(data, quiet = TRUE)
+  # Check that old names match original data
+  expect_equal(dict$old, names(data))
 
-  expect_match(out, "tribble\\(")
-  expect_match(out, "~old, ~new, ~label")
-  expect_match(out, "'a'")
-  expect_match(out, "'b'")
+  # Check that new names are cleaned if auto_clean = TRUE
+  expect_equal(dict$new, names(janitor::clean_names(data)))
+
+  # Labels should be empty strings
+  expect_true(all(dict$label == ""))
 })
 
 
@@ -330,7 +341,7 @@ test_that("auto_clean = FALSE leaves new names empty", {
 
   out <- make_column_dict(data, auto_clean = FALSE, quiet = TRUE)
 
-  expect_match(out, "'My Column', '',")
+  expect_equal(out$new, "")
 })
 
 
@@ -342,7 +353,7 @@ test_that("auto_clean = TRUE uses janitor::clean_names", {
 
   out <- make_column_dict(data, auto_clean = TRUE, quiet = TRUE)
 
-  expect_match(out, "'My Column', 'my_column'")
+  expect_equal(out$new, "my_column")
 })
 
 
@@ -438,7 +449,7 @@ test_that("return value is invisible", {
   out <- withVisible(make_column_dict(data, quiet = TRUE))
 
   expect_false(out$visible)
-  expect_type(out$value, "character")
+  expect_s3_class(out$value, "data.frame")
 })
 
 
