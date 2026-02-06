@@ -117,7 +117,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] thekidsbiostats_1.7.0 extrafont_0.20        flextable_0.9.10     
+#>  [1] thekidsbiostats_1.8.0 extrafont_0.20        flextable_0.9.10     
 #>  [4] gtsummary_2.5.0       lubridate_1.9.5       forcats_1.0.1        
 #>  [7] stringr_1.6.0         dplyr_1.2.0           purrr_1.2.1          
 #> [10] readr_2.1.6           tidyr_1.3.2           tibble_3.3.1         
