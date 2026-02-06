@@ -39,7 +39,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/data_manipulations.html">Data Manipulation Tools</a></li>
+<li><a class="dropdown-item" href="../articles/cleaning_columns.html">Cleaning Columns</a></li>
+    <li><a class="dropdown-item" href="../articles/data_manipulations.html">Data Manipulation Tools</a></li>
     <li><a class="dropdown-item" href="../articles/miscellaneous.html">Miscellaneous Functions</a></li>
     <li><a class="dropdown-item" href="../articles/model_output.html">Presenting Model Output</a></li>
     <li><a class="dropdown-item" href="../articles/project_workflow.html">Project Workflows and Shiny Helpers/addins using `thekidsbiostats`</a></li>
@@ -113,250 +114,250 @@ from REDCap:</p>
 <span><span class="co">#&gt; Warning in check_font_family(font_family = font_family, fallback_family =</span></span>
 <span><span class="co">#&gt; fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d210faba{table-layout:auto;}.cl-d208294e{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d2082958{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-d20b99a8{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:1.5pt;padding-top:1.5pt;padding-left:1.5pt;padding-right:1.5pt;line-height: 0.8;background-color:transparent;}.cl-d20b99b2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:1.5pt;padding-top:1.5pt;padding-left:1.5pt;padding-right:1.5pt;line-height: 0.8;background-color:transparent;}.cl-d20bcd38{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd42{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd43{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd4c{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd4d{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd56{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd57{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd58{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd60{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd61{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd62{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd6a{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd6b{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd6c{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd6d{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd74{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd75{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd7e{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd7f{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd80{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd81{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd88{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd89{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd92{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd93{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd94{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd9c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd9d{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd9e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcd9f{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcda6{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcda7{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcda8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdb0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdb1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdba{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdbb{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdbc{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdc4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdc5{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdc6{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdce{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdcf{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdd0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdd1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdd8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdd9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdda{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcde2{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcde3{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcde4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdec{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcded{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdee{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdf6{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdf7{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdf8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bcdf9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce00{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce01{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce02{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce03{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce0a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce0b{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce0c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce14{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce15{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce1e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce1f{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce20{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce21{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce28{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce29{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce2a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce32{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce33{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce34{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce3c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce3d{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d20bce3e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d210faba">
+<style>.cl-1b3110d4{table-layout:auto;}.cl-1b27e25c{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-1b27e270{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-1b2b6f12{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:1.5pt;padding-top:1.5pt;padding-left:1.5pt;padding-right:1.5pt;line-height: 0.8;background-color:transparent;}.cl-1b2b6f1c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:1.5pt;padding-top:1.5pt;padding-left:1.5pt;padding-right:1.5pt;line-height: 0.8;background-color:transparent;}.cl-1b2ba680{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba68a{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba68b{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba694{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba695{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba696{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba69e{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba69f{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6a8{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6a9{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6b2{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6b3{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6b4{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6bc{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6bd{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6be{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6c6{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6c7{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6c8{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6d0{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6da{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6db{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6dc{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6dd{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6e4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6e5{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6e6{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6ee{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6ef{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6f0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6f1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6f8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba6f9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba702{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba703{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba704{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba70c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba70d{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba70e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba716{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba717{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba718{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba719{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba720{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba721{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba722{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba723{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba72a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba72b{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba72c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba734{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba735{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba736{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba73e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba73f{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba740{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba741{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba748{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba749{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba74a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba752{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba753{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba754{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba75c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba75d{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba766{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba767{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba768{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba769{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba770{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba771{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba77a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba77b{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba77c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba784{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba785{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba786{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba78e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba78f{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1b2ba790{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-1b3110d4">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-d20bcd38"><p class="cl-d20b99a8"><span class="cl-d208294e">record_id</span></p></th>
-<th class="cl-d20bcd42"><p class="cl-d20b99a8"><span class="cl-d208294e">form_1_complete</span></p></th>
-<th class="cl-d20bcd43"><p class="cl-d20b99b2"><span class="cl-d208294e">demo_title</span></p></th>
-<th class="cl-d20bcd4c"><p class="cl-d20b99b2"><span class="cl-d208294e">demo_fname</span></p></th>
-<th class="cl-d20bcd4d"><p class="cl-d20b99b2"><span class="cl-d208294e">demo_dob</span></p></th>
-<th class="cl-d20bcd56"><p class="cl-d20b99b2"><span class="cl-d208294e">demo_address</span></p></th>
-<th class="cl-d20bcd57"><p class="cl-d20b99a8"><span class="cl-d208294e">demo_postcode</span></p></th>
-<th class="cl-d20bcd58"><p class="cl-d20b99b2"><span class="cl-d208294e">anthro_sex</span></p></th>
-<th class="cl-d20bcd60"><p class="cl-d20b99a8"><span class="cl-d208294e">anthro_weight</span></p></th>
-<th class="cl-d20bcd61"><p class="cl-d20b99a8"><span class="cl-d208294e">anthro_height</span></p></th>
-<th class="cl-d20bcd62"><p class="cl-d20b99a8"><span class="cl-d208294e">assess_iq</span></p></th>
-<th class="cl-d20bcd6a"><p class="cl-d20b99a8"><span class="cl-d208294e">demo_edu</span></p></th>
-<th class="cl-d20bcd6b"><p class="cl-d20b99a8"><span class="cl-d208294e">demo_income</span></p></th>
-<th class="cl-d20bcd6c"><p class="cl-d20b99a8"><span class="cl-d208294e">demo_num_dep</span></p></th>
-<th class="cl-d20bcd6d"><p class="cl-d20b99a8"><span class="cl-d208294e">med_hist_cvd</span></p></th>
-<th class="cl-d20bcd74"><p class="cl-d20b99a8"><span class="cl-d208294e">med_hist_diabetes</span></p></th>
-<th class="cl-d20bcd75"><p class="cl-d20b99b2"><span class="cl-d208294e">life_pol</span></p></th>
-<th class="cl-d20bcd7e"><p class="cl-d20b99b2"><span class="cl-d208294e">life_house_date</span></p></th>
-<th class="cl-d20bcd7f"><p class="cl-d20b99a8"><span class="cl-d208294e">life_super</span></p></th>
-<th class="cl-d20bcd80"><p class="cl-d20b99a8"><span class="cl-d208294e">synthetic_1_complete</span></p></th>
+<th class="cl-1b2ba680"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">record_id</span></p></th>
+<th class="cl-1b2ba68a"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">form_1_complete</span></p></th>
+<th class="cl-1b2ba68b"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">demo_title</span></p></th>
+<th class="cl-1b2ba694"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">demo_fname</span></p></th>
+<th class="cl-1b2ba695"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">demo_dob</span></p></th>
+<th class="cl-1b2ba696"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">demo_address</span></p></th>
+<th class="cl-1b2ba69e"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">demo_postcode</span></p></th>
+<th class="cl-1b2ba69f"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">anthro_sex</span></p></th>
+<th class="cl-1b2ba6a8"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">anthro_weight</span></p></th>
+<th class="cl-1b2ba6a9"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">anthro_height</span></p></th>
+<th class="cl-1b2ba6b2"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">assess_iq</span></p></th>
+<th class="cl-1b2ba6b3"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">demo_edu</span></p></th>
+<th class="cl-1b2ba6b4"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">demo_income</span></p></th>
+<th class="cl-1b2ba6bc"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">demo_num_dep</span></p></th>
+<th class="cl-1b2ba6bd"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">med_hist_cvd</span></p></th>
+<th class="cl-1b2ba6be"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">med_hist_diabetes</span></p></th>
+<th class="cl-1b2ba6c6"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">life_pol</span></p></th>
+<th class="cl-1b2ba6c7"><p class="cl-1b2b6f1c"><span class="cl-1b27e25c">life_house_date</span></p></th>
+<th class="cl-1b2ba6c8"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">life_super</span></p></th>
+<th class="cl-1b2ba6d0"><p class="cl-1b2b6f12"><span class="cl-1b27e25c">synthetic_1_complete</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Mr.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">William Moore</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1990‑01‑24</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">99 St Georges Terrace, Scarborough, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6006</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Male</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">97.7</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">1.56</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">58</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">2</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Liberal</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">1999‑04‑05</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">4458703</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mr.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">William Moore</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1990‑01‑24</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">99 St Georges Terrace, Scarborough, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6006</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Male</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">97.7</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.56</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">58</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Liberal</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1999‑04‑05</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">4458703</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcdc6"><p class="cl-d20b99a8"><span class="cl-d2082958">2</span></p></td>
-<td class="cl-d20bcdce"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdcf"><p class="cl-d20b99b2"><span class="cl-d2082958">Mr.</span></p></td>
-<td class="cl-d20bcdd0"><p class="cl-d20b99b2"><span class="cl-d2082958">William Brown</span></p></td>
-<td class="cl-d20bcdd1"><p class="cl-d20b99b2"><span class="cl-d2082958">1998‑10‑24</span></p></td>
-<td class="cl-d20bcdd8"><p class="cl-d20b99b2"><span class="cl-d2082958"></span></p></td>
-<td class="cl-d20bcdd9"><p class="cl-d20b99a8"><span class="cl-d2082958">6011</span></p></td>
-<td class="cl-d20bcdda"><p class="cl-d20b99b2"><span class="cl-d2082958">Other</span></p></td>
-<td class="cl-d20bcde2"><p class="cl-d20b99a8"><span class="cl-d2082958">62.3</span></p></td>
-<td class="cl-d20bcde3"><p class="cl-d20b99a8"><span class="cl-d2082958">1.53</span></p></td>
-<td class="cl-d20bcde4"><p class="cl-d20b99a8"><span class="cl-d2082958">54</span></p></td>
-<td class="cl-d20bcdec"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcded"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdee"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdf6"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdf7"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdf8"><p class="cl-d20b99b2"><span class="cl-d2082958">Central</span></p></td>
-<td class="cl-d20bcdf9"><p class="cl-d20b99b2"><span class="cl-d2082958">1985‑05‑31</span></p></td>
-<td class="cl-d20bce00"><p class="cl-d20b99a8"><span class="cl-d2082958">14636346</span></p></td>
-<td class="cl-d20bce01"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba717"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2</span></p></td>
+<td class="cl-1b2ba718"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba719"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mr.</span></p></td>
+<td class="cl-1b2ba720"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">William Brown</span></p></td>
+<td class="cl-1b2ba721"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1998‑10‑24</span></p></td>
+<td class="cl-1b2ba722"><p class="cl-1b2b6f1c"><span class="cl-1b27e270"></span></p></td>
+<td class="cl-1b2ba723"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6011</span></p></td>
+<td class="cl-1b2ba72a"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Other</span></p></td>
+<td class="cl-1b2ba72b"><p class="cl-1b2b6f12"><span class="cl-1b27e270">62.3</span></p></td>
+<td class="cl-1b2ba72c"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.53</span></p></td>
+<td class="cl-1b2ba734"><p class="cl-1b2b6f12"><span class="cl-1b27e270">54</span></p></td>
+<td class="cl-1b2ba735"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba736"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba73e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba73f"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba740"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba741"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Central</span></p></td>
+<td class="cl-1b2ba748"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1985‑05‑31</span></p></td>
+<td class="cl-1b2ba749"><p class="cl-1b2b6f12"><span class="cl-1b27e270">14636346</span></p></td>
+<td class="cl-1b2ba74a"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Mr.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">Elizabeth Williams</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1983‑03‑01</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">87 Hay Street, Joondalup, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6011</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Male</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">146.0</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">2.02</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">119</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">4</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">6</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Liberal</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958"></span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">5334516</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mr.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Elizabeth Williams</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1983‑03‑01</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">87 Hay Street, Joondalup, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6011</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Male</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">146.0</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2.02</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">119</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">4</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Liberal</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270"></span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">5334516</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">4</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Ms.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">John Miller</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1985‑02‑13</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">85 Hay Street, Perth CBD, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6006</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Female</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">66.4</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">1.53</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">54</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">2</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">5</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Labour</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">1989‑11‑13</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">6399928</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">4</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Ms.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">John Miller</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1985‑02‑13</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">85 Hay Street, Perth CBD, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6006</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Female</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">66.4</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.53</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">54</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">5</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Labour</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1989‑11‑13</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6399928</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">5</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Mr.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">John Brown</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1973‑12‑10</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">33 Beaufort Street, Mount Lawley, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6005</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Other</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">114.9</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">1.55</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">57</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">6</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Labour</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">1985‑12‑02</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">294741</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">5</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mr.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">John Brown</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1973‑12‑10</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">33 Beaufort Street, Mount Lawley, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6005</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Other</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">114.9</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.55</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">57</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Labour</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1985‑12‑02</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">294741</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">6</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Ms.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">Michael Williams</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1997‑01‑29</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">24 St Georges Terrace, Northbridge, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6011</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Female</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">69.2</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">1.64</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">69</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">2</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Labour</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">1992‑04‑19</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">10847340</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Ms.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Michael Williams</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1997‑01‑29</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">24 St Georges Terrace, Northbridge, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6011</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Female</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">69.2</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.64</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">69</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Labour</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1992‑04‑19</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">10847340</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">7</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Ms.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">Michael Davis</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1990‑10‑10</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">84 Hay Street, Northbridge, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6007</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Male</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">85.6</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">2.03</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">121</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">4</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">5</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Labour</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">1991‑04‑28</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">6320541</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">7</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Ms.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Michael Davis</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1990‑10‑10</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">84 Hay Street, Northbridge, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6007</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Male</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">85.6</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">2.03</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">121</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">4</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">5</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Labour</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1991‑04‑28</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6320541</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">8</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Mx.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">Mary Brown</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1994‑08‑20</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">85 Murray Street, Mount Lawley, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6008</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Male</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">76.7</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958">1.70</span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">77</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Central</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">2009‑03‑12</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">1726473</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">8</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mx.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mary Brown</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1994‑08‑20</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">85 Murray Street, Mount Lawley, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6008</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Male</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">76.7</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.70</span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">77</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Central</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">2009‑03‑12</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1726473</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bcd81"><p class="cl-d20b99a8"><span class="cl-d2082958">9</span></p></td>
-<td class="cl-d20bcd88"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcd89"><p class="cl-d20b99b2"><span class="cl-d2082958">Ms.</span></p></td>
-<td class="cl-d20bcd92"><p class="cl-d20b99b2"><span class="cl-d2082958">Michael Taylor</span></p></td>
-<td class="cl-d20bcd93"><p class="cl-d20b99b2"><span class="cl-d2082958">1978‑05‑13</span></p></td>
-<td class="cl-d20bcd94"><p class="cl-d20b99b2"><span class="cl-d2082958">29 King Street, Fremantle, WA</span></p></td>
-<td class="cl-d20bcd9c"><p class="cl-d20b99a8"><span class="cl-d2082958">6008</span></p></td>
-<td class="cl-d20bcd9d"><p class="cl-d20b99b2"><span class="cl-d2082958">Other</span></p></td>
-<td class="cl-d20bcd9e"><p class="cl-d20b99a8"><span class="cl-d2082958">109.8</span></p></td>
-<td class="cl-d20bcd9f"><p class="cl-d20b99a8"><span class="cl-d2082958"></span></p></td>
-<td class="cl-d20bcda6"><p class="cl-d20b99a8"><span class="cl-d2082958">66</span></p></td>
-<td class="cl-d20bcda7"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcda8"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdb0"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdb1"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bcdba"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bcdbb"><p class="cl-d20b99b2"><span class="cl-d2082958">Liberal</span></p></td>
-<td class="cl-d20bcdbc"><p class="cl-d20b99b2"><span class="cl-d2082958">2004‑03‑05</span></p></td>
-<td class="cl-d20bcdc4"><p class="cl-d20b99a8"><span class="cl-d2082958">14534640</span></p></td>
-<td class="cl-d20bcdc5"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba6da"><p class="cl-1b2b6f12"><span class="cl-1b27e270">9</span></p></td>
+<td class="cl-1b2ba6db"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba6dc"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Ms.</span></p></td>
+<td class="cl-1b2ba6dd"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Michael Taylor</span></p></td>
+<td class="cl-1b2ba6e4"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1978‑05‑13</span></p></td>
+<td class="cl-1b2ba6e5"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">29 King Street, Fremantle, WA</span></p></td>
+<td class="cl-1b2ba6e6"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6008</span></p></td>
+<td class="cl-1b2ba6ee"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Other</span></p></td>
+<td class="cl-1b2ba6ef"><p class="cl-1b2b6f12"><span class="cl-1b27e270">109.8</span></p></td>
+<td class="cl-1b2ba6f0"><p class="cl-1b2b6f12"><span class="cl-1b27e270"></span></p></td>
+<td class="cl-1b2ba6f1"><p class="cl-1b2b6f12"><span class="cl-1b27e270">66</span></p></td>
+<td class="cl-1b2ba6f8"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba6f9"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba702"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba703"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba704"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba70c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Liberal</span></p></td>
+<td class="cl-1b2ba70d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">2004‑03‑05</span></p></td>
+<td class="cl-1b2ba70e"><p class="cl-1b2b6f12"><span class="cl-1b27e270">14534640</span></p></td>
+<td class="cl-1b2ba716"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d20bce02"><p class="cl-d20b99a8"><span class="cl-d2082958">10</span></p></td>
-<td class="cl-d20bce03"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bce0a"><p class="cl-d20b99b2"><span class="cl-d2082958">Mx.</span></p></td>
-<td class="cl-d20bce0b"><p class="cl-d20b99b2"><span class="cl-d2082958">Patricia Moore</span></p></td>
-<td class="cl-d20bce0c"><p class="cl-d20b99b2"><span class="cl-d2082958">1990‑06‑06</span></p></td>
-<td class="cl-d20bce14"><p class="cl-d20b99b2"><span class="cl-d2082958">76 Adelaide Terrace, Cottesloe, WA</span></p></td>
-<td class="cl-d20bce15"><p class="cl-d20b99a8"><span class="cl-d2082958">6012</span></p></td>
-<td class="cl-d20bce1e"><p class="cl-d20b99b2"><span class="cl-d2082958">Other</span></p></td>
-<td class="cl-d20bce1f"><p class="cl-d20b99a8"><span class="cl-d2082958">139.8</span></p></td>
-<td class="cl-d20bce20"><p class="cl-d20b99a8"><span class="cl-d2082958">1.93</span></p></td>
-<td class="cl-d20bce21"><p class="cl-d20b99a8"><span class="cl-d2082958">107</span></p></td>
-<td class="cl-d20bce28"><p class="cl-d20b99a8"><span class="cl-d2082958">1</span></p></td>
-<td class="cl-d20bce29"><p class="cl-d20b99a8"><span class="cl-d2082958">3</span></p></td>
-<td class="cl-d20bce2a"><p class="cl-d20b99a8"><span class="cl-d2082958">7</span></p></td>
-<td class="cl-d20bce32"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bce33"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
-<td class="cl-d20bce34"><p class="cl-d20b99b2"><span class="cl-d2082958">Liberal</span></p></td>
-<td class="cl-d20bce3c"><p class="cl-d20b99b2"><span class="cl-d2082958">1992‑12‑20</span></p></td>
-<td class="cl-d20bce3d"><p class="cl-d20b99a8"><span class="cl-d2082958">11706012</span></p></td>
-<td class="cl-d20bce3e"><p class="cl-d20b99a8"><span class="cl-d2082958">0</span></p></td>
+<td class="cl-1b2ba752"><p class="cl-1b2b6f12"><span class="cl-1b27e270">10</span></p></td>
+<td class="cl-1b2ba753"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba754"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Mx.</span></p></td>
+<td class="cl-1b2ba75c"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Patricia Moore</span></p></td>
+<td class="cl-1b2ba75d"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1990‑06‑06</span></p></td>
+<td class="cl-1b2ba766"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">76 Adelaide Terrace, Cottesloe, WA</span></p></td>
+<td class="cl-1b2ba767"><p class="cl-1b2b6f12"><span class="cl-1b27e270">6012</span></p></td>
+<td class="cl-1b2ba768"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Other</span></p></td>
+<td class="cl-1b2ba769"><p class="cl-1b2b6f12"><span class="cl-1b27e270">139.8</span></p></td>
+<td class="cl-1b2ba770"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1.93</span></p></td>
+<td class="cl-1b2ba771"><p class="cl-1b2b6f12"><span class="cl-1b27e270">107</span></p></td>
+<td class="cl-1b2ba77a"><p class="cl-1b2b6f12"><span class="cl-1b27e270">1</span></p></td>
+<td class="cl-1b2ba77b"><p class="cl-1b2b6f12"><span class="cl-1b27e270">3</span></p></td>
+<td class="cl-1b2ba77c"><p class="cl-1b2b6f12"><span class="cl-1b27e270">7</span></p></td>
+<td class="cl-1b2ba784"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba785"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
+<td class="cl-1b2ba786"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">Liberal</span></p></td>
+<td class="cl-1b2ba78e"><p class="cl-1b2b6f1c"><span class="cl-1b27e270">1992‑12‑20</span></p></td>
+<td class="cl-1b2ba78f"><p class="cl-1b2b6f12"><span class="cl-1b27e270">11706012</span></p></td>
+<td class="cl-1b2ba790"><p class="cl-1b2b6f12"><span class="cl-1b27e270">0</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -420,262 +421,262 @@ directly to <code>tbl_summary</code>):</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">100</span> missing rows in the <span style="color: #0000BB;">"med_hist_cvd"</span> column have been</span></span>
 <span><span class="co">#&gt; removed.</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d35be696{table-layout:auto;}.cl-d3541c7c{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d3541c90{font-family:'sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;position: relative;bottom:3.3pt;}.cl-d3541c9a{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-d3541c9b{font-family:'sans';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-d3541c9c{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d3574e9c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3574ea6{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3574ea7{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3574eb0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3574eb1{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:15pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3574eba{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d3577c00{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c0a{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c14{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c15{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c16{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c17{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c1e{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c1f{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c20{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c28{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c29{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c2a{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c32{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c33{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c3c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3577c3d{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d35be696">
+<style>.cl-1c833098{table-layout:auto;}.cl-1c7a8c72{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-1c7a8c86{font-family:'sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;position: relative;bottom:3.3pt;}.cl-1c7a8c87{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-1c7a8c88{font-family:'sans';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-1c7a8c90{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1c7db744{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7db74e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7db758{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7db759{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7db762{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:15pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7db763{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1c7de23c{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de246{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de247{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de248{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de250{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de251{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de252{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de25a{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de25b{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de25c{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de264{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de265{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de26e{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de26f{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de270{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c7de278{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-1c833098">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d3577c00"><p class="cl-d3574e9c"><span class="cl-d3541c7c"> </span></p></th>
-<th colspan="2" class="cl-d3577c0a"><p class="cl-d3574ea6"><span class="cl-d3541c7c">History of CVD</span></p></th>
+<th class="cl-1c7de23c"><p class="cl-1c7db744"><span class="cl-1c7a8c72"> </span></p></th>
+<th colspan="2" class="cl-1c7de246"><p class="cl-1c7db74e"><span class="cl-1c7a8c72">History of CVD</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d3577c14"><p class="cl-d3574e9c"><span class="cl-d3541c7c">Characteristic</span></p></th>
-<th class="cl-d3577c15"><p class="cl-d3574ea6"><span class="cl-d3541c7c">No</span><span class="cl-d3541c7c">  </span><br><span class="cl-d3541c7c">N = 960</span><span class="cl-d3541c90">1</span></p></th>
-<th class="cl-d3577c15"><p class="cl-d3574ea6"><span class="cl-d3541c7c">Yes</span><span class="cl-d3541c7c">  </span><br><span class="cl-d3541c7c">N = 940</span><span class="cl-d3541c90">1</span></p></th>
+<th class="cl-1c7de247"><p class="cl-1c7db744"><span class="cl-1c7a8c72">Characteristic</span></p></th>
+<th class="cl-1c7de248"><p class="cl-1c7db74e"><span class="cl-1c7a8c72">No</span><span class="cl-1c7a8c72">  </span><br><span class="cl-1c7a8c72">N = 960</span><span class="cl-1c7a8c86">1</span></p></th>
+<th class="cl-1c7de248"><p class="cl-1c7db74e"><span class="cl-1c7a8c72">Yes</span><span class="cl-1c7a8c72">  </span><br><span class="cl-1c7a8c72">N = 940</span><span class="cl-1c7a8c86">1</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Postcode</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Postcode</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">72 (7.9%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">69 (7.7%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">72 (7.9%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">69 (7.7%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6003</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">59 (6.5%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">79 (8.8%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6003</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">59 (6.5%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">79 (8.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6004</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">85 (9.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">81 (9.0%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6004</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">85 (9.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">81 (9.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6005</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">76 (8.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">82 (9.2%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6005</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">76 (8.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">82 (9.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6006</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">89 (9.7%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">90 (10.0%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6006</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">89 (9.7%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">90 (10.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6007</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">85 (9.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">88 (9.8%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6007</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">85 (9.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">88 (9.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6008</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">85 (9.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">88 (9.8%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6008</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">85 (9.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">88 (9.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6009</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">79 (8.6%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">81 (9.0%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6009</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">79 (8.6%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">81 (9.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6010</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">82 (9.0%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">78 (8.7%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6010</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">82 (9.0%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">78 (8.7%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6011</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">101 (11.1%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">77 (8.6%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6011</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">101 (11.1%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">77 (8.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">6012</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">101 (11.1%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">83 (9.3%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">6012</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">101 (11.1%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">83 (9.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">46</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">44</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">46</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">44</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c20"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Sex</span></p></td>
-<td class="cl-d3577c28"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
-<td class="cl-d3577c28"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
+<td class="cl-1c7de25b"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Sex</span></p></td>
+<td class="cl-1c7de25c"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
+<td class="cl-1c7de25c"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Female</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">308 (33.7%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">272 (30.6%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Female</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">308 (33.7%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">272 (30.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Male</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">285 (31.2%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">314 (35.3%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Male</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">285 (31.2%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">314 (35.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Other</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">320 (35.0%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">304 (34.2%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Other</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">320 (35.0%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">304 (34.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">47</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">50</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">47</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">50</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Weight</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">107 (82, 129)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">106 (85, 129)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Weight</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">107 (82, 129)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">106 (85, 129)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">46</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">47</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">46</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">47</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Height</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">1.79 (1.65, 1.96)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">1.81 (1.66, 1.96)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Height</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">1.79 (1.65, 1.96)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">1.81 (1.66, 1.96)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">44</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">52</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">44</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">52</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574ea7"><span class="cl-d3541c9a">IQ</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">89 (69, 111)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">90 (70, 110)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db758"><span class="cl-1c7a8c87">IQ</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">89 (69, 111)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">90 (70, 110)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">50</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">47</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">50</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">47</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Highest level of education</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Highest level of education</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Completed High School</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">216 (23.6%)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">215 (24.2%)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Completed High School</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">216 (23.6%)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">215 (24.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">TAFE or Trade</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">234 (25.5%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">219 (24.6%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">TAFE or Trade</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">234 (25.5%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">219 (24.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Higher Degree</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">218 (23.8%)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">230 (25.8%)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Higher Degree</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">218 (23.8%)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">230 (25.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Bachelor Degree</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">249 (27.2%)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">226 (25.4%)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Bachelor Degree</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">249 (27.2%)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">226 (25.4%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">43</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">50</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">43</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">50</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Household income</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Household income</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">&lt;80000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">199 (21.7%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">183 (20.6%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">&lt;80000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">199 (21.7%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">183 (20.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">80000-120000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">176 (19.2%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">169 (19.0%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">80000-120000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">176 (19.2%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">169 (19.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">120000-160000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">186 (20.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">189 (21.3%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">120000-160000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">186 (20.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">189 (21.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">160000-200000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">182 (19.9%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">162 (18.2%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">160000-200000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">182 (19.9%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">162 (18.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">&gt;200000</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">173 (18.9%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">186 (20.9%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">&gt;200000</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">173 (18.9%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">186 (20.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">44</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">51</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">44</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">51</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Number of dependents</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">3 (2, 5)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">3 (1, 5)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Number of dependents</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">3 (2, 5)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">3 (1, 5)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">51</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">45</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">51</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">45</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">History of diabetes</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">471 (51.3%)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">467 (52.6%)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">History of diabetes</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">471 (51.3%)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">467 (52.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">41</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">53</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">41</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">53</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Political affiliation</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a"></span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Political affiliation</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Central</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">301 (33.3%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">309 (34.3%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Central</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">301 (33.3%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">309 (34.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Labour</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">270 (29.9%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">325 (36.0%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Labour</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">270 (29.9%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">325 (36.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c1e"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Liberal</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">332 (36.8%)</span></p></td>
-<td class="cl-d3577c1f"><p class="cl-d3574eb0"><span class="cl-d3541c9a">268 (29.7%)</span></p></td>
+<td class="cl-1c7de252"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Liberal</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">332 (36.8%)</span></p></td>
+<td class="cl-1c7de25a"><p class="cl-1c7db759"><span class="cl-1c7a8c87">268 (29.7%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c16"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">57</span></p></td>
-<td class="cl-d3577c17"><p class="cl-d3574eb0"><span class="cl-d3541c9a">38</span></p></td>
+<td class="cl-1c7de250"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">57</span></p></td>
+<td class="cl-1c7de251"><p class="cl-1c7db759"><span class="cl-1c7a8c87">38</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c29"><p class="cl-d3574ea7"><span class="cl-d3541c9a">Total superannuation balance</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">7,456,367 (3,930,725, 11,271,067)</span></p></td>
-<td class="cl-d3577c2a"><p class="cl-d3574eb0"><span class="cl-d3541c9a">7,679,442 (3,868,717, 11,056,757)</span></p></td>
+<td class="cl-1c7de264"><p class="cl-1c7db758"><span class="cl-1c7a8c87">Total superannuation balance</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">7,456,367 (3,930,725, 11,271,067)</span></p></td>
+<td class="cl-1c7de265"><p class="cl-1c7db759"><span class="cl-1c7a8c87">7,679,442 (3,868,717, 11,056,757)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d3577c32"><p class="cl-d3574eb1"><span class="cl-d3541c9a">Unknown</span></p></td>
-<td class="cl-d3577c33"><p class="cl-d3574eb0"><span class="cl-d3541c9a">42</span></p></td>
-<td class="cl-d3577c33"><p class="cl-d3574eb0"><span class="cl-d3541c9a">53</span></p></td>
+<td class="cl-1c7de26e"><p class="cl-1c7db762"><span class="cl-1c7a8c87">Unknown</span></p></td>
+<td class="cl-1c7de26f"><p class="cl-1c7db759"><span class="cl-1c7a8c87">42</span></p></td>
+<td class="cl-1c7de26f"><p class="cl-1c7db759"><span class="cl-1c7a8c87">53</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-d3577c3c"><p class="cl-d3574eba"><span class="cl-d3541c9b">1</span><span class="cl-d3541c9c">n (%); Median (Q1, Q3)</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-1c7de270"><p class="cl-1c7db763"><span class="cl-1c7a8c88">1</span><span class="cl-1c7a8c90">n (%); Median (Q1, Q3)</span></p></td></tr></tfoot>
 </table>
 </div>
 <p>The above code chunk is clearly quite sizeable and required a
@@ -685,6 +686,20 @@ significant degree of user input.</p>
 <code class="sourceCode R"><span><span class="va">dat_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_REDCap.html">clean_REDCap</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">dat_raw</span>,</span>
 <span>             dict <span class="op">=</span> <span class="va">dict</span>,</span>
 <span>             yesno_to_bool <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There was 1 warning in `mutate()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span></span>
+<span><span class="co">#&gt; Caused by warning:</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The `...` argument of `across()` is deprecated as of dplyr 1.1.0.</span></span>
+<span><span class="co">#&gt; Supply arguments directly to `.fns` through an anonymous function instead.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   # Previously</span></span>
+<span><span class="co">#&gt;   across(a:b, mean, na.rm = TRUE)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   # Now</span></span>
+<span><span class="co">#&gt;   across(a:b, \(x) mean(x, na.rm = TRUE))</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">thekidsbiostats</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/the-kids-biostats/thekidsbiostats/issues&gt;</span>.</span></span>
 <span></span>
 <span><span class="va">dat_mod</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">demo_postcode</span>, <span class="va">anthro_sex</span><span class="op">:</span><span class="va">life_pol</span>, <span class="va">life_super</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -700,262 +715,262 @@ significant degree of user input.</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">100</span> missing rows in the <span style="color: #0000BB;">"med_hist_cvd"</span> column have been</span></span>
 <span><span class="co">#&gt; removed.</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d4c87940{table-layout:auto;}.cl-d4c0e19e{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d4c0e1b2{font-family:'sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;position: relative;bottom:3.3pt;}.cl-d4c0e1bc{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-d4c0e1bd{font-family:'sans';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-d4c0e1be{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d4c40c2a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c40c34{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c40c35{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c40c3e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c40c3f{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:15pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c40c40{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-d4c43394{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c4339e{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c4339f{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433a8{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433a9{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433b2{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433b3{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433b4{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433bc{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433bd{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433c6{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433c7{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433c8{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433d0{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433d1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4c433d2{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d4c87940">
+<style>.cl-1de1c648{table-layout:auto;}.cl-1dd9dd98{font-family:'sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-1dd9ddac{font-family:'sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;position: relative;bottom:3.3pt;}.cl-1dd9ddad{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 25, 33, 1.00);background-color:transparent;}.cl-1dd9ddb6{font-family:'sans';font-size:6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;position: relative;bottom:3pt;}.cl-1dd9ddb7{font-family:'sans';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1ddd267e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd2688{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd2692{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd269c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd269d{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:15pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd26a6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2.5pt;padding-top:2.5pt;padding-left:2.5pt;padding-right:2.5pt;line-height: 1.5;background-color:transparent;}.cl-1ddd5360{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd536a{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5374{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5375{background-color:rgba(86, 95, 95, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd537e{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd537f{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5388{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5389{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd538a{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5392{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd5393{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd539c{background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd539d{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd53a6{background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd53a7{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1ddd53a8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-1de1c648">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d4c43394"><p class="cl-d4c40c2a"><span class="cl-d4c0e19e"> </span></p></th>
-<th colspan="2" class="cl-d4c4339e"><p class="cl-d4c40c34"><span class="cl-d4c0e19e">History of CVD</span></p></th>
+<th class="cl-1ddd5360"><p class="cl-1ddd267e"><span class="cl-1dd9dd98"> </span></p></th>
+<th colspan="2" class="cl-1ddd536a"><p class="cl-1ddd2688"><span class="cl-1dd9dd98">History of CVD</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d4c4339f"><p class="cl-d4c40c2a"><span class="cl-d4c0e19e">Characteristic</span></p></th>
-<th class="cl-d4c433a8"><p class="cl-d4c40c34"><span class="cl-d4c0e19e">No</span><span class="cl-d4c0e19e">  </span><br><span class="cl-d4c0e19e">N = 960</span><span class="cl-d4c0e1b2">1</span></p></th>
-<th class="cl-d4c433a8"><p class="cl-d4c40c34"><span class="cl-d4c0e19e">Yes</span><span class="cl-d4c0e19e">  </span><br><span class="cl-d4c0e19e">N = 940</span><span class="cl-d4c0e1b2">1</span></p></th>
+<th class="cl-1ddd5374"><p class="cl-1ddd267e"><span class="cl-1dd9dd98">Characteristic</span></p></th>
+<th class="cl-1ddd5375"><p class="cl-1ddd2688"><span class="cl-1dd9dd98">No</span><span class="cl-1dd9dd98">  </span><br><span class="cl-1dd9dd98">N = 960</span><span class="cl-1dd9ddac">1</span></p></th>
+<th class="cl-1ddd5375"><p class="cl-1ddd2688"><span class="cl-1dd9dd98">Yes</span><span class="cl-1dd9dd98">  </span><br><span class="cl-1dd9dd98">N = 940</span><span class="cl-1dd9ddac">1</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Postcode</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Postcode</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">72 (7.9%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">69 (7.7%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">72 (7.9%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">69 (7.7%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6003</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">59 (6.5%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">79 (8.8%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6003</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">59 (6.5%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">79 (8.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6004</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">85 (9.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">81 (9.0%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6004</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">85 (9.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">81 (9.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6005</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">76 (8.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">82 (9.2%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6005</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">76 (8.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">82 (9.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6006</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">89 (9.7%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">90 (10.0%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6006</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">89 (9.7%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">90 (10.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6007</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">85 (9.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">88 (9.8%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6007</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">85 (9.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">88 (9.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6008</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">85 (9.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">88 (9.8%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6008</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">85 (9.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">88 (9.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6009</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">79 (8.6%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">81 (9.0%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6009</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">79 (8.6%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">81 (9.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6010</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">82 (9.0%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">78 (8.7%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6010</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">82 (9.0%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">78 (8.7%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6011</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">101 (11.1%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">77 (8.6%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6011</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">101 (11.1%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">77 (8.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">6012</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">101 (11.1%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">83 (9.3%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">6012</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">101 (11.1%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">83 (9.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">46</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">44</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">46</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">44</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433bc"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Sex</span></p></td>
-<td class="cl-d4c433bd"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433bd"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
+<td class="cl-1ddd538a"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Sex</span></p></td>
+<td class="cl-1ddd5392"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd5392"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">47 (4.9%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">50 (5.3%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">47 (4.9%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">50 (5.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Female</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">308 (32.1%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">272 (28.9%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Female</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">308 (32.1%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">272 (28.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Male</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">285 (29.7%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">314 (33.4%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Male</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">285 (29.7%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">314 (33.4%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Other</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">320 (33.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">304 (32.3%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Other</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">320 (33.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">304 (32.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Weight</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">107 (82, 129)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">106 (85, 129)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Weight</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">107 (82, 129)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">106 (85, 129)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">46</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">47</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">46</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">47</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Height</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">1.79 (1.65, 1.96)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">1.81 (1.66, 1.96)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Height</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">1.79 (1.65, 1.96)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">1.81 (1.66, 1.96)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">44</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">52</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">44</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">52</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">IQ</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">89 (69, 111)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">90 (70, 110)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">IQ</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">89 (69, 111)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">90 (70, 110)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">50</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">47</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">50</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">47</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Highest Level of Education</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Highest Level of Education</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Completed High School</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">216 (23.6%)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">215 (24.2%)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Completed High School</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">216 (23.6%)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">215 (24.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">TAFE or Trade</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">234 (25.5%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">219 (24.6%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">TAFE or Trade</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">234 (25.5%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">219 (24.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Higher Degree</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">218 (23.8%)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">230 (25.8%)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Higher Degree</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">218 (23.8%)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">230 (25.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Bachelor Degree</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">249 (27.2%)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">226 (25.4%)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Bachelor Degree</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">249 (27.2%)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">226 (25.4%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">43</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">50</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">43</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">50</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Household Income</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Household Income</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">&lt;80000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">199 (21.7%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">183 (20.6%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">&lt;80000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">199 (21.7%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">183 (20.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">80000-120000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">176 (19.2%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">169 (19.0%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">80000-120000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">176 (19.2%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">169 (19.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">120000-160000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">186 (20.3%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">189 (21.3%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">120000-160000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">186 (20.3%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">189 (21.3%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">160000-200000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">182 (19.9%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">162 (18.2%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">160000-200000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">182 (19.9%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">162 (18.2%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">&gt;200000</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">173 (18.9%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">186 (20.9%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">&gt;200000</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">173 (18.9%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">186 (20.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">44</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">51</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">44</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">51</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Number of Dependents</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">3 (2, 5)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">3 (1, 5)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Number of Dependents</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">3 (2, 5)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">3 (1, 5)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">51</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">45</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">51</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">45</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">History of Diabetes</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">471 (51.3%)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">467 (52.6%)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">History of Diabetes</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">471 (51.3%)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">467 (52.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">41</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">53</span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">41</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">53</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433a9"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Political Affiliation</span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433b2"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc"></span></p></td>
+<td class="cl-1ddd537e"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Political Affiliation</span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd537f"><p class="cl-1ddd269c"><span class="cl-1dd9ddad"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc"></span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">57 (5.9%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">38 (4.0%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad"></span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">57 (5.9%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">38 (4.0%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Central</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">301 (31.4%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">309 (32.9%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Central</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">301 (31.4%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">309 (32.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Labour</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">270 (28.1%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">325 (34.6%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Labour</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">270 (28.1%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">325 (34.6%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433b3"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Liberal</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">332 (34.6%)</span></p></td>
-<td class="cl-d4c433b4"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">268 (28.5%)</span></p></td>
+<td class="cl-1ddd5388"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Liberal</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">332 (34.6%)</span></p></td>
+<td class="cl-1ddd5389"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">268 (28.5%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c6"><p class="cl-d4c40c35"><span class="cl-d4c0e1bc">Total Super Balance</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">7,456,367 (3,930,725, 11,271,067)</span></p></td>
-<td class="cl-d4c433c7"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">7,679,442 (3,868,717, 11,056,757)</span></p></td>
+<td class="cl-1ddd5393"><p class="cl-1ddd2692"><span class="cl-1dd9ddad">Total Super Balance</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">7,456,367 (3,930,725, 11,271,067)</span></p></td>
+<td class="cl-1ddd539c"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">7,679,442 (3,868,717, 11,056,757)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4c433c8"><p class="cl-d4c40c3f"><span class="cl-d4c0e1bc">Unknown</span></p></td>
-<td class="cl-d4c433d0"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">42</span></p></td>
-<td class="cl-d4c433d0"><p class="cl-d4c40c3e"><span class="cl-d4c0e1bc">53</span></p></td>
+<td class="cl-1ddd539d"><p class="cl-1ddd269d"><span class="cl-1dd9ddad">Unknown</span></p></td>
+<td class="cl-1ddd53a6"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">42</span></p></td>
+<td class="cl-1ddd53a6"><p class="cl-1ddd269c"><span class="cl-1dd9ddad">53</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-d4c433d1"><p class="cl-d4c40c40"><span class="cl-d4c0e1bd">1</span><span class="cl-d4c0e1be">n (%); Median (Q1, Q3)</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-1ddd53a7"><p class="cl-1ddd26a6"><span class="cl-1dd9ddb6">1</span><span class="cl-1dd9ddb7">n (%); Median (Q1, Q3)</span></p></td></tr></tfoot>
 </table>
 </div>
 <p>The variable levels and labels are automatically applied.</p>
@@ -972,7 +987,7 @@ significant degree of user input.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Matt Cooper, Zac Dempsey, Wesley Billingham, Robin Cook.</p>
+  <p>Developed by Matt Cooper, Zac Dempsey, Wesley Billingham, Robin van de Meeberg.</p>
 </div>
 
 <div class="pkgdown-footer-right">

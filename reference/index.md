@@ -14,6 +14,8 @@
   : Create a Quarto report template
 - [`create_template_addin()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/create_template_addin.md)
   : Shiny Addin: Create Report Template
+- [`data_patient`](https://the-kids-biostats.github.io/thekidsbiostats/reference/data_patient.md)
+  : Example of a (fictional) uncleaned data set for analysis
 - [`factor_convert()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/factor_convert.md)
   : factor_convert
 - [`factor_table()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/factor_table.md)
@@ -30,6 +32,8 @@
   : RStudio Addin: Insert child Quarto tabset for model output
 - [`layout_params`](https://the-kids-biostats.github.io/thekidsbiostats/reference/layout_params.md)
   : Image Size Parameters for Save Function
+- [`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md)
+  : Create a copy-pasteable variable dictionary template
 - [`modify_labels()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/modify_labels.md)
   : Modify flextable Labels
 - [`preprocess_qmd()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/preprocess_qmd.md)
@@ -66,6 +70,9 @@
   : Apply Institute Theme to ggplot2 Plots
 - [`theme_institute()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/theme_institute.md)
   : Apply Institute Theme to ggplot2 Plots
+- [`update_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.md)
+  : Apply a variable dictionary to a dataset. Each column is replaced
+  with a new name and a corresponding label attribute is applied.
 - [`variable_labels()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/variable_labels.md)
   : variable_labels
 - [`yesno_vars()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/yesno_vars.md)

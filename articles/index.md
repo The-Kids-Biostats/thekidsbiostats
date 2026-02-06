@@ -2,6 +2,8 @@
 
 ### All vignettes
 
+- [Cleaning
+  Columns](https://the-kids-biostats.github.io/thekidsbiostats/articles/cleaning_columns.md):
 - [Data Manipulation
   Tools](https://the-kids-biostats.github.io/thekidsbiostats/articles/data_manipulations.md):
 - [Miscellaneous
