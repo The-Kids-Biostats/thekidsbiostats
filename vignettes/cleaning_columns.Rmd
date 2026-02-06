@@ -24,7 +24,7 @@ This vignette demonstrates how to use **column dictionaries** to expedite the pr
 -   `make_column_dict()` – create a copy-pasteable column dictionary template.
 -   `update_columns()` – rename and label columns using a column dictionary.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(thekidsbiostats)
 ```
 
@@ -32,36 +32,25 @@ library(thekidsbiostats)
 
 ## 1. Create a data dictionary template: `make_column_dict()`
 
-Suppose we have the following dataset:
+Suppose we use `thekidsbiostats::data_patient` as an example:
 
 ```{r}
 
-data_patients <- data.frame(
-  "Patient ID#"         = 101:105,
-  "DOB [YYYY-MM-DD]"    = as.Date(c("1980-05-12", "1992-08-03", "1975-12-25", "2000-01-01", "1985-07-07")),
-  "Sex (0=Male, 1=Female)" = c("0", "1", "1", "0", "1"),
-  "HEIGHT (cm)"         = c(175, 160, 180, 165, 170),
-  "WEIGHT (kg)"         = c(70, 55, 80, 60, 75),
-  "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?" = c(TRUE, FALSE, FALSE, TRUE, FALSE),
-  "bp (mmHg)"           = c("120/80", "110/70", "130/85", "115/75", "125/82"),
-  "Cholesterol / mmolL" = c(5.2, 4.8, 6.1, 5.0, 5.5),
-  check.names = FALSE  # setting this to FALSE to highlight problems with bad names
-)
+data("data_patient")
 
-data_patients |> as_flextable()
-
+data_patient |> as_flextable()
 ```
 
 Beyond this dataset visually looking messy, it can also be tricky to reference these column names when attempting to use them in operations. For example, let's try to calculate the BMI of individuals and recode the `Sex` column by replacing `0/1` with `Male/Female`.
 
 ```{r}
-data_patients$`Sex (0=Male, 1=Female)` = case_when(
-  data_patients$`Sex (0=Male, 1=Female)` == 0 ~ "Male",
-  data_patients$`Sex (0=Male, 1=Female)` == 1 ~ "Female",
+data_patient$`Sex (0=Male, 1=Female)` = case_when(
+  data_patient$`Sex (0=Male, 1=Female)` == 0 ~ "Male",
+  data_patient$`Sex (0=Male, 1=Female)` == 1 ~ "Female",
   T ~ NA_character_
 )
 
-bmi = data_patients$`WEIGHT (kg)` / (data_patients$`HEIGHT (cm)` / 100.0)^2
+bmi = data_patient$`WEIGHT (kg)` / (data_patient$`HEIGHT (cm)` / 100.0)^2
 print(bmi)
 ```
 
@@ -76,23 +65,23 @@ The solution is therefore to manually set up a dictionary that maps the old colu
 The **`make_column_dict()`** function makes this process slightly easier by creating a ready-to-fill template based on the column names that exist with the data. For example:
 
 ```{r}
-dict <- make_column_dict(data_patients, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
+dict <- make_column_dict(data_patient, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
 ```
 
 We can either directly add to the `dict` object assigned above or copy-paste the printed output into our code and modify as needed:
 
 ```{r}
-dict_patients <- tribble(
+dict_patient <- tribble(
   ~old, ~new, ~label,
-  'Patient ID#', 'patient_id', 'Patient ID#',
-  'DOB [YYYY-MM-DD]', 'dob', 'Date of Birth',
-  'Sex (0=Male, 1=Female)', 'sex', 'Sex',
-  'HEIGHT (cm)', 'height_cm', 'Height (cm)',
-  'WEIGHT (kg)', 'weight_kg', 'Weight (kg)',
-  'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'smoke_current', 'Current Smoker',
-  'bp (mmHg)', 'bp_mmhg', 'Blood Pressure (mmHg)',
-  'Cholesterol / mmolL', 'cholesterol_mmoll', 'Cholesterol (mmol L)',
-) 
+  'Patient ID#', 'patient_id_number', '',
+  'DOB [YYYY-MM-DD]', 'dob_yyyy_mm_dd', '',
+  'Sex (0=Male, 1=Female)', 'sex_0_male_1_female', '',
+  'WHAT IS YOUR HEIGHT? (cm)', 'what_is_your_height_cm', '',
+  'WHAT IS YOUR CURRENT WEIGHT? (kg)', 'what_is_your_current_weight_kg', '',
+  'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis', '',
+  'bp (mmHg)', 'bp_mm_hg', '',
+  'Cholesterol / mmolL', 'cholesterol_mmol_l', '',
+)
 ```
 
 <br> <br>
@@ -102,7 +91,7 @@ dict_patients <- tribble(
 Now after having defined the column dictionary above, we can simply use the **`update_columns()`** function to apply these changes in a single line.
 
 ```{r}
-data_clean <- update_columns(data_patients, dict = dict_patients)
+data_clean <- update_columns(data_patient, dict = dict_patient)
 data_clean |> flextable()
 ```
 

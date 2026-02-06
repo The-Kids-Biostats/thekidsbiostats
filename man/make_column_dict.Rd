@@ -32,3 +32,11 @@ Create a copy-pasteable variable dictionary template
 \details{
 The default behaviour is to print a tribble template to the console. Set \code{quiet=TRUE} to suppress this output.
 }
+\examples{
+data("data_patient", package = "thekidsbiostats")
+
+# Create a data dictionary and formulate some cleaned column names, assign to `dict` object
+dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
+
+
+}

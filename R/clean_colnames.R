@@ -10,6 +10,16 @@
 #'    Columns not referenced in the dictionary remain at the end in their original order.
 #'
 #' @return A data.frame with renamed columns and labels applied
+#'
+#' @examples
+#' data("data_patient", package = "thekidsbiostats")
+#'
+#' # 1) Create a data dictionary and formulate some cleaned column names, assign to `dict` object
+#' dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
+#'
+#' # 2) Apply column names to data, assign to `data_patient_clean`
+#' data_patient_clean <- update_columns(data_patient, dict = dict)
+#'
 #' @export
 update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=FALSE) {
 
@@ -122,6 +132,14 @@ update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=F
 #'
 #' @details
 #' The default behaviour is to print a tribble template to the console. Set \code{quiet=TRUE} to suppress this output.
+#'
+#' @examples
+#' data("data_patient", package = "thekidsbiostats")
+#'
+#' # Create a data dictionary and formulate some cleaned column names, assign to `dict` object
+#' dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
+#'
+#'
 #' @export
 make_column_dict <- function(data, auto_clean=TRUE, file=NULL, quiet=FALSE, ...) {
 

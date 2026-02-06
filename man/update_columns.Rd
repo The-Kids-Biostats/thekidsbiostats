@@ -34,3 +34,13 @@ A data.frame with renamed columns and labels applied
 \description{
 Apply a variable dictionary to a dataset. Each column is replaced with a new name and a corresponding label attribute is applied.
 }
+\examples{
+data("data_patient", package = "thekidsbiostats")
+
+# 1) Create a data dictionary and formulate some cleaned column names, assign to `dict` object
+dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
+
+# 2) Apply column names to data, assign to `data_patient_clean`
+data_patient_clean <- update_columns(data_patient, dict = dict)
+
+}
