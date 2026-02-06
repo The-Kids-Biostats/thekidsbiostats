@@ -98,7 +98,8 @@ corr_table <- function(
 
   res_clean <- res |>
     dplyr::select(dplyr::all_of(common)) |>
-    dplyr::rename_with(.cols = common, .fn = ~ unname(nice_names[common]))
+    dplyr::rename_with(.cols = dplyr::all_of(common),
+                       .fn = ~ unname(nice_names[common]))
 
   method_title <- if (method == "pearson") "Pearson correlation" else
     stringr::str_to_sentence(paste(method, "rank correlation"))
