@@ -1,5 +1,15 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.8.0
+
+* Added functions for cleaning column names
+* Changed functions for cleaning column names
+* Added tests and cleaned up code
+* Added Cleaning Columns vignette
+* Added openxlsx to DESCRIPTION Suggests
+* Add data_patient to package data
+
+
 # thekidsbiostats 1.7.0
 
 * Added message argument to fct_case_when

@@ -1,5 +1,6 @@
 Addin
 AzureBlue
+BMI
 CMD
 Callout
 CelestialBlue
@@ -29,6 +30,7 @@ colorRampPalette
 css
 csv
 df
+dict
 dplyr
 dropdown
 etc
@@ -37,8 +39,10 @@ fct
 flextable
 ggeffects
 ggplot
+ggsave
 gradientn
 gtsummary
+htmls
 huxtable
 ioslides
 kable
@@ -50,9 +54,12 @@ md
 modeling
 mtcars
 onLoad
+pasteable
 pkgdown
+png
 preformatted
 qmd
+rds
 rect
 roxygen
 shinyFiles
@@ -64,6 +71,8 @@ thekids
 tibble
 tibbles
 toolbelt
+tribble
+uncleaned
 vars
 vec
 walkthough
