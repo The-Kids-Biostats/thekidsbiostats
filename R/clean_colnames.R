@@ -90,7 +90,7 @@ update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=F
   needs_renaming <- dict$old %in% names(data) & dict$old != dict$new
 
   # Rename only those requiring renaming
-  rename_map <- setNames(dict$old[needs_renaming], dict$new[needs_renaming])
+  rename_map <- stats::setNames(dict$old[needs_renaming], dict$new[needs_renaming])
   data <- data |>
     dplyr::rename(!!!rename_map)  # any_of() skips old column names that don't exist in the data
 
