@@ -21,11 +21,21 @@
 #'
 #' Supported Google Fonts are those that exist in `sysfonts::font_families_google()`.
 #'
-#' @return A list of ggplot2 theme elements and scale adjustments.
+#' @return data.frame if `return_plot=FALSE`, or a list of `return_plot=TRUE`.
 #'
 #' @examples
+#' # Directly supply vectors
 #' corr_table(mtcars$mpg,
 #'            mtcars$hp)
+#'
+#' # Supply vector names & data
+#' corr_table("mpg",
+#'            "hp",
+#'            data = mtcars)
+#'
+#' # Specify formula
+#' corr_table(formula = ~ mpg + hp,
+#'            data = mtcars)
 #'
 #' @export
 
@@ -48,101 +58,129 @@ corr_table <- function(
   method      <- match.arg(method)
   alternative <- match.arg(alternative)
 
-  # Calculate correlation coefficient based specification
-  if (!is.null(formula)) {
-    if (is.null(data)) stop("Provide data with formula")
-    ct <- cor.test(formula,
-                   data = data,
-                   method = method,
-                   conf.level = conf.level,
-                   alternative = alternative, ...)
-    vars <- all.vars(formula)
-    x_name <- vars[1]; y_name <- vars[2]
-    x_vec <- data[[x_name]]; y_vec <- data[[y_name]]
-  } else {
-    x_vec <- if (is.null(data)) x else data[[x]]
-    y_vec <- if (is.null(data)) y else data[[y]]
-    x_name <- if (is.null(data)) deparse(substitute(x)) else x
-    y_name <- if (is.null(data)) deparse(substitute(y)) else y
-    ct <- cor.test(x_vec, y_vec,
-                   method = method,
-                   conf.level = conf.level,
-                   alternative = alternative, ...)
+  if (is.null(formula) && is.null(x) && is.null(y)) {
+    stop("You must provide either a formula or x and y vectors/column names.")
   }
 
-  # Clean cor.test output
+  if (!is.null(formula) && is.null(data)) {
+    stop("A data frame must be provided when using a formula.")
+  }
+
+  if (!is.null(data) && !is.null(x) && !is.null(y)) {
+    if (!x %in% names(data)) stop(sprintf("Column '%s' not found in data.", x))
+    if (!y %in% names(data)) stop(sprintf("Column '%s' not found in data.", y))
+  }
+
+  # 1) Extract vector names and formulas
+  # Get vectors and names
+  if (!is.null(formula)) {
+    if (is.null(data)) stop("Provide data with formula")
+    vars <- all.vars(formula)
+    x_vec <- data[[vars[1]]]
+    y_vec <- data[[vars[2]]]
+    x_name <- vars[1]
+    y_name <- vars[2]
+  } else if (!is.null(data)) {
+    x_vec <- data[[x]]
+    y_vec <- data[[y]]
+    x_name <- x
+    y_name <- y
+  } else {
+    x_vec <- x
+    y_vec <- y
+    x_name <- deparse(substitute(x))
+    y_name <- deparse(substitute(y))
+  }
+
+  if (length(x_vec) != length(y_vec)) {
+    stop("x and y must be of the same length.")
+  }
+
+  # 2) Run correlation test
+  ct   <- run_cor_test(x_vec = x_vec,
+                       y_vec = y_vec,
+                       data = data,
+                       formula = formula,
+                       alternative = alternative,
+                       method = method,
+                       conf.level = conf.level,
+                       ...)
+
+  # 3) Clean correlation test output
   res <- broom::tidy(ct)
 
-  # CI if present
   if (all(c("conf.low", "conf.high") %in% names(res))) {
     ci_col <- sprintf("%.0f%% CI", conf.level * 100)
 
-    res <- res |>
-      dplyr::mutate(!!ci_col := sprintf("(%s, %s)",
-                                        thekidsbiostats::round_vec(conf.low, round_digits),
-                                        thekidsbiostats::round_vec(conf.high, round_digits))) |>
-      dplyr::select(-conf.low, -conf.high)
+    res[[ci_col]] <- sprintf("(%s, %s)",
+                             thekidsbiostats::round_vec(res$conf.low,
+                                                        round_digits),
+                             thekidsbiostats::round_vec(res$conf.high,
+                                                        round_digits))
+
+    res <- res[, !names(res) %in% c("conf.low", "conf.high")]
   }
 
-  nice_names <- c(
-    estimate  = "Estimate",
-    statistic = "Test statistic",
-    parameter = "df",
-    p.value   = "p-value"
-  )
 
-  ci_name <- sprintf("%.0f%% CI", conf.level * 100)
-  if (ci_name %in% names(res)) nice_names[ci_name] <- ci_name
+  # 4) Rename columns
+  nice_names <- c(estimate  = "Estimate",
+                  statistic = "Test Statistic",
+                  parameter = "df",
+                  p.value   = "p-value")
 
-  common <- intersect(names(res), names(nice_names))
+  common <- intersect(names(res),
+                      c(names(nice_names)))
 
   res_clean <- res |>
-    dplyr::select(dplyr::all_of(common)) |>
+    dplyr::select(dplyr::all_of(c(common, ci_col))) |>
     dplyr::rename_with(.cols = dplyr::all_of(common),
-                       .fn = ~ unname(nice_names[common]))
+                       .fn = ~ unname(nice_names[common])) |>
+    dplyr::mutate(dplyr::across(dplyr::all_of(c("Estimate", "Test Statistic")),
+                                ~thekidsbiostats::round_vec(.,
+                                                            round_digits)),
+                  dplyr::across(dplyr::all_of("p-value"),
+                                ~gtsummary::style_pvalue(.)))
 
-  method_title <- if (method == "pearson") "Pearson correlation" else
-    stringr::str_to_sentence(paste(method, "rank correlation"))
-  title <- title %||% sprintf("%s between %s and %s", method_title, x_name, y_name)
-  plot_title <- plot_title %||% title
 
-  # Formulate Table
-  tbl <- res_clean |>
-    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~thekidsbiostats::round_vec(., round_digits))) |>
-    thekidsbiostats::thekids_table() |>
-    flextable::set_caption(caption = title)
+  # 6) Make table
+  tbl <- res_clean
 
 
   if (!isTRUE(return_plot)){
     return(tbl)
   } else {
-    # Create plot
+    print(x_name)
+    print(y_name)
+
+    method_title <- if (method == "pearson") "Pearson correlation" else
+      stringr::str_to_sentence(paste(method, "rank correlation"))
+    title <- title %||% sprintf("%s between %s and %s", method_title, x_name, y_name)
+    plot_title <- plot_title %||% title
+
     ## Plot subtitle (rho and p-value)
     subtitle_txt <- sprintf("rho = %s, p = %s",
                             thekidsbiostats::round_vec(unname(ct$estimate), round_digits),
                             gtsummary::style_pvalue(ct$p.value))
 
     # Create plot
-    p <- ggplot2::ggplot(data.frame(x = x_vec, y = y_vec),
-                         ggplot2::aes(x = x, y = y)) +
+    p <- ggplot2::ggplot(,
+                         ggplot2::aes(x = x,
+                                      y = y)) +
       ggplot2::geom_point(alpha = point_alpha) +
-      ggplot2::labs(
-        title = plot_title,
-        subtitle = subtitle_txt,
-        x = x_name,
-        y = y_name
-      ) +
-      thekidsbiostats::theme_thekids()
+      ggplot2::labs(title = plot_title,
+                    subtitle = subtitle_txt,
+                    x = x_name,
+                    y = y_name)
 
     if (add_smooth) {
-      p <- p + ggplot2::geom_smooth(method = "lm",
-                                    se = TRUE)
+      p <- p +
+        ggplot2::geom_smooth(method = "lm",
+                             se = TRUE)
     }
 
     return(list(table = tbl,
                 plot = p,
-                test = ct,
-                tidy = res))
+                test = ct))
   }
 
 }
