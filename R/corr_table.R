@@ -74,7 +74,6 @@ corr_table <- function(
   # 1) Extract vector names and formulas
   # Get vectors and names
   if (!is.null(formula)) {
-    if (is.null(data)) stop("Provide data with formula")
     vars <- all.vars(formula)
     x_vec <- data[[vars[1]]]
     y_vec <- data[[vars[2]]]
@@ -109,6 +108,8 @@ corr_table <- function(
   # 3) Clean correlation test output
   res <- broom::tidy(ct)
 
+  ci_col <- NULL
+
   if (all(c("conf.low", "conf.high") %in% names(res))) {
     ci_col <- sprintf("%.0f%% CI", conf.level * 100)
 
@@ -130,9 +131,11 @@ corr_table <- function(
 
   common <- intersect(names(res),
                       c(names(nice_names)))
+  cols_keep <- c(common, ci_col)
+  cols_keep <<- cols_keep[!is.null(cols_keep)]
 
   res_clean <- res |>
-    dplyr::select(dplyr::all_of(c(common, ci_col))) |>
+    dplyr::select(dplyr::all_of(cols_keep)) |>
     dplyr::rename_with(.cols = dplyr::all_of(common),
                        .fn = ~ unname(nice_names[common])) |>
     dplyr::mutate(dplyr::across(dplyr::all_of(c("Estimate", "Test Statistic")),
@@ -149,8 +152,6 @@ corr_table <- function(
   if (!isTRUE(return_plot)){
     return(tbl)
   } else {
-    print(x_name)
-    print(y_name)
 
     method_title <- if (method == "pearson") "Pearson correlation" else
       stringr::str_to_sentence(paste(method, "rank correlation"))

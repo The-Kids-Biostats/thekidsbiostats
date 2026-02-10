@@ -54,6 +54,7 @@ md
 modeling
 mtcars
 onLoad
+openxlsx
 pasteable
 pkgdown
 png
