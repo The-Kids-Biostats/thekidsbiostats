@@ -11,8 +11,8 @@ scale_fill_thekids <- function(palette = "primary", discrete = TRUE, reverse = F
   pal <- thekids_pal(palette = palette, reverse = reverse)
 
   if (discrete) {
-    discrete_scale("fill", paste0("thekids_", palette), palette = pal, ...)
+    ggplot2::discrete_scale(aesthetics = "fill", palette = pal, ...)
   } else {
-    scale_fill_gradientn(colours = pal(256), ...)
+    ggplot2::scale_fill_gradientn(colours = pal(256), ...)
   }
 }
