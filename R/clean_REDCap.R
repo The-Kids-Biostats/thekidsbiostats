@@ -13,11 +13,7 @@
 #'
 #' @return 2 column tibble of factor levels ("key") and labels ("value")
 #'
-#' @importFrom tibble tibble
-#' @importFrom stringr str_split
-#' @importFrom tidyr separate
-#' @importFrom dplyr mutate across
-#' @importFrom tidyselect everything
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' \dontrun{ factor_table("0, No | 1, Yes") }
@@ -27,9 +23,9 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 
   key <- NULL
 
-  tibble(key = str_split(x, rows)[[1]]) %>%
-    separate(key, into = c("key", "value"), sep = cols, extra = "merge") %>%
-    mutate(across(everything(), trimws))
+  tibble::tibble(key = stringr::str_split(x, rows)[[1]]) %>%
+    tidyr::separate(key, into = c("key", "value"), sep = cols, extra = "merge") %>%
+    dplyr::mutate(dplyr::across(tidyselect::everything(), ~trimws(.)))
 
 }
 
@@ -40,8 +36,6 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 #' @param x character vector
 #' @param d REDCap import
 #' @param dict REDCap data dictionary
-#'
-#' @importFrom dplyr cur_column
 #'
 #' @examples
 #' \dontrun{
@@ -57,7 +51,7 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 #'
 #' @export
 factor_convert <- function(x, d, dict) {
-  y <- factor_table(dict[dict$`Variable / Field Name` == cur_column(),]$`Choices, Calculations, OR Slider Labels`)
+  y <- factor_table(dict[dict$`Variable / Field Name` == dplyr::cur_column(),]$`Choices, Calculations, OR Slider Labels`)
   factor(x, levels = y$key, labels = y$value)
 }
 
@@ -69,8 +63,6 @@ factor_convert <- function(x, d, dict) {
 #' @param dict REDCap data dictionary
 #'
 #' @return Named list of character objects
-#'
-#' @importFrom dplyr cur_column
 #'
 #' @examples
 #' \dontrun{
@@ -88,7 +80,7 @@ factor_convert <- function(x, d, dict) {
 checkbox_labels <- function(x, dict) {
 
   d <- factor_table(dict[dict$`Variable / Field Name` == x,]$`Choices, Calculations, OR Slider Labels`) %>%
-    mutate(across("key", ~paste(x, ., sep = "___")))
+    dplyr::mutate(dplyr::across("key", ~paste(x, ., sep = "___")))
 
   o <- as.list(d$value)
   names(o) <- d$key
@@ -107,8 +99,6 @@ checkbox_labels <- function(x, dict) {
 #'
 #' @return character vector (length `ncol(d)`) of REDCap Field Labels per the data dictionary
 #'
-#' @importFrom purrr map_chr
-#'
 #' @examples
 #' \dontrun{
 #'
@@ -121,7 +111,7 @@ checkbox_labels <- function(x, dict) {
 #' }
 #'
 #' @export
-variable_labels <- function(d, dict) map_chr(names(d),
+variable_labels <- function(d, dict) purrr::map_chr(names(d),
                                              ~ifelse(.x %in% dict$`Variable / Field Name`,
                                                      dict[dict$`Variable / Field Name` == .x,]$`Field Label`,
                                                      .x), dict = dict)
@@ -138,12 +128,6 @@ variable_labels <- function(d, dict) map_chr(names(d),
 #'
 #' @return 2 column tibble of factor levels ("key") and labels ("value")
 #'
-#' @importFrom tibble tibble
-#' @importFrom stringr str_split
-#' @importFrom tidyr separate
-#' @importFrom dplyr mutate across
-#' @importFrom tidyselect everything
-#'
 #' @examples
 #' \dontrun{ factor_table("0, No | 1, Yes") }
 #'
@@ -152,9 +136,9 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 
   key <- NULL
 
-  tibble(key = str_split(x, rows)[[1]]) %>%
-    separate(key, into = c("key", "value"), sep = cols, extra = "merge") %>%
-    mutate(across(everything(), trimws))
+  tibble::tibble(key = stringr::str_split(x, rows)[[1]]) %>%
+    tidyr::separate(key, into = c("key", "value"), sep = cols, extra = "merge") %>%
+    dplyr::mutate(dplyr::across(tidyselect::everything(), ~trimws(.)))
 
 }
 
@@ -165,8 +149,6 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 #' @param x character vector
 #' @param d REDCap import
 #' @param dict REDCap data dictionary
-#'
-#' @importFrom dplyr cur_column
 #'
 #' @examples
 #' \dontrun{
@@ -182,7 +164,7 @@ factor_table <- function(x, rows = "\\|", cols = ",") {
 #'
 #' @export
 factor_convert <- function(x, d, dict) {
-  y <- factor_table(dict[dict$`Variable / Field Name` == cur_column(),]$`Choices, Calculations, OR Slider Labels`)
+  y <- factor_table(dict[dict$`Variable / Field Name` == dplyr::cur_column(),]$`Choices, Calculations, OR Slider Labels`)
   factor(x, levels = y$key, labels = y$value)
 }
 
@@ -194,8 +176,6 @@ factor_convert <- function(x, d, dict) {
 #' @param dict REDCap data dictionary
 #'
 #' @return Named list of character objects
-#'
-#' @importFrom dplyr cur_column
 #'
 #' @examples
 #' \dontrun{
@@ -213,7 +193,7 @@ factor_convert <- function(x, d, dict) {
 checkbox_labels <- function(x, dict) {
 
   d <- factor_table(dict[dict$`Variable / Field Name` == x,]$`Choices, Calculations, OR Slider Labels`) %>%
-    mutate(across("key", ~paste(x, ., sep = "___")))
+    dplyr::mutate(dplyr::across("key", ~paste(x, ., sep = "___")))
 
   o <- as.list(d$value)
   names(o) <- d$key
@@ -231,9 +211,6 @@ checkbox_labels <- function(x, dict) {
 #' @param dict REDCap data dictionary
 #'
 #' @return data frame with variable labels
-#'
-#' @importFrom purrr map_chr map_lgl
-#' @importFrom labelled set_variable_labels
 #'
 #' @examples
 #' \dontrun{
@@ -253,19 +230,19 @@ checkbox_labels <- function(x, dict) {
 #' @export
 variable_labels <- function(d, dict) {
 
-  dict <- dict[dict$`Variable / Field Name` %in% str_replace(names(d), "___\\d+", ""),] # remove items from dictionary that aren't in the dataset
+  dict <- dict[dict$`Variable / Field Name` %in% stringr::str_replace(names(d), "___\\d+", ""),] # remove items from dictionary that aren't in the dataset
 
-  x <- map_chr(names(d),
+  x <- purrr::map_chr(names(d),
                ~ifelse(.x %in% dict$`Variable / Field Name`,
                        dict[dict$`Variable / Field Name` == .x,]$`Field Label`,
                        .x), dict = dict)
 
-  d <- set_variable_labels(d, .labels = x)
+  d <- labelled::set_variable_labels(d, .labels = x)
 
   # Apply checkbox labels
 
-  for (i in dict[map_lgl(dict$`Field Type` == "checkbox", isTRUE),]$`Variable / Field Name`) {
-    d <- set_variable_labels(d, .labels = checkbox_labels(i, dict))
+  for (i in dict[purrr::map_lgl(dict$`Field Type` == "checkbox", isTRUE),]$`Variable / Field Name`) {
+    d <- labelled::set_variable_labels(d, .labels = checkbox_labels(i, dict))
   }
 
   d
@@ -277,8 +254,6 @@ variable_labels <- function(d, dict) {
 #' @param d a data frame object
 #'
 #' @return a character vector of columns that are factors with levels: `c("Yes", "No")`
-#'
-#' @importFrom purrr map_lgl
 #'
 #' @examples
 #'   \dontrun{
@@ -293,7 +268,7 @@ variable_labels <- function(d, dict) {
 #'
 #' @export
 yesno_vars <- function(d) {
-  o <- map_lgl({{d}}, function(x) {
+  o <- purrr::map_lgl({{d}}, function(x) {
     if ( !is.factor(x) )
       return(FALSE)
     if ( length(levels(x)) != 2 )
@@ -319,13 +294,6 @@ yesno_vars <- function(d) {
 #'
 #' @return cleaned data frame
 #'
-#' @importFrom stringr str_replace str_detect
-#' @importFrom dplyr mutate across
-#' @importFrom magrittr %>%
-#' @importFrom tidyselect starts_with
-#' @importFrom lubridate ymd mdy dmy ymd_hm mdy_hm dmy_hm ymd_hms mdy_hms dmy_hms hm ms
-#' @importFrom janitor excel_numeric_to_date
-#'
 #' @examples
 #' \dontrun{
 #'
@@ -344,40 +312,62 @@ yesno_vars <- function(d) {
 #' @export
 clean_REDCap <- function(d, dict, numeric_date = FALSE, yesno_to_bool = FALSE, quiet = FALSE) {
 
-  dict <- dict[dict$`Variable / Field Name` %in% str_replace(names(d), "___\\d+", ""),] # remove items from dictionary that aren't in the dataset
+  dict <- dict[dict$`Variable / Field Name` %in% stringr::str_replace(names(d), "___\\d+", ""),] # remove items from dictionary that aren't in the dataset
 
-  d <- mutate(d,
-              across(dict[map_lgl(dict$`Field Type` == "yesno", isTRUE),]$`Variable / Field Name`, factor, c("1", "0"), c("Yes", "No")),
-              across(dict[map_lgl(dict$`Field Type` == "calc", isTRUE),]$`Variable / Field Name`, as.numeric),
-              across(starts_with(paste0(dict[map_lgl(dict$`Field Type` == "checkbox", isTRUE),]$`Variable / Field Name`, "___")), ~as.logical(as.numeric(.))),
-              across(dict[map_lgl(dict$`Field Type` %in% c("dropdown", "radio"), isTRUE),]$`Variable / Field Name`, factor_convert, d = d, dict = dict),
+  d <- dplyr::mutate(d,
+              dplyr::across(dict[purrr::map_lgl(dict$`Field Type` == "yesno", isTRUE),]$`Variable / Field Name`,
+                            ~factor(x = ., levels = c("1", "0"), labels = c("Yes", "No"))),
+              dplyr::across(dict[purrr::map_lgl(dict$`Field Type` == "calc", isTRUE),]$`Variable / Field Name`,
+                            ~as.numeric(.)),
+              dplyr::across(tidyselect::starts_with(paste0(dict[purrr::map_lgl(dict$`Field Type` == "checkbox", isTRUE),]$`Variable / Field Name`, "___")),
+                            ~as.logical(as.numeric(.))),
+              dplyr::across(dict[purrr::map_lgl(dict$`Field Type` %in% c("dropdown", "radio"), isTRUE),]$`Variable / Field Name`,
+                            ~factor_convert(x = ., d = d, dict = dict)),
 
-              across(dict[map_lgl(dict$`Text Validation Type OR Show Slider Number` == "integer", isTRUE),]$`Variable / Field Name`, as.integer),
-              across(dict[grepl("^number((?!comma).)*$", dict$`Text Validation Type OR Show Slider Number`, perl = TRUE),]$`Variable / Field Name`, as.numeric), # starts with "number", does not contain "comma"
-              across(dict[grepl("^number.*comma.*$", dict$`Text Validation Type OR Show Slider Number`),]$`Variable / Field Name`, ~as.numeric(sub(",", ".", .x)))) # starts with "number", does contain "comma"
+              dplyr::across(dict[purrr::map_lgl(dict$`Text Validation Type OR Show Slider Number` == "integer", isTRUE),]$`Variable / Field Name`,
+                            ~as.integer(.)),
+              dplyr::across(dict[grepl("^number((?!comma).)*$", dict$`Text Validation Type OR Show Slider Number`, perl = TRUE),]$`Variable / Field Name`,
+                            ~as.numeric(.)), # starts with "number", does not contain "comma"
+              dplyr::across(dict[grepl("^number.*comma.*$", dict$`Text Validation Type OR Show Slider Number`),]$`Variable / Field Name`,
+                            ~as.numeric(sub(",", ".", .x)))) # starts with "number", does contain "comma"
 
   if (numeric_date) {
-    d <- mutate(d, across(dict[grepl("^date.*$", dict$`Text Validation Type OR Show Slider Number`, perl = TRUE),]$`Variable / Field Name`, ~excel_numeric_to_date(as.numeric(.))))
+    d <- dplyr::mutate(d, dplyr::across(dict[grepl("^date.*$", dict$`Text Validation Type OR Show Slider Number`, perl = TRUE),]$`Variable / Field Name`,
+                                        ~janitor::excel_numeric_to_date(as.numeric(.))))
   } else {
-    d <- mutate(d,
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_ymd"), isTRUE),]$`Variable / Field Name`, ymd, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_mdy"), isTRUE),]$`Variable / Field Name`, ymd, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_dmy"), isTRUE),]$`Variable / Field Name`, ymd, quiet = quiet),
+    d <- dplyr::mutate(d,
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_ymd"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_mdy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^date_dmy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd(., quiet = quiet)),
 
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_ymd"), isTRUE),]$`Variable / Field Name`, ymd_hm, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_mdy"), isTRUE),]$`Variable / Field Name`, ymd_hm, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_dmy"), isTRUE),]$`Variable / Field Name`, ymd_hm, quiet = quiet),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_ymd"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hm(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_mdy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hm(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_dmy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hm(., quiet = quiet)),
 
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_ymd"), isTRUE),]$`Variable / Field Name`, ymd_hms, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_mdy"), isTRUE),]$`Variable / Field Name`, ymd_hms, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_dmy"), isTRUE),]$`Variable / Field Name`, ymd_hms, quiet = quiet),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_ymd"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hms(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_mdy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hms(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^datetime_seconds_dmy"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ymd_hms(., quiet = quiet)),
 
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^time$"), isTRUE),]$`Variable / Field Name`, hm, quiet = quiet),
-                across(dict[map_lgl(str_detect(dict$`Text Validation Type OR Show Slider Number`, "^time_mm_ss$"), isTRUE),]$`Variable / Field Name`, ms, quiet = quiet))
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^time$"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::hm(., quiet = quiet)),
+                dplyr::across(dict[purrr::map_lgl(stringr::str_detect(dict$`Text Validation Type OR Show Slider Number`, "^time_mm_ss$"), isTRUE),]$`Variable / Field Name`,
+                              ~lubridate::ms(., quiet = quiet)))
   }
 
   if (yesno_to_bool)
-    d <- mutate(d, across(yesno_vars(d), ~case_when(. == "Yes" ~ TRUE, . == "No" ~ FALSE, TRUE ~ NA)))
+    d <- dplyr::mutate(d, dplyr::across(yesno_vars(d),
+                                        ~dplyr::case_when(. == "Yes" ~ TRUE,
+                                                          . == "No" ~ FALSE,
+                                                          TRUE ~ NA)))
 
   variable_labels(d, dict)
 
