@@ -121,20 +121,6 @@ Instead, using `clean_REDCap`:
 dat_mod <- clean_REDCap(d = dat_raw,
              dict = dict,
              yesno_to_bool = T)
-#> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `across(...)`.
-#> Caused by warning:
-#> ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-#> Supply arguments directly to `.fns` through an anonymous function instead.
-#> 
-#>   # Previously
-#>   across(a:b, mean, na.rm = TRUE)
-#> 
-#>   # Now
-#>   across(a:b, \(x) mean(x, na.rm = TRUE))
-#> ℹ The deprecated feature was likely used in the thekidsbiostats package.
-#>   Please report the issue at
-#>   <https://github.com/the-kids-biostats/thekidsbiostats/issues>.
 
 dat_mod %>%
   select(demo_postcode, anthro_sex:life_pol, life_super) %>%
