@@ -372,6 +372,42 @@ test_that("quiet controls console output", {
 })
 
 
+test_that("labels is given as a vector of correct length", {
+  
+  data <- data.frame(A = 1, B = 2)
+
+  expect_error(
+    make_column_dict(data, labels=999),
+    "`labels` must be a vector of length equal"
+  )
+
+  labels = c("alpha", "beta", "gamma")
+
+  expect_error(
+    make_column_dict(data, labels=labels),
+    "`labels` must be a vector of length equal"
+  )
+})
+
+
+test_that("new_names is given as a vector of correct length", {
+  
+  data <- data.frame(A = 1, B = 2)
+
+  expect_error(
+    make_column_dict(data, new_names=999),
+    "`new_names` must be a vector of length equal"
+  )
+
+  new_names = c("alpha", "beta", "gamma")
+
+  expect_error(
+    make_column_dict(data, new_names=new_names),
+    "`new_names` must be a vector of length equal"
+  )
+})
+
+
 test_that("writes CSV file when file is specified", {
 
   data <- data.frame(A = 1, B = 2)
@@ -400,6 +436,22 @@ test_that("writes RDS file when requested", {
   written <- readRDS(tmp)
 
   expect_equal(written$old, "A")
+})
+
+
+test_that("writes .R file when requested", {
+
+  data <- data.frame(A = 1)
+  tmp <- tempfile(fileext = ".R")
+
+  make_column_dict(data, file = tmp, quiet = TRUE)
+
+  expect_true(file.exists(tmp))
+
+  expect_error(
+    source(tmp),
+    NA
+  )
 })
 
 
