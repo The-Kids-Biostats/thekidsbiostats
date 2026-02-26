@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.8.1
+
+* Fix deprecation warnings in `ggplot2`.
+* Clean NAMESPACE
+
+
 # thekidsbiostats 1.8.0
 
 * Added functions for cleaning column names
