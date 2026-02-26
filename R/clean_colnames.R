@@ -225,6 +225,8 @@ make_column_dict <- function(data, quiet=FALSE, auto_clean=TRUE, new_names=NULL,
     } else {
       stop("Unsupported file extension. Use .csv, .xls/.xlsx, .rds or .R", call. = FALSE)
     }
+
+    message(sprintf("Successfully saved dictionary to '%s'", normalizePath(file)))
   }
 
   if (!quiet) cat(dict_text, "\n")
