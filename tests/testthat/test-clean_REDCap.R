@@ -94,7 +94,7 @@ test_that("numeric_date = TRUE converts Excel numeric dates correctly using mock
   mock_dat2$excel_date_var <- c(44204, 44235, 44265)  # Excel numeric dates
 
   # Add corresponding entry to mock dictionary
-  mock_dict2 <- bind_rows(
+  mock_dict2 <- dplyr::bind_rows(
     mock_dict,
     tibble(
       `Variable / Field Name` = "excel_date_var",
