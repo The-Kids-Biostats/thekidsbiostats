@@ -117,7 +117,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] thekidsbiostats_1.8.0 extrafont_0.20        flextable_0.9.11     
+#>  [1] thekidsbiostats_1.8.1 extrafont_0.20        flextable_0.9.11     
 #>  [4] gtsummary_2.5.0       lubridate_1.9.5       forcats_1.0.1        
 #>  [7] stringr_1.6.0         dplyr_1.2.0           purrr_1.2.1          
 #> [10] readr_2.2.0           tidyr_1.3.2           tibble_3.3.1         
@@ -133,7 +133,7 @@ sessionInfo()
 #> [19] httpuv_1.6.16           fontquiver_0.2.1        fontLiberation_0.1.0   
 #> [22] htmltools_0.5.9         sass_0.4.10             yaml_2.3.12            
 #> [25] Rttf2pt1_1.3.14         extrafontdb_1.1         pillar_1.11.1          
-#> [28] pkgdown_2.2.0           later_1.4.6             jquerylib_0.1.4        
+#> [28] pkgdown_2.2.0           later_1.4.7             jquerylib_0.1.4        
 #> [31] openssl_2.3.4           cachem_1.1.0            mime_0.13              
 #> [34] fontBitstreamVera_0.1.1 tidyselect_1.2.1        zip_2.3.3              
 #> [37] digest_0.6.39           stringi_1.8.7           fastmap_1.2.0          
