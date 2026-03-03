@@ -16,7 +16,7 @@ update_columns(
 \arguments{
 \item{data}{A data.frame-like object}
 
-\item{dict}{A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: \code{old} names, \code{new} names, and \code{label}s. The order that columns appear in $old determines the final ordering in the cleaned data.}
+\item{dict}{A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: \code{old} names, \code{new} names, and \code{label}s.}
 
 \item{old}{Column name in dict with old column names (default "old")}
 

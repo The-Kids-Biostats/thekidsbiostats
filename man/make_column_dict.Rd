@@ -4,16 +4,28 @@
 \alias{make_column_dict}
 \title{Create a copy-pasteable variable dictionary template}
 \usage{
-make_column_dict(data, auto_clean = TRUE, file = NULL, quiet = FALSE, ...)
+make_column_dict(
+  data,
+  quiet = FALSE,
+  auto_clean = TRUE,
+  new_names = NULL,
+  labels = NULL,
+  file = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{A data.frame or tibble containing the original data with column names to be replaced.}
 
+\item{quiet}{Logical, default FALSE: suppress printing the generated R code string to the console.}
+
 \item{auto_clean}{Logical, default TRUE: generate suggested new names using \code{janitor::clean_names()}}
 
-\item{file}{Optional character string. If specified, writes dictionary template to file path (available formats: .csv, .txt, .xlsx, .rds)}
+\item{new_names}{Optional character string, If specified, fills the \code{$new} column with these labels. Length must match the number of columns in \code{data}.}
 
-\item{quiet}{Logical, default FALSE: suppress printing the generated R code string to the console.}
+\item{labels}{Optional character string. If specified, fills the \code{$label} column with these labels. Length must match the number of columns in \code{data}.}
+
+\item{file}{Optional character string. If specified, writes dictionary template to file path (available formats: .csv, .txt, .xlsx, .rds, .R)}
 
 \item{...}{Additional arguments passed to \code{janitor::clean_names()}}
 }
@@ -31,6 +43,7 @@ Create a copy-pasteable variable dictionary template
 }
 \details{
 The default behaviour is to print a tribble template to the console. Set \code{quiet=TRUE} to suppress this output.
+If the file path has the extension .R, this writes the R code in the format of a \code{tribble} to the file.
 }
 \examples{
 data("data_patient", package = "thekidsbiostats")

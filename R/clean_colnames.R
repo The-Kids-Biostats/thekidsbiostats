@@ -1,7 +1,7 @@
 #' Apply a variable dictionary to a dataset. Each column is replaced with a new name and a corresponding label attribute is applied.
 #'
 #' @param data A data.frame-like object
-#' @param dict A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: `old` names, `new` names, and `label`s. The order that columns appear in $old determines the final ordering in the cleaned data.
+#' @param dict A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: `old` names, `new` names, and `label`s.
 #' @param old Column name in dict with old column names (default "old")
 #' @param new Column name in dict with new column names (default "new")
 #' @param label Column name in dict with human-readable labels (default "label")
@@ -77,17 +77,26 @@ update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=F
       .keep = 'none'
   )
 
+  # Identify rows that don't need renaming
+  needs_renaming <- dict$old %in% names(data) & dict$old != dict$new
+
   # Duplicate checks
-  if (anyDuplicated(dict$old)) {
-    stop("Duplicate `old` entries in dictionary.")
+  old_nonempty <- dict$old[needs_renaming]
+  old_nonempty <- old_nonempty[!is.na(old_nonempty) & old_nonempty != ""]
+
+  if (anyDuplicated(old_nonempty)) {
+    dup_names <- unique(old_nonempty[duplicated(old_nonempty)])
+    warning(
+      "Duplicate `old` names in dictionary: '",
+      paste(dup_names, collapse = "', '"),
+      "'. Only the last entry will be used for new names and labels",
+      call. = FALSE
+    )
   }
 
   if (anyDuplicated(dict$new)) {
     stop("Duplicate `new` entries in dictionary")
   }
-
-  # Identify rows that don't need renaming
-  needs_renaming <- dict$old %in% names(data) & dict$old != dict$new
 
   # Rename only those requiring renaming
   rename_map <- stats::setNames(dict$old[needs_renaming], dict$new[needs_renaming])

@@ -97,7 +97,7 @@ test_that("update_columns() columns already named correctly are not renamed", {
 })
 
 
-test_that("update_columns() duplicate $old entries error", {
+test_that("update_columns() duplicate $old entries warning", {
 
   data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -107,9 +107,25 @@ test_that("update_columns() duplicate $old entries error", {
     label = c("one", "two")
   )
 
-  expect_error(
+  expect_warning(
     update_columns(data, dict),
-    "Duplicate `old` entries"
+    "Duplicate `old` names"
+  )
+})
+
+
+test_that("update_columns() ignores blank/NA duplicate $old entries", {
+
+  data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
+
+  dict <- data.frame(
+    old = c("a", "b", "", NA, ""),
+    new = c("v", "w", "x", "y", "z"),
+    label = c("one", "two", "three", "four", "five")
+  )
+
+  expect_silent(
+    update_columns(data, dict)
   )
 })
 
