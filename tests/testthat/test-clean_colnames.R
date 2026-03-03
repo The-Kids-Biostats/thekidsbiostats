@@ -97,7 +97,7 @@ test_that("update_columns() columns already named correctly are not renamed", {
 })
 
 
-test_that("update_columns() duplicate $old entries error", {
+test_that("update_columns() duplicate $old entries warning", {
 
   data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
 
@@ -107,9 +107,25 @@ test_that("update_columns() duplicate $old entries error", {
     label = c("one", "two")
   )
 
-  expect_error(
+  expect_warning(
     update_columns(data, dict),
-    "Duplicate `old` entries"
+    "Duplicate `old` names"
+  )
+})
+
+
+test_that("update_columns() ignores blank/NA duplicate $old entries", {
+
+  data <- data.frame(a = c(1, 2, 3), b=c(4, 5, 6))
+
+  dict <- data.frame(
+    old = c("a", "b", "", NA, ""),
+    new = c("v", "w", "x", "y", "z"),
+    label = c("one", "two", "three", "four", "five")
+  )
+
+  expect_silent(
+    update_columns(data, dict)
   )
 })
 
@@ -372,6 +388,42 @@ test_that("quiet controls console output", {
 })
 
 
+test_that("labels is given as a vector of correct length", {
+  
+  data <- data.frame(A = 1, B = 2)
+
+  expect_error(
+    make_column_dict(data, labels=999),
+    "`labels` must be a vector of length equal"
+  )
+
+  labels = c("alpha", "beta", "gamma")
+
+  expect_error(
+    make_column_dict(data, labels=labels),
+    "`labels` must be a vector of length equal"
+  )
+})
+
+
+test_that("new_names is given as a vector of correct length", {
+  
+  data <- data.frame(A = 1, B = 2)
+
+  expect_error(
+    make_column_dict(data, new_names=999),
+    "`new_names` must be a vector of length equal"
+  )
+
+  new_names = c("alpha", "beta", "gamma")
+
+  expect_error(
+    make_column_dict(data, new_names=new_names),
+    "`new_names` must be a vector of length equal"
+  )
+})
+
+
 test_that("writes CSV file when file is specified", {
 
   data <- data.frame(A = 1, B = 2)
@@ -400,6 +452,22 @@ test_that("writes RDS file when requested", {
   written <- readRDS(tmp)
 
   expect_equal(written$old, "A")
+})
+
+
+test_that("writes .R file when requested", {
+
+  data <- data.frame(A = 1)
+  tmp <- tempfile(fileext = ".R")
+
+  make_column_dict(data, file = tmp, quiet = TRUE)
+
+  expect_true(file.exists(tmp))
+
+  expect_error(
+    source(tmp),
+    NA
+  )
 })
 
 
