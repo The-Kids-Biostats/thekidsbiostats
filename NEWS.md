@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.8.2
+
+* Made adjustments to make_column_dict()
+* When `file` is specified in make_column_dict, a message lets users know that the file has been successfully written to the specified location.
+* Removed duplicates raising errors in update_colnames()
+
+
 # thekidsbiostats 1.8.1
 
 * Fix deprecation warnings in `ggplot2`.
