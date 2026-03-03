@@ -73,7 +73,7 @@
 
 
 <dt id="arg-dict">dict<a class="anchor" aria-label="anchor" href="#arg-dict"></a></dt>
-<dd><p>A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: <code>old</code> names, <code>new</code> names, and <code>label</code>s. The order that columns appear in $old determines the final ordering in the cleaned data.</p></dd>
+<dd><p>A data.frame-like object or .csv file path (.csv, .txt, .xlsx, .rds). Should have 3 columns specifying: <code>old</code> names, <code>new</code> names, and <code>label</code>s.</p></dd>
 
 
 <dt id="arg-old">old<a class="anchor" aria-label="anchor" href="#arg-old"></a></dt>
@@ -107,14 +107,14 @@ Columns not referenced in the dictionary remain at the end in their original ord
 <span class="r-in"><span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="make_column_dict.html">make_column_dict</a></span><span class="op">(</span><span class="va">data_patient</span>, auto_clean <span class="op">=</span> <span class="cn">TRUE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dict_patient &lt;- tribble(</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ~old, ~new, ~label,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Patient ID#', 'patient_id_number', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'DOB [YYYY-MM-DD]', 'dob_yyyy_mm_dd', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Sex (0=Male, 1=Female)', 'sex_0_male_1_female', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'WHAT IS YOUR HEIGHT? (cm)', 'what_is_your_height_cm', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'WHAT IS YOUR CURRENT WEIGHT? (kg)', 'what_is_your_current_weight_kg', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'bp (mmHg)', 'bp_mm_hg', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Cholesterol / mmolL', 'cholesterol_mmol_l', '',</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Patient ID#", "patient_id_number", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "DOB [YYYY-MM-DD]", "dob_yyyy_mm_dd", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Sex (0=Male, 1=Female)", "sex_0_male_1_female", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "WHAT IS YOUR HEIGHT? (cm)", "what_is_your_height_cm", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "WHAT IS YOUR CURRENT WEIGHT? (kg)", "what_is_your_current_weight_kg", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?", "do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bp (mmHg)", "bp_mm_hg", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Cholesterol / mmolL", "cholesterol_mmol_l", "",</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ) </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 2) Apply column names to data, assign to `data_patient_clean`</span></span></span>

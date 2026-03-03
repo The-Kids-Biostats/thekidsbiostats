@@ -54,7 +54,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_column_dict</span><span class="op">(</span><span class="va">data</span>, auto_clean <span class="op">=</span> <span class="cn">TRUE</span>, file <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_column_dict</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  auto_clean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  new_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  file <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,16 +73,24 @@
 <dd><p>A data.frame or tibble containing the original data with column names to be replaced.</p></dd>
 
 
+<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
+<dd><p>Logical, default FALSE: suppress printing the generated R code string to the console.</p></dd>
+
+
 <dt id="arg-auto-clean">auto_clean<a class="anchor" aria-label="anchor" href="#arg-auto-clean"></a></dt>
 <dd><p>Logical, default TRUE: generate suggested new names using <code><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">janitor::clean_names()</a></code></p></dd>
 
 
+<dt id="arg-new-names">new_names<a class="anchor" aria-label="anchor" href="#arg-new-names"></a></dt>
+<dd><p>Optional character string, If specified, fills the <code>$new</code> column with these labels. Length must match the number of columns in <code>data</code>.</p></dd>
+
+
+<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
+<dd><p>Optional character string. If specified, fills the <code>$label</code> column with these labels. Length must match the number of columns in <code>data</code>.</p></dd>
+
+
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
-<dd><p>Optional character string. If specified, writes dictionary template to file path (available formats: .csv, .txt, .xlsx, .rds)</p></dd>
-
-
-<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
-<dd><p>Logical, default FALSE: suppress printing the generated R code string to the console.</p></dd>
+<dd><p>Optional character string. If specified, writes dictionary template to file path (available formats: .csv, .txt, .xlsx, .rds, .R)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -97,7 +113,8 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The default behaviour is to print a tribble template to the console. Set <code>quiet=TRUE</code> to suppress this output.</p>
+    <p>The default behaviour is to print a tribble template to the console. Set <code>quiet=TRUE</code> to suppress this output.
+If the file path has the extension .R, this writes the R code in the format of a <code>tribble</code> to the file.</p>
     </div>
 
     <div class="section level2">
@@ -108,14 +125,14 @@
 <span class="r-in"><span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu">make_column_dict</span><span class="op">(</span><span class="va">data_patient</span>, auto_clean <span class="op">=</span> <span class="cn">TRUE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dict_patient &lt;- tribble(</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ~old, ~new, ~label,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Patient ID#', 'patient_id_number', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'DOB [YYYY-MM-DD]', 'dob_yyyy_mm_dd', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Sex (0=Male, 1=Female)', 'sex_0_male_1_female', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'WHAT IS YOUR HEIGHT? (cm)', 'what_is_your_height_cm', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'WHAT IS YOUR CURRENT WEIGHT? (kg)', 'what_is_your_current_weight_kg', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'bp (mmHg)', 'bp_mm_hg', '',</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   'Cholesterol / mmolL', 'cholesterol_mmol_l', '',</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Patient ID#", "patient_id_number", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "DOB [YYYY-MM-DD]", "dob_yyyy_mm_dd", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Sex (0=Male, 1=Female)", "sex_0_male_1_female", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "WHAT IS YOUR HEIGHT? (cm)", "what_is_your_height_cm", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "WHAT IS YOUR CURRENT WEIGHT? (kg)", "what_is_your_current_weight_kg", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?", "do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "bp (mmHg)", "bp_mm_hg", "",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "Cholesterol / mmolL", "cholesterol_mmol_l", "",</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ) </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
