@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.8.3
+
+- Fixed erroneous print messages in addins.R
+
+
 # thekidsbiostats 1.8.2
 
 * Made adjustments to make_column_dict(), including ability to prefill new_names and labels and escaping quotations.
