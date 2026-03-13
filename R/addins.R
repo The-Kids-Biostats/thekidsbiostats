@@ -512,8 +512,6 @@ create_project_addin <- function() {
 
       report_filename <- ifelse(endsWith(input$report_filename, ".qmd"), sub("\\.qmd$", "", input$report_filename), input$report_filename)
       qmd_path <- file.path(project_path(), 'reports', paste0(report_filename, '.qmd'))
-      print(qmd_path)
-      print(report_filename)
 
       tryCatch({
         create_project(
