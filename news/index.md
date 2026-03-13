@@ -1,5 +1,9 @@
 # Changelog
 
+## thekidsbiostats 1.8.3
+
+- Fixed erroneous print messages in addins.R
+
 ## thekidsbiostats 1.8.2
 
 - Made adjustments to make_column_dict(), including ability to prefill
