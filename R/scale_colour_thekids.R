@@ -6,8 +6,6 @@
 #' @param ... Additional arguments passed to discrete_scale() or
 #'            scale_color_gradientn(), used respectively when discrete is TRUE or FALSE
 #'
-#' @import ggplot2
-#'
 #' @export
 scale_color_thekids <- function(palette = "primary", discrete = NULL, reverse = FALSE, ...) {
 
@@ -26,8 +24,11 @@ scale_color_thekids <- function(palette = "primary", discrete = NULL, reverse = 
       pal <- thekids_pal(palette)  # returns a function that accepts parameter `n` as levels.
     }
 
+
+  if (discrete) {
+    ggplot2::discrete_scale("colour", palette = pal, ...)
   } else {
-    print('ding')
+    ggplot2::scale_color_gradientn(colours = pal(256), ...)
   }
 
   discrete_scale(aesthetics = "color", palette = pal, ...)

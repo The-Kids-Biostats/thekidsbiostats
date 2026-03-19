@@ -24,8 +24,11 @@ scale_fill_thekids <- function(palette = "primary", discrete = NULL, reverse = F
       pal <- thekids_pal(palette)  # returns a function that accepts parameter `n` as levels.
     }
 
+
+  if (discrete) {
+    ggplot2::discrete_scale(aesthetics = "fill", palette = pal, ...)
   } else {
-    print('ding')
+    ggplot2::scale_fill_gradientn(colours = pal(256), ...)
   }
 
   discrete_scale( aesthetics = "fill", palette = pal, ...)

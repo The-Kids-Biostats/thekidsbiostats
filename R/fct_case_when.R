@@ -2,6 +2,7 @@
 #'
 #' Essentially the same as dplyr::case_when but the variable is of class factor, ordered based on the order entered into the case_when statement
 #'
+#' @param message prints the resulting factor levels. This is TRUE by default as output may often not be as expected
 #' @param ... as per dplyr::case_when, essentially all input is passed through to dplyr::case_when
 #'
 #' <dynamic-dots> A sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value.
@@ -13,7 +14,7 @@
 #' NULL inputs are ignored.
 #'
 #' @details
-#' For a more thorough example, see the \href{../doc/data_manipulations.html}{vignette}.
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/data_manipulations.html).
 #'
 #'
 #' @return A vector of length 1 or n, of class factor, matching the length of the logical input or output vectors. Inconsistent lengths or types will generate an error.
@@ -32,6 +33,7 @@
 #'   ) %>% table
 #'
 #'   fct_case_when(
+#'     message = F,
 #'     x %% 35 == 0 ~ "fizz buzz",
 #'     x %% 5 == 0 ~ "fizz",
 #'     x %% 7 == 0 ~ "buzz",
@@ -43,9 +45,22 @@
 #' @export
 #'
 
-fct_case_when <- function(...) {
-  args <- as.list(match.call())
-  levels <- sapply(args[-1], function(f) f[[3]])  # extract RHS of formula
+fct_case_when <- function(..., message = T) {
+  mc <- match.call(expand.dots = TRUE)
+  mc$message <- NULL # Ignore message argument for levels determination
+
+  args <- as.list(mc)[-1]
+  levels <- sapply(args, function(f) f[[3]])  # extract RHS of formula
   levels <- levels[!is.na(levels)]
-  factor(dplyr::case_when(...), levels=levels)
+  out <- factor(dplyr::case_when(...), levels=levels)
+
+  if (isTRUE(message)) {
+    lvls <- levels(out)
+    message(
+      "Factor levels (in order): ",
+      paste0(lvls, collapse = ", ")
+    )
+  }
+
+  out
 }

@@ -28,3 +28,21 @@
 #'
 #' @source The Kids Research Institute Australia style guide.
 "thekids_palettes"
+
+#' Image Size Parameters for Save Function
+#'
+#' Size parameters (mm) for a standard A4 page with "quarter", "half portrait",
+#' "half landscape", #' "full portrait", "full landscape". Identifiers for "pdf"
+#' and "png" devices included.
+#'
+#' @format data.frame
+"layout_params"
+
+#' Example of a (fictional) uncleaned data set for analysis
+#'
+#' Includes variables that represent common patient information,
+#' with column names that would generally be problematic in an analytical setting
+#' without some form of cleaning.
+#'
+#' @format data.frame
+"data_patient"

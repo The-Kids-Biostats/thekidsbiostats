@@ -1,10 +1,26 @@
 .quarto-title-block .quarto-title-banner {
-  background-image: url(thekids.png);
-  background-size: 200px;
-  background-position: left;
+  background-image: url('thekids.png');
+  background-size: 200px auto;           /* Fixed logo width */
   background-repeat: no-repeat;
-  padding-left: 10px;
-  background-origin: content-box;
+  background-position: 20px center;      /* Pull logo away from left edge */
+  padding-left: 240px;                   /* Reserve space for logo + margin */
+  padding-top: 1.5rem;                   /* More space above */
+  padding-bottom: 1.5rem;                /* More space below */
+  min-height: 160px;                     /* Adjust as needed */
+  display: flex;                         /* Align text */
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+/* Fix for small screens */
+@media (max-width: 600px) {
+  .quarto-title-block .quarto-title-banner {
+    background-image: none;
+    padding: 1rem;
+    min-height: auto;
+    display: block;
+  }
 }
 
 /* Note Callout (Azure Blue) */

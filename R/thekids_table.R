@@ -10,6 +10,10 @@
 #'
 #' Currently the function works well with input in the form of data frames, tibbles, dplyr pipes (think `summarise()`), `gtsummary`, and `kable` outputs.
 #'
+#' @details
+#' For a more thorough example, see the [vignette](https://the-kids-biostats.github.io/thekidsbiostats/articles/thekids_theming.html).
+#'
+#'
 #' @note
 #' Errors may be encountered if the input to the function (kable/gtsummary/flextable) has already received a lot of processing (merging cells, aesthetic changes). The intention is that these things would occur after running `thekids_table()`.
 #'
@@ -29,7 +33,8 @@
 #'  if negative, this will invert the sequence of highlighted blocks;
 #'  (defaults to `F`)
 #' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows).
-#' @param font_family string containing the font family to apply to the table. Default "Barlow", otherwise "sans".
+#' @param font_family string containing the font family to apply to the table. Default "Barlow".
+#' @param fallback_font_family fallback font family if `font_family` is does not exist. Default is "sans".
 #' @param date_fix re-wraps date objects to strictly occupy one line, instead of splitting (defaults to `T`).
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}.
 #'
@@ -68,12 +73,14 @@ thekids_table <- function(x,
                           zebra = FALSE,
                           highlight = NULL,
                           font_family = "Barlow",
+                          fallback_font_family = "sans",
                           date_fix = TRUE,
                           ...) {
 
 
   # Check font family availability
-  font_family <- check_font_family(font_family)
+  font_family <- check_font_family(font_family = font_family,
+                                   fallback_family = fallback_font_family)
 
   # Standardise argument aliasing
   call <- match.call()

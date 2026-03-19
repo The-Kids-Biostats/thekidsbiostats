@@ -1,5 +1,82 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.8.3
+
+- Fixed erroneous print messages in addins.R
+
+
+# thekidsbiostats 1.8.2
+
+* Made adjustments to make_column_dict(), including ability to prefill new_names and labels and escaping quotations.
+* When `file` is specified in make_column_dict, a message lets users know that the file has been successfully written to the specified location.
+* Removed duplicates raising errors in update_colnames()
+
+
+# thekidsbiostats 1.8.1
+
+* Fix deprecation warnings in `ggplot2`.
+* Clean NAMESPACE
+
+
+# thekidsbiostats 1.8.0
+
+* Added functions for cleaning column names
+* Changed functions for cleaning column names
+* Added tests and cleaned up code
+* Added Cleaning Columns vignette
+* Added openxlsx to DESCRIPTION Suggests
+* Add data_patient to package data
+
+
+# thekidsbiostats 1.7.0
+
+* Added message argument to fct_case_when
+* Format p-values in thekids_model
+* Removed tests/manual folder
+* Ignoring example_reports htmls
+
+
+# thekidsbiostats 1.6.4
+
+* Fixed R-CMD-CHECK notes and warnings.
+
+
+# thekidsbiostats 1.6.3
+
+* Updated vignette hyperlinks in function documentation.
+
+
+# thekidsbiostats 1.6.2
+
+* updated logo css for wrapping
+* fix create_template merge issues
+
+
+# thekidsbiostats 1.6.1
+
+- Same as previous version.
+
+
+# thekidsbiostats 1.6.0
+
+* Added modify_labels()
+* Added unit testing for modify_labels()
+
+
+# thekidsbiostats 1.5.0
+
+* Update thekids_table fallback font handling
+* Additional font tests for thekids_table()
+* Add blog link to pkgdown site
+* Enhance pkgdown structure
+
+
+# thekidsbiostats 1.4.3
+
+* Re-structure readme
+* Update README.md
+
+
 # thekidsbiostats 1.4.2
 
 * Implement a suite of changes with how dependencies are installed by the package.
