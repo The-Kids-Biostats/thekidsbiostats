@@ -29,6 +29,7 @@ Imports:
     janitor (>= 2.1.0),
     labelled (>= 2.8.0),
     later,
+    lifecycle,
     lubridate (>= 1.7.9),
     magrittr (>= 2.0.1),
     MASS,

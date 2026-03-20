@@ -10,12 +10,12 @@ thekids_theme(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -25,12 +25,12 @@ theme_thekids(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -44,17 +44,17 @@ theme_thekids(
 
 \item{base_rect_size}{The base size for rect elements (e.g., plot background, legend keys). Calculated as \code{base_size/22} by default.}
 
-\item{scale_colour_type}{Type of scale used for colours. Should be either \code{"discrete"} or \code{"continuous"}. Default is \code{"discrete"}.}
+\item{scale_colour_type}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
 
-\item{scale_fill_type}{Type of scale used for fills. Should be either \code{"discrete"} or \code{"continuous"}. Default is \code{"discrete"}.}
+\item{scale_fill_type}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
 
-\item{colour_theme}{Colour palette to use for colour scales. Must be one of \code{"viridis"},\code{"thekids"},\code{"thekids_tint"},\code{"thekids_grey"}. Default is \code{"viridis"}.}
+\item{colour_theme}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
 
-\item{fill_theme}{Colour palette to use for fill scales. Must be one of \code{"viridis"},\code{"thekids"},\code{"thekids_tint"},\code{"thekids_grey"}. Default is \code{"viridis"}.}
+\item{fill_theme}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
 
-\item{rev_colour}{Logical. Should the colour palette be reversed? Default is \code{FALSE}.}
+\item{rev_colour}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
 
-\item{rev_fill}{Logical. Should the fill palette be reversed? Default is \code{FALSE}.}
+\item{rev_fill}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
 
 \item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
 

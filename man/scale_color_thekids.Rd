@@ -15,14 +15,14 @@ scale_colour_thekids(
 )
 }
 \arguments{
-\item{palette}{Character name of palette in thekids_palettes. Options are "primary", "tint50" and "typography"}
+\item{palette}{Character Name of palette in thekids_palettes.}
 
-\item{discrete}{Boolean indicating whether color aesthetic is discrete or not}
+\item{discrete}{Boolean Indicating whether colour aesthetic is discrete or not}
 
-\item{reverse}{Boolean indicating whether the palette should be reversed}
+\item{reverse}{Boolean Indicating whether the palette should be reversed}
 
 \item{...}{Additional arguments passed to discrete_scale() or
-scale_color_gradientn(), used respectively when discrete is TRUE or FALSE}
+scale_colour_gradientn(), used respectively when discrete is TRUE or FALSE}
 }
 \description{
 Colour scale constructor for The Kids colours.

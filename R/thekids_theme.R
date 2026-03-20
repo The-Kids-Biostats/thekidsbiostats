@@ -11,12 +11,12 @@
 #' @param base_family The base font family used for the text (default Barlow). Most Google Fonts are supported (see Note).
 #' @param base_line_size The base size for line elements (e.g., axis lines, grid lines). Calculated as `base_size/22` by default.
 #' @param base_rect_size The base size for rect elements (e.g., plot background, legend keys). Calculated as `base_size/22` by default.
-#' @param scale_colour_type Type of scale used for colours. Should be either `"discrete"` or `"continuous"`. Default is `"discrete"`.
-#' @param scale_fill_type Type of scale used for fills. Should be either `"discrete"` or `"continuous"`. Default is `"discrete"`.
-#' @param colour_theme Colour palette to use for colour scales. Must be one of `"viridis"`,`"thekids"`,`"thekids_tint"`,`"thekids_grey"`. Default is `"viridis"`.
-#' @param fill_theme Colour palette to use for fill scales. Must be one of `"viridis"`,`"thekids"`,`"thekids_tint"`,`"thekids_grey"`. Default is `"viridis"`.
-#' @param rev_colour Logical. Should the colour palette be reversed? Default is `FALSE`.
-#' @param rev_fill Logical. Should the fill palette be reversed? Default is `FALSE`.
+#' @param colour_theme Deprecated. Use [scale_colour_thekids()] instead.
+#' @param fill_theme Deprecated. Use [scale_fill_thekids()] instead.
+#' @param scale_colour_type Deprecated. Use [scale_colour_thekids()] instead.
+#' @param scale_fill_type Deprecated. Use [scale_fill_thekids()] instead.
+#' @param rev_colour Deprecated. Use [scale_colour_thekids()] instead.
+#' @param rev_fill Deprecated. Use [scale_fill_thekids()] instead.
 #' @param fig_dpi Base DPI for figure. Only applicable when Barlow font family (default) is *not* selected.
 #' @param ... Miscellaneous arguments necessary for parameter aliasing, etc.
 #'
@@ -52,20 +52,63 @@ thekids_theme <- function(base_size = 11,
                           base_family = NULL,
                           base_line_size = base_size / 22,
                           base_rect_size = base_size / 22,
-                          scale_colour_type = "discrete",
-                          scale_fill_type = "discrete",
-                          colour_theme = "viridis",
-                          fill_theme = "viridis",
-                          rev_colour = FALSE,
-                          rev_fill = FALSE,
+                          scale_colour_type = lifecycle::deprecated(),
+                          scale_fill_type = lifecycle::deprecated(),
+                          colour_theme = lifecycle::deprecated(),
+                          fill_theme = lifecycle::deprecated(),
+                          rev_colour = lifecycle::deprecated(),
+                          rev_fill = lifecycle::deprecated(),
                           fig_dpi = 300,
                           ...) {
-
+  
   # Standardise argument aliasing
   call <- match.call()
   std_call <- standardise_args(call)
   if (!identical(names(call), names(std_call))) {
     return(eval(std_call, parent.frame()))
+  }
+
+  # Deprecation checks
+  if (lifecycle::is_present(scale_colour_type)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_theme(scale_colour_type)",
+      details = "Colour scales are now controlled via `scale_colour_thekids()`."
+    )
+  }
+  
+  if (lifecycle::is_present(scale_fill_type)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_theme(scale_fill_type)",
+      details = "Fill scales are now controlled via `scale_fill_thekids()`."
+    )
+  }
+  
+  if (lifecycle::is_present(colour_theme)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_theme(colour_theme)",
+      details = "Colour scales are now controlled via `scale_colour_thekids()`."
+    )
+  }
+  
+  if (lifecycle::is_present(fill_theme)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_theme(fill_theme)",
+      details = "Fill scales are now controlled via `scale_fill_thekids()`."
+    )
+  }
+  
+  if (lifecycle::is_present(rev_colour)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_theme(rev_colour)",
+      details = "Colour scales are now controlled via `scale_colour_thekids()`."
+    )
+  }
+  
+  if (lifecycle::is_present(rev_fill)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what= "thekids_theme(rev_fill)",
+      details = "Fill scales are now controlled via `scale_fill_thekids()`."
+    )
   }
 
   # Default font from options
@@ -92,47 +135,26 @@ thekids_theme <- function(base_size = 11,
     message(paste0("Non-default font family (", base_family, ") selected.\nPlease consider changing `fig_dpi` if any issues with plot scaling are encountered."))
   }
 
-  # Define color and fill functions
-  colour_function <- dplyr::case_when(
-    colour_theme == "viridis" & scale_colour_type == "discrete" ~
-      list(scale_colour_viridis_d(option = "plasma", end = 0.85)),
-    colour_theme == "viridis" & scale_colour_type == "continuous" ~
-      list(scale_colour_viridis_c(option = "plasma", end = 0.85)),
-    colour_theme == "thekids" ~
-      list(scale_color_thekids(palette = "primary", reverse = rev_colour)),
-    colour_theme == "thekids_tint" ~
-      list(scale_color_thekids(palette = "tint50", reverse = rev_colour)),
-    colour_theme == "thekids_grey" ~
-      list(scale_color_thekids(palette = "typography", reverse = rev_colour))
-  )[[1]]
-
-  fill_function <- dplyr::case_when(
-    fill_theme == "viridis" & scale_fill_type == "discrete" ~
-      list(scale_fill_viridis_d(option = "plasma", end = 0.85)),
-    fill_theme == "viridis" & scale_fill_type == "continuous" ~
-      list(scale_fill_viridis_c(option = "plasma", end = 0.85)),
-    fill_theme == "thekids" ~
-      list(scale_fill_thekids(palette = "primary", reverse = rev_fill)),
-    fill_theme == "thekids_tint" ~
-      list(scale_fill_thekids(palette = "tint50", reverse = rev_fill)),
-    fill_theme == "thekids_grey" ~
-      list(scale_fill_thekids(palette = "typography", reverse = rev_fill))
-  )[[1]]
-
   # Return the theme and functions
   list(
-    ggplot2::theme_minimal(base_family = base_family, base_size = base_size,
-                  base_line_size = base_line_size, base_rect_size = base_rect_size) +
-      ggplot2::theme(
-        panel.grid.minor = ggplot2::element_blank(),
-        plot.title = ggplot2::element_text(family = base_family, face = "bold"),
-        axis.title = ggplot2::element_text(family = base_family, face = "bold"),
-        strip.text = ggplot2::element_text(family = base_family, face = "bold", size = rel(1), hjust = 0),
-        plot.background = ggplot2::element_rect(fill = "white", colour = "white"),
-        strip.background = ggplot2::element_rect(fill = "grey80", colour = NA)
-      ),
-    colour_function,
-    fill_function
+    ggplot2::theme_minimal(
+      base_family = base_family, 
+      base_size = base_size,
+      base_line_size = base_line_size, 
+      base_rect_size = base_rect_size
+    ) +
+    ggplot2::theme(
+      axis.line = element_line(colour = "grey75", linewidth = 0.6),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.grid.major = element_line(colour = "grey85", linewidth = 0.4),
+      plot.title = ggplot2::element_text(family = base_family, face = "bold"),
+      axis.title = ggplot2::element_text(family = base_family, face = "bold"),
+      strip.text = ggplot2::element_text(family = base_family, face = "bold", size = rel(1), hjust = 0),
+      plot.background = ggplot2::element_rect(fill = "white", colour = "white"),
+      strip.background = ggplot2::element_rect(fill = "grey80", colour = NA),
+      plot.margin = margin(10, 15, 10, 10),
+      panel.spacing = unit(1, "lines")
+    )
   )
 }
 

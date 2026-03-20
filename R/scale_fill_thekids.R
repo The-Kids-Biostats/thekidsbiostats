@@ -1,36 +1,20 @@
 #' @title Fill scale constructor for The Kids colours.
 #'
-#' @param palette Character name of palette in thekids_palettes.
-#' @param discrete Boolean indicating whether color aesthetic is discrete or not
-#' @param reverse Boolean indicating whether the palette should be reversed
+#' @param palette Character Name of palette in thekids_palettes.
+#' @param discrete Boolean Indicating whether fill aesthetic is discrete or not
+#' @param reverse Boolean Indicating whether the palette should be reversed
 #' @param ... Additional arguments passed to discrete_scale() or
 #'            scale_fill_gradientn(), used respectively when discrete is TRUE or FALSE
 #'
 #' @export
-scale_fill_thekids <- function(palette = "primary", discrete = NULL, reverse = FALSE, ...) {
+scale_fill_thekids <- function(palette = "primary", discrete = TRUE, reverse = FALSE, ...) {
 
-  palette_names <- thekids_palettes |> (\(x) keep(x, is.list))() |> map(names) |> unlist()
-  if (is.character(palette)){
-    if (!palette %in% palette_names) {
-      stop(
-        sprintf(
-          "Palette '%s' not recognised. Please select from: %s",
-          palette,
-          paste(strwrap(palette_names, width = 60), collapse = ", ")
-        ),
-        call. = FALSE
-      )
-    } else {
-      pal <- thekids_pal(palette)  # returns a function that accepts parameter `n` as levels.
-    }
-
+  pal_func <- thekids_pal(palette, discrete, reverse)
 
   if (discrete) {
-    ggplot2::discrete_scale(aesthetics = "fill", palette = pal, ...)
+    ggplot2::discrete_scale("fill", palette = pal_func, ...)
   } else {
-    ggplot2::scale_fill_gradientn(colours = pal(256), ...)
+    ggplot2::scale_fill_gradientn(colours = pal_func(256), ...)
   }
-
-  discrete_scale( aesthetics = "fill", palette = pal, ...)
 
 }
