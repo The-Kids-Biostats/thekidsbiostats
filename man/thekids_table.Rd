@@ -10,9 +10,10 @@ thekids_table(
   font.size.header = 11,
   line.spacing = 1.5,
   padding = 2.5,
-  colour = "CoolGrey",
-  zebra = FALSE,
+  colour = "coolgrey",
   highlight = NULL,
+  highlight_colour = NULL,
+  zebra = FALSE,
   font_family = "Barlow",
   fallback_font_family = "sans",
   date_fix = TRUE,
@@ -30,15 +31,19 @@ thekids_table(
 
 \item{padding}{padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).}
 
-\item{colour}{a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.}
+\item{colour}{a named colour, hex code or one of the following The Kids colours, including "saffron", "pumpkin", "teal", "darkteal", "celestialblue", "azureblue", "midnightblue", or "coolgrey", defaults to 'coolgrey'.}
+
+\item{highlight}{A numeric vector indicating which rows to highlight.
+Defaults to \code{NULL}, meaning no rows are highlighted.}
+
+\item{highlight_colour}{Colour used for highlighting rows in both \code{highlight} and \code{zebra}. If \code{NULL},
+a 50\% tint of the main colour is used.}
 
 \item{zebra}{controls alternating highlighting of rows, logical or integer (defaults to \code{F});
 if TRUE, alternate each row's background with \code{colour};
 if an integer, alternate row blocks of this size are highlighted;
 if negative, this will invert the sequence of highlighted blocks;
 (defaults to \code{F})}
-
-\item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows).}
 
 \item{font_family}{string containing the font family to apply to the table. Default "Barlow".}
 

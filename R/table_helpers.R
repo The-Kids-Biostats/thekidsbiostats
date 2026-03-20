@@ -71,11 +71,14 @@ table_theme <- function(x,
 #'
 #' @return A styled flextable
 #' @noRd
-table_zebra <- function(x, colour) {
+table_zebra <- function(x, colour, highlight_colour) {
   table_theme(x,
-              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("even" = thekidsbiostats::thekids_palettes$tint50[[colour]], "odd" = "transparent"))
+              header_bg = c("odd" = colour, 
+                            "even" = "transparent"),
+              footer_bg = c("odd" = "transparent", 
+                            "even" = "transparent"),
+              body_bg   = c("even" = highlight_colour,
+                            "odd" = "transparent"))
 }
 
 
@@ -89,15 +92,9 @@ table_zebra <- function(x, colour) {
 #'
 #' @return A styled flextable
 #' @noRd
-table_highlight <- function(x, colour, highlight) {
+table_highlight <- function(x, colour, highlight, highlight_colour) {
   # x must already be converted to a flextable
   stopifnot(inherits(x, "flextable"))
-
-  # Check colours are available
-  if (!colour %in% names(thekidsbiostats::thekids_palettes$primary)) {
-    stop(sprintf("Invalid colour. Choose from: %s",
-                 paste(shQuote(names(thekidsbiostats::thekids_palettes$primary)), collapse = ", ")))
-  }
 
   # Ensure the highlight value is in integer
   if (!is.null(highlight)) {
@@ -117,9 +114,12 @@ table_highlight <- function(x, colour, highlight) {
   }
 
   table_theme(x,
-              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
-              body_bg   = c("highlight" = thekidsbiostats::thekids_palettes$tint50[[colour]], "other" = "transparent"),
+              header_bg = c("odd" = colour, 
+                            "even" = "transparent"),
+              footer_bg = c("odd" = "transparent", 
+                            "even" = "transparent"),
+              body_bg   = c("highlight" = highlight_colour, 
+                            "other" = "transparent"),
               highlight = highlight)
 }
 
@@ -135,8 +135,8 @@ table_highlight <- function(x, colour, highlight) {
 #' @noRd
 table_non_zebra <- function(x, colour) {
   table_theme(x,
-              header_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
-              footer_bg = c("odd" = thekidsbiostats::thekids_palettes$primary[[colour]], "even" = "transparent"),
+              header_bg = c("odd" = colour, "even" = "transparent"),
+              footer_bg = c("odd" = "transparent", "even" = "transparent"),
               body_bg   = c("odd" = "transparent", "even" = "transparent"))
 }
 
@@ -281,4 +281,62 @@ check_font_family <- function(font_family, fallback_family) {
     warning(sprintf("Font '%s' not found; falling back to '%s'.", font_family, fallback_family))
     return(fallback_family)
   }
+}
+
+
+#' Convert any colour input into a standard hex code
+#'
+#' Returns the equivalent hex code for any valid colour represented by a character in any format.
+#'
+#' @param colour A colour represented by any of the following formats:
+#' \itemize{
+#'   \item Named colours: "red", "skyblue" (including The Kids colours)
+#'   \item Hex codes: "#FF0000" or "#ff0000"
+#'   \item Possibly factors: factor("Red")
+#'   \item Possibly mixed-case strings: "Red", "SkyBlue"
+#' }
+#'
+#' @return An rgb hex code
+#' @noRd
+colour_to_hex <- function(colour) {
+  
+  colour <- as.character(colour)
+
+  if (tolower(colour) %in% tolower(names(thekidsbiostats::thekids_palettes$primary))) {
+    colour <- thekidsbiostats::thekids_colours[[tolower(colour)]]
+  }
+
+  tryCatch({
+    rgb_matrix <- grDevices::col2rgb(colour)  # returns 3 x n matrix
+    hex_code <- grDevices::rgb(
+      rgb_matrix[1, ], 
+      rgb_matrix[2, ], 
+      rgb_matrix[3, ], 
+      maxColorValue = 255
+    )
+  }, error = function(e) {
+    stop(
+      sprintf("Invalid colour value: '%s'.\nPlease provide a valid colour name, hex code or choose from the following:\n %s", 
+      colour, paste(shQuote(tolower(names(thekidsbiostats::thekids_palettes$primary))), collapse = ", ")),
+      call. = FALSE
+    )
+  })
+  
+  return(hex_code)
+}
+
+
+#' Determines if text colour should be light or dark.
+#'
+#' Based on the relative luminance of the background colour, returns either 
+#' white or black as the most appropriate text colour.
+#'
+#' @param bg Character or Hex code representing the background colour
+#'
+#' @return An rgb hex code colour of either 'black' or 'white'
+#' @noRd
+get_text_colour <- function(bg) {
+  rgb <- grDevices::col2rgb(bg)
+  brightness <- (rgb[1, ] * 299 + rgb[2, ] * 587 + rgb[3, ] * 114) / 1000
+  unname(ifelse(brightness > 128, "#000000", "#FFFFFF"))
 }
