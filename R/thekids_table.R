@@ -88,18 +88,29 @@ thekids_table <- function(x,
 
   # Standardise argument aliasing
   call <- match.call()
-  std_call <- standardise_args(call)
+  std_call <- standardise_args(
+    call, 
+    alias_map = c(
+      "color" = "colour",
+      "gray" = "grey",
+      "background.color" = "background_colour",
+      "background.colour" = "background_colour"
+    )
+  )
+
   if (!identical(names(call), names(std_call))) {
     return(eval(std_call, parent.frame()))
   }
 
-  # FIXME: if user gives a `background.color`, then it does not get applied because the highlighting rules force 'transparent'
-
-  # Standardise the colour input
+  args <- list(...)
+  background_colour <- args$background_colour
+  args$background_colour <- NULL
+  
+  # Standardise the colour inputs
   colour <- colour_to_hex(colour)
-
-  # Get the highlight colour if not given
-  if (is.null(highlight_colour)) {
+  background_colour <- colour_to_hex(background_colour)
+  
+  if (is.null(highlight_colour)) {  # Get the highlight colour if not given
     rgb_colour <- grDevices::col2rgb(colour)
     rgb_tinted <- (1 - 0.5) * rgb_colour + 0.5 * grDevices::col2rgb('white')
     highlight_colour <- grDevices::rgb(
@@ -108,6 +119,8 @@ thekids_table <- function(x,
       rgb_tinted[3, ],
       maxColorValue = 255
     )
+  } else {
+    highlight_colour <- colour_to_hex(highlight_colour)
   }
 
   # Check zebra vs highlight
@@ -132,7 +145,13 @@ thekids_table <- function(x,
   if (isTRUE(zebra)){
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
-                                      theme_fun = function(y) table_zebra(y, colour = colour, highlight_colour = highlight_colour),
+                                      theme_fun = function(y) {
+                                        table_zebra(y, 
+                                          colour = colour,
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
                                       line_spacing = line.spacing,
                                       padding = padding,
                                       big.mark = "",
@@ -152,7 +171,14 @@ thekids_table <- function(x,
 
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
-                                      theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight, highlight_colour = highlight_colour),
+                                      theme_fun = function(y) {
+                                        table_highlight(y, 
+                                          colour = colour,
+                                          highlight = highlight, 
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
                                       line_spacing = line.spacing,
                                       padding = padding,
                                       big.mark = "",
@@ -161,7 +187,14 @@ thekids_table <- function(x,
   } else if (!is.null(highlight)){
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
-                                      theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight, highlight_colour = highlight_colour),
+                                      theme_fun = function(y) {
+                                        table_highlight(y, 
+                                          colour = colour,
+                                          highlight = highlight, 
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
                                       line_spacing = line.spacing,
                                       padding = padding,
                                       big.mark = "",
@@ -170,7 +203,12 @@ thekids_table <- function(x,
   } else {
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = font.size,
-                                      theme_fun = function(y) table_non_zebra(y, colour = colour),
+                                      theme_fun = function(y) {
+                                        table_non_zebra(y,
+                                          colour = colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
                                       line_spacing = line.spacing,
                                       padding = padding,
                                       big.mark = "",

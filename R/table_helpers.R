@@ -67,18 +67,20 @@ table_theme <- function(x,
 #' Applies alternating body striping to a flextable with Kids palette colours.
 #'
 #' @param x A flextable object
-#' @param colour A valid colour name from `thekids_palettes$primary`
+#' @param colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the header.
+#' @param highlight_colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the body highlights
+#' @param background_colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the body non-highlights.
 #'
 #' @return A styled flextable
 #' @noRd
-table_zebra <- function(x, colour, highlight_colour) {
+table_zebra <- function(x, colour, highlight_colour, background_colour) {
   table_theme(x,
               header_bg = c("odd" = colour, 
                             "even" = "transparent"),
               footer_bg = c("odd" = "transparent", 
                             "even" = "transparent"),
               body_bg   = c("even" = highlight_colour,
-                            "odd" = "transparent"))
+                            "odd" = background_colour))
 }
 
 
@@ -87,12 +89,14 @@ table_zebra <- function(x, colour, highlight_colour) {
 #' Applies row-specific highlighting to the body of a flextable.
 #'
 #' @param x A flextable object
-#' @param colour A valid colour name from `thekids_palettes$primary`
+#' @param colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the header.
+#' @param highlight_colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the body highlights
+#' @param background_colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the body non-highlights.
 #' @param highlight Integer vector of row indices to highlight
 #'
 #' @return A styled flextable
 #' @noRd
-table_highlight <- function(x, colour, highlight, highlight_colour) {
+table_highlight <- function(x, colour, highlight, highlight_colour, background_colour) {
   # x must already be converted to a flextable
   stopifnot(inherits(x, "flextable"))
 
@@ -119,25 +123,29 @@ table_highlight <- function(x, colour, highlight, highlight_colour) {
               footer_bg = c("odd" = "transparent", 
                             "even" = "transparent"),
               body_bg   = c("highlight" = highlight_colour, 
-                            "other" = "transparent"),
+                            "other" = background_colour),
               highlight = highlight)
 }
 
 
 #' Plain non-zebra table styling
 #'
-#' Applies header color but no body striping or highlighting.
+#' Applies header colour but no body striping or highlighting.
 #'
 #' @param x A flextable object
-#' @param colour A valid colour name from `thekids_palettes$primary`
+#' @param colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the header.
+#' @param background_colour A valid colour name (including from `thekids_colours`) or hex code, for colouring the body background.
 #'
 #' @return A styled flextable
 #' @noRd
-table_non_zebra <- function(x, colour) {
+table_non_zebra <- function(x, colour, background_colour) {
   table_theme(x,
-              header_bg = c("odd" = colour, "even" = "transparent"),
-              footer_bg = c("odd" = "transparent", "even" = "transparent"),
-              body_bg   = c("odd" = "transparent", "even" = "transparent"))
+              header_bg = c("odd" = colour, 
+                            "even" = "transparent"),
+              footer_bg = c("odd" = "transparent", 
+                            "even" = "transparent"),
+              body_bg   = c("odd" = background_colour, 
+                            "even" = background_colour))
 }
 
 
@@ -300,9 +308,10 @@ check_font_family <- function(font_family, fallback_family) {
 #' @noRd
 colour_to_hex <- function(colour) {
   
+  if (is.null(colour)) colour <- 'transparent'
   colour <- as.character(colour)
 
-  if (tolower(colour) %in% tolower(names(thekidsbiostats::thekids_palettes$primary))) {
+  if (tolower(colour) %in% tolower(names(thekidsbiostats::thekids_colours))) {
     colour <- thekidsbiostats::thekids_colours[[tolower(colour)]]
   }
 
