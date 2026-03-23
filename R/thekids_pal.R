@@ -24,7 +24,7 @@ thekids_pal <- function(palette, discrete = FALSE, reverse = FALSE) {
     if (discrete) { 
       function(n) {  # These could be moved to thekids_palette$qualitative$...
         if (n <= 6) {
-          pal <- unname(thekids_palettes[[palette]][c('MidnightBlue', 'Saffron', 'Teal', 'Pumpkin', 'CelestialBlue', 'CoolGrey')])
+          pal <- unname(thekids_palettes[[palette]][c('MidnightBlue', 'Pumpkin', 'Teal', 'Saffron', 'CelestialBlue', 'CoolGrey')])
           cols <- pal[seq_len(n)]
         } else { 
           # TODO: one-time 24hr warning for using different sequential options if 7 < n < 15.
