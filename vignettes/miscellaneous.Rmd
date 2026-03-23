@@ -39,7 +39,7 @@ Visualising the first few rows of our data:
 
 ```{r}
 head(dat_raw, n = 10) %>%
-  thekids_table(line.spacing = 0.8,
+  thekids_table(line_spacing = 0.8,
                 padding = 1.5)
 ```
 
