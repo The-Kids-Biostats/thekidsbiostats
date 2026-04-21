@@ -31,14 +31,14 @@ test_that("thekids_showpalette applies coord_fixed with ratio 0.5", {
 })
 
 test_that("thekids_showpalette factors are set correctly", {
-  df <- dplyr::bind_rows(thekidsbiostats::thekids_palettes, .id = "Category") %>%
-    dplyr::filter(Category != "typography") %>%
-    tidyr::pivot_longer(-tidyselect::all_of("Category"), names_to = "Color", values_to = "Hex") %>%
-    tidyr::drop_na() %>%
+  df <- dplyr::bind_rows(thekidsbiostats::thekids_palettes[c('primary', 'tint50', 'tint10')], .id = "Category") |> 
+    tidyr::pivot_longer(-tidyselect::all_of("Category"), names_to = "Color", values_to = "Hex") |> 
+    tidyr::drop_na() |>  # Remove NA rows
     dplyr::mutate(
-      Category = factor(Category, levels = c("primary", "tint50", "tint10")),
-      Color = factor(Color, levels = rev(names(thekidsbiostats::thekids_palettes$primary)))
+      Category = factor(.data$Category, levels = c("primary", "tint50", "tint10")),
+      Color = factor(.data$Color, levels = rev(names(thekidsbiostats::thekids_palettes$primary))) # Maintain row order
     )
+  
   expect_true(all(levels(df$Category) == c("primary", "tint50", "tint10")))
   expect_true(all(levels(df$Color) == rev(names(thekidsbiostats::thekids_palettes$primary))))
 })

@@ -81,17 +81,18 @@ Supported Google Fonts are those that exist in \code{sysfonts::font_families_goo
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  thekids_theme()
+  thekids_theme() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  thekids_theme(fill_theme = "thekids_tint", rev_fill = T)
+  thekids_theme() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 }
@@ -99,17 +100,18 @@ print(p2)
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  theme_thekids()
+  theme_thekids() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  theme_thekids(fill_theme = "thekids_tint", rev_fill = T)
+  theme_thekids() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 }
