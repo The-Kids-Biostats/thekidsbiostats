@@ -26,12 +26,12 @@
 #' @param fontsize_header the font size for text in the header of the table, defaults to 10.
 #' @param line_spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).
 #' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).
-#' @param colour a named colour, hex code or one of the following The Kids colours, including "saffron", "pumpkin", "teal", "darkteal", "celestialblue", "azureblue", "midnightblue", or "coolgrey", defaults to 'coolgrey'.
-#' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
+#' @param colour a named colour, hex code or one of the colours from The Kids palette, see \link{thekids_colours} for available colour names.
+#' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `FALSE`);
 #'  if TRUE, alternate each row's background with `colour`;
 #'  if an integer, alternate row blocks of this size are highlighted;
 #'  if negative, this will invert the sequence of highlighted blocks;
-#'  (defaults to `F`)
+#'  (defaults to `FALSE`)
 #' @param highlight A numeric vector indicating which rows to highlight.
 #'   Defaults to `NULL`, meaning no rows are highlighted.
 #' @param highlight_colour Colour used when highlighting rows for both `highlight` and `zebra`. If `NULL`,
@@ -72,7 +72,7 @@ thekids_table <- function(x,
                           fontsize_header = 11,
                           line_spacing = 1.5,
                           padding = 2.5,
-                          colour = "coolgrey",
+                          colour = "midnightblue",
                           highlight = NULL,
                           highlight_colour = NULL,
                           zebra = FALSE,

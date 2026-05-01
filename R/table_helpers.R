@@ -298,7 +298,7 @@ check_font_family <- function(font_family, fallback_family) {
 #'
 #' @param colour A colour represented by any of the following formats:
 #' \itemize{
-#'   \item Named colours: "red", "skyblue" (including The Kids colours)
+#'   \item Named colours: "red", "skyblue" (including The Kids colours, e.g. "saffron")
 #'   \item Hex codes: "#FF0000" or "#ff0000"
 #'   \item Possibly factors: factor("Red")
 #'   \item Possibly mixed-case strings: "Red", "SkyBlue"

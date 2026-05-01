@@ -1,4 +1,4 @@
-#' Apply Institute Theme to ggplot2 Plots
+#' Apply Institute Theming to ggplot2 Plots
 #'
 #' This function applies a custom theme to ggplot2 plots, incorporating specific fonts and colours to align with the institute's visual identity.
 #'
@@ -11,6 +11,7 @@
 #' @param base_family The base font family used for the text (default Barlow). Most Google Fonts are supported (see Note).
 #' @param base_line_size The base size for line elements (e.g., axis lines, grid lines). Calculated as `base_size/22` by default.
 #' @param base_rect_size The base size for rect elements (e.g., plot background, legend keys). Calculated as `base_size/22` by default.
+#' @param strip_colour A named colour from the list of The Kids colours, see \link{thekids_colours} for available colour names. Note that only the main colour names are accepted because the 50% tint is always used.
 #' @param colour_theme Deprecated. Use [scale_colour_thekids()] instead.
 #' @param fill_theme Deprecated. Use [scale_fill_thekids()] instead.
 #' @param scale_colour_type Deprecated. Use [scale_colour_thekids()] instead.
@@ -53,6 +54,7 @@ thekids_theme <- function(base_size = 11,
                           base_family = NULL,
                           base_line_size = base_size / 22,
                           base_rect_size = base_size / 22,
+                          strip_colour = 'midnightblue',
                           scale_colour_type = lifecycle::deprecated(),
                           scale_fill_type = lifecycle::deprecated(),
                           colour_theme = lifecycle::deprecated(),
@@ -64,7 +66,14 @@ thekids_theme <- function(base_size = 11,
   
   # Standardise argument aliasing
   call <- match.call()
-  std_call <- standardise_args(call)
+  std_call <- standardise_args(
+    call,
+    alias_map = c(
+      "color" = "colour",
+      "gray" = "grey",
+      "strip_color" = "strip_colour"
+    )
+  )
   if (!identical(names(call), names(std_call))) {
     return(eval(std_call, parent.frame()))
   }
@@ -136,6 +145,13 @@ thekids_theme <- function(base_size = 11,
     message(paste0("Non-default font family (", base_family, ") selected.\nPlease consider changing `fig_dpi` if any issues with plot scaling are encountered."))
   }
 
+  if (!strip_colour %in% names(thekids_colours)[!grepl("_", names(thekids_colours))]) {
+    stop("`strip_colour` must be one of the main (i.e. not '_50' or '_10') named colours listed in `thekids_colours`.", call. = FALSE)
+  }
+
+  # Get the 50% tint version of the requested The Kids colour.
+  strip.background = thekids_colours[[paste0(strip_colour, '_50')]]
+
   # Return the theme and functions
   list(
     ggplot2::theme_minimal(
@@ -158,7 +174,7 @@ thekids_theme <- function(base_size = 11,
         size = base_size * 1.1, hjust = 0,
         margin = ggplot2::margin(l=8, r=4, t=8, b=8)
       ),
-      strip.background = ggplot2::element_rect(fill = "grey90", colour = "grey75", linewidth = 1),
+      strip.background = ggplot2::element_rect(fill = strip.background, colour = "grey75", linewidth = 1),
       legend.title = element_text(size = base_size * 0.9, face = "bold"),
       legend.text  = element_text(size = base_size * 0.8),
       legend.key.size = unit(base_size * 0.05, "cm"),

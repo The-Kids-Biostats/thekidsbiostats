@@ -12,6 +12,10 @@
 #' @export
 thekids_pal <- function(palette, discrete = FALSE, reverse = FALSE) {
 
+  if (palette == 'thekids') {
+    palette = 'primary'
+  }
+
   palette_names <- thekids_palettes |> (\(x) purrr::keep(x, is.list))() |> purrr::map(names) |> unlist()
   if (!palette %in% palette_names) {
     stop(sprintf(
@@ -70,3 +74,48 @@ thekids_pal <- function(palette, discrete = FALSE, reverse = FALSE) {
 }
 
 
+#' Allows a begin and end fraction to be imposed on an already created colourRampPalette function
+#'
+#' Internal function for modifying a palette's begin and end points
+#'
+#' @param pal_func The palette function generated from colourRampPalette
+#' @param begin Numeric The hue between [0,1] at which the colour map should begin.
+#' @param end Numeric The hue between [0,1] at which the colour map should end.
+#' @param n_interp Number of points to interpolate between the original palette
+#' @return Modified palette function truncated between the new begin and end points.
+#' @noRd
+truncate_pal <- function(pal_func, begin = 0, end = 1, n_interp = 256) {
+  
+  if (!is.numeric(begin) || length(begin) != 1 || is.na(begin)) {
+    stop("`begin` must be a single numeric value")
+  }
+
+  if (!is.numeric(end) || length(end) != 1 || is.na(end)) {
+    stop("`end` must be a single numeric value")
+  }
+
+  if (begin < 0 || begin > 1) {
+    stop("`begin` must be between 0 and 1")
+  }
+
+  if (end < 0 || end > 1) {
+    stop("`end` must be between 0 and 1")
+  }
+
+  if (begin >= end) {
+    stop("`begin` must be less than `end`")
+  }
+  
+  force(pal_func)  # lock in this exact palette for the returned function.
+  
+  function(n) {
+    cols <- pal_func(n_interp)
+    
+    i_begin <- floor(begin * (n_interp - 1)) + 1
+    i_end   <- ceiling(end * (n_interp - 1)) + 1
+    
+    cols_sub <- cols[i_begin:i_end]
+    
+    colorRampPalette(cols_sub)(n)
+  }
+}
