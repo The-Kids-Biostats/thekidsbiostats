@@ -127,7 +127,7 @@ test_that("continuous scale visually looks correct", {
 
 test_that("reverse palette changes appearance", {
   p <- ggplot(mtcars, aes(factor(cyl), colour = factor(cyl))) +
-    geom_bar() +
+    geom_bar(linewidth=2, fill="transparent") +
     thekids_theme() +
     scale_colour_thekids("primary", reverse = TRUE)
 

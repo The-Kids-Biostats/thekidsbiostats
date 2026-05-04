@@ -12,12 +12,12 @@
 #' @param base_line_size The base size for line elements (e.g., axis lines, grid lines). Calculated as `base_size/22` by default.
 #' @param base_rect_size The base size for rect elements (e.g., plot background, legend keys). Calculated as `base_size/22` by default.
 #' @param strip_colour A named colour from the list of The Kids colours, see \link{thekids_colours} for available colour names. Note that only the main colour names are accepted because the 50% tint is always used.
-#' @param colour_theme Deprecated. Use [scale_colour_thekids()] instead.
-#' @param fill_theme Deprecated. Use [scale_fill_thekids()] instead.
-#' @param scale_colour_type Deprecated. Use [scale_colour_thekids()] instead.
-#' @param scale_fill_type Deprecated. Use [scale_fill_thekids()] instead.
-#' @param rev_colour Deprecated. Use [scale_colour_thekids()] instead.
-#' @param rev_fill Deprecated. Use [scale_fill_thekids()] instead.
+#' @param colour_theme Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
+#' @param fill_theme Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
+#' @param scale_colour_type Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
+#' @param scale_fill_type Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
+#' @param rev_colour Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
+#' @param rev_fill Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.
 #' @param fig_dpi Base DPI for figure. Only applicable when Barlow font family (default) is *not* selected.
 #' @param ... Miscellaneous arguments necessary for parameter aliasing, etc.
 #'

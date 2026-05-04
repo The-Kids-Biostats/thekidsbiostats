@@ -1,6 +1,7 @@
 ## code to prepare `thekids_colours`
 
 library(colorspace)
+library(datacolor)
 
 # The list of primary colours for The Kids based off of "The Kids Brand Toolkit.pdf"
 hex_colours = c('Saffron'='#F1B434',
@@ -60,13 +61,13 @@ thekids_palettes$sequential <- list(
   coolgrey = colorRampPalette(pal_coolgrey)
 )
 
-pumpkin <- thekids_colours$pumpkin |> lighten(0.1) |> hex2hcl()
-celestial_blue <- thekids_colours$celestialblue |> hex2hcl()
-light_saffron <- thekids_colours$saffron |> lighten(0.9) |>  hex2hcl()
-saffron <- thekids_colours$saffron |> hex2hcl()
-darkteal <- thekids_colours$darkteal |> lighten(0.1) |> hex2hcl()
-midnight_blue <- thekids_colours$midnightblue |> hex2hcl()
-light_celestial_blue <- thekids_colours$celestialblue |> lighten(0.9) |> hex2hcl()
+pumpkin <- thekids_colours$pumpkin |> lighten(0.1) |> datacolor::hex2hcl()
+celestial_blue <- thekids_colours$celestialblue |> datacolor::hex2hcl()
+light_saffron <- thekids_colours$saffron |> lighten(0.9) |>  datacolor::hex2hcl()
+saffron <- thekids_colours$saffron |> datacolor::hex2hcl()
+darkteal <- thekids_colours$darkteal |> lighten(0.1) |> datacolor::hex2hcl()
+midnight_blue <- thekids_colours$midnightblue |> datacolor::hex2hcl()
+light_celestial_blue <- thekids_colours$celestialblue |> lighten(0.9) |> datacolor::hex2hcl()
 
 pal_pumpkin2celestial <- colorspace::divergingx_hcl(
   n = 101,

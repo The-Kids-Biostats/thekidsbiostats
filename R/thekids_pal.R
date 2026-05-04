@@ -79,8 +79,8 @@ thekids_pal <- function(palette, discrete = FALSE, reverse = FALSE) {
 #' Internal function for modifying a palette's begin and end points
 #'
 #' @param pal_func The palette function generated from colourRampPalette
-#' @param begin Numeric The hue between [0,1] at which the colour map should begin.
-#' @param end Numeric The hue between [0,1] at which the colour map should end.
+#' @param begin Numeric The hue between 0 and 1 at which the colour map should begin.
+#' @param end Numeric The hue between 0 and 1 at which the colour map should end.
 #' @param n_interp Number of points to interpolate between the original palette
 #' @return Modified palette function truncated between the new begin and end points.
 #' @noRd
@@ -116,6 +116,6 @@ truncate_pal <- function(pal_func, begin = 0, end = 1, n_interp = 256) {
     
     cols_sub <- cols[i_begin:i_end]
     
-    colorRampPalette(cols_sub)(n)
+    grDevices::colorRampPalette(cols_sub)(n)
   }
 }

@@ -62,10 +62,9 @@
 #' will remove these lists from `thekids_palettes` object.
 #' 
 #' @examples
-#' names(thekids_palettes)
-#' thekids_palettes$primary$sequential$primary
-#' thekids_palettes$primary$sequential$midnightblue
-#' thekids_palettes$primary$diverging$saffron2teal
+#' thekids_palettes$sequential$primary
+#' thekids_palettes$sequential$midnightblue
+#' thekids_palettes$diverging$saffron2teal
 #'
 #' @source The Kids Research Institute Australia style guide.
 "thekids_palettes"

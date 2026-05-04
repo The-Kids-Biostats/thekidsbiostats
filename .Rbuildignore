@@ -1,5 +1,6 @@
 ^thekidsbiostats\.Rproj$
 ^\.Rproj\.user$
+^\.vscode$
 ^doc$
 ^Meta$
 ^LICENSE\.md$

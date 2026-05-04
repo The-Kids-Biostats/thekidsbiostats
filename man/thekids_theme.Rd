@@ -3,13 +3,14 @@
 \name{thekids_theme}
 \alias{thekids_theme}
 \alias{theme_thekids}
-\title{Apply Institute Theme to ggplot2 Plots}
+\title{Apply Institute Theming to ggplot2 Plots}
 \usage{
 thekids_theme(
   base_size = 11,
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
+  strip_colour = "midnightblue",
   scale_colour_type = lifecycle::deprecated(),
   scale_fill_type = lifecycle::deprecated(),
   colour_theme = lifecycle::deprecated(),
@@ -25,6 +26,7 @@ theme_thekids(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
+  strip_colour = "midnightblue",
   scale_colour_type = lifecycle::deprecated(),
   scale_fill_type = lifecycle::deprecated(),
   colour_theme = lifecycle::deprecated(),
@@ -44,17 +46,19 @@ theme_thekids(
 
 \item{base_rect_size}{The base size for rect elements (e.g., plot background, legend keys). Calculated as \code{base_size/22} by default.}
 
-\item{scale_colour_type}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
+\item{strip_colour}{A named colour from the list of The Kids colours, see \link{thekids_colours} for available colour names. Note that only the main colour names are accepted because the 50\% tint is always used.}
 
-\item{scale_fill_type}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
+\item{scale_colour_type}{Deprecated. Use \link{scale_thekids} instead.}
 
-\item{colour_theme}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
+\item{scale_fill_type}{Deprecated. Use \link{scale_thekids} instead.}
 
-\item{fill_theme}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
+\item{colour_theme}{Deprecated. Use \link{scale_thekids} instead.}
 
-\item{rev_colour}{Deprecated. Use \code{\link[=scale_colour_thekids]{scale_colour_thekids()}} instead.}
+\item{fill_theme}{Deprecated. Use \link{scale_thekids} instead.}
 
-\item{rev_fill}{Deprecated. Use \code{\link[=scale_fill_thekids]{scale_fill_thekids()}} instead.}
+\item{rev_colour}{Deprecated. Use \link{scale_thekids} instead.}
+
+\item{rev_fill}{Deprecated. Use \link{scale_thekids} instead.}
 
 \item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
 
