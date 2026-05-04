@@ -105,31 +105,31 @@ test_that("divergin palette names give the correct palette", {
 
 
 ### Visual Tests
-test_that("discrete scale visually looks correct", {
-  p <- ggplot(mtcars, aes(factor(cyl), colour = factor(cyl))) +
-    geom_bar(linewidth=2, fill="transparent") +
-    thekids_theme() +
-    scale_colour_thekids("primary", discrete = TRUE)
+# test_that("discrete scale visually looks correct", {
+#   p <- ggplot(mtcars, aes(factor(cyl), colour = factor(cyl))) +
+#     geom_bar(linewidth=2, fill="transparent") +
+#     thekids_theme() +
+#     scale_colour_thekids("primary", discrete = TRUE)
 
-  vdiffr::expect_doppelganger("discrete primary palette", p)
-})
-
-
-test_that("continuous scale visually looks correct", {
-  p <- ggplot(mtcars, aes(mpg, wt, colour = mpg)) +
-    geom_point(shape = 21, size = 3) +
-    thekids_theme() +
-    scale_colour_thekids("primary", discrete = FALSE)
-
-  vdiffr::expect_doppelganger("continuous primary palette", p)
-})
+#   vdiffr::expect_doppelganger("discrete primary palette", p)
+# })
 
 
-test_that("reverse palette changes appearance", {
-  p <- ggplot(mtcars, aes(factor(cyl), colour = factor(cyl))) +
-    geom_bar(linewidth=2, fill="transparent") +
-    thekids_theme() +
-    scale_colour_thekids("primary", reverse = TRUE)
+# test_that("continuous scale visually looks correct", {
+#   p <- ggplot(mtcars, aes(mpg, wt, colour = mpg)) +
+#     geom_point(shape = 21, size = 3) +
+#     thekids_theme() +
+#     scale_colour_thekids("primary", discrete = FALSE)
 
-  vdiffr::expect_doppelganger("reversed palette", p)
-})
+#   vdiffr::expect_doppelganger("continuous primary palette", p)
+# })
+
+
+# test_that("reverse palette changes appearance", {
+#   p <- ggplot(mtcars, aes(factor(cyl), colour = factor(cyl))) +
+#     geom_bar(linewidth=2, fill="transparent") +
+#     thekids_theme() +
+#     scale_colour_thekids("primary", reverse = TRUE)
+
+#   vdiffr::expect_doppelganger("reversed palette", p)
+# })

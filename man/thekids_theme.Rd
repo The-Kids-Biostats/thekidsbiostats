@@ -48,17 +48,17 @@ theme_thekids(
 
 \item{strip_colour}{A named colour from the list of The Kids colours, see \link{thekids_colours} for available colour names. Note that only the main colour names are accepted because the 50\% tint is always used.}
 
-\item{scale_colour_type}{Deprecated. Use \link{scale_thekids} instead.}
+\item{scale_colour_type}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{scale_fill_type}{Deprecated. Use \link{scale_thekids} instead.}
+\item{scale_fill_type}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{colour_theme}{Deprecated. Use \link{scale_thekids} instead.}
+\item{colour_theme}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{fill_theme}{Deprecated. Use \link{scale_thekids} instead.}
+\item{fill_theme}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{rev_colour}{Deprecated. Use \link{scale_thekids} instead.}
+\item{rev_colour}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{rev_fill}{Deprecated. Use \link{scale_thekids} instead.}
+\item{rev_fill}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
 \item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
 

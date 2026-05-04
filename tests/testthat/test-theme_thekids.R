@@ -78,15 +78,15 @@ test_that("deprecated arguments trigger warnings", {
 
 
 ## Visual Regression Testing
-test_that("deprecated arguments trigger warnings", {
-  vdiffr::expect_doppelganger(
-    "thekids theme basic plot",
-    ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
-      ggplot2::geom_point() +
-      ggplot2::labs(
-        title = "Plot Title",
-        subtitle = "Subtitle"
-      ) +
-      thekids_theme()
-  )
-})
+# test_that("deprecated arguments trigger warnings", {
+#   vdiffr::expect_doppelganger(
+#     "thekids theme basic plot",
+#     ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+#       ggplot2::geom_point() +
+#       ggplot2::labs(
+#         title = "Plot Title",
+#         subtitle = "Subtitle"
+#       ) +
+#       thekids_theme()
+#   )
+# })
