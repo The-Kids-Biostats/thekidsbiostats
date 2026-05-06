@@ -5,8 +5,38 @@
 \alias{thekids_palettes}
 \title{The Kids Research Institute Australia Colour Palettes}
 \format{
-A list of length 4.
-Names correspond to "primary", "tint50", "tint10", and "typography" guidelines
+A nested list of colourmaps
+Palettes are stored in a nested list of palette variants,
+which can be accessed by: \verb{thekids_palettes$<variant>$<name>}
+\itemize{
+\item \strong{Sequential palettes}: Continuous colour gradients for ordered data values
+\itemize{
+\item \code{thekids_palettes$sequential$primary}
+\item \code{thekids_palettes$sequential$tint50}
+\item \code{thekids_palettes$sequential$tint10}
+\item mono-colour sequential ramps, accessed by \code{thekids_palettes$sequential$...}
+\code{saffron}, \code{pumpkin}, \code{teal},
+\code{celestialblue}, \code{azureblue}, \code{midnightblue}, \code{coolgrey}
+}
+
+These return palette functions of the form \verb{function(n)} for continuous scales.
+\item \strong{Diverging palettes}: Two-ended colour gradients deviating about a central white reference point.
+\itemize{
+\item \code{thekids_palettes$diverging$pumpkin2celestial}
+\item \code{thekids_palettes$diverging$saffron2teal}
+\item \code{thekids_palettes$diverging$saffron2midnight}
+}
+
+These return palette functions of the form \verb{function(n)} for diverging scales.
+\item \strong{Qualitative palettes}: Sets of visually distinct colours for nominal (unordered) categories.
+\itemize{
+\item \code{thekids_palettes$qualitative$primary} - NOT YET IMPLEMENTED
+\item \code{thekids_palettes$qualitative$tint50} - NOT YET IMPLEMENTED
+\item \code{thekids_palettes$qualitative$tint10} - NOT YET IMPLEMENTED
+}
+
+These return a named list of colours.
+}
 }
 \source{
 The Kids Research Institute Australia style guide.
@@ -15,14 +45,19 @@ The Kids Research Institute Australia style guide.
 thekids_palettes
 }
 \description{
-Additional colour palettes and HEX codes consistent with Institute guidelines.
+Colour palettes using colours from The Kids Research Institute Australia.
 }
 \details{
-Contains "primary" and "tinted" colours.
+In addition to the nested lists (sequential, diverging and qualitative), there are also
+three separate lists at the base level, namely: \verb{$primary}, \verb{$tint50}, \verb{$tint10}. These historically
+contained the list of The Kids colours (which have now been moved to \code{thekids_colours})
+but have been left here for backwards compatibility. Future updates of \code{thekidsbiostats} package
+will remove these lists from \code{thekids_palettes} object.
 }
 \examples{
-names(thekids_palettes)
-thekids_palettes$primary["Saffron"]
+thekids_palettes$sequential$primary
+thekids_palettes$sequential$midnightblue
+thekids_palettes$diverging$saffron2teal
 
 }
 \keyword{datasets}

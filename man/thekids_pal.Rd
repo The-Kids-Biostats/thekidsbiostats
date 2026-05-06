@@ -2,17 +2,22 @@
 % Please edit documentation in R/thekids_pal.R
 \name{thekids_pal}
 \alias{thekids_pal}
-\title{Return function to interpolate a The Kids color palette}
+\title{Generates a function, which when supplied to ggplot2 will return the appropriate colour palette, depending on the number of levels.}
 \usage{
-thekids_pal(palette = "primary", reverse = FALSE, ...)
+thekids_pal(palette, discrete = FALSE, reverse = FALSE)
 }
 \arguments{
 \item{palette}{Character name of palette in thekids_palettes}
 
-\item{reverse}{Boolean indicating whether the palette should be reversed}
+\item{discrete}{Boolean Indicating whether the palette is discrete or not (i.e. sequential or diverging)}
 
-\item{...}{Additional arguments to pass to colorRampPalette()}
+\item{reverse}{Boolean indicating whether the palette should be reversed}
+}
+\value{
+A palette function based off the thekids_palettes. When called with an integer \code{n},
+it returns a character vector of \code{n} hex colour values. Designed for use with
+scale_colour_thekids(), scale_fill_thekids() and other ggplot2 scale functions.
 }
 \description{
-Return function to interpolate a The Kids color palette
+Generates a function, which when supplied to ggplot2 will return the appropriate colour palette, depending on the number of levels.
 }

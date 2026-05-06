@@ -3,19 +3,20 @@
 \name{thekids_theme}
 \alias{thekids_theme}
 \alias{theme_thekids}
-\title{Apply Institute Theme to ggplot2 Plots}
+\title{Apply Institute Theming to ggplot2 Plots}
 \usage{
 thekids_theme(
   base_size = 11,
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  strip_colour = "midnightblue",
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -25,12 +26,13 @@ theme_thekids(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  strip_colour = "midnightblue",
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -44,17 +46,19 @@ theme_thekids(
 
 \item{base_rect_size}{The base size for rect elements (e.g., plot background, legend keys). Calculated as \code{base_size/22} by default.}
 
-\item{scale_colour_type}{Type of scale used for colours. Should be either \code{"discrete"} or \code{"continuous"}. Default is \code{"discrete"}.}
+\item{strip_colour}{A named colour from the list of The Kids colours, see \link{thekids_colours} for available colour names. Note that only the main colour names are accepted because the 50\% tint is always used.}
 
-\item{scale_fill_type}{Type of scale used for fills. Should be either \code{"discrete"} or \code{"continuous"}. Default is \code{"discrete"}.}
+\item{scale_colour_type}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{colour_theme}{Colour palette to use for colour scales. Must be one of \code{"viridis"},\code{"thekids"},\code{"thekids_tint"},\code{"thekids_grey"}. Default is \code{"viridis"}.}
+\item{scale_fill_type}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{fill_theme}{Colour palette to use for fill scales. Must be one of \code{"viridis"},\code{"thekids"},\code{"thekids_tint"},\code{"thekids_grey"}. Default is \code{"viridis"}.}
+\item{colour_theme}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{rev_colour}{Logical. Should the colour palette be reversed? Default is \code{FALSE}.}
+\item{fill_theme}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
-\item{rev_fill}{Logical. Should the fill palette be reversed? Default is \code{FALSE}.}
+\item{rev_colour}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
+
+\item{rev_fill}{Deprecated. Use \code{\link[scale_thekids]{viridis_pal}} instead.}
 
 \item{fig_dpi}{Base DPI for figure. Only applicable when Barlow font family (default) is \emph{not} selected.}
 
@@ -81,17 +85,18 @@ Supported Google Fonts are those that exist in \code{sysfonts::font_families_goo
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  thekids_theme()
+  thekids_theme() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  thekids_theme(fill_theme = "thekids_tint", rev_fill = T)
+  thekids_theme() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 }
@@ -99,17 +104,18 @@ print(p2)
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  theme_thekids()
+  theme_thekids() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  theme_thekids(fill_theme = "thekids_tint", rev_fill = T)
+  theme_thekids() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 }

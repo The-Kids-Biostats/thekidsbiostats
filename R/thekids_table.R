@@ -22,20 +22,23 @@
 #' Pre-specified formatting applied to 'flextable' objects (ahead of `thekids_table()`) may not carry over as expected. Please consider using `thekids_table() `in place of an explicit `flextable()` call, because our function already coerces the table to a flextable object.
 #'
 #' @param x a table, typically a data.frame, tibble, or output from gtsummary.
-#' @param font.size the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).
-#' @param font.size.header the font size for text in the header of the table, defaults to 10.
-#' @param line.spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).
+#' @param fontsize the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).
+#' @param fontsize_header the font size for text in the header of the table, defaults to 10.
+#' @param line_spacing line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).
 #' @param padding padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).
-#' @param colour a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.
-#' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `F`);
+#' @param colour a named colour, hex code or one of the colours from The Kids palette, see \link{thekids_colours} for available colour names.
+#' @param zebra controls alternating highlighting of rows, logical or integer (defaults to `FALSE`);
 #'  if TRUE, alternate each row's background with `colour`;
 #'  if an integer, alternate row blocks of this size are highlighted;
 #'  if negative, this will invert the sequence of highlighted blocks;
-#'  (defaults to `F`)
-#' @param highlight a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to `NULL` giving no highlighted rows).
+#'  (defaults to `FALSE`)
+#' @param highlight A numeric vector indicating which rows to highlight.
+#'   Defaults to `NULL`, meaning no rows are highlighted.
+#' @param highlight_colour Colour used when highlighting rows for both `highlight` and `zebra`. If `NULL`,
+#'   a 50% tint of the main `colour` argument is used.
 #' @param font_family string containing the font family to apply to the table. Default "Barlow".
 #' @param fallback_font_family fallback font family if `font_family` is does not exist. Default is "sans".
-#' @param date_fix re-wraps date objects to strictly occupy one line, instead of splitting (defaults to `T`).
+#' @param date_fix re-wraps date objects to strictly occupy one line, instead of splitting (defaults to `TRUE`).
 #' @param ... other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}.
 #'
 #' @return a flextable class object that will display in both html and word output
@@ -65,34 +68,71 @@
 #'
 
 thekids_table <- function(x,
-                          font.size = 10,
-                          font.size.header = 11,
-                          line.spacing = 1.5,
+                          fontsize = 10,
+                          fontsize_header = 11,
+                          line_spacing = 1.5,
                           padding = 2.5,
-                          colour = "CoolGrey",
-                          zebra = FALSE,
+                          colour = "midnightblue",
                           highlight = NULL,
+                          highlight_colour = NULL,
+                          zebra = FALSE,
                           font_family = "Barlow",
                           fallback_font_family = "sans",
                           date_fix = TRUE,
                           ...) {
 
+  args <- list(...)
 
+  # Deprecation checks
+  if ("line.spacing" %in% names(args)) {
+    lifecycle::deprecate_warn(
+      when="2.0.0", what="thekids_table(line.spacing)",
+      details = "`line.spacing` will be replaced with `line_spacing` to match flextable::set_flextable_defaults()."
+    )
+  }
+  
   # Check font family availability
   font_family <- check_font_family(font_family = font_family,
                                    fallback_family = fallback_font_family)
 
   # Standardise argument aliasing
   call <- match.call()
-  std_call <- standardise_args(call)
+  std_call <- standardise_args(
+    call, 
+    alias_map = c(
+      "color" = "colour",
+      "gray" = "grey",
+      "background.color" = "background_colour",
+      "background.colour" = "background_colour",
+      "font.size" = "fontsize",
+      "font.size.header" = "fontsize_header",
+      "fontsize.header" = "fontsize_header",
+      "line.spacing" = "line_spacing"
+    )
+  )
+
   if (!identical(names(call), names(std_call))) {
     return(eval(std_call, parent.frame()))
   }
-
-  # Check colours are available
-  if (!colour %in% names(thekidsbiostats::thekids_palettes$primary)) {
-    stop(sprintf("Invalid colour. Choose from: %s",
-                 paste(shQuote(names(thekidsbiostats::thekids_palettes$primary)), collapse = ", ")))
+  
+  # Standardise the colour inputs
+  colour <- colour_to_hex(colour)
+  
+  background_colour <- args$background_colour
+  args$background_colour <- NULL
+  background_colour <- colour_to_hex(background_colour)
+  
+  if (is.null(highlight_colour)) {  # Get the highlight colour if not given
+    rgb_colour <- grDevices::col2rgb(colour)
+    rgb_tinted <- (1 - 0.5) * rgb_colour + 0.5 * grDevices::col2rgb('white')
+    highlight_colour <- grDevices::rgb(
+      rgb_tinted[1, ],
+      rgb_tinted[2, ],
+      rgb_tinted[3, ],
+      maxColorValue = 255
+    )
+  } else {
+    highlight_colour <- colour_to_hex(highlight_colour)
   }
 
   # Check zebra vs highlight
@@ -105,7 +145,6 @@ thekids_table <- function(x,
     warning("Object of class 'flextable' detected. Please note that some flextable formatting may not carry over as expected.\n\nPlease consider applying `thekids_table()` in place of `flextable()` call in your workflow.")
   }
 
-
   # Save *existing* flextable defaults so they can be restored at the end
   old_defaults <- flextable::get_flextable_defaults()
 
@@ -117,9 +156,15 @@ thekids_table <- function(x,
   # NOW set the flextable defaults
   if (isTRUE(zebra)){
     flextable::set_flextable_defaults(font.family = font_family,
-                                      font.size = font.size,
-                                      theme_fun = function(y) table_zebra(y, colour = colour),
-                                      line_spacing = line.spacing,
+                                      font.size = fontsize,
+                                      theme_fun = function(y) {
+                                        table_zebra(y, 
+                                          colour = colour,
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
+                                      line_spacing = line_spacing,
                                       padding = padding,
                                       big.mark = "",
                                       table.layout = "autofit",
@@ -137,27 +182,46 @@ thekids_table <- function(x,
     }
 
     flextable::set_flextable_defaults(font.family = font_family,
-                                      font.size = font.size,
-                                      theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight),
-                                      line_spacing = line.spacing,
+                                      font.size = fontsize,
+                                      theme_fun = function(y) {
+                                        table_highlight(y, 
+                                          colour = colour,
+                                          highlight = highlight, 
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
+                                      line_spacing = line_spacing,
                                       padding = padding,
                                       big.mark = "",
                                       table.layout = "autofit",
                                       ...)
   } else if (!is.null(highlight)){
     flextable::set_flextable_defaults(font.family = font_family,
-                                      font.size = font.size,
-                                      theme_fun = function(y) table_highlight(y, colour = colour, highlight = highlight),
-                                      line_spacing = line.spacing,
+                                      font.size = fontsize,
+                                      theme_fun = function(y) {
+                                        table_highlight(y, 
+                                          colour = colour,
+                                          highlight = highlight, 
+                                          highlight_colour = highlight_colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
+                                      line_spacing = line_spacing,
                                       padding = padding,
                                       big.mark = "",
                                       table.layout = "autofit",
                                       ...)
   } else {
     flextable::set_flextable_defaults(font.family = font_family,
-                                      font.size = font.size,
-                                      theme_fun = function(y) table_non_zebra(y, colour = colour),
-                                      line_spacing = line.spacing,
+                                      font.size = fontsize,
+                                      theme_fun = function(y) {
+                                        table_non_zebra(y,
+                                          colour = colour,
+                                          background_colour = background_colour
+                                        )
+                                      },
+                                      line_spacing = line_spacing,
                                       padding = padding,
                                       big.mark = "",
                                       table.layout = "autofit",
@@ -166,12 +230,11 @@ thekids_table <- function(x,
 
   # Coerce x to flextable
   ## amended flextable defaults will be applied within function environment
-  table_out <- table_coerce(x,
-                            date_fix = date_fix)
+  table_out <- table_coerce(x, date_fix = date_fix)
 
   table_out <- table_out %>%
-    flextable::fontsize(size = font.size.header, part = "header") %>%
-    flextable::color(color = "white", part = "header") %>%
+    flextable::fontsize(size = fontsize_header, part = "header") %>%
+    flextable::color(color = get_text_colour(colour), part = "header") %>%
     flextable::color(color = "#111921", part = "body") %>%
     flextable::hline_top(part = "all") %>%
     flextable::hline_bottom() %>%

@@ -6,13 +6,14 @@
 \usage{
 thekids_table(
   x,
-  font.size = 10,
-  font.size.header = 11,
-  line.spacing = 1.5,
+  fontsize = 10,
+  fontsize_header = 11,
+  line_spacing = 1.5,
   padding = 2.5,
-  colour = "CoolGrey",
-  zebra = FALSE,
+  colour = "midnightblue",
   highlight = NULL,
+  highlight_colour = NULL,
+  zebra = FALSE,
   font_family = "Barlow",
   fallback_font_family = "sans",
   date_fix = TRUE,
@@ -22,29 +23,33 @@ thekids_table(
 \arguments{
 \item{x}{a table, typically a data.frame, tibble, or output from gtsummary.}
 
-\item{font.size}{the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).}
+\item{fontsize}{the font size for text in the body of the table, defaults to 8 (passed through to set_flextable_defaults).}
 
-\item{font.size.header}{the font size for text in the header of the table, defaults to 10.}
+\item{fontsize_header}{the font size for text in the header of the table, defaults to 10.}
 
-\item{line.spacing}{line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).}
+\item{line_spacing}{line spacing for the table, defaults to 1.5 (passed through to set_flextable_defaults).}
 
 \item{padding}{padding around all four sides of the text within the cell, defaults to 2.5 (passed through to set_flextable_defaults).}
 
-\item{colour}{a colour palette from The Kids branding, options include "Saffron", "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue", "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.}
+\item{colour}{a named colour, hex code or one of the colours from The Kids palette, see \link{thekids_colours} for available colour names.}
 
-\item{zebra}{controls alternating highlighting of rows, logical or integer (defaults to \code{F});
+\item{highlight}{A numeric vector indicating which rows to highlight.
+Defaults to \code{NULL}, meaning no rows are highlighted.}
+
+\item{highlight_colour}{Colour used when highlighting rows for both \code{highlight} and \code{zebra}. If \code{NULL},
+a 50\% tint of the main \code{colour} argument is used.}
+
+\item{zebra}{controls alternating highlighting of rows, logical or integer (defaults to \code{FALSE});
 if TRUE, alternate each row's background with \code{colour};
 if an integer, alternate row blocks of this size are highlighted;
 if negative, this will invert the sequence of highlighted blocks;
-(defaults to \code{F})}
-
-\item{highlight}{a numeric vector indicating which rows are to receive a colour highlight, based on the selected colouring (defaults to \code{NULL} giving no highlighted rows).}
+(defaults to \code{FALSE})}
 
 \item{font_family}{string containing the font family to apply to the table. Default "Barlow".}
 
 \item{fallback_font_family}{fallback font family if \code{font_family} is does not exist. Default is "sans".}
 
-\item{date_fix}{re-wraps date objects to strictly occupy one line, instead of splitting (defaults to \code{T}).}
+\item{date_fix}{re-wraps date objects to strictly occupy one line, instead of splitting (defaults to \code{TRUE}).}
 
 \item{...}{other parameters passed through to \code{\link[flextable]{set_flextable_defaults}}.}
 }

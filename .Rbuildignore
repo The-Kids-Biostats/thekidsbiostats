@@ -1,5 +1,6 @@
 ^thekidsbiostats\.Rproj$
 ^\.Rproj\.user$
+^\.vscode$
 ^doc$
 ^Meta$
 ^LICENSE\.md$
@@ -9,3 +10,5 @@
 ^pkgdown$
 ^README\.Rmd$
 ^data-raw$
+^\.positai$
+^\.claude$

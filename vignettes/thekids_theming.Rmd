@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   fig.width = 6
 )
+
 ```
 
 # Overview
@@ -27,58 +28,68 @@ library(thekidsbiostats)
 All theming functions host a variety of other options that can further tweak the overall look of plots and tables (including colours).
 
 ## The Kids Colours
-Colours, consistent with "The Kids" brand guidelines, can be accessed directly via `thekidsbiostats::thekids_colours`:
+Colours, consistent with "The Kids" brand guidelines, can be accessed directly via `thekids_colours` list:
 
-```{r echo=F, message=F}
-thekidsbiostats::thekids_colours
+```{r echo=F}
 
-bind_rows(thekids_palettes, .id = "Category") %>%
-  filter(Category != "typography") %>% 
-  pivot_longer(-Category, names_to = "Color", values_to = "Hex") %>%
-  drop_na() %>%  # Remove NA rows
-  mutate(
-    Category = factor(Category, levels = c("primary", "tint50", "tint10")),
-    Color = factor(Color, levels = rev(names(thekids_palettes$primary))) # Maintain row order
-  ) %>% 
-  ggplot(aes(x = Category, y = Color, fill = Hex)) +
-  geom_tile(width = 0.45, height = 0.9) +  # Reduce width more than height to increase horizontal spacing
-  labs(x = NULL, y = NULL, title = "The Kids Palette") +
-  thekids_theme(base_size = 14) +
-  scale_fill_identity() +  # Use exact hex colours
-  scale_x_discrete(position = "top") +
-  theme(
-    axis.text.x = element_text(face = "bold"),  # Bold column headers
-    axis.text.y = element_text(face = "bold"),  # Bold row labels
-    panel.grid = element_blank(),  # Remove grid lines
-    axis.ticks = element_blank(),  # Remove axis ticks
-    legend.position = "none"
-  ) +
-  coord_fixed(ratio = 0.5)  # Increase ratio to add more horizontal space
+base_colours <- names(thekids_palettes$primary)
+
+# Build a tibble with ColourFamily as rows and Palettes as columns
+df_colours <- tibble(
+  Colour = base_colours,
+  Primary = sapply(base_colours, function(x) grep(paste0("^", tolower(x), "$"), names(thekids_colours), value = TRUE)),
+  `50%`   = sapply(base_colours, function(x) grep(paste0("^", tolower(x), "_50$"), names(thekids_colours), value = TRUE)),
+  `10%`   = sapply(base_colours, function(x) grep(paste0("^", tolower(x), "_10$"), names(thekids_colours), value = TRUE))
+)
+
+df_colours |> 
+  flextable::flextable() |> 
+  align(part='all', j=2:4, align='center') |> 
+  padding(part='all', j = 1,  padding.left=6, padding.right = 20) |> 
+  padding(part='all', j = 2:4,  padding.left=8, padding.right = 12) |> 
+  font(j=2:4, fontname = "Courier New", part = "body") |> 
+  bold(part='header', bold=TRUE) |> 
+  vline(j=1) |> 
+  fontsize(part='header', size=12)
+  
 ```
+
+<br>
+
+The colours can be visualised with the `thekids_showpalette()` function, i.e.
+
+```{r echo=T}
+thekids_showpalette()
+```
+
+
 <br><br>
 
 # Example Usage
 
-## `> thekids_theme`
+## `> The Kids theming functions`
 
-The `thekids_theme` function applies consistent theming to ggplot2 visualisations. It uses a clean, minimal aesthetic with fonts and colours that align with "The Kids" branding. Here’s an example of a plot before-and-after theming:
+The `thekids_theme`, `scale_colour_thekids` and `scale_fill_thekids` functions are useful to apply consistent theming to `ggplot2` visualisations. These use a clean, minimal aesthetic with fonts that align with "The Kids" branding. Here’s an example of a plot before-and-after theming:
 
 ```{r echo=TRUE}
-ggplot(mtcars, 
-       aes(x = mpg, y = wt, col = factor(cyl))) +
+ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
   geom_point(size = 3) +
-  labs(x = "Miles per Gallon", y = "Weight", col = "Cylinders")
+  labs(x = "Miles per Gallon", y = "Weight", colour = "Cylinders")
+
 ```
 
-```{r}
-ggplot(mtcars, 
-       aes(x = mpg, y = wt, col = factor(cyl))) +
+```{r echo=TRUE}
+ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
   geom_point(size = 3) +
-  labs(x = "Miles per Gallon", y = "Weight", col = "Cylinders") +
-  thekids_theme()
+  labs(x = "Miles per Gallon", y = "Weight", colour = "Cylinders") +
+  thekids_theme() +
+  scale_colour_thekids()
+
 ```
+
 <br>
-Miles better! And as simple as just adding one line of code: `thekids_theme()`.
+
+*Miles* better! And as simple as just adding these lines of code: `thekids_theme() + scale_colour_thekids()`.
 
 ## `> thekids_table`
 

@@ -29,6 +29,7 @@ Imports:
     janitor (>= 2.1.0),
     labelled (>= 2.8.0),
     later,
+    lifecycle,
     lubridate (>= 1.7.9),
     magrittr (>= 2.0.1),
     MASS,
@@ -76,6 +77,7 @@ Suggests:
     rvest (>= 1.0.0),
     testthat (>= 3.0.0),
     tinytable (>= 0.8),
+    vdiffr,
     withr (>= 2.4.2),
     XML (>= 3.99-0.3),
     spelling

@@ -7,8 +7,7 @@
 #' @export
 thekids_showpalette <- function() {
 
-  dplyr::bind_rows(thekidsbiostats::thekids_palettes, .id = "Category") %>%
-    dplyr::filter(.data$Category != "typography") %>%
+  dplyr::bind_rows(thekidsbiostats::thekids_palettes[c('primary', 'tint50', 'tint10')], .id = "Category") %>%
     tidyr::pivot_longer(-tidyselect::all_of("Category"), names_to = "Color", values_to = "Hex") %>%
     tidyr::drop_na() %>%  # Remove NA rows
     dplyr::mutate(

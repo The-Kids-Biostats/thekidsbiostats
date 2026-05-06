@@ -1,6 +1,5 @@
 library(testthat)
 
-
 test_that("table_theme requires a flextable", {
   expect_error(table_theme(head(mtcars),
                            header_bg = c(odd = "red", even = "blue"),
@@ -39,11 +38,17 @@ test_that("table_highlight errors for invalid highlight argument", {
 })
 
 
-test_that("table_highlight applies row highlighting", {
+test_that("table_highlight applies default row highlighting", {
   ft <- flextable::flextable(head(mtcars, 10))
 
   highlight_rows <- c(2, 4)
-  styled_ft <- table_highlight(ft, "CoolGrey", highlight = highlight_rows)
+  styled_ft <- table_highlight(
+    ft, 
+    thekids_colours$saffron, 
+    highlight = highlight_rows, 
+    highlight_colour = thekids_colours$saffron_50, 
+    background_colour = thekids_colours$saffron_10
+  )
 
   expect_s3_class(styled_ft, "flextable")
 
@@ -52,9 +57,9 @@ test_that("table_highlight applies row highlighting", {
   for (ii in seq(nrow(bg_colours))){  # for each row, test backgrounds are correct
     row_cols <- bg_colours[ii, ]
     if (ii %in% highlight_rows) {
-      expect_true(all(row_cols == thekidsbiostats::thekids_palettes$tint50[['CoolGrey']]))
+      expect_true(all(row_cols == thekids_colours$saffron_50))
     } else {
-      expect_false(any(row_cols == thekidsbiostats::thekids_palettes$tint50[['CoolGrey']]))
+      expect_false(any(row_cols == thekids_colours$saffron_50))
     }
   }
 })
@@ -63,33 +68,44 @@ test_that("table_highlight applies row highlighting", {
 test_that("table_zebra and table_non_zebra return flextables", {
   ft <- flextable::flextable(head(mtcars, 10))
 
-  zebra <- table_zebra(ft, "CoolGrey")
-  non_zebra <- table_non_zebra(ft, "CoolGrey")
+  zebra <- table_zebra(
+    ft, 
+    thekids_colours$coolgrey, 
+    highlight_colour = thekids_colours$coolgrey_50, 
+    background_colour = thekids_colours$coolgrey_10
+  )
+  
+  non_zebra <- table_non_zebra(ft, thekids_colours$coolgrey, background_colour = thekids_colours$coolgrey_10)
 
   expect_s3_class(zebra, "flextable")
   expect_s3_class(non_zebra, "flextable")
 })
 
 
-test_that("table_highlight errors for invalid colour", {
+test_that("get_text_colour errors for invalid colour", {
   ft <- flextable(head(mtcars, 10))
   expect_error(
-    table_highlight(ft, colour = "notacolour", highlight = 1),
-    "Invalid colour"
+    get_text_colour("notacolour"),
+    "invalid color"
   )
 })
 
 
 test_that("table_highlight works with NULL highlight", {
   ft <- flextable(head(mtcars, 10))
-  styled_ft <- table_highlight(ft, colour = "CoolGrey", highlight = NULL)
+  styled_ft <- table_highlight(
+    ft,
+    highlight = NULL,
+    colour = thekids_colours$coolgrey,
+    highlight_colour = thekids_colours$coolgrey_50,
+    background_colour = 'transparent'
+  )
 
   # no row should have the highlight colour
   body_styles <- styled_ft$body$styles
   bg_colours <- body_styles$cells$background.color$data
   expect_true(any(is.na(bg_colours)))
 })
-
 
 
 

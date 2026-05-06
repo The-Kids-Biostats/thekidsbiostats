@@ -5,8 +5,18 @@
 \alias{thekids_colours}
 \title{The Kids Research Institute Australia Colours}
 \format{
-A named character vector of length 15.
-Names correspond to semantic colour names (e.g., "Saffron", "Teal", "CoolGrey50").
+A named character string.
+The following colours can be accessed with three variants (main colours and their 50\% or 10\% tint variations):
+\itemize{
+\item Saffron: \code{saffron}, \code{saffron_50}, \code{saffron_10}
+\item Pumpkin: \code{pumpkin}, \code{pumpkin_50}, \code{pumpkin_10}
+\item Teal: \code{teal}, \code{teal_50}, \code{teal_10}
+\item Dark teal: \code{darkteal}, \code{darkteal_50}, \code{darkteal_10}
+\item Celestial blue: \code{celestialblue}, \code{celestialblue_50}, \code{celestialblue_10}
+\item Azure blue: \code{azureblue}, \code{azureblue_50}, \code{azureblue_10}
+\item Midnight blue: \code{midnightblue}, \code{midnightblue_50}, \code{midnightblue_10}
+\item Cool grey: \code{coolgrey}, \code{coolgrey_50}, \code{coolgrey_10}
+}
 }
 \source{
 The Kids Research Institute Australia style guide.
@@ -19,7 +29,8 @@ Colour names and HEX codes consistent with Institute guidelines.
 }
 \examples{
 names(thekids_colours)
-thekids_colours["Teal"]
+thekids_colours$teal
+thekids_colours$saffron_50
 
 }
 \keyword{datasets}
