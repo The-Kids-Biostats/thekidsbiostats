@@ -48,6 +48,7 @@ For a more thorough example, see the
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
   x <- 1:50

@@ -59,9 +59,16 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A named character vector of length 15.
-Names correspond to semantic colour names (e.g., "Saffron", "Teal", "CoolGrey50").</p>
-    </div>
+    <p>A named character string.
+The following colours can be accessed with three variants (main colours and their 50% or 10% tint variations):</p><ul><li><p>Saffron: <code>saffron</code>, <code>saffron_50</code>, <code>saffron_10</code></p></li>
+<li><p>Pumpkin: <code>pumpkin</code>, <code>pumpkin_50</code>, <code>pumpkin_10</code></p></li>
+<li><p>Teal: <code>teal</code>, <code>teal_50</code>, <code>teal_10</code></p></li>
+<li><p>Dark teal: <code>darkteal</code>, <code>darkteal_50</code>, <code>darkteal_10</code></p></li>
+<li><p>Celestial blue: <code>celestialblue</code>, <code>celestialblue_50</code>, <code>celestialblue_10</code></p></li>
+<li><p>Azure blue: <code>azureblue</code>, <code>azureblue_50</code>, <code>azureblue_10</code></p></li>
+<li><p>Midnight blue: <code>midnightblue</code>, <code>midnightblue_50</code>, <code>midnightblue_10</code></p></li>
+<li><p>Cool grey: <code>coolgrey</code>, <code>coolgrey_50</code>, <code>coolgrey_10</code></p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     <p>The Kids Research Institute Australia style guide.</p>
@@ -70,13 +77,16 @@ Names correspond to semantic colour names (e.g., "Saffron", "Teal", "CoolGrey50"
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">thekids_colours</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "Saffron"         "Pumpkin"         "Teal"            "DarkTeal"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "CelestialBlue"   "AzureBlue"       "MidnightBlue"    "Saffron50"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "Pumpkin50"       "Teal50"          "CelestialBlue50" "MidnightBlue50" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "CoolGrey"        "CoolGrey50"      "CoolGrey20"     </span>
-<span class="r-in"><span><span class="va">thekids_colours</span><span class="op">[</span><span class="st">"Teal"</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Teal </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "#00A39C" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "saffron"          "pumpkin"          "teal"             "darkteal"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "celestialblue"    "azureblue"        "midnightblue"     "coolgrey"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "saffron_50"       "pumpkin_50"       "teal_50"          "darkteal_50"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "celestialblue_50" "azureblue_50"     "midnightblue_50"  "coolgrey_50"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "saffron_10"       "pumpkin_10"       "teal_10"          "darkteal_10"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "celestialblue_10" "azureblue_10"     "midnightblue_10"  "coolgrey_10"     </span>
+<span class="r-in"><span><span class="va">thekids_colours</span><span class="op">$</span><span class="va">teal</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "#00A39C"</span>
+<span class="r-in"><span><span class="va">thekids_colours</span><span class="op">$</span><span class="va">saffron_50</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "#F8DA9A"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

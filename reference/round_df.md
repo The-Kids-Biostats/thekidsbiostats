@@ -36,6 +36,7 @@ to convert them to characters keeping trailing zeroes in the process.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 round_df(iris, 0)
 

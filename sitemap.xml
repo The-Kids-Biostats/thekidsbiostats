@@ -33,10 +33,8 @@
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/preprocess_qmd.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/round_df.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/round_vec.html</loc></url>
-<url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_color_thekids.html</loc></url>
-<url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_fill_thekids.html</loc></url>
+<url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_thekids.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_colours.html</loc></url>
-<url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_cols.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_model.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_model_output.default.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_model_output.html</loc></url>
@@ -49,7 +47,6 @@
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_showpalette.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_table.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_theme.html</loc></url>
-<url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/theme_institute.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/variable_labels.html</loc></url>
 <url><loc>https://the-kids-biostats.github.io/thekidsbiostats/reference/yesno_vars.html</loc></url>

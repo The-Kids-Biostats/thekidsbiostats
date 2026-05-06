@@ -3,6 +3,7 @@
 ## Overview
 
 ``` r
+
 library(thekidsbiostats)
 ```
 
@@ -42,6 +43,7 @@ data (read more with
 ### Data
 
 ``` r
+
 dat_bwt <- MASS::birthwt
 ```
 
@@ -49,6 +51,7 @@ The dataset has 189 observations (rows) and in the code below we just
 tidy up some variables prior to running the model.
 
 ``` r
+
 dat_bwt <- MASS::birthwt
 dat_bwt <- dat_bwt %>% 
   tibble() %>% 
@@ -74,6 +77,7 @@ This model can be generated using the `thekids_model` function using the
 code below:
 
 ``` r
+
 mod_bwt <- dat_bwt %>% 
   thekids_model(y = "bwt", x = "smoke", formula = "age + ht")
 #> Warning: `fortify(<lm>)` was deprecated in ggplot2 4.0.0.
@@ -110,6 +114,7 @@ into our output processing function `thekids_model_output` — the
 workhorse of the function above — which would look like the following:
 
 ``` r
+
 my_model <- lm(bwt ~ smoke + age + ht, data = dat_bwt)
 thekids_model_output(my_model, by = "smoke") # still requires specifying the exposure of interest
 ```
@@ -127,6 +132,7 @@ The table below shows summary statistics for all variables in the model
 by the primary exposure variable (maternal smoking status in pregnancy).
 
 ``` r
+
 mod_bwt$mod_desc %>% 
   thekids_table(colour = "DarkTeal",
                 padding.left = 10, padding.right = 10)
@@ -141,6 +147,7 @@ The figure below shows the distribution of the primary outcome variable
 status in pregnancy).
 
 ``` r
+
 mod_bwt$mod_desc_plot
 ```
 
@@ -155,6 +162,7 @@ determining if the required assumptions of model are met. **Based on the
 diagnostics below,** the model fit is deemed to be good.
 
 ``` r
+
 mod_bwt$mod_diag
 ```
 
@@ -175,6 +183,7 @@ including the beta coefficient (and 95% confidence interval) and
 p-values associated with each variable in the model.
 
 ``` r
+
 mod_bwt$mod_output %>% 
   thekids_table(colour = "DarkTeal",
                 padding.left = 10, padding.right = 10)
@@ -204,6 +213,7 @@ smoking in pregnancy* or *maternal smoking in pregnancy*), along with a
 for the other variables in the model.
 
 ``` r
+
 mod_bwt$model %>% 
   ggeffects::predict_response("smoke") %>% 
   plot
@@ -212,6 +222,7 @@ mod_bwt$model %>%
 ![](model_output_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 mod_bwt$model %>% 
   ggeffects::predict_response("smoke") %>% 
   ggeffects::print_html()
@@ -219,7 +230,9 @@ mod_bwt$model %>%
 
 [TABLE]
 
-Predicted values of bwt
+Predicted values of bwt {#tinytable_v58l9vxglu05x0o7wvir .table
+.tinytable style="width: auto; margin-left: auto; margin-right: auto;"
+quarto-disable-processing="true"}
 
 #### Interpretation of model
 

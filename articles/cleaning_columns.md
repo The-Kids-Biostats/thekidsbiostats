@@ -24,6 +24,7 @@ dataset. We will use two main functions from `thekidsbiostats`:
   – rename and label columns using a column dictionary.
 
 ``` r
+
 library(thekidsbiostats)
 ```
 
@@ -37,20 +38,21 @@ as an example:
 
 ``` r
 
+
 data("data_patient")
 
 data_patient |> as_flextable()
 ```
 
 | Patient ID# | DOB \[YYYY-MM-DD\] | Sex (0=Male, 1=Female) | WHAT IS YOUR HEIGHT? (cm) | WHAT IS YOUR CURRENT WEIGHT? (kg) | Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis? | bp (mmHg) | Cholesterol / mmolL |
-|-------------|--------------------|------------------------|---------------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------------|-----------|---------------------|
-| integer     | Date               | character              | numeric                   | numeric                           | logical                                                                                                          | character | numeric             |
-| 101         | 1980-05-12         | 0                      | 175                       | 70                                | true                                                                                                             | 120/80    | 5.2                 |
-| 102         | 1992-08-03         | 1                      | 160                       | 55                                | false                                                                                                            | 110/70    | 4.8                 |
-| 103         | 1975-12-25         | 1                      | 180                       | 80                                | false                                                                                                            | 130/85    | 6.1                 |
-| 104         | 2000-01-01         | 0                      | 165                       | 60                                | true                                                                                                             | 115/75    | 5.0                 |
-| 105         | 1985-07-07         | 1                      | 170                       | 75                                | false                                                                                                            | 125/82    | 5.5                 |
-| n: 5        |                    |                        |                           |                                   |                                                                                                                  |           |                     |
+|----|----|----|----|----|----|----|----|
+| integer | Date | character | numeric | numeric | logical | character | numeric |
+| 101 | 1980-05-12 | 0 | 175 | 70 | true | 120/80 | 5.2 |
+| 102 | 1992-08-03 | 1 | 160 | 55 | false | 110/70 | 4.8 |
+| 103 | 1975-12-25 | 1 | 180 | 80 | false | 130/85 | 6.1 |
+| 104 | 2000-01-01 | 0 | 165 | 60 | true | 115/75 | 5.0 |
+| 105 | 1985-07-07 | 1 | 170 | 75 | false | 125/82 | 5.5 |
+| n: 5 |  |  |  |  |  |  |  |
 
 Beyond this dataset visually looking messy, it can also be tricky to
 reference these column names when attempting to use them in operations.
@@ -58,6 +60,7 @@ For example, let’s try to calculate the BMI of individuals and recode
 the `Sex` column by replacing `0/1` with `Male/Female`.
 
 ``` r
+
 data_patient$`Sex (0=Male, 1=Female)` = case_when(
   data_patient$`Sex (0=Male, 1=Female)` == 0 ~ "Male",
   data_patient$`Sex (0=Male, 1=Female)` == 1 ~ "Female",
@@ -98,6 +101,7 @@ template based on the column names that exist with the data. For
 example:
 
 ``` r
+
 dict <- make_column_dict(data_patient, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
 #> dict_patient <- tribble(
 #>   ~old, ~new, ~label,
@@ -116,6 +120,7 @@ We can either directly add to the `dict` object assigned above or
 copy-paste the printed output into our code and modify as needed:
 
 ``` r
+
 dict_patient <- tribble(
   ~old, ~new, ~label,
   'Patient ID#', 'patient_id_number', '',
@@ -140,6 +145,7 @@ the
 function to apply these changes in a single line.
 
 ``` r
+
 data_clean <- update_columns(data_patient, dict = dict_patient)
 data_clean |> flextable()
 ```

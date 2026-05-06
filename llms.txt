@@ -162,21 +162,19 @@ interpretation.
   : round_df
 - [`round_vec()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/round_vec.md)
   : round_vec
-- [`scale_color_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_color_thekids.md)
-  [`scale_colour_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_color_thekids.md)
-  : Colour scale constructor for The Kids colours.
-- [`scale_fill_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_fill_thekids.md)
-  : Fill scale constructor for The Kids colours.
+- [`scale_fill_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_thekids.md)
+  [`scale_colour_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_thekids.md)
+  [`scale_color_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/scale_thekids.md)
+  : The Kids Colour Scales for ggplot2
 - [`thekids_colours`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_colours.md)
   : The Kids Research Institute Australia Colours
-- [`thekids_cols()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_cols.md)
-  : Function to extract The Kids colours as hex codes
 - [`thekids_model()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_model.md)
   : Fit a Statistical Model and Pass to Output Handler
 - [`thekids_model_output()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_model_output.md)
   : Generate Model Output for Specified Model Type
 - [`thekids_pal()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_pal.md)
-  : Return function to interpolate a The Kids color palette
+  : Generates a function, which when supplied to ggplot2 will return the
+  appropriate colour palette, depending on the number of levels.
 - [`thekids_palettes`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_palettes.md)
   : The Kids Research Institute Australia Colour Palettes
 - [`thekids_save()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_save.md)
@@ -187,9 +185,7 @@ interpretation.
   : The Kids themed table output
 - [`thekids_theme()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_theme.md)
   [`theme_thekids()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_theme.md)
-  : Apply Institute Theme to ggplot2 Plots
-- [`theme_institute()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/theme_institute.md)
-  : Apply Institute Theme to ggplot2 Plots
+  : Apply Institute Theming to ggplot2 Plots
 - [`update_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.md)
   : Apply a variable dictionary to a dataset. Each column is replaced
   with a new name and a corresponding label attribute is applied.

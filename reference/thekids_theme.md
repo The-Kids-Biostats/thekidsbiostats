@@ -1,4 +1,4 @@
-# Apply Institute Theme to ggplot2 Plots
+# Apply Institute Theming to ggplot2 Plots
 
 This function applies a custom theme to ggplot2 plots, incorporating
 specific fonts and colours to align with the institute's visual
@@ -12,12 +12,13 @@ thekids_theme(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  strip_colour = "midnightblue",
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -27,12 +28,13 @@ theme_thekids(
   base_family = NULL,
   base_line_size = base_size/22,
   base_rect_size = base_size/22,
-  scale_colour_type = "discrete",
-  scale_fill_type = "discrete",
-  colour_theme = "viridis",
-  fill_theme = "viridis",
-  rev_colour = FALSE,
-  rev_fill = FALSE,
+  strip_colour = "midnightblue",
+  scale_colour_type = lifecycle::deprecated(),
+  scale_fill_type = lifecycle::deprecated(),
+  colour_theme = lifecycle::deprecated(),
+  fill_theme = lifecycle::deprecated(),
+  rev_colour = lifecycle::deprecated(),
+  rev_fill = lifecycle::deprecated(),
   fig_dpi = 300,
   ...
 )
@@ -59,35 +61,36 @@ theme_thekids(
   The base size for rect elements (e.g., plot background, legend keys).
   Calculated as `base_size/22` by default.
 
+- strip_colour:
+
+  A named colour from the list of The Kids colours, see
+  [thekids_colours](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_colours.md)
+  for available colour names. Note that only the main colour names are
+  accepted because the 50% tint is always used.
+
 - scale_colour_type:
 
-  Type of scale used for colours. Should be either `"discrete"` or
-  `"continuous"`. Default is `"discrete"`.
+  Deprecated. Use `viridis_pal` instead.
 
 - scale_fill_type:
 
-  Type of scale used for fills. Should be either `"discrete"` or
-  `"continuous"`. Default is `"discrete"`.
+  Deprecated. Use `viridis_pal` instead.
 
 - colour_theme:
 
-  Colour palette to use for colour scales. Must be one of
-  `"viridis"`,`"thekids"`,`"thekids_tint"`,`"thekids_grey"`. Default is
-  `"viridis"`.
+  Deprecated. Use `viridis_pal` instead.
 
 - fill_theme:
 
-  Colour palette to use for fill scales. Must be one of
-  `"viridis"`,`"thekids"`,`"thekids_tint"`,`"thekids_grey"`. Default is
-  `"viridis"`.
+  Deprecated. Use `viridis_pal` instead.
 
 - rev_colour:
 
-  Logical. Should the colour palette be reversed? Default is `FALSE`.
+  Deprecated. Use `viridis_pal` instead.
 
 - rev_fill:
 
-  Logical. Should the fill palette be reversed? Default is `FALSE`.
+  Deprecated. Use `viridis_pal` instead.
 
 - fig_dpi:
 
@@ -128,17 +131,18 @@ if (FALSE) { # \dontrun{
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  thekids_theme()
+  thekids_theme() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  thekids_theme(fill_theme = "thekids_tint", rev_fill = T)
+  thekids_theme() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 } # }
@@ -146,17 +150,18 @@ if (FALSE) { # \dontrun{
 # Install the required fonts first (see below)
 # Example usage with ggplot2
 library(ggplot2)
-library(viridis)
 
 p <- ggplot(mtcars, aes(x = mpg, y = wt, col = factor(cyl))) +
   geom_point() +
-  theme_thekids()
+  theme_thekids() +
+  scale_colour_thekids()
 
 print(p)
 
 p2 <- ggplot(mtcars, aes(x = factor(cyl), y = wt, fill = factor(cyl))) +
   geom_col() +
-  theme_thekids(fill_theme = "thekids_tint", rev_fill = T)
+  theme_thekids() +
+  scale_fill_thekids(palette='tint50', reverse=TRUE)
 
 print(p2)
 } # }

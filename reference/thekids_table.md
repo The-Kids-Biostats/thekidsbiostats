@@ -10,13 +10,14 @@ an object of class
 ``` r
 thekids_table(
   x,
-  font.size = 10,
-  font.size.header = 11,
-  line.spacing = 1.5,
+  fontsize = 10,
+  fontsize_header = 11,
+  line_spacing = 1.5,
   padding = 2.5,
-  colour = "CoolGrey",
-  zebra = FALSE,
+  colour = "midnightblue",
   highlight = NULL,
+  highlight_colour = NULL,
+  zebra = FALSE,
   font_family = "Barlow",
   fallback_font_family = "sans",
   date_fix = TRUE,
@@ -30,16 +31,16 @@ thekids_table(
 
   a table, typically a data.frame, tibble, or output from gtsummary.
 
-- font.size:
+- fontsize:
 
   the font size for text in the body of the table, defaults to 8 (passed
   through to set_flextable_defaults).
 
-- font.size.header:
+- fontsize_header:
 
   the font size for text in the header of the table, defaults to 10.
 
-- line.spacing:
+- line_spacing:
 
   line spacing for the table, defaults to 1.5 (passed through to
   set_flextable_defaults).
@@ -51,23 +52,28 @@ thekids_table(
 
 - colour:
 
-  a colour palette from The Kids branding, options include "Saffron",
-  "Pumpkin", "Teal", "DarkTeal", "CelestialBlue", "AzureBlue",
-  "MidnightBlue", or "CoolGrey", defaults to 'CoolGrey'.
+  a named colour, hex code or one of the colours from The Kids palette,
+  see
+  [thekids_colours](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_colours.md)
+  for available colour names.
+
+- highlight:
+
+  A numeric vector indicating which rows to highlight. Defaults to
+  `NULL`, meaning no rows are highlighted.
+
+- highlight_colour:
+
+  Colour used when highlighting rows for both `highlight` and `zebra`.
+  If `NULL`, a 50% tint of the main `colour` argument is used.
 
 - zebra:
 
   controls alternating highlighting of rows, logical or integer
-  (defaults to `F`); if TRUE, alternate each row's background with
+  (defaults to `FALSE`); if TRUE, alternate each row's background with
   `colour`; if an integer, alternate row blocks of this size are
   highlighted; if negative, this will invert the sequence of highlighted
-  blocks; (defaults to `F`)
-
-- highlight:
-
-  a numeric vector indicating which rows are to receive a colour
-  highlight, based on the selected colouring (defaults to `NULL` giving
-  no highlighted rows).
+  blocks; (defaults to `FALSE`)
 
 - font_family:
 
@@ -82,7 +88,7 @@ thekids_table(
 - date_fix:
 
   re-wraps date objects to strictly occupy one line, instead of
-  splitting (defaults to `T`).
+  splitting (defaults to `TRUE`).
 
 - ...:
 
@@ -134,6 +140,7 @@ object.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 head(mtcars, 10) %>%

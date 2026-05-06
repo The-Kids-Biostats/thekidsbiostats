@@ -33,6 +33,7 @@ Below we demonstrate the difference between the base R
 when rounding numerical values:
 
 ``` r
+
 original <-  c(1.8003, 1.9998, 2.5812)
 
 data.frame(original = original) %>%
@@ -52,6 +53,7 @@ data.frame(original = original) %>%
 To illustrate `round_df`:
 
 ``` r
+
 data.frame(var1 = rnorm(n = 5, mean = 10, sd = 2),
            var2 = rexp(n = 5, rate = 0.25),
            var3 = rweibull(n = 5, shape = 4, scale = 7))  %>%
@@ -79,6 +81,7 @@ because they preserve the ordinal nature inherent to those variables.
 Below is an example of working with ordinal data.
 
 ``` r
+
 x <- 1:50
 case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
           x %% 6  == 0 ~ "Likely",        # Multiple of 6
@@ -97,6 +100,7 @@ we would like to set a more logical ordering of these factors, we would
 also have to use `factor`:
 
 ``` r
+
 x <- 1:50
 case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
           x %% 6  == 0 ~ "Likely",        # Multiple of 6
@@ -117,6 +121,7 @@ orders the factor levels simply based on the order of their appearance
 in the argument, to return an identical result to the above:
 
 ``` r
+
 x <- 1:50
 fct_case_when(x %% 12 == 0 ~ "Very Likely",   # Multiple of 12 (most certain)
               x %% 6  == 0 ~ "Likely",        # Multiple of 6
