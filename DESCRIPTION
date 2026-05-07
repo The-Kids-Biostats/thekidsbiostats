@@ -1,6 +1,6 @@
 Package: thekidsbiostats
 Title: Report Templates and general use functions - The Kids Research Institute Australia, Biostatistics Team
-Version: 1.8.3
+Version: 1.9.0
 Authors@R: c(person("Matt", "Cooper", email = "Matt.Cooper@thekids.org.au", role = c("aut", "cre")),
              person("Zac", "Dempsey", email = "Zac.Dempsey@thekids.org.au", role = c("aut")),
              person("Wesley", "Billingham", email = "Wesley.Billingham@thekids.org.au", role = c("aut")),
@@ -12,7 +12,7 @@ Description: This package includes RMarkdown and ioslides templates that incorpo
     that will automatically reproduce The Kids style in R graphics. A
     number of helper functions and data-sets are also available. Currently, this is
     in transition from previous branding to new branding, with added functionality.
-Date: 2026-03-13
+Date: 2026-05-07
 License: MIT + file LICENSE
 LazyData: true
 Depends:
