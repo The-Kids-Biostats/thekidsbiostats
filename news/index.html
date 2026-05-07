@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thekidsbiostats</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,18 @@
       <small>Source: <a href="https://github.com/the-kids-biostats/thekidsbiostats/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.9.0" id="thekidsbiostats-190">thekidsbiostats 1.9.0<a class="anchor" aria-label="anchor" href="#thekidsbiostats-190"></a></h2>
+<ul><li>Access to The Kids colours is now done via the <code>thekids_colours</code> list, which stores the named colours in lowercase and suffixed with their tinted variants (e.g. ‘midnightblue’, ‘saffron_50’).</li>
+<li>Added a suited custom palettes with The Kids colouring, including a main continuous/discrete sampling of the main kids colours as well as sequential and diverging variants for specific The Kids colour.</li>
+<li>Overhauled parsing/naming of arguments within <code><a href="../reference/thekids_table.html">thekids_table()</a></code>, which previously only allowed accessing very specific flextable parameters (some not at all). Additional new arguments: <code>highlight_colour</code>, <code>background_colour</code>. The <code>colour</code> parameter now also accepts any named colour or hex code in addition to the named The Kids colours.</li>
+<li>Created a data-raw folder which contains R scripts for creating The Kids colours and palettes.</li>
+<li>Removed scale_colour_thekids() and scale_fill_thekids() functionality out of thekids_theme() and merged the scale_ functions into a single file with combined documentation.</li>
+<li>Added parameters <code>start</code>, <code>end</code> and <code>na.value</code> to scale_colour_thekids() and scale_fill_thekids() for truncating the chosen colourmap.</li>
+<li>Changed default behaviour of thekids_theme() and thekids_table(), whereby ‘midnightblue’ is the default background colour, where applicable.</li>
+<li>Fixed/Improved documentation and testing for all colour functions and list objects.</li>
+<li>Removed <code>theme_institute()</code> and <code>thekids_cols</code>, which are now deprecated.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.8.3" id="thekidsbiostats-183">thekidsbiostats 1.8.3<a class="anchor" aria-label="anchor" href="#thekidsbiostats-183"></a></h2>
 <ul><li>Fixed erroneous print messages in addins.R</li>

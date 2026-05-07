@@ -1,5 +1,36 @@
 # Changelog
 
+## thekidsbiostats 1.9.0
+
+- Access to The Kids colours is now done via the `thekids_colours` list,
+  which stores the named colours in lowercase and suffixed with their
+  tinted variants (e.g. ‘midnightblue’, ‘saffron_50’).
+- Added a suited custom palettes with The Kids colouring, including a
+  main continuous/discrete sampling of the main kids colours as well as
+  sequential and diverging variants for specific The Kids colour.
+- Overhauled parsing/naming of arguments within
+  [`thekids_table()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/thekids_table.md),
+  which previously only allowed accessing very specific flextable
+  parameters (some not at all). Additional new arguments:
+  `highlight_colour`, `background_colour`. The `colour` parameter now
+  also accepts any named colour or hex code in addition to the named The
+  Kids colours.
+- Created a data-raw folder which contains R scripts for creating The
+  Kids colours and palettes.
+- Removed scale_colour_thekids() and scale_fill_thekids() functionality
+  out of thekids_theme() and merged the scale\_ functions into a single
+  file with combined documentation.
+- Added parameters `start`, `end` and `na.value` to
+  scale_colour_thekids() and scale_fill_thekids() for truncating the
+  chosen colourmap.
+- Changed default behaviour of thekids_theme() and thekids_table(),
+  whereby ‘midnightblue’ is the default background colour, where
+  applicable.
+- Fixed/Improved documentation and testing for all colour functions and
+  list objects.
+- Removed `theme_institute()` and `thekids_cols`, which are now
+  deprecated.
+
 ## thekidsbiostats 1.8.3
 
 - Fixed erroneous print messages in addins.R
