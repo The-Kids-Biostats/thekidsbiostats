@@ -43,6 +43,15 @@ test_that("palette is applied correctly for discrete scale", {
   expect_equal(actual, expected)
 })
 
+test_that("scale_colour_thekids() defaults to the primary palette", {
+  expected <- thekids_pal("primary", TRUE, FALSE)(3)
+
+  scale <- scale_colour_thekids()
+  actual <- scale$palette(3)
+
+  expect_equal(actual, expected)
+})
+
 
 test_that("invalid palette throws error", {
   expect_error(
