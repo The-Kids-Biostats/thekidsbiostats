@@ -2,7 +2,7 @@
 
 # thekidsbiostats 1.9.1
 
-- Same as previous version.
+- Moved session info text to callout
 
 
 # thekidsbiostats 1.9.0
