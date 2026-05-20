@@ -128,23 +128,23 @@ sessionInfo()
 #> [13] ggplot2_4.0.3         tidyverse_2.0.0      
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] gtable_0.3.6            xfun_0.57               bslib_0.10.0           
+#>  [1] gtable_0.3.6            xfun_0.57               bslib_0.11.0           
 #>  [4] htmlwidgets_1.6.4       tzdb_0.5.0              vctrs_0.7.3            
 #>  [7] tools_4.6.0             generics_0.1.4          pkgconfig_2.0.3        
-#> [10] data.table_1.18.2.1     RColorBrewer_1.1-3      S7_0.2.2               
+#> [10] data.table_1.18.4       RColorBrewer_1.1-3      S7_0.2.2               
 #> [13] desc_1.4.3              uuid_1.2-2              lifecycle_1.0.5        
 #> [16] compiler_4.6.0          farver_2.1.2            textshaping_1.0.5      
 #> [19] httpuv_1.6.17           fontquiver_0.2.1        fontLiberation_0.1.0   
 #> [22] htmltools_0.5.9         sass_0.4.10             yaml_2.3.12            
 #> [25] Rttf2pt1_1.3.14         extrafontdb_1.1         pillar_1.11.1          
 #> [28] pkgdown_2.2.0           later_1.4.8             jquerylib_0.1.4        
-#> [31] openssl_2.4.0           cachem_1.1.0            mime_0.13              
+#> [31] openssl_2.4.1           cachem_1.1.0            mime_0.13              
 #> [34] fontBitstreamVera_0.1.1 tidyselect_1.2.1        zip_2.3.3              
 #> [37] digest_0.6.39           stringi_1.8.7           fastmap_1.2.0          
 #> [40] grid_4.6.0              cli_3.6.6               magrittr_2.0.5         
 #> [43] patchwork_1.3.2         withr_3.0.2             gdtools_0.5.0          
 #> [46] scales_1.4.0            promises_1.5.0          timechange_0.4.0       
-#> [49] rmarkdown_2.31          officer_0.7.4           otel_0.2.0             
+#> [49] rmarkdown_2.31          officer_0.7.5           otel_0.2.0             
 #> [52] askpass_1.2.1           ragg_1.5.2              hms_1.1.4              
 #> [55] shiny_1.13.0            evaluate_1.0.5          knitr_1.51             
 #> [58] rlang_1.2.0             Rcpp_1.1.1-1.1          xtable_1.8-8           
