@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.9.1
+
+- Same as previous version.
+
+
 # thekidsbiostats 1.9.0
 
 - Access to The Kids colours is now done via the `thekids_colours` list, which stores the named colours in lowercase and suffixed with their tinted variants (e.g. 'midnightblue', 'saffron_50').
