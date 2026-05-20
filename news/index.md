@@ -1,5 +1,9 @@
 # Changelog
 
+## thekidsbiostats 1.9.1
+
+- Same as previous version.
+
 ## thekidsbiostats 1.9.0
 
 - Access to The Kids colours is now done via the `thekids_colours` list,
