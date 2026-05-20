@@ -87,7 +87,10 @@ mod <- thekidsbiostats::thekids_model(mtcars, y = "mpg", x = "cyl")
 
 ## Reproducibility Information
 
+::: {.callout-note collapse="true"}
+## Click to expand and see Session Info
 ```{r}
 sessionInfo()
 ```
+:::
 
