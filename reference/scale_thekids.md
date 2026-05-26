@@ -17,7 +17,7 @@ scale_fill_thekids(
 )
 
 scale_colour_thekids(
-  palette = "saffron",
+  palette = "primary",
   discrete = TRUE,
   reverse = FALSE,
   begin = 0,
@@ -27,7 +27,7 @@ scale_colour_thekids(
 )
 
 scale_color_thekids(
-  palette = "saffron",
+  palette = "primary",
   discrete = TRUE,
   reverse = FALSE,
   begin = 0,

@@ -68,6 +68,9 @@ ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
 
 ![](thekids_theming_files/figure-html/unnamed-chunk-5-1.png)
 
+  
+  
+
 ``` r
 
 ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
@@ -114,9 +117,7 @@ appealing format with branded elements:
 ``` r
 
 head(mtcars, 5) %>%
-  thekids_table(colour = "Saffron", font.size = 10)
-#> Warning in check_font_family(font_family = font_family, fallback_family =
-#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+  thekids_table(colour = "saffron", fontsize = 10)
 #> Warning in check_font_family(font_family = font_family, fallback_family =
 #> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
 ```
@@ -129,21 +130,22 @@ head(mtcars, 5) %>%
 | 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
 | 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
 
-This outputs a compact, zebra-striped table ready to be added to any
-Word or HTML reports.
+### Table Highlighting
 
-The `padding` and `striped` options can be changed if we would prefer
-more space and to lose the stripes:
+The `highlight` and `zebra` arguments are useful for highlighting rows
+within a table.
+
+  
+
+#### \> `highlight`
+
+Set the specific rows to highlight by passing a vector of indices to
+`highlight`:
 
 ``` r
 
-head(mtcars, 5) %>%
-  thekids_table(colour = "Saffron", 
-                font.size = 10, 
-                padding = 4, 
-                striped = F)
-#> Warning in check_font_family(font_family = font_family, fallback_family =
-#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+head(mtcars, 6) %>%
+  thekids_table(colour = "saffron", highlight = c(2, 5))
 #> Warning in check_font_family(font_family = font_family, fallback_family =
 #> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
 ```
@@ -155,3 +157,111 @@ head(mtcars, 5) %>%
 | 22.8 | 4   | 108  | 93  | 3.85 | 2.320 | 18.61 | 1   | 1   | 4    | 1    |
 | 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
 | 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
+| 18.1 | 6   | 225  | 105 | 2.76 | 3.460 | 20.22 | 1   | 0   | 3    | 1    |
+
+  
+
+By default, the colour used for highlighting is defined as a 50% lighter
+tinted version of the colour given to the header. This can be changed by
+providing a named colour (including any The Kids colours) or hex code to
+the `highlight_colour` argument.
+
+``` r
+
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "teal", 
+    highlight = c(2, 5), highlight_colour = 'lightblue'
+  )
+#> Warning in check_font_family(font_family = font_family, fallback_family =
+#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+```
+
+| mpg  | cyl | disp | hp  | drat | wt    | qsec  | vs  | am  | gear | carb |
+|------|-----|------|-----|------|-------|-------|-----|-----|------|------|
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.620 | 16.46 | 0   | 1   | 4    | 4    |
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.875 | 17.02 | 0   | 1   | 4    | 4    |
+| 22.8 | 4   | 108  | 93  | 3.85 | 2.320 | 18.61 | 1   | 1   | 4    | 1    |
+| 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
+| 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
+| 18.1 | 6   | 225  | 105 | 2.76 | 3.460 | 20.22 | 1   | 0   | 3    | 1    |
+
+  
+
+#### \> `zebra`
+
+If `zebra = TRUE`, then every other row will be highlighted.
+
+``` r
+
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = TRUE
+  )
+#> Warning in check_font_family(font_family = font_family, fallback_family =
+#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+```
+
+| mpg  | cyl | disp | hp  | drat | wt    | qsec  | vs  | am  | gear | carb |
+|------|-----|------|-----|------|-------|-------|-----|-----|------|------|
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.620 | 16.46 | 0   | 1   | 4    | 4    |
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.875 | 17.02 | 0   | 1   | 4    | 4    |
+| 22.8 | 4   | 108  | 93  | 3.85 | 2.320 | 18.61 | 1   | 1   | 4    | 1    |
+| 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
+| 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
+| 18.1 | 6   | 225  | 105 | 2.76 | 3.460 | 20.22 | 1   | 0   | 3    | 1    |
+
+  
+
+If instead you want the highlighted rows to alternate in chunks of two
+or more rows, then an integer can be supplied to `zebra` indicating the
+row chunk size.
+
+``` r
+
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = 2
+  )
+#> Warning in check_font_family(font_family = font_family, fallback_family =
+#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+```
+
+| mpg  | cyl | disp | hp  | drat | wt    | qsec  | vs  | am  | gear | carb |
+|------|-----|------|-----|------|-------|-------|-----|-----|------|------|
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.620 | 16.46 | 0   | 1   | 4    | 4    |
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.875 | 17.02 | 0   | 1   | 4    | 4    |
+| 22.8 | 4   | 108  | 93  | 3.85 | 2.320 | 18.61 | 1   | 1   | 4    | 1    |
+| 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
+| 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
+| 18.1 | 6   | 225  | 105 | 2.76 | 3.460 | 20.22 | 1   | 0   | 3    | 1    |
+
+  
+
+… and if you want to reverse the ordering such that the first rows
+initiate the highlighting pattern, a negative sign can be added to the
+`zebra` value. For example, `zebra=-1` reverses the result of `zebra=1`
+(or equivalently `zebra=TRUE`)
+
+``` r
+
+
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = -2
+  )
+#> Warning in check_font_family(font_family = font_family, fallback_family =
+#> fallback_font_family): Font 'Barlow' not found; falling back to 'sans'.
+```
+
+| mpg  | cyl | disp | hp  | drat | wt    | qsec  | vs  | am  | gear | carb |
+|------|-----|------|-----|------|-------|-------|-----|-----|------|------|
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.620 | 16.46 | 0   | 1   | 4    | 4    |
+| 21.0 | 6   | 160  | 110 | 3.90 | 2.875 | 17.02 | 0   | 1   | 4    | 4    |
+| 22.8 | 4   | 108  | 93  | 3.85 | 2.320 | 18.61 | 1   | 1   | 4    | 1    |
+| 21.4 | 6   | 258  | 110 | 3.08 | 3.215 | 19.44 | 1   | 0   | 3    | 1    |
+| 18.7 | 8   | 360  | 175 | 3.15 | 3.440 | 17.02 | 0   | 0   | 3    | 2    |
+| 18.1 | 6   | 225  | 105 | 2.76 | 3.460 | 20.22 | 1   | 0   | 3    | 1    |
