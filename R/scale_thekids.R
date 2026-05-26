@@ -40,7 +40,7 @@ scale_fill_thekids <- function(palette = "primary",
 
 #' @rdname scale_thekids
 #' @export
-scale_colour_thekids <- function(palette = "saffron",
+scale_colour_thekids <- function(palette = "primary",
                                 discrete = TRUE, 
                                 reverse = FALSE,
                                 begin=0, 

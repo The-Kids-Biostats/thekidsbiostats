@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ```
 
-# Overview
+## Overview
 
 Using functions that automatically apply a set of formatting options to plots and tables saves time, allowing us to focus on the analysis and interpretation. Code will also look much cleaner when those ~10 repeated lines of ggplot for each plot are automated away. Importantly, these functions also ensure a polished and consistent appearance across our team, so that outputs look the same irrespective of who generated it.
 
@@ -27,7 +27,7 @@ library(thekidsbiostats)
 
 All theming functions host a variety of other options that can further tweak the overall look of plots and tables (including colours).
 
-## The Kids Colours
+### The Kids Colours
 Colours, consistent with "The Kids" brand guidelines, can be accessed directly via `thekids_colours` list:
 
 ```{r echo=F}
@@ -59,15 +59,18 @@ df_colours |>
 The colours can be visualised with the `thekids_showpalette()` function, i.e.
 
 ```{r echo=T}
+#| fig.height: 9
+#| fig.width: 5
+
 thekids_showpalette()
 ```
 
 
 <br><br>
 
-# Example Usage
+## Example Usage
 
-## `> The Kids theming functions`
+### `> The Kids theming functions`
 
 The `thekids_theme`, `scale_colour_thekids` and `scale_fill_thekids` functions are useful to apply consistent theming to `ggplot2` visualisations. These use a clean, minimal aesthetic with fonts that align with "The Kids" branding. Here’s an example of a plot before-and-after theming:
 
@@ -77,6 +80,8 @@ ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
   labs(x = "Miles per Gallon", y = "Weight", colour = "Cylinders")
 
 ```
+
+<br><br>
 
 ```{r echo=TRUE}
 ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
@@ -91,7 +96,7 @@ ggplot(mtcars, aes(x = mpg, y = wt, colour = factor(cyl))) +
 
 *Miles* better! And as simple as just adding these lines of code: `thekids_theme() + scale_colour_thekids()`.
 
-## `> thekids_table`
+### `> thekids_table`
 
 `thekids_table` produces tables styled with The Kids branding and is powered by the [flextable](https://cran.r-project.org/web/packages/flextable/index.html) package. By default, this function applies the Barlow font, compact formatting (our preference!), and zebra-striping for readability. Note that these can all be altered/disabled via parameters (see `?thekids_table` documentation).
 
@@ -105,18 +110,77 @@ Now, applying `thekids_table` transforms it into a clean, visually appealing for
 
 ```{r echo=TRUE}
 head(mtcars, 5) %>%
-  thekids_table(colour = "Saffron", font.size = 10)
+  thekids_table(colour = "saffron", fontsize = 10)
+
 ```
 
-This outputs a compact, zebra-striped table ready to be added to any Word or HTML reports.
+### Table Highlighting
 
-The `padding` and `striped` options can be changed if we would prefer more space and to lose the stripes:
+The `highlight` and `zebra` arguments are useful for highlighting rows within a table.
+
+<br>
+
+#### > `highlight`
+
+Set the specific rows to highlight by passing a vector of indices to `highlight`:
 
 ```{r echo=TRUE}
-head(mtcars, 5) %>%
-  thekids_table(colour = "Saffron", 
-                font.size = 10, 
-                padding = 4, 
-                striped = F)
+head(mtcars, 6) %>%
+  thekids_table(colour = "saffron", highlight = c(2, 5))
+
 ```
 
+<br>
+
+By default, the colour used for highlighting is defined as a 50% lighter tinted version of the colour given to the header. This can be changed by providing a named colour (including any The Kids colours) or hex code to the `highlight_colour` argument.
+
+```{r echo=TRUE}
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "teal", 
+    highlight = c(2, 5), highlight_colour = 'lightblue'
+  )
+
+```
+
+<br>
+
+#### > `zebra`
+
+If `zebra = TRUE`, then every other row will be highlighted.
+
+```{r echo=TRUE}
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = TRUE
+  )
+
+```
+
+<br>
+
+If instead you want the highlighted rows to alternate in chunks of two or more rows, then an integer can be supplied to `zebra` indicating the row chunk size.
+
+```{r echo=TRUE}
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = 2
+  )
+
+```
+
+<br>
+
+... and if you want to reverse the ordering such that the first rows initiate the highlighting pattern, a negative sign can be added to the `zebra` value. For example, `zebra=-1` reverses the result of `zebra=1` (or equivalently `zebra=TRUE`)
+
+```{r echo=TRUE}
+
+head(mtcars, 6) %>%
+  thekids_table(
+    colour = "azureblue", 
+    zebra = -2
+  )
+
+```
