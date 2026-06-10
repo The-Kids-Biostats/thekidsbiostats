@@ -90,7 +90,7 @@ thekids_table <- function(x,
       details = "`line.spacing` will be replaced with `line_spacing` to match flextable::set_flextable_defaults()."
     )
   }
-  
+
   # Check font family availability
   font_family <- check_font_family(font_family = font_family,
                                    fallback_family = fallback_font_family)
@@ -98,7 +98,7 @@ thekids_table <- function(x,
   # Standardise argument aliasing
   call <- match.call()
   std_call <- standardise_args(
-    call, 
+    call,
     alias_map = c(
       "color" = "colour",
       "gray" = "grey",
@@ -114,14 +114,14 @@ thekids_table <- function(x,
   if (!identical(names(call), names(std_call))) {
     return(eval(std_call, parent.frame()))
   }
-  
+
   # Standardise the colour inputs
   colour <- colour_to_hex(colour)
-  
+
   background_colour <- args$background_colour
   args$background_colour <- NULL
   background_colour <- colour_to_hex(background_colour)
-  
+
   if (is.null(highlight_colour)) {  # Get the highlight colour if not given
     rgb_colour <- grDevices::col2rgb(colour)
     rgb_tinted <- (1 - 0.5) * rgb_colour + 0.5 * grDevices::col2rgb('white')
@@ -150,15 +150,15 @@ thekids_table <- function(x,
 
   # Ensure these existing defaults are reset on any exit
   #on.exit(flextable::init_flextable_defaults(), add = TRUE) ## This works! But resets to package default options on exit
-  on.exit(do.call(flextable::set_flextable_defaults, old_defaults),
-          add = TRUE)
+  #on.exit(do.call(flextable::set_flextable_defaults, old_defaults),
+  #        add = TRUE) ## This becomes problematic with the new thekids_simple() function
 
   # NOW set the flextable defaults
   if (isTRUE(zebra)){
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = fontsize,
                                       theme_fun = function(y) {
-                                        table_zebra(y, 
+                                        table_zebra(y,
                                           colour = colour,
                                           highlight_colour = highlight_colour,
                                           background_colour = background_colour
@@ -184,9 +184,9 @@ thekids_table <- function(x,
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = fontsize,
                                       theme_fun = function(y) {
-                                        table_highlight(y, 
+                                        table_highlight(y,
                                           colour = colour,
-                                          highlight = highlight, 
+                                          highlight = highlight,
                                           highlight_colour = highlight_colour,
                                           background_colour = background_colour
                                         )
@@ -200,9 +200,9 @@ thekids_table <- function(x,
     flextable::set_flextable_defaults(font.family = font_family,
                                       font.size = fontsize,
                                       theme_fun = function(y) {
-                                        table_highlight(y, 
+                                        table_highlight(y,
                                           colour = colour,
-                                          highlight = highlight, 
+                                          highlight = highlight,
                                           highlight_colour = highlight_colour,
                                           background_colour = background_colour
                                         )
