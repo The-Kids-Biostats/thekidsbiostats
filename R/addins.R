@@ -21,8 +21,9 @@ insert_callout <- function() {
   color_map <- c(
     "note"      = "#a1b7d4",
     "tip"       = "#80D1CE",
-    "important" = "#FAB580",
-    "warning"   = "#F8DA9A"
+    "caution" = "#FAB580",
+    "warning"   = "#F8DA9A",
+    "important"   = "#e64848"
   )
 
   callout_button <- function(id, label, color) {
@@ -41,29 +42,34 @@ insert_callout <- function() {
     shiny::titlePanel("Insert Callout"),
     shiny::fluidRow(
       shiny::column(12,
-        callout_button("note",      "Note",      color_map["note"]),
-        callout_button("warning",   "Warning",   color_map["warning"]),
-        callout_button("important", "Important", color_map["important"]),
-        callout_button("tip",       "Tip",       color_map["tip"])
+        callout_button("note",      "Azure Blue",      color_map["note"]),
+        callout_button("warning",   "Saffron",   color_map["warning"]),
+        callout_button("caution",   "Pumpkin",   color_map["caution"]),
+        callout_button("tip",       "Teal",       color_map["tip"]),
+        callout_button("important", "Red", color_map["important"])
       )
     )
   )
 
   server <- function(input, output, session) {
     shiny::observeEvent(input$note, {
-      rstudioapi::insertText("::: {.callout-note}\n<your text>\n:::\n")
+      rstudioapi::insertText("::: {.callout-note collapse=\"true\"}\n## <title>\n<content>\n:::\n")
       shiny::stopApp()
     })
     shiny::observeEvent(input$warning, {
-      rstudioapi::insertText("::: {.callout-warning}\n<your text>\n:::\n")
+      rstudioapi::insertText("::: {.callout-warning collapse=\"true\"}\n## <title>\n<content>\n:::\n")
+      shiny::stopApp()
+    })
+    shiny::observeEvent(input$caution, {
+      rstudioapi::insertText("::: {.callout-caution collapse=\"true\"}\n## <title>\n<content>\n:::\n")
       shiny::stopApp()
     })
     shiny::observeEvent(input$important, {
-      rstudioapi::insertText("::: {.callout-important}\n<your text>\n:::\n")
+      rstudioapi::insertText("::: {.callout-important collapse=\"false\"}\n## <title>\n<content>\n:::\n")
       shiny::stopApp()
     })
     shiny::observeEvent(input$tip, {
-      rstudioapi::insertText("::: {.callout-tip}\n<your text>\n:::\n")
+      rstudioapi::insertText("::: {.callout-tip collapse=\"true\"}\n## <title>\n<content>\n:::\n")
       shiny::stopApp()
     })
   }
@@ -86,7 +92,7 @@ insert_callout <- function() {
 insert_callout_2 <- function() {
   if (rstudioapi::isAvailable()) {
     rstudioapi::insertText(
-      "::: {.callout-tip}\n#options: tip, note, warning, important\n<your text>\n:::\n"
+      "::: {.callout-tip collapse=\"true\"}\n## <title>\noptions: tip (teal), note (azure blue), caution (pumpkin), warning (saffron), important (red)\n:::\n"
     )
   } else {
     warning("RStudio API is not available.")
