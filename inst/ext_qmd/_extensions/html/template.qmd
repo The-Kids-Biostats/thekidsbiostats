@@ -48,24 +48,14 @@ A blurb describing the project, which team or individual is conducting the resea
 
 A succinct, specific research question to be answered in this report.
 
-::: {.callout-note}
-### Note
-This callout should have the colour scheme of **Azure Blue**.
-:::
+::: {.callout-note collapse="true"}
+### Azure Blue Callout
+Use other callout presets for different colours:
 
-::: {.callout-tip}
-### Tip
-This callout should have the colour scheme of **Teal**.
-:::
-
-::: {.callout-warning}
-### Warning
-This callout should have the colour scheme of **Saffron**.
-:::
-
-::: {.callout-important}
-### Important
-This callout should have the colour scheme of **Pumpkin**.
+- **tip**: teal
+- **warning**: saffron:
+- **caution**: pumpkin
+- **important**: red (*should be used to indicate key information and collapse set to "false"*)
 :::
 
 ## Data Summary

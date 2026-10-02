@@ -10,9 +10,14 @@ test_that("insert_callout_2 inserts callout text when RStudio API is available",
 
   insert_callout_2()
 
-  expect_true(grepl("::: \\{\\.callout-tip\\}", inserted))
-  expect_true(grepl("#options: tip, note, warning, important", inserted))
-  expect_true(grepl("<your text>", inserted))
+  expect_true(grepl("::: \\{\\.callout-tip", inserted))
+  expect_true(grepl("collapse=", inserted))
+  expect_true(grepl("tip \\(teal\\)", inserted))
+  expect_true(grepl("note \\(azure blue\\)", inserted))
+  expect_true(grepl("caution \\(pumpkin\\)", inserted))
+  expect_true(grepl("warning \\(saffron\\)", inserted))
+  expect_true(grepl("important \\(red\\)", inserted))
+  expect_true(grepl("## <title>", inserted))
 })
 
 test_that("insert_callout_2 warns when RStudio API is unavailable", {

@@ -14,7 +14,7 @@ test_that("insert_callout triggers insertText for each button", {
   mock_run <- function(ui, server, viewer) {
     # simulate pressing each button
     testServer(server, {
-      session$setInputs(note = 1, warning = 1, important = 1, tip = 1)
+      session$setInputs(note = 1, warning = 1, caution = 1, important = 1, tip = 1)
     })
     "ran"
   }
@@ -26,12 +26,13 @@ test_that("insert_callout triggers insertText for each button", {
   res <- insert_callout()
   expect_equal(res, "ran")
 
-  # Check all callouts were inserted
+  # Check all callouts were inserted with collapse parameter and title/content placeholders
   expected <- c(
-    "::: {.callout-note}\n<your text>\n:::\n",
-    "::: {.callout-warning}\n<your text>\n:::\n",
-    "::: {.callout-important}\n<your text>\n:::\n",
-    "::: {.callout-tip}\n<your text>\n:::\n"
+    "::: {.callout-note collapse=\"true\"}\n## <title>\n<content>\n:::\n",
+    "::: {.callout-warning collapse=\"true\"}\n## <title>\n<content>\n:::\n",
+    "::: {.callout-caution collapse=\"true\"}\n## <title>\n<content>\n:::\n",
+    "::: {.callout-important collapse=\"false\"}\n## <title>\n<content>\n:::\n",
+    "::: {.callout-tip collapse=\"true\"}\n## <title>\n<content>\n:::\n"
   )
   expect_setequal(inserted, expected)
 })
