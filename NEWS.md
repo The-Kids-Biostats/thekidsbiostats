@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.9.2
+
+- Same as previous version.
+
+
 # thekidsbiostats 1.9.1
 
 - Moved session info text to callout
