@@ -1,5 +1,9 @@
 # Changelog
 
+## thekidsbiostats 1.9.2
+
+- Improved callout text and addin UI.
+
 ## thekidsbiostats 1.9.1
 
 - Moved session info text to callout
