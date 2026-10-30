@@ -1,0 +1,99 @@
+---
+title: "Report Title"
+subtitle: "Subtitle or Project Name"
+author:
+  name: "J Smith"
+  affiliation:
+  - "The Kids Research Institute Australia, Perth, WA, Australia"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+format:
+  docx:
+    reference-doc: ../ext_qmd/_extensions/word/thekids_quarto_template.docx
+    toc: false
+    toc-depth: 3
+    toc-title: Table of contents
+    number-sections: true
+    number-depth: 1
+    highlight-style: github
+    fig-dpi: 300
+editor_options: 
+  chunk_output_type: inline
+execute:
+  echo: false
+  warning: false
+  message: false
+  error: false
+mainfont: Barlow
+fig-align: center
+fig-format: png
+---
+
+```{r}
+#| label: init
+#| include: false
+
+library(thekidsbiostats)
+```
+
+# Introduction
+
+## Project Summary
+
+A blurb describing the project, which team or individual is conducting the research
+
+## Research Question
+
+A succinct, specific research question to be answered in this report.
+
+
+::: {.callout-important collapse="false"}
+Highlights a key finding or point of interpretation that must not be missed.
+:::
+
+::: {.callout-note collapse="true"}
+Provides extra context to assist the reader in understanding a result or to provide secondary information.
+:::
+
+::: {.callout-tip collapse="true"}
+A helpful suggestion for how to read or use a result.
+:::
+
+::: {.callout-caution collapse="true"}
+Flags attention to a specific issue that needs to considered.
+:::
+
+::: {.callout-warning collapse="true"}
+Asks the reader to interpret results carefully, because of a limitation to its trustworthiness.
+:::
+
+
+
+
+# Data Summary
+
+Tables, explanatory plots, etc. for examining the data prior to analysis.
+
+
+
+# Analysis
+
+Use the `insert_model_tabset` addin to preview and insert a set of model summaries and diagnostics for the `mod` object below.
+
+```{r}
+#| echo: true
+#| code-fold: false
+
+mod <- thekidsbiostats::thekids_model(mtcars, y = "mpg", x = "cyl")
+```
+
+# Supplementary Material
+
+# Reproducibility Information
+
+::: {.callout-note collapse="true"}
+## Session Info
+```{r}
+#| label: session_info
+sessionInfo()
+```
+:::
