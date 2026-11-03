@@ -1,5 +1,10 @@
 # Changelog
 
+## thekidsbiostats 1.9.3
+
+- create_project(open = T) now works with both RStudio and Positron,
+  opening the .RProj file or the root folder respectively.
+
 ## thekidsbiostats 1.9.2
 
 - Improved callout text and addin UI.
