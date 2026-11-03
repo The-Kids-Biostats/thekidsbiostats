@@ -49,7 +49,8 @@ create_project(
 
 - open_project:
 
-  Whether to open the new project in a new RStudio session.
+  Whether to open the new project in a new session. In RStudio the
+  .Rproj file is opened; in Positron the project folder is opened.
 
 - ...:
 
