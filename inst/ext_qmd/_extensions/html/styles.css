@@ -1,3 +1,10 @@
+/* Set Barlow in places where the YAML setting is not reaching */
+/* and establish Arial as the fall back as opposed to Times */
+
+body {
+  font-family: 'Barlow', Arial, sans-serif;
+}
+
 .quarto-title-block .quarto-title-banner {
   background-image: url('thekids.png');
   background-size: 200px auto;           /* Fixed logo width */
