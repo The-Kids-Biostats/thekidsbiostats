@@ -102,11 +102,11 @@ Figure 6: Rendered html Quarto report.
 sessionInfo()
 #> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.5 LTS
+#> Running under: Ubuntu 26.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -121,7 +121,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] thekidsbiostats_1.9.3 extrafont_0.20        flextable_0.10.3     
+#>  [1] thekidsbiostats_1.9.3 extrafont_0.20        flextable_0.10.4     
 #>  [4] gtsummary_2.6.1       lubridate_1.9.5       forcats_1.0.1        
 #>  [7] stringr_1.6.0         dplyr_1.2.1           purrr_1.2.2          
 #> [10] readr_2.2.0           tidyr_1.3.2           tibble_3.3.1         
@@ -138,13 +138,13 @@ sessionInfo()
 #> [22] htmltools_0.5.9         sass_0.4.10             yaml_2.3.12            
 #> [25] Rttf2pt1_1.3.14         extrafontdb_1.1         pillar_1.11.1          
 #> [28] pkgdown_2.2.1           later_1.4.8             jquerylib_0.1.4        
-#> [31] openssl_2.4.2           cachem_1.1.0            mime_0.13              
+#> [31] openssl_2.5.0           cachem_1.1.0            mime_0.13              
 #> [34] fontBitstreamVera_0.1.1 tidyselect_1.2.1        zip_3.0.2              
 #> [37] digest_0.6.39           stringi_1.8.9           fastmap_1.2.0          
 #> [40] grid_4.6.2              cli_3.6.6               magrittr_2.0.5         
-#> [43] patchwork_1.3.2         withr_3.0.3             gdtools_0.5.2          
+#> [43] patchwork_1.3.2         withr_3.0.3             gdtools_0.5.3          
 #> [46] scales_1.4.0            promises_1.5.0          timechange_0.4.0       
-#> [49] rmarkdown_2.32          officer_0.7.7           otel_0.2.0             
+#> [49] rmarkdown_2.32          officer_0.7.8           otel_0.3.0             
 #> [52] askpass_1.2.1           ragg_1.5.2              hms_1.1.4              
 #> [55] shiny_1.14.0            evaluate_1.0.5          knitr_1.52             
 #> [58] rlang_1.3.0             Rcpp_1.1.2              xtable_1.8-8           
