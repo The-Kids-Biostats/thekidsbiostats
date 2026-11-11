@@ -1,5 +1,9 @@
 # Changelog
 
+## thekidsbiostats 1.9.4
+
+- Altered fallback font to Arial when Barlow is not found
+
 ## thekidsbiostats 1.9.3
 
 - create_project(open = T) now works with both RStudio and Positron,
