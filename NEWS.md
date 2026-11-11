@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.9.4
+
+- Same as previous version.
+
+
 # thekidsbiostats 1.9.3
 
 - create_project(open = T) now works with both RStudio and Positron, opening the .RProj file or the root folder respectively. 
