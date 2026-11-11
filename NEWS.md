@@ -2,8 +2,7 @@
 
 # thekidsbiostats 1.9.4
 
-- Same as previous version.
-
+- Altered fallback font to Arial when Barlow is not found
 
 # thekidsbiostats 1.9.3
 
