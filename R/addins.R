@@ -595,7 +595,7 @@ create_project_addin <- function() {
       rproj_file <- file.path(project_path(),input$project_name, paste0(input$project_name, ".Rproj"))
 
       if (file.exists(rproj_file) && rstudioapi::isAvailable()) {
-        rstudioapi::openProject(path = rproj_file, newSession = TRUE)
+        rstudioapi::openProject(path = project_open_path(rproj_file), newSession = TRUE)
       } else {
         output$status <- shiny::renderText("\u26A0\uFE0F Could not open project (file missing or RStudio API unavailable).")
       }

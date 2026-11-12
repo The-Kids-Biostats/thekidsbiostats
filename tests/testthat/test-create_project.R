@@ -109,3 +109,33 @@ test_that("creates reports folder and triggers message", {
   expect_true(dir.exists(reports_path))
   expect_true(any(grepl("📂 Report folder created: reports/", msgs)))
 })
+
+test_that("project_open_path() opens the .Rproj in RStudio and the folder in Positron", {
+  rproj <- file.path("some", "dir", "proj.Rproj")
+
+  withr::with_envvar(c(POSITRON = ""), {
+    expect_false(is_positron())
+    expect_equal(project_open_path(rproj), rproj)
+  })
+
+  withr::with_envvar(c(POSITRON = "1"), {
+    expect_true(is_positron())
+    expect_equal(project_open_path(rproj), file.path("some", "dir"))
+  })
+})
+
+test_that("create_project() opens the project folder when run in Positron", {
+  tmp <- tempfile("projtest")
+  dir.create(tmp)
+
+  mock_openProj <- mock(TRUE)
+  stub(create_project, "rstudioapi::isAvailable", mock(TRUE))
+  stub(create_project, "rstudioapi::openProject", mock_openProj)
+
+  withr::with_envvar(c(POSITRON = "1"), {
+    proj <- create_project("myproj", path = tmp, open_project = TRUE)
+  })
+
+  expect_called(mock_openProj, 1)
+  expect_equal(normalizePath(mock_args(mock_openProj)[[1]]$path), normalizePath(proj))
+})

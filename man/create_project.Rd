@@ -28,7 +28,7 @@ create_project(
 
 \item{create_rproj}{Whether to include a .Rproj file.}
 
-\item{open_project}{Whether to open the new project in a new RStudio session.}
+\item{open_project}{Whether to open the new project in a new session. In RStudio the .Rproj file is opened; in Positron the project folder is opened.}
 
 \item{...}{Additional arguments passed to \code{create_template()}.}
 }
