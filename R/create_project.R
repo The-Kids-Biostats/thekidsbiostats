@@ -25,8 +25,8 @@ create_project <- function(project_name,
   if (missing(project_name) || project_name == "") stop("You must provide a project_name.")
 
   if (is.null(path)) {
-    if (!rstudioapi::isAvailable()) stop("Please provide a path or run inside RStudio.")
-    path <- rstudioapi::selectDirectory("Select parent folder for new project")
+    if (!interactive()) stop("Please provide a path when not running interactively.")
+    path <- choose_directory("Select parent folder for new project")
     if (is.null(path)) stop("No directory selected.")
   }
 

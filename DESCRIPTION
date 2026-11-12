@@ -75,6 +75,7 @@ Suggests:
     repmis (>= 0.5),
     rmarkdown,
     rvest (>= 1.0.0),
+    tcltk,
     testthat (>= 3.0.0),
     tinytable (>= 0.8),
     vdiffr,
