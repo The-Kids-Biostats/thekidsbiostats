@@ -23,8 +23,7 @@ format:
         </style>
 reference-location: margin 
 citation-location: margin 
-#css: _extensions/html/styles.css
-css: ../ext_qmd/_extensions/html/styles.css
+css: _extensions/html/styles.css
 editor_options: 
   chunk_output_type: inline
 execute:

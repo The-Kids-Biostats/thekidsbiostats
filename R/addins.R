@@ -139,9 +139,60 @@ create_project_addin <- function() {
   if (grepl("^[A-Z]{2}[a-z]", default_name)) {
     # Insert space between first and second characters
     default_name <- paste0(substr(default_name, 1, 1), " ", substr(default_name, 2, nchar(default_name)))
+  } else {
+    default_name <- gsub("(?<=[a-z])(?=[A-Z])", " ", default_name, perl = TRUE)
   }
 
   ui <- shiny::fluidPage(
+    shiny::tags$head(
+      shiny::tags$style(shiny::HTML(r"---(
+      .container-fluid {
+        max-width: 3000px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      a.section-toggle, a.section-toggle:visited, a.section-toggle:hover, a.section-toggle:focus {
+        display: block;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #424242;
+        padding: 6px 0 8px 0;
+        margin-top: 12px;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #b0b0b0;
+        text-decoration: none;
+      }
+      a.section-toggle:hover, a.section-toggle:focus {
+        color: #1a1a1a;
+      }
+      a#toggle_code.section-toggle {
+        margin-top: 0;
+      }
+      a.section-toggle .caret {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: 7px solid currentColor;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        margin-right: 10px;
+        vertical-align: middle;
+        transition: transform 0.25s ease;
+      }
+      a.section-toggle .caret.open {
+        transform: rotate(90deg);
+      }
+      #header_ui .form-group,
+      #code_ui .form-group {
+        margin-bottom: 4px;
+      }
+      #code_ui .checkbox {
+        margin-top: 0;
+        margin-bottom: 4px;
+      }
+    )---"))
+    ),
+
     shinyjs::useShinyjs(),
 
     shiny::titlePanel("Create a New Project"),
@@ -224,27 +275,48 @@ create_project_addin <- function() {
           shiny::p("Initialise a template report and modify the details contained within the document."),
           shiny::fluidRow(
             shiny::column(8, style = "padding-right:5px;",
-                          shiny::textInput("report_filename", "Report File Name:", value = "report")),
+                          shiny::tagList(
+                            shiny::textInput("report_filename", "Report File Name:", value = "report.qmd"),
+                            # Keep '.qmd' fixed at the end of the box; the caret stays before it
+                            shiny::tags$script(shiny::HTML(r"---(
+                              document.addEventListener('input', function(e) {
+                                if (e.target.id !== 'report_filename') return;
+                                var el = e.target;
+                                var base = el.value.replace(/\.(q(m(d)?)?)?$/i, '');
+                                var pos = Math.min(el.selectionStart, base.length);
+                                el.value = base + '.qmd';
+                                el.setSelectionRange(pos, pos);
+                              }, true);
+                            )---")))),
             shiny::column(4, style = "padding-left:5px; padding-right:5px;",
                           shiny::selectInput("ext_name", "Format:",
                                              choices = list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats")),
                                              selected = "html", width='80%'))
           ),
-          #shiny::actionButton("browse_report_dir", "Folder to store report"),
           shiny::textOutput("selected_report_dir"),
           shiny::br(),
-          shiny::actionLink("toggle_advanced", "\u25B6 Modify Report Header"),
-
-          # Advanced options (initially hidden)
+          shiny::actionLink("toggle_header",
+            shiny::tagList(shiny::tags$span(id = "caret_header", class = "caret"), "Report Header Options"),
+            class = "section-toggle"),
           shiny::div(
-            id = "advanced_ui",
+            id = "header_ui",
             style = "display: none;",
-            shiny::tags$hr(),
             shiny::textInput("title", "Title", value = default_title),
             shiny::textInput("subtitle", "Subtitle", value = default_subtitle),
             shiny::textInput("author", "Author Name", value = default_name),
-            shiny::textInput("affiliation", "Affiliation", value = default_affiliation),
-            shiny::checkboxInput("reproducibility", "Include Reproducibility", value = default_reproducibility)
+            shiny::textInput("affiliation", "Affiliation", value = default_affiliation)
+          ),
+          shiny::br(),
+          shiny::actionLink("toggle_code",
+            shiny::tagList(shiny::tags$span(id = "caret_code", class = "caret"), "Code Display Options"),
+            class = "section-toggle"),
+          shiny::div(
+            id = "code_ui",
+            style = "display: none;",
+            shiny::checkboxInput("reproducibility", "Include Reproducibility", value = default_reproducibility),
+            shiny::checkboxInput("show_code", "Show code chunks", value = FALSE),
+            shiny::checkboxInput("code_fold", "Collapse code chunks by default", value = TRUE),
+            shiny::checkboxInput("code_tools", "Add Code tools menu", value = TRUE)
           )
         ),
         shiny::br(), shiny::br(),
@@ -285,16 +357,17 @@ create_project_addin <- function() {
     current_tab <- shiny::reactiveVal("Project")
 
     ### Template Reactives
-    show_advanced <- shiny::reactiveVal(FALSE)
     preview_inputs <- shiny::reactiveVal(NULL)
     last_preview <- shiny::reactiveVal(NULL)
-    suppress_preview <- shiny::reactiveVal(FALSE)
 
     debounced_title <- shiny::debounce(shiny::reactive(input$title), 1200)
     debounced_subtitle <- shiny::debounce(shiny::reactive(input$subtitle), 1200)
     debounced_author <- shiny::debounce(shiny::reactive(input$author), 750)
     debounced_affiliation <- shiny::debounce(shiny::reactive(input$affiliation), 1000)
     debounced_reproducibility <- shiny::debounce(shiny::reactive(input$reproducibility), 0)
+    debounced_show_code <- shiny::debounce(shiny::reactive(input$show_code), 0)
+    debounced_code_fold <- shiny::debounce(shiny::reactive(input$code_fold), 0)
+    debounced_code_tools <- shiny::debounce(shiny::reactive(input$code_tools), 0)
 
     debounced_inputs <- shiny::reactive({
       list(
@@ -302,7 +375,10 @@ create_project_addin <- function() {
         subtitle = debounced_subtitle() %||% default_subtitle,
         author = debounced_author() %||% default_name,
         affiliation = debounced_affiliation() %||% default_affiliation,
-        include_reproducibility = debounced_reproducibility() %||% default_reproducibility
+        include_reproducibility = debounced_reproducibility() %||% default_reproducibility,
+        show_code = debounced_show_code() %||% FALSE,
+        code_fold = debounced_code_fold() %||% TRUE,
+        code_tools = debounced_code_tools() %||% TRUE
       )
     })
 
@@ -387,7 +463,10 @@ create_project_addin <- function() {
       selected <- shinyFiles::parseDirPath(volumes, input$browse)
       if (length(selected) > 0) project_path(selected)
 
-      if (is.null(project_path())) {
+      if (isTRUE(input$create_report) && !nzchar(input$report_filename)) {
+        shinyjs::disable("create")
+        shinyjs::runjs('document.getElementById("create_wrap").setAttribute("title", "Please enter a valid file name");')
+      } else if (is.null(project_path())) {
         shinyjs::disable("create")
         shinyjs::runjs('document.getElementById("create_wrap").setAttribute("title", "Please select a folder");')
       } else {  # Enable the button
@@ -430,31 +509,16 @@ create_project_addin <- function() {
         subtitle = default_subtitle,
         author = default_name,
         affiliation = default_affiliation,
-        include_reproducibility = default_reproducibility
+        include_reproducibility = default_reproducibility,
+        show_code = FALSE,
+        code_fold = TRUE,
+        code_tools = TRUE
       ))
     })
 
 
-    shiny::observeEvent(input$toggle_advanced, {
-      suppress_preview(TRUE)  # Suppress auto preview update
-
-      show_advanced(!show_advanced())
-
-      # Toggle visibility
-      if (show_advanced()) {
-        shiny::updateActionLink(session, "toggle_advanced", label = "\u25BC Modify Report Header")
-        shinyjs::show("advanced_ui")
-      } else {
-        shiny::updateActionLink(session, "toggle_advanced", label = "\u25B6 Modify Report Header")
-        shinyjs::hide("advanced_ui")
-      }
-
-      # Reset suppression AFTER a short delay (after UI settles)
-      later::later(function() suppress_preview(FALSE), delay = 0.1)
-    })
-
-
-    generate_preview <- function(title, subtitle, author, affiliation, include_reproducibility) {
+    generate_preview <- function(title, subtitle, author, affiliation, include_reproducibility,
+                                 show_code, code_fold, code_tools) {
       template_path <- system.file("example_reports", "example.html", package = "thekidsbiostats")
 
       html_lines <- update_html_template(
@@ -463,14 +527,15 @@ create_project_addin <- function() {
         subtitle = subtitle,
         author = author,
         affiliation = affiliation,
-        include_reproducibility = include_reproducibility
+        include_reproducibility = include_reproducibility,
+        show_code = show_code,
+        code_fold = code_fold,
+        code_tools = code_tools
       )
       render_preview(html_lines)
     }
 
     shiny::observe({
-      if (isTRUE(suppress_preview())) return()  # Don't update if suppressed
-
       new_inputs <- debounced_inputs()
       old_inputs <- last_preview()
 
@@ -487,7 +552,10 @@ create_project_addin <- function() {
         subtitle = debounced_inputs()$subtitle,
         author = debounced_inputs()$author,
         affiliation = debounced_inputs()$affiliation,
-        include_reproducibility = debounced_inputs()$include_reproducibility
+        include_reproducibility = debounced_inputs()$include_reproducibility,
+        show_code = debounced_inputs()$show_code,
+        code_fold = debounced_inputs()$code_fold,
+        code_tools = debounced_inputs()$code_tools
       )
 
       shiny::addResourcePath("preview", dirname(path))
@@ -514,6 +582,33 @@ create_project_addin <- function() {
     })
 
 
+    shiny::addResourcePath(
+      prefix = "example_reports",
+      directoryPath = system.file("example_reports", package = "thekidsbiostats")
+    )
+
+    # Only one section is open at a time
+    open_section <- shiny::reactiveVal(NULL)
+
+    shiny::observeEvent(input$toggle_header, {
+      open_section(if (identical(open_section(), "header")) NULL else "header")
+    })
+
+    shiny::observeEvent(input$toggle_code, {
+      open_section(if (identical(open_section(), "code")) NULL else "code")
+    })
+
+    shiny::observeEvent(open_section(), {
+      is_header <- identical(open_section(), "header")
+      is_code <- identical(open_section(), "code")
+
+      shinyjs::toggleClass("caret_header", class = "open", condition = is_header)
+      shinyjs::toggleClass("caret_code", class = "open", condition = is_code)
+
+      if (is_header) shinyjs::show("header_ui") else shinyjs::hide("header_ui")
+      if (is_code) shinyjs::show("code_ui") else shinyjs::hide("code_ui")
+    }, ignoreNULL = FALSE)
+
     #### Create Project
 
     shiny::observeEvent(input$create, {
@@ -536,6 +631,9 @@ create_project_addin <- function() {
           author = input$author,
           affiliation = input$affiliation,
           include_reproducibility = input$reproducibility,
+          echo = input$show_code,
+          code_fold = input$code_fold,
+          code_tools = input$code_tools,
 
           open_project = FALSE
           #open_file = FALSE  # Already handled by create_project()
