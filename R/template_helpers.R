@@ -105,12 +105,17 @@ update_html_template <- function(lines, title, subtitle, author, affiliation, in
   }
 
   # Replace the line with the author
+  # The affiliation element can span several lines, so replace the whole range
   if (!is.null(affiliation)) {
-    lines <- sub(
-      '<p class="affiliation">.*?</p>',
-      sprintf('<p class="affiliation">%s</p>', affiliation),
-      lines
-    )
+    start <- grep('<p class="affiliation">', lines, fixed = TRUE)
+    if (length(start) == 1) {
+      end <- start - 1 + which(grepl("</p>", lines[start:length(lines)], fixed = TRUE))[1]
+      if (!is.na(end)) {
+        lines <- c(lines[seq_len(start - 1)],
+                   sprintf('<p class="affiliation">%s</p>', affiliation),
+                   lines[-seq_len(end)])
+      }
+    }
   }
 
   if (!include_reproducibility) {
