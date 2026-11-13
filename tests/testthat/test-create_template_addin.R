@@ -20,7 +20,7 @@ test_that("UI contains expected inputs and buttons", {
   tags <- htmltools::renderTags(app$ui)$html
   expect_true(grepl("Report File Name", tags))
   expect_true(grepl("Format", tags))
-  expect_true(grepl("Select Folder", tags))
+  expect_true(grepl("Select Destination Folder", tags))
   expect_true(grepl("Report Header Options", tags))
   expect_true(grepl("Create Report", tags))
 })
