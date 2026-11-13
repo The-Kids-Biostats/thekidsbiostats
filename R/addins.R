@@ -124,7 +124,7 @@ insert_margin <- function() {
 
 #' Shiny Addin: Create New Project
 #'
-#' Launches a Shiny app to create a project with folders, report, and control over session state.
+#' Launches a Shiny app to create a project with a template of folders and reports.
 #'
 #' @export
 create_project_addin <- function() {
@@ -141,6 +141,13 @@ create_project_addin <- function() {
     default_name <- paste0(substr(default_name, 1, 1), " ", substr(default_name, 2, nchar(default_name)))
   } else {
     default_name <- gsub("(?<=[a-z])(?=[A-Z])", " ", default_name, perl = TRUE)
+  }
+
+  create_button <- function(id) {
+    shiny::tags$div(
+      style = "margin-top: 16px; text-align: right;",
+      shiny::actionButton(id, "Create Project", class = "btn-primary", style = "font-size: 16px;")
+    )
   }
 
   ui <- shiny::fluidPage(
@@ -190,6 +197,41 @@ create_project_addin <- function() {
         margin-top: 0;
         margin-bottom: 4px;
       }
+      .qmd-name-row {
+        display: flex;
+        align-items: flex-end;
+      }
+      .qmd-name-row .shiny-input-container {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin-bottom: 0;
+      }
+      .qmd-name-row .form-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .qmd-suffix {
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        white-space: nowrap;
+      }
+      a#toggle_header.section-toggle {
+        margin-top: 0;
+      }
+      .col-sm-3 > .col-sm-12, .col-sm-9 > .col-sm-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      #main_tabs a[data-value='add_report'] {
+        color: #1f6feb;
+        font-weight: 600;
+      }
     )---"))
     ),
 
@@ -200,18 +242,22 @@ create_project_addin <- function() {
     shiny::tabsetPanel(
       id="main_tabs",
       selected = "Project",
-      shiny::tabPanel("Project")
+      shiny::tabPanel("Project"),
+      shiny::tabPanel(
+        title = shiny::tags$span(shiny::icon("plus"), "Add Report"),
+        value = "add_report"
+      )
     ),
 
 
-    shiny::sidebarLayout(
-      shiny::sidebarPanel(width = 3,
+    shiny::fluidRow(
+      shiny::column(width = 3,
+        shiny::sidebarPanel(width = 12,
         shiny::div(id = 'project_side',
           shiny::h3("Project Customisation"),
-          shiny::p("Modify the details of your project and select the folder structure and files that best suits your project."),
+          shiny::p("Modify the key project details and select an initial folder structure and files."),
           shiny::textInput("project_name", "Project Name:", value="", width='90%'),
           shinyFiles::shinyDirButton("browse", "Select Destination Folder", "Choose destination folder", class = "btn-secondary"),
-          shiny::checkboxInput("create_report", "Create report template?", value = FALSE),
           shiny::textOutput("selected_dir"),
           shiny::br(),
           shiny::checkboxGroupInput("folders", "Folders to Include:",
@@ -268,33 +314,23 @@ create_project_addin <- function() {
               shiny::actionButton("add_custom_folder", "Add", class = 'btn-secondary')
             )
           )
-
         ),
         shiny::div(id = 'report_side',
+
           shiny::h3("Report Customisation"),
           shiny::p("Initialise a template report and modify the details contained within the document."),
           shiny::fluidRow(
-            shiny::column(8, style = "padding-right:5px;",
-                          shiny::tagList(
-                            shiny::textInput("report_filename", "Report File Name:", value = "report.qmd"),
-                            # Keep '.qmd' fixed at the end of the box; the caret stays before it
-                            shiny::tags$script(shiny::HTML(r"---(
-                              document.addEventListener('input', function(e) {
-                                if (e.target.id !== 'report_filename') return;
-                                var el = e.target;
-                                var base = el.value.replace(/\.(q(m(d)?)?)?$/i, '');
-                                var pos = Math.min(el.selectionStart, base.length);
-                                el.value = base + '.qmd';
-                                el.setSelectionRange(pos, pos);
-                              }, true);
-                            )---")))),
+            shiny::column(8, style = "padding-right:0;",
+                          shiny::div(class = "qmd-name-row",
+                            shiny::textInput("report_filename", "Report File Name:", value = "report"),
+                            shiny::tags$span(class = "qmd-suffix", ".qmd")
+                          )),
             shiny::column(4, style = "padding-left:5px; padding-right:5px;",
                           shiny::selectInput("ext_name", "Format:",
                                              choices = list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats")),
                                              selected = "html", width='80%'))
           ),
           shiny::textOutput("selected_report_dir"),
-          shiny::br(),
           shiny::actionLink("toggle_header",
             shiny::tagList(shiny::tags$span(id = "caret_header", class = "caret"), "Report Header Options"),
             class = "section-toggle"),
@@ -317,17 +353,14 @@ create_project_addin <- function() {
             shiny::checkboxInput("show_code", "Show code chunks", value = FALSE),
             shiny::checkboxInput("code_fold", "Collapse code chunks by default", value = TRUE),
             shiny::checkboxInput("code_tools", "Add Code tools menu", value = TRUE)
-          )
+          ),
+          shiny::actionButton("remove_report", "Remove Report", icon = shiny::icon("trash"), class = "btn-danger btn-sm", style = "margin-top: 16px;")
         ),
-        shiny::br(), shiny::br(),
-        shiny::tags$div(
-          id = 'create_wrap',
-          title = "Please select a folder.",
-          style = "display: inline-block;",
-          shiny::actionButton("create", "Create Project", class = "btn-primary", disabled = "disabled")
-        )
+        ),
+        create_button("create")
       ),
-      shiny::mainPanel(width = 9,
+      shiny::column(width = 9,
+      shiny::mainPanel(width = 12,
         shiny::div(id = "project_main",
           shiny::div(style = "max-width: 65%",
             shiny::wellPanel(style='background-color: #f6f6f6; border: none; box-shadow: none;',
@@ -340,21 +373,19 @@ create_project_addin <- function() {
         ),
         shiny::div(id = "report_main",
           shiny::wellPanel(style='background-color: #f6f6f6;',
-            shiny::tags$h4("Template Report Preview"),
             shiny::uiOutput("preview_html")
           )
         )
+      )
       )
     )
   )
 
   server <- function(input, output, session) {
-    volumes <- shinyFiles::getVolumes()()
-    shinyFiles::shinyDirChoose(input, "browse", roots = volumes, session = session)
-
     ### Project Reactives
     project_path <- shiny::reactiveVal(NULL)
     current_tab <- shiny::reactiveVal("Project")
+    report_added <- shiny::reactiveVal(FALSE)
 
     ### Template Reactives
     preview_inputs <- shiny::reactiveVal(NULL)
@@ -390,28 +421,21 @@ create_project_addin <- function() {
       shinyjs::hide("report_main")
     })
 
-    # Condition the Report tab on checkbox
-    shiny::observeEvent(input$create_report, {
-      if (isTRUE(input$create_report)) {
-        shiny::insertTab(
-          inputId = "main_tabs",
-          tabPanel("Report"),
-          target = "Project",
-          position = "after",
-          select = FALSE
-        )
-      } else {
-        # Redirect to "Project" tab before removing to avoid errors
-        if (input$main_tabs == "Report") {
-          shiny::updateTabsetPanel(session, "main_tabs", selected = "Project")
-        }
-        shiny::removeTab("main_tabs", target = "Report")
-      }
-    })
-
-    # Toggle visibility based on selected tab
+    # Toggle visibility based on selected tab; "Add Report" inserts the Report tab once
     shiny::observeEvent(input$main_tabs, {
-      if (input$main_tabs == "Project") {
+      if (input$main_tabs == "add_report") {
+        if (!report_added()) {
+          shiny::insertTab(
+            inputId = "main_tabs",
+            shiny::tabPanel("Report"),
+            target = "Project",
+            position = "after",
+            select = TRUE
+          )
+          shiny::hideTab(inputId = "main_tabs", target = "add_report")
+          report_added(TRUE)
+        }
+      } else if (input$main_tabs == "Project") {
         shinyjs::show("project_side")
         shinyjs::show("project_main")
         shinyjs::hide("report_side")
@@ -432,23 +456,28 @@ create_project_addin <- function() {
 
     #### Project Tab
 
-    shiny::observeEvent(input$create_report, {
-      if (isTRUE(input$create_report)) {
-        # Ensure 'reports' is included in selection
+    # Ensure 'reports' is selected and locked once a report is added
+    shiny::observeEvent(report_added(), {
+      if (isTRUE(report_added())) {
         new_selection <- union(input$folders, "reports")
         shiny::updateCheckboxGroupInput(session, "folders", selected = new_selection)
-
-        # Lock and de-highlight
         session$sendCustomMessage("lock_reports", list(lock = TRUE))
       } else {
-        # Unlock and re-highlight
         session$sendCustomMessage("lock_reports", list(lock = FALSE))
       }
-    })
+    }, ignoreInit = TRUE)
+
+    # Remove the Report tab and restore the "Add Report" tab
+    shiny::observeEvent(input$remove_report, {
+      shiny::updateTabsetPanel(session, "main_tabs", selected = "Project")
+      shiny::removeTab("main_tabs", target = "Report")
+      shiny::showTab("main_tabs", target = "add_report")
+      report_added(FALSE)
+    }, ignoreInit = TRUE)
 
     # Prevent manual unchecking of "reports"
     shiny::observe({
-      if (isTRUE(input$create_report)) {
+      if (isTRUE(report_added())) {
         if (is.null(input$folders) || !"reports" %in% input$folders) {
           shiny::updateCheckboxGroupInput(session, "folders",
                                    selected = union(input$folders, "reports"))
@@ -456,24 +485,13 @@ create_project_addin <- function() {
       }
     })
 
-    # Disable the Create Template button initially
-    shinyjs::disable("create")
+    volumes <- c(Home = fs::path_home(), shinyFiles::getVolumes()())
+    shinyFiles::shinyDirChoose(input, "browse", roots = volumes, defaultRoot = "Home", session = session)
 
     shiny::observeEvent(input$browse, {
       selected <- shinyFiles::parseDirPath(volumes, input$browse)
       if (length(selected) > 0) project_path(selected)
-
-      if (isTRUE(input$create_report) && !nzchar(input$report_filename)) {
-        shinyjs::disable("create")
-        shinyjs::runjs('document.getElementById("create_wrap").setAttribute("title", "Please enter a valid file name");')
-      } else if (is.null(project_path())) {
-        shinyjs::disable("create")
-        shinyjs::runjs('document.getElementById("create_wrap").setAttribute("title", "Please select a folder");')
-      } else {  # Enable the button
-        shinyjs::enable("create")
-        shinyjs::runjs('document.getElementById("create_wrap").setAttribute("title", "Create project");')
-      }
-    })
+    }, ignoreInit = TRUE)
 
     output$selected_dir <- shiny::renderText({
       shiny::req(project_path())
@@ -587,8 +605,8 @@ create_project_addin <- function() {
       directoryPath = system.file("example_reports", package = "thekidsbiostats")
     )
 
-    # Only one section is open at a time
-    open_section <- shiny::reactiveVal(NULL)
+    # Only one section is open at a time; report header starts expanded
+    open_section <- shiny::reactiveVal("header")
 
     shiny::observeEvent(input$toggle_header, {
       open_section(if (identical(open_section(), "header")) NULL else "header")
@@ -612,7 +630,18 @@ create_project_addin <- function() {
     #### Create Project
 
     shiny::observeEvent(input$create, {
-      shiny::req(project_path(), input$project_name, input$report_filename)
+      if (!nzchar(trimws(input$project_name %||% ""))) {
+        shiny::showNotification("Please enter a project name before creating the project.", type = "warning", duration = 5)
+        return()
+      }
+
+      # If no folder has been chosen yet, select one first, then continue
+      if (is.null(project_path())) {
+        shiny::showNotification("Please select a destination folder first.", type = "warning", duration = 5)
+        return()
+      }
+
+      if (report_added()) shiny::req(nzchar(input$report_filename))
 
       report_filename <- ifelse(endsWith(input$report_filename, ".qmd"), sub("\\.qmd$", "", input$report_filename), input$report_filename)
       qmd_path <- file.path(project_path(), 'reports', paste0(report_filename, '.qmd'))
@@ -623,7 +652,7 @@ create_project_addin <- function() {
           project_name = input$project_name,
           folders = input$folders,
           ext_name = input$ext_name,
-          create_report = isTRUE(input$create_report),
+          create_report = isTRUE(report_added()),
           # ... --> create_template()
           file_name = report_filename,
           title = input$title,
@@ -655,7 +684,7 @@ create_project_addin <- function() {
         output$status <- shiny::renderText("\U0001F6D1 Project creation failed!")
       })
 
-    })
+    }, ignoreInit = TRUE)
 
     output$tree <- shinyTree::renderTree({
       included_folders <- input$folders
@@ -668,7 +697,7 @@ create_project_addin <- function() {
       # Add folders conditionally
       for (folder in included_folders) {
         if (folder == "reports") {
-          if (input$create_report) {
+          if (report_added()) {
             report_filename <- ifelse(!endsWith(input$report_filename, ".qmd"), paste0(input$report_filename, '.qmd'), input$report_filename)
             tree[[paste0(folder, "/")]] <- structure(
               stats::setNames(list(structure("", sticon = "file")), report_filename),
@@ -779,6 +808,37 @@ create_template_addin <- function() {
         margin-top: 0;
         margin-bottom: 4px;
       }
+      .qmd-name-row {
+        display: flex;
+        align-items: flex-end;
+      }
+      .qmd-name-row .shiny-input-container {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin-bottom: 0;
+      }
+      .qmd-name-row .form-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .qmd-suffix {
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        white-space: nowrap;
+      }
+      a#toggle_header.section-toggle {
+        margin-top: 0;
+      }
+      .col-sm-3 > .col-sm-12, .col-sm-9 > .col-sm-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
     "))
     ),
 
@@ -786,29 +846,21 @@ create_template_addin <- function() {
 
     shiny::titlePanel("Create Report Template"),
 
-    shiny::sidebarLayout(
-      shiny::sidebarPanel(width=3,
+    shiny::fluidRow(
+      shiny::column(width = 3,
+        shiny::sidebarPanel(width = 12,
         shiny::fluidRow(
-          shiny::column(8, style = "padding-right:5px;",
-                 shiny::tagList(
-                   shiny::textInput("file_name", "Report File Name:", value = "report.qmd"),
-                   # Keep '.qmd' fixed at the end of the box; the caret stays before it
-                   shiny::tags$script(shiny::HTML(r"---(
-                     document.addEventListener('input', function(e) {
-                       if (e.target.id !== 'file_name') return;
-                       var el = e.target;
-                       var base = el.value.replace(/\.(q(m(d)?)?)?$/i, '');
-                       var pos = Math.min(el.selectionStart, base.length);
-                       el.value = base + '.qmd';
-                       el.setSelectionRange(pos, pos);
-                     }, true);
-                   )---")))),
+          shiny::column(8, style = "padding-right:0;",
+                 shiny::div(class = "qmd-name-row",
+                   shiny::textInput("file_name", "Report File Name:", value = "report"),
+                   shiny::tags$span(class = "qmd-suffix", ".qmd")
+                 )),
           shiny::column(4, style = "padding-left:5px; padding-right:5px;",
                  shiny::selectInput("ext_name", "Format:",
                                         choices = list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats")),
                                         selected = "html", width='80%'))
         ),
-        shinyFiles::shinyDirButton("browse", "Select Folder", "Choose target directory"),
+        shinyFiles::shinyDirButton("browse", "Select Destination Folder", "Choose target directory"),
         shiny::textOutput("selected_dir"),
         shiny::br(),
         shiny::actionLink("toggle_header",
@@ -834,16 +886,18 @@ create_template_addin <- function() {
           shiny::checkboxInput("code_fold", "Collapse code chunks by default", value = TRUE),
           shiny::checkboxInput("code_tools", "Add Code tools menu", value = TRUE)
         ),
-        shiny::br(), shiny::br(),
+        ),
         shiny::tags$div(
           id = 'create_wrap',
           title = "Please select a folder.",
-          style = "display: inline-block;",
-          shiny::actionButton("create", "Create Report", class = "btn-primary", disabled = "disabled")
+          style = "margin-top: 16px; text-align: right;",
+          shiny::actionButton("create", "Create Report", class = "btn-primary", style = "font-size: 16px;", disabled = "disabled")
         )
       ),
-      shiny::mainPanel(width=9,
-                       shiny::uiOutput("preview_html")
+      shiny::column(width = 9,
+        shiny::mainPanel(width = 12,
+                         shiny::uiOutput("preview_html")
+        )
       )
     ),
     shiny::br(),
@@ -851,8 +905,8 @@ create_template_addin <- function() {
   )
 
   server <- function(input, output, session) {
-    volumes <- shinyFiles::getVolumes()()
-    shinyFiles::shinyDirChoose(input, "browse", roots = volumes, session = session)
+    volumes <- c(Home = fs::path_home(), shinyFiles::getVolumes()())
+    shinyFiles::shinyDirChoose(input, "browse", roots = volumes, defaultRoot = "Home", session = session)
 
     output_path <- shiny::reactiveVal(NULL)
     preview_inputs <- shiny::reactiveVal(NULL)
@@ -990,8 +1044,8 @@ create_template_addin <- function() {
     })
 
 
-    # Only one section is open at a time
-    open_section <- shiny::reactiveVal(NULL)
+    # Only one section is open at a time; report header starts expanded
+    open_section <- shiny::reactiveVal("header")
 
     shiny::observeEvent(input$toggle_header, {
       open_section(if (identical(open_section(), "header")) NULL else "header")

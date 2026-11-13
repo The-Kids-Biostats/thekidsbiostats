@@ -26,7 +26,7 @@ create_project <- function(project_name,
 
   if (is.null(path)) {
     if (!interactive()) stop("Please provide a path when not running interactively.")
-    path <- choose_directory("Select parent folder for new project")
+    path <- select_folder("Select parent folder for new project")
     if (is.null(path)) stop("No directory selected.")
   }
 
@@ -75,13 +75,8 @@ create_project <- function(project_name,
 }
 
 
-# Is the current session running inside Positron?
-is_positron <- function() {
-  identical(Sys.getenv("POSITRON"), "1")
-}
-
 # Path to hand to rstudioapi::openProject(): Positron opens folders (opening
 # the .Rproj file only opens that single file), RStudio opens the .Rproj file.
 project_open_path <- function(rproj_file) {
-  if (is_positron()) dirname(rproj_file) else rproj_file
+  if (is_ide("positron")) dirname(rproj_file) else rproj_file
 }

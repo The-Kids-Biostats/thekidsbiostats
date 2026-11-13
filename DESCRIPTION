@@ -46,6 +46,7 @@ Imports:
     shinyTree (>= 0.3),
     showtext (>= 0.9),
     stringr (>= 1.4.0),
+    svDialogs,
     sysfonts (>= 0.8),
     systemfonts (>= 1.2),
     tidyverse (>= 2.0.0),
