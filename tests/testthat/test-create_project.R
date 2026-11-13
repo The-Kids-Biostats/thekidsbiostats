@@ -6,25 +6,30 @@ test_that("project_name must be provided", {
   expect_error(create_project(), "project_name")
 })
 
-test_that("uses rstudioapi to select path when path is NULL", {
-  mock_isAvailable <- mock(TRUE)
-  mock_selectDir  <- mock(tempdir())
-
-  stub(create_project, "rstudioapi::isAvailable", mock_isAvailable)
-  stub(create_project, "rstudioapi::selectDirectory", mock_selectDir)
+test_that("uses select_folder() to choose a parent folder when path is NULL", {
+  mock_select <- mock(tempdir())
+  stub(create_project, "interactive", TRUE)
+  stub(create_project, "select_folder", mock_select)
 
   proj <- create_project("testproj", path = NULL, create_rproj = FALSE, open_project = FALSE)
   expect_true(dir.exists(proj))
+  expect_called(mock_select, 1)
 })
 
 test_that("errors if no path selected", {
-  mock_isAvailable <- mock(TRUE)
-  mock_selectDir  <- mock(NULL)
-
-  stub(create_project, "rstudioapi::isAvailable", mock_isAvailable)
-  stub(create_project, "rstudioapi::selectDirectory", mock_selectDir)
+  stub(create_project, "interactive", TRUE)
+  stub(create_project, "select_folder", mock(NULL))
 
   expect_error(create_project("testproj", path = NULL), "No directory selected")
+})
+
+test_that("errors if not interactive and path is NULL", {
+  stub(create_project, "interactive", FALSE)
+
+  expect_error(
+    create_project("myproj", path = NULL),
+    "Please provide a path when not running interactively."
+  )
 })
 
 test_that("creates project structure with folders and .Rproj", {
@@ -75,16 +80,6 @@ test_that("opens project when open_project = TRUE", {
   expect_called(mock_openProj, 1)
 })
 
-test_that("errors if RStudio not available and path is NULL", {
-  mock_isAvailable <- mock(FALSE)
-  stub(create_project, "rstudioapi::isAvailable", mock_isAvailable)
-
-  expect_error(
-    create_project("myproj", path = NULL),
-    "Please provide a path or run inside RStudio."
-  )
-})
-
 test_that("creates reports folder and triggers message", {
   tmp <- tempfile("projtest")
   dir.create(tmp)
@@ -114,12 +109,12 @@ test_that("project_open_path() opens the .Rproj in RStudio and the folder in Pos
   rproj <- file.path("some", "dir", "proj.Rproj")
 
   withr::with_envvar(c(POSITRON = ""), {
-    expect_false(is_positron())
+    expect_false(is_ide("positron"))
     expect_equal(project_open_path(rproj), rproj)
   })
 
   withr::with_envvar(c(POSITRON = "1"), {
-    expect_true(is_positron())
+    expect_true(is_ide("positron"))
     expect_equal(project_open_path(rproj), file.path("some", "dir"))
   })
 })
