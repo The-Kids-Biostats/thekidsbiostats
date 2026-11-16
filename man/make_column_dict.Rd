@@ -46,10 +46,10 @@ The default behaviour is to print a tribble template to the console. Set \code{q
 If the file path has the extension .R, this writes the R code in the format of a \code{tribble} to the file.
 }
 \examples{
-data("data_patient", package = "thekidsbiostats")
+data("patients_raw", package = "thekidsbiostats")
 
 # Create a data dictionary and formulate some cleaned column names, assign to `dict` object
-dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
+dict <- make_column_dict(patients_raw, auto_clean = TRUE, quiet = FALSE)
 
 
 }
