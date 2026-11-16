@@ -25,7 +25,8 @@ This vignette demonstrates how to use **column dictionaries** to expedite the pr
 -   `update_columns()` – rename and label columns using a column dictionary.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-library(thekidsbiostats)
+# library(thekidsbiostats)
+devtools::load_all()
 ```
 
 <br>
@@ -37,8 +38,10 @@ Suppose we use `patients_raw` from `thekidsbiostats` pacakge as an example:
 ```{r}
 data("patients_raw")
 
-patients_raw |> as_flextable()
+patients_raw |> dplyr::slice_head(n=10) |> gt::gt()
 ```
+
+<br>
 
 Beyond these names being inconsistent (mixed case, underscores, dots and spaces), they can also be tricky to reference when attempting to use them in coding operations. For example, let's try to calculate the BMI of the patients.
 
@@ -46,7 +49,7 @@ Beyond these names being inconsistent (mixed case, underscores, dots and spaces)
 patients_raw <- patients_raw |> 
   mutate(bmi = WEIGHT_kg / (`Height (cm)` / 100.0)^2)
 
-print(patients_raw$bmi)
+head(patients_raw$bmi)
 ```
 
 The *spaces*, *question marks* and *parentheses* in the column names require us to use backticks (\` \`) to avoid R interpreting these symbols literally. Functions such as `janitor::clean_names()` can be very useful for standardising such column with syntactic names. However, for situations like the column `"Do you smoke any form of tabacco product?"`, the "cleaned" version (`do_you_smoke_any_form_of_tabacco_product`) is arguably just as unwieldy.
@@ -55,7 +58,7 @@ Nonetheless, the consequence of renaming columns for easy manipulation in code i
 
 <br>
 
-The solution is therefore to manually set up a dictionary that maps the old column names to newly formatted column names as well as apply `$label` attributes to each column to be used for all visual presentation.
+The solution is to manually set up a dictionary that maps the old column names to newly formatted column names as well as apply `$label` attributes to each column to be used for all visual presentation.
 
 The **`make_column_dict()`** function makes this process easier by creating a ready-to-fill template based on the column names that exist within the data. For example:
 
@@ -95,9 +98,11 @@ dict_patients <- tribble(
 Now after having defined the column dictionary above, we can simply use the **`update_columns()`** function to apply these changes in a single line.
 
 ```{r}
-data_clean <- update_columns(patients_raw, dict = dict_patients)
-data_clean |> flextable()
+patients_clean <- update_columns(patients_raw, dict = dict_patients)
+patients_clean |> dplyr::slice_head(n=10) |> gt::gt()
 ```
+
+<br>
 
 ### Writing/Loading column dictionaries from file
 
