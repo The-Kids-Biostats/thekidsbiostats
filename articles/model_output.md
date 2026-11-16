@@ -80,20 +80,6 @@ code below:
 
 mod_bwt <- dat_bwt %>% 
   thekids_model(y = "bwt", x = "smoke", formula = "age + ht")
-#> Warning: `fortify(<lm>)` was deprecated in ggplot2 4.0.0.
-#> ℹ Please use `broom::augment(<lm>)` instead.
-#> ℹ The deprecated feature was likely used in the ggfortify package.
-#>   Please report the issue at <https://github.com/sinhrks/ggfortify/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the ggfortify package.
-#>   Please report the issue at <https://github.com/sinhrks/ggfortify/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 ```
 
 In this, we have passed (*piped*: `%>%`) the data into the first
@@ -222,7 +208,7 @@ mod_bwt$model %>%
 
 [TABLE]
 
-Predicted values of bwt {#tinytable_r8vejvhjmyzph6dj7ucs .table
+Predicted values of bwt {#tinytable_vqai9k44itsjr3axex0x .table
 .tinytable style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 

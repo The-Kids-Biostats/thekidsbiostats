@@ -125,7 +125,7 @@ sessionInfo()
 #>  [4] gtsummary_2.6.1       lubridate_1.9.5       forcats_1.0.1        
 #>  [7] stringr_1.6.0         dplyr_1.2.1           purrr_1.2.2          
 #> [10] readr_2.2.0           tidyr_1.3.2           tibble_3.3.1         
-#> [13] ggplot2_4.0.3         tidyverse_2.0.0      
+#> [13] ggplot2_4.0.4         tidyverse_2.0.0      
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] gtable_0.3.6            xfun_0.62               bslib_0.12.0           
@@ -142,7 +142,7 @@ sessionInfo()
 #> [34] fontBitstreamVera_0.1.1 tidyselect_1.2.1        zip_3.0.2              
 #> [37] digest_0.6.39           stringi_1.8.9           fastmap_1.2.0          
 #> [40] grid_4.6.2              cli_3.6.6               magrittr_2.0.5         
-#> [43] patchwork_1.3.2         withr_3.0.3             gdtools_0.5.3          
+#> [43] patchwork_1.3.2         withr_3.0.3             gdtools_0.6.0          
 #> [46] scales_1.4.0            promises_1.5.0          timechange_0.4.0       
 #> [49] rmarkdown_2.32          officer_0.7.8           otel_0.3.0             
 #> [52] askpass_1.2.1           ragg_1.5.2              hms_1.1.4              
@@ -150,5 +150,5 @@ sessionInfo()
 #> [58] rlang_1.3.0             Rcpp_1.1.2              xtable_1.8-8           
 #> [61] glue_1.8.1              xml2_1.6.0              rstudioapi_0.19.0      
 #> [64] jsonlite_2.0.0          R6_2.6.1                systemfonts_1.3.2      
-#> [67] fs_2.1.0                shinyFiles_0.9.3
+#> [67] fs_2.1.0                shinyFiles_0.9.4
 ```

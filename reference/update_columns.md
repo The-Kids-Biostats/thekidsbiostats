@@ -54,22 +54,31 @@ A data.frame with renamed columns and labels applied
 ## Examples
 
 ``` r
-data("data_patient", package = "thekidsbiostats")
+data("patients_raw", package = "thekidsbiostats")
 
 # 1) Create a data dictionary and formulate some cleaned column names, assign to `dict` object
-dict <- make_column_dict(data_patient, auto_clean = TRUE, quiet = FALSE)
-#> dict_patient <- tribble(
+dict <- make_column_dict(patients_raw, auto_clean = TRUE, quiet = FALSE)
+#> dict_patients_raw <- tribble(
 #>   ~old, ~new, ~label,
-#>   "Patient ID#", "patient_id_number", "",
-#>   "DOB [YYYY-MM-DD]", "dob_yyyy_mm_dd", "",
-#>   "Sex (0=Male, 1=Female)", "sex_0_male_1_female", "",
-#>   "WHAT IS YOUR HEIGHT? (cm)", "what_is_your_height_cm", "",
-#>   "WHAT IS YOUR CURRENT WEIGHT? (kg)", "what_is_your_current_weight_kg", "",
-#>   "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?", "do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis", "",
-#>   "bp (mmHg)", "bp_mm_hg", "",
-#>   "Cholesterol / mmolL", "cholesterol_mmol_l", "",
+#>   "Patient ID", "patient_id", "",
+#>   "Site Name", "site_name", "",
+#>   "trt_grp", "trt_grp", "",
+#>   "randomisation date", "randomisation_date", "",
+#>   "AGE_yrs", "age_yrs", "",
+#>   "Sex", "sex", "",
+#>   "Height (cm)", "height_cm", "",
+#>   "WEIGHT_kg", "weight_kg", "",
+#>   "Do you smoke any form of tabacco product?", "do_you_smoke_any_form_of_tabacco_product", "",
+#>   "Diabetes (Y/N)", "diabetes_y_n", "",
+#>   "Cholesterol-Total", "cholesterol_total", "",
+#>   "eGFR", "e_gfr", "",
+#>   "HR_bpm", "hr_bpm", "",
+#>   "SBP_baseline_mmHg", "sbp_baseline_mm_hg", "",
+#>   "DBP Baseline (mmHg)", "dbp_baseline_mm_hg", "",
+#>   "sbp.wk12", "sbp_wk12", "",
+#>   "DBP_Week12", "dbp_week12", "",
 #> ) 
 
-# 2) Apply column names to data, assign to `data_patient_clean`
-data_patient_clean <- update_columns(data_patient, dict = dict)
+# 2) Apply column names to data, assign to `patients_clean`
+patients_clean <- update_columns(patients_raw, dict = dict)
 ```

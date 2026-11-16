@@ -32,105 +32,124 @@ library(thekidsbiostats)
 
 ## 1. Create a data dictionary template: `make_column_dict()`
 
-Suppose we use
-[`thekidsbiostats::data_patient`](https://the-kids-biostats.github.io/thekidsbiostats/reference/data_patient.md)
-as an example:
-
-``` r
-
-
-data("data_patient")
-
-data_patient |> as_flextable()
-```
-
-| Patient ID# | DOB \[YYYY-MM-DD\] | Sex (0=Male, 1=Female) | WHAT IS YOUR HEIGHT? (cm) | WHAT IS YOUR CURRENT WEIGHT? (kg) | Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis? | bp (mmHg) | Cholesterol / mmolL |
-|----|----|----|----|----|----|----|----|
-| integer | Date | character | numeric | numeric | logical | character | numeric |
-| 101 | 1980-05-12 | 0 | 175 | 70 | true | 120/80 | 5.2 |
-| 102 | 1992-08-03 | 1 | 160 | 55 | false | 110/70 | 4.8 |
-| 103 | 1975-12-25 | 1 | 180 | 80 | false | 130/85 | 6.1 |
-| 104 | 2000-01-01 | 0 | 165 | 60 | true | 115/75 | 5.0 |
-| 105 | 1985-07-07 | 1 | 170 | 75 | false | 125/82 | 5.5 |
-| n: 5 |  |  |  |  |  |  |  |
-
-Beyond this dataset visually looking messy, it can also be tricky to
-reference these column names when attempting to use them in operations.
-For example, let’s try to calculate the BMI of individuals and recode
-the `Sex` column by replacing `0/1` with `Male/Female`.
-
-``` r
-
-data_patient$`Sex (0=Male, 1=Female)` = case_when(
-  data_patient$`Sex (0=Male, 1=Female)` == 0 ~ "Male",
-  data_patient$`Sex (0=Male, 1=Female)` == 1 ~ "Female",
-  T ~ NA_character_
-)
-
-bmi = data_patient$`WEIGHT (kg)` / (data_patient$`HEIGHT (cm)` / 100.0)^2
-print(bmi)
-#> numeric(0)
-```
-
-The *spaces*, *equal signs* and *parentheses* in the column names
-requires us to use backticks (\` \`) to avoid R interpreting these
-symbols literally. Functions such as
-[`janitor::clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html)
-can be very useful for standardising such column names into syntactic
-names. However, for situations like our column
-`"Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?"`,
-the “cleaned” version is arguably just as unwieldy.
-
-Nonetheless, the consequence of renaming columns for easy manipulation
-in code is likely dropping any potentially useful formatting of the
-columns (e.g. units and symbols). Ideally, we want to both rename the
-columns and simultaneously retain their human-readable labels for
-presentation.
-
-  
-
-The solution is therefore to manually set up a dictionary that maps the
-old column names to newly formatted column names as well as apply
-`$label` attributes to each column to be used for all visual
-presentation.
-
-The
-**[`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md)**
-function makes this process slightly easier by creating a ready-to-fill
-template based on the column names that exist with the data. For
+Suppose we use `patients_raw` from `thekidsbiostats` pacakge as an
 example:
 
 ``` r
 
-dict <- make_column_dict(data_patient, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
-#> dict_patient <- tribble(
-#>   ~old, ~new, ~label,
-#>   "Patient ID#", "patient_id_number", "",
-#>   "DOB [YYYY-MM-DD]", "dob_yyyy_mm_dd", "",
-#>   "Sex (0=Male, 1=Female)", "sex_0_male_1_female", "",
-#>   "WHAT IS YOUR HEIGHT? (cm)", "what_is_your_height_cm", "",
-#>   "WHAT IS YOUR CURRENT WEIGHT? (kg)", "what_is_your_current_weight_kg", "",
-#>   "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?", "do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis", "",
-#>   "bp (mmHg)", "bp_mm_hg", "",
-#>   "Cholesterol / mmolL", "cholesterol_mmol_l", "",
-#> )
+data("patients_raw")
+
+patients_raw |> dplyr::slice_head(n=10) |> gt::gt()
 ```
 
-We can either directly add to the `dict` object assigned above or
-copy-paste the printed output into our code and modify as needed:
+| Patient ID | Site Name | trt_grp | randomisation date | AGE_yrs | Sex | Height (cm) | WEIGHT_kg | Do you smoke any form of tabacco product? | Diabetes (Y/N) | Cholesterol-Total | eGFR | HR_bpm | SBP_baseline_mmHg | DBP Baseline (mmHg) | sbp.wk12 | DBP_Week12 |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| BP-001 | Sydney | Control | 2025-08-26 | 55 | Female | 162.7 | 82.0 | Former | N | 5.7 | 70 | 64 | 159 | 96 | 158 | 98 |
+| BP-002 | Melbourne | 5 mg/day | 2025-03-14 | 76 | Male | 164.4 | 94.0 | Never | N | 5.7 | 55 | 76 | 157 | 91 | 145 | 87 |
+| BP-003 | Perth | Control | 2025-08-19 | 54 | Female | 163.9 | 75.9 | Never | N | 4.0 | 93 | 59 | 153 | 97 | 153 | 96 |
+| BP-004 | Perth | Control | 2025-03-14 | 52 | Female | 158.8 | 78.8 | Never | N | 5.2 | 74 | 79 | 143 | 93 | 132 | 92 |
+| BP-005 | Melbourne | 10 mg/day | 2025-02-28 | 57 | Male | 170.9 | 90.7 | Never | Y | 5.9 | 90 | 59 | 148 | 84 | 131 | 86 |
+| BP-006 | Perth | Control | 2025-02-24 | 75 | Female | 169.1 | 76.8 | Never | Y | 5.4 | 57 | 76 | 150 | 86 | 149 | 82 |
+| BP-007 | Melbourne | 5 mg/day | 2025-02-08 | 49 | Female | 164.3 | 59.4 | Never | N | 5.0 | 78 | 71 | 137 | 86 | 125 | 78 |
+| BP-008 | Brisbane | 10 mg/day | 2025-06-24 | 66 | Female | 173.6 | 78.1 | Current | N | 5.0 | 82 | 73 | 141 | 88 | 132 | 85 |
+| BP-009 | Perth | Control | 2025-04-06 | 52 | Male | 159.5 | 75.5 | Never | N | 4.3 | 71 | 89 | 157 | 93 | 157 | 94 |
+| BP-010 | Melbourne | Control | 2025-07-30 | 55 | Female | 161.0 | 76.8 | Former | Y | 4.9 | 84 | 71 | 160 | 105 | 142 | 104 |
+
+  
+
+Beyond these names being inconsistent (mixed case, underscores, dots and
+spaces), they can also be tricky to reference when attempting to use
+them in coding operations. For example, let’s try to calculate the BMI
+of the patients.
 
 ``` r
 
-dict_patient <- tribble(
+patients_raw <- patients_raw |> 
+  mutate(bmi = WEIGHT_kg / (`Height (cm)` / 100.0)^2)
+
+head(patients_raw$bmi)
+#> [1] 30.97696 34.77957 28.25426 31.24822 31.05440 26.85802
+```
+
+The *spaces*, *question marks* and *parentheses* in the column names
+require us to use backticks (\` \`) to avoid R interpreting these
+symbols literally. Functions such as
+[`janitor::clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html)
+can be very useful for standardising such column with syntactic names.
+However, for situations like the column
+`"Do you smoke any form of tabacco product?"`, the “cleaned” version
+(`do_you_smoke_any_form_of_tabacco_product`) is arguably just as
+unwieldy.
+
+Nonetheless, the consequence of renaming columns for easy manipulation
+in code is that we will likely also drop potentially useful formatting
+stored in the columns (e.g. units and symbols). Ideally, we want the
+best of both worlds: clean column names and simultaneously retaining
+human-readable labels for presentation.
+
+  
+
+The solution is to manually set up a dictionary that maps the old column
+names to newly formatted column names as well as apply `$label`
+attributes to each column to be used for all visual presentation.
+
+The
+**[`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md)**
+function makes this process easier by creating a ready-to-fill template
+based on the column names that exist within the data. For example:
+
+``` r
+
+dict <- make_column_dict(patients_raw, quiet=FALSE)  # note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.
+#> dict_patients_raw <- tribble(
+#>   ~old, ~new, ~label,
+#>   "Patient ID", "patient_id", "",
+#>   "Site Name", "site_name", "",
+#>   "trt_grp", "trt_grp", "",
+#>   "randomisation date", "randomisation_date", "",
+#>   "AGE_yrs", "age_yrs", "",
+#>   "Sex", "sex", "",
+#>   "Height (cm)", "height_cm", "",
+#>   "WEIGHT_kg", "weight_kg", "",
+#>   "Do you smoke any form of tabacco product?", "do_you_smoke_any_form_of_tabacco_product", "",
+#>   "Diabetes (Y/N)", "diabetes_y_n", "",
+#>   "Cholesterol-Total", "cholesterol_total", "",
+#>   "eGFR", "e_gfr", "",
+#>   "HR_bpm", "hr_bpm", "",
+#>   "SBP_baseline_mmHg", "sbp_baseline_mm_hg", "",
+#>   "DBP Baseline (mmHg)", "dbp_baseline_mm_hg", "",
+#>   "sbp.wk12", "sbp_wk12", "",
+#>   "DBP_Week12", "dbp_week12", "",
+#>   "bmi", "bmi", "",
+#> )
+```
+
+We can either directly modify the `dict` object assigned above or
+copy-paste the printed output into our code and modify as needed. Here
+we fill in the `new` names with cleaned, syntactic names and add a
+human-readable `label` for each column:
+
+``` r
+
+dict_patients <- tribble(
   ~old, ~new, ~label,
-  'Patient ID#', 'patient_id_number', '',
-  'DOB [YYYY-MM-DD]', 'dob_yyyy_mm_dd', '',
-  'Sex (0=Male, 1=Female)', 'sex_0_male_1_female', '',
-  'WHAT IS YOUR HEIGHT? (cm)', 'what_is_your_height_cm', '',
-  'WHAT IS YOUR CURRENT WEIGHT? (kg)', 'what_is_your_current_weight_kg', '',
-  'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?', 'do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis', '',
-  'bp (mmHg)', 'bp_mm_hg', '',
-  'Cholesterol / mmolL', 'cholesterol_mmol_l', '',
+  'Patient ID', 'patient_id', 'Patient ID',
+  'Site Name', 'site', 'Site name',
+  'trt_grp', 'treatment', 'Treatment group',
+  'randomisation date', 'rand_date', 'Randomisation date',
+  'AGE_yrs', 'age', 'Age (years)',
+  'Sex', 'sex', 'Sex',
+  'Height (cm)', 'height_cm', 'Height (cm)',
+  'WEIGHT_kg', 'weight_kg', 'Weight (kg)',
+  'Do you smoke any form of tabacco product?', 'smoking_status', 'Smoking status',
+  'Diabetes (Y/N)', 'diabetes', 'Diabetes (Y/N)',
+  'Cholesterol-Total', 'chol_total', 'Total cholesterol (mmol/L)',
+  'eGFR', 'egfr', 'eGFR',
+  'HR_bpm', 'heart_rate', 'Heart rate (bpm)',
+  'SBP_baseline_mmHg', 'sbp_baseline', 'Systolic BP baseline (mmHg)',
+  'DBP Baseline (mmHg)', 'dbp_baseline', 'Diastolic BP baseline (mmHg)',
+  'sbp.wk12', 'sbp_week12', 'Systolic BP week 12 (mmHg)',
+  'DBP_Week12', 'dbp_week12', 'Diastolic BP week 12 (mmHg)',
 )
 ```
 
@@ -146,17 +165,24 @@ function to apply these changes in a single line.
 
 ``` r
 
-data_clean <- update_columns(data_patient, dict = dict_patient)
-data_clean |> flextable()
+patients_clean <- update_columns(patients_raw, dict = dict_patients)
+patients_clean |> dplyr::slice_head(n=10) |> gt::gt()
 ```
 
-|     |            |        |     |     |       |        |     |
-|-----|------------|--------|-----|-----|-------|--------|-----|
-| 101 | 1980-05-12 | Male   | 175 | 70  | true  | 120/80 | 5.2 |
-| 102 | 1992-08-03 | Female | 160 | 55  | false | 110/70 | 4.8 |
-| 103 | 1975-12-25 | Female | 180 | 80  | false | 130/85 | 6.1 |
-| 104 | 2000-01-01 | Male   | 165 | 60  | true  | 115/75 | 5.0 |
-| 105 | 1985-07-07 | Female | 170 | 75  | false | 125/82 | 5.5 |
+| Patient ID | Site name | Treatment group | Randomisation date | Age (years) | Sex | Height (cm) | Weight (kg) | Smoking status | Diabetes (Y/N) | Total cholesterol (mmol/L) | eGFR | Heart rate (bpm) | Systolic BP baseline (mmHg) | Diastolic BP baseline (mmHg) | Systolic BP week 12 (mmHg) | Diastolic BP week 12 (mmHg) | bmi |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| BP-001 | Sydney | Control | 2025-08-26 | 55 | Female | 162.7 | 82.0 | Former | N | 5.7 | 70 | 64 | 159 | 96 | 158 | 98 | 30.97696 |
+| BP-002 | Melbourne | 5 mg/day | 2025-03-14 | 76 | Male | 164.4 | 94.0 | Never | N | 5.7 | 55 | 76 | 157 | 91 | 145 | 87 | 34.77957 |
+| BP-003 | Perth | Control | 2025-08-19 | 54 | Female | 163.9 | 75.9 | Never | N | 4.0 | 93 | 59 | 153 | 97 | 153 | 96 | 28.25426 |
+| BP-004 | Perth | Control | 2025-03-14 | 52 | Female | 158.8 | 78.8 | Never | N | 5.2 | 74 | 79 | 143 | 93 | 132 | 92 | 31.24822 |
+| BP-005 | Melbourne | 10 mg/day | 2025-02-28 | 57 | Male | 170.9 | 90.7 | Never | Y | 5.9 | 90 | 59 | 148 | 84 | 131 | 86 | 31.05440 |
+| BP-006 | Perth | Control | 2025-02-24 | 75 | Female | 169.1 | 76.8 | Never | Y | 5.4 | 57 | 76 | 150 | 86 | 149 | 82 | 26.85802 |
+| BP-007 | Melbourne | 5 mg/day | 2025-02-08 | 49 | Female | 164.3 | 59.4 | Never | N | 5.0 | 78 | 71 | 137 | 86 | 125 | 78 | 22.00449 |
+| BP-008 | Brisbane | 10 mg/day | 2025-06-24 | 66 | Female | 173.6 | 78.1 | Current | N | 5.0 | 82 | 73 | 141 | 88 | 132 | 85 | 25.91502 |
+| BP-009 | Perth | Control | 2025-04-06 | 52 | Male | 159.5 | 75.5 | Never | N | 4.3 | 71 | 89 | 157 | 93 | 157 | 94 | 29.67738 |
+| BP-010 | Melbourne | Control | 2025-07-30 | 55 | Female | 161.0 | 76.8 | Former | Y | 4.9 | 84 | 71 | 160 | 105 | 142 | 104 | 29.62849 |
+
+  
 
 ### Writing/Loading column dictionaries from file
 

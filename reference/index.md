@@ -14,8 +14,6 @@
   : Create a Quarto report template
 - [`create_template_addin()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/create_template_addin.md)
   : Shiny Addin: Create Report Template
-- [`data_patient`](https://the-kids-biostats.github.io/thekidsbiostats/reference/data_patient.md)
-  : Example of a (fictional) uncleaned data set for analysis
 - [`factor_convert()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/factor_convert.md)
   : factor_convert
 - [`factor_table()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/factor_table.md)

@@ -71,8 +71,8 @@
 
 
 
-<link href="cleaning_columns_files/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="cleaning_columns_files/tabwid-1.1.3/tabwid.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Cleaning Columns</h1>
             
@@ -118,156 +118,756 @@ column dictionary.</li>
 <h2 id="create-a-data-dictionary-template-make_column_dict">1. Create a data dictionary template:
 <code>make_column_dict()</code><a class="anchor" aria-label="anchor" href="#create-a-data-dictionary-template-make_column_dict"></a>
 </h2>
-<p>Suppose we use <code><a href="../reference/data_patient.html">thekidsbiostats::data_patient</a></code> as an
-example:</p>
+<p>Suppose we use <code>patients_raw</code> from
+<code>thekidsbiostats</code> pacakge as an example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"data_patient"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"patients_raw"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data_patient</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/as_flextable.html" class="external-link">as_flextable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="tabwid">
-<style>.cl-d8bad469{}.cl-5430bca3{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8fbe04dd{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(153, 153, 153, 1.00);background-color:transparent;}.cl-a1958ec5{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6477613b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-135a49f2{width:1.163in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-383bdfc9{width:1.778in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-883cc1ba{width:2.205in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8c61fd7f{width:2.533in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-59a4d1dc{width:3.305in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5606c566{width:8.85in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d9569984{width:1.156in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8e8e3292{width:1.818in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37618108{width:1.163in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-818cdd1f{width:1.778in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f024a24d{width:2.205in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec0d068d{width:2.533in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-469f3cb2{width:3.305in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f41f6b44{width:8.85in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a17c4a42{width:1.156in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e7c62d5f{width:1.818in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1775e1de{width:1.163in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-33add827{width:1.778in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bc338343{width:2.205in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a9708fd8{width:2.533in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d516a843{width:3.305in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81f13298{width:8.85in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-09bd67be{width:1.156in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dc5daa7e{width:1.818in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6b15299{width:1.163in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f060f219{width:1.778in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-44ffc55f{width:2.205in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7af5b4e7{width:2.533in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7677fbb2{width:3.305in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5b855b4d{width:8.85in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bb381c1e{width:1.156in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9db0781d{width:1.818in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-97cd7ee4{width:1.163in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-10a2bde7{width:1.778in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e5cd0212{width:2.205in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d3b30feb{width:2.533in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4d6c27bd{width:3.305in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-22108002{width:8.85in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-42dd40cf{width:1.156in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ab02f641{width:1.818in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d8bad469">
-<thead>
-<tr style="overflow-wrap:break-word;">
-<th class="cl-135a49f2"><p class="cl-a1958ec5"><span class="cl-5430bca3">Patient ID#</span></p></th>
-<th class="cl-383bdfc9"><p class="cl-a1958ec5"><span class="cl-5430bca3">DOB [YYYY-MM-DD]</span></p></th>
-<th class="cl-883cc1ba"><p class="cl-6477613b"><span class="cl-5430bca3">Sex (0=Male, 1=Female)</span></p></th>
-<th class="cl-8c61fd7f"><p class="cl-a1958ec5"><span class="cl-5430bca3">WHAT IS YOUR HEIGHT? (cm)</span></p></th>
-<th class="cl-59a4d1dc"><p class="cl-a1958ec5"><span class="cl-5430bca3">WHAT IS YOUR CURRENT WEIGHT? (kg)</span></p></th>
-<th class="cl-5606c566"><p class="cl-a1958ec5"><span class="cl-5430bca3">Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?</span></p></th>
-<th class="cl-d9569984"><p class="cl-6477613b"><span class="cl-5430bca3">bp (mmHg)</span></p></th>
-<th class="cl-8e8e3292"><p class="cl-a1958ec5"><span class="cl-5430bca3">Cholesterol / mmolL</span></p></th>
+<span><span class="va">patients_raw</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div id="mwlefoodfi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mwlefoodfi table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mwlefoodfi thead, #mwlefoodfi tbody, #mwlefoodfi tfoot, #mwlefoodfi tr, #mwlefoodfi td, #mwlefoodfi th {
+  border-style: none;
+}
+
+#mwlefoodfi p {
+  margin: 0;
+  padding: 0;
+}
+
+#mwlefoodfi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mwlefoodfi .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mwlefoodfi .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mwlefoodfi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mwlefoodfi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mwlefoodfi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mwlefoodfi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mwlefoodfi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mwlefoodfi .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mwlefoodfi .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mwlefoodfi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mwlefoodfi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mwlefoodfi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mwlefoodfi .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mwlefoodfi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mwlefoodfi .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mwlefoodfi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_left {
+  text-align: left;
+}
+
+#mwlefoodfi .gt_center {
+  text-align: center;
+}
+
+#mwlefoodfi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mwlefoodfi .gt_font_normal {
+  font-weight: normal;
+}
+
+#mwlefoodfi .gt_font_bold {
+  font-weight: bold;
+}
+
+#mwlefoodfi .gt_font_italic {
+  font-style: italic;
+}
+
+#mwlefoodfi .gt_super {
+  font-size: 65%;
+}
+
+#mwlefoodfi .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mwlefoodfi .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mwlefoodfi .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mwlefoodfi .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mwlefoodfi .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mwlefoodfi .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mwlefoodfi .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mwlefoodfi .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mwlefoodfi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Patient-ID">Patient ID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Site-Name">Site Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="trt_grp">trt_grp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="randomisation-date">randomisation date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="AGE_yrs">AGE_yrs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Sex">Sex</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Height-(cm)">Height (cm)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="WEIGHT_kg">WEIGHT_kg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Do-you-smoke-any-form-of-tabacco-product?">Do you smoke any form of tabacco product?</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Diabetes-(Y/N)">Diabetes (Y/N)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Cholesterol-Total">Cholesterol-Total</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="eGFR">eGFR</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="HR_bpm">HR_bpm</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SBP_baseline_mmHg">SBP_baseline_mmHg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="DBP-Baseline-(mmHg)">DBP Baseline (mmHg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sbp.wk12">sbp.wk12</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="DBP_Week12">DBP_Week12</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-001</td>
+<td headers="Site-Name" class="gt_row gt_left">Sydney</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-08-26</td>
+<td headers="AGE_yrs" class="gt_row gt_right">55</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">162.7</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">82.0</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Former</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.7</td>
+<td headers="eGFR" class="gt_row gt_right">70</td>
+<td headers="HR_bpm" class="gt_row gt_right">64</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">159</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">96</td>
+<td headers="sbp.wk12" class="gt_row gt_right">158</td>
+<td headers="DBP_Week12" class="gt_row gt_right">98</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<th class="cl-37618108"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">integer</span></p></th>
-<th class="cl-818cdd1f"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">Date</span></p></th>
-<th class="cl-f024a24d"><p class="cl-6477613b"><span class="cl-8fbe04dd">character</span></p></th>
-<th class="cl-ec0d068d"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">numeric</span></p></th>
-<th class="cl-469f3cb2"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">numeric</span></p></th>
-<th class="cl-f41f6b44"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">logical</span></p></th>
-<th class="cl-a17c4a42"><p class="cl-6477613b"><span class="cl-8fbe04dd">character</span></p></th>
-<th class="cl-e7c62d5f"><p class="cl-a1958ec5"><span class="cl-8fbe04dd">numeric</span></p></th>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-002</td>
+<td headers="Site-Name" class="gt_row gt_left">Melbourne</td>
+<td headers="trt_grp" class="gt_row gt_center">5 mg/day</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-03-14</td>
+<td headers="AGE_yrs" class="gt_row gt_right">76</td>
+<td headers="Sex" class="gt_row gt_left">Male</td>
+<td headers="Height-(cm)" class="gt_row gt_right">164.4</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">94.0</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.7</td>
+<td headers="eGFR" class="gt_row gt_right">55</td>
+<td headers="HR_bpm" class="gt_row gt_right">76</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">157</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">91</td>
+<td headers="sbp.wk12" class="gt_row gt_right">145</td>
+<td headers="DBP_Week12" class="gt_row gt_right">87</td>
 </tr>
-</thead>
-<tbody>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-1775e1de"><p class="cl-a1958ec5"><span class="cl-5430bca3">101</span></p></td>
-<td class="cl-33add827"><p class="cl-a1958ec5"><span class="cl-5430bca3">1980-05-12</span></p></td>
-<td class="cl-bc338343"><p class="cl-6477613b"><span class="cl-5430bca3">0</span></p></td>
-<td class="cl-a9708fd8"><p class="cl-a1958ec5"><span class="cl-5430bca3">175</span></p></td>
-<td class="cl-d516a843"><p class="cl-a1958ec5"><span class="cl-5430bca3">70</span></p></td>
-<td class="cl-81f13298"><p class="cl-a1958ec5"><span class="cl-5430bca3">true</span></p></td>
-<td class="cl-09bd67be"><p class="cl-6477613b"><span class="cl-5430bca3">120/80</span></p></td>
-<td class="cl-dc5daa7e"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.2</span></p></td>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-003</td>
+<td headers="Site-Name" class="gt_row gt_left">Perth</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-08-19</td>
+<td headers="AGE_yrs" class="gt_row gt_right">54</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">163.9</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">75.9</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">4.0</td>
+<td headers="eGFR" class="gt_row gt_right">93</td>
+<td headers="HR_bpm" class="gt_row gt_right">59</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">153</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">97</td>
+<td headers="sbp.wk12" class="gt_row gt_right">153</td>
+<td headers="DBP_Week12" class="gt_row gt_right">96</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-1775e1de"><p class="cl-a1958ec5"><span class="cl-5430bca3">102</span></p></td>
-<td class="cl-33add827"><p class="cl-a1958ec5"><span class="cl-5430bca3">1992-08-03</span></p></td>
-<td class="cl-bc338343"><p class="cl-6477613b"><span class="cl-5430bca3">1</span></p></td>
-<td class="cl-a9708fd8"><p class="cl-a1958ec5"><span class="cl-5430bca3">160</span></p></td>
-<td class="cl-d516a843"><p class="cl-a1958ec5"><span class="cl-5430bca3">55</span></p></td>
-<td class="cl-81f13298"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-09bd67be"><p class="cl-6477613b"><span class="cl-5430bca3">110/70</span></p></td>
-<td class="cl-dc5daa7e"><p class="cl-a1958ec5"><span class="cl-5430bca3">4.8</span></p></td>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-004</td>
+<td headers="Site-Name" class="gt_row gt_left">Perth</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-03-14</td>
+<td headers="AGE_yrs" class="gt_row gt_right">52</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">158.8</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">78.8</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.2</td>
+<td headers="eGFR" class="gt_row gt_right">74</td>
+<td headers="HR_bpm" class="gt_row gt_right">79</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">143</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">93</td>
+<td headers="sbp.wk12" class="gt_row gt_right">132</td>
+<td headers="DBP_Week12" class="gt_row gt_right">92</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-1775e1de"><p class="cl-a1958ec5"><span class="cl-5430bca3">103</span></p></td>
-<td class="cl-33add827"><p class="cl-a1958ec5"><span class="cl-5430bca3">1975-12-25</span></p></td>
-<td class="cl-bc338343"><p class="cl-6477613b"><span class="cl-5430bca3">1</span></p></td>
-<td class="cl-a9708fd8"><p class="cl-a1958ec5"><span class="cl-5430bca3">180</span></p></td>
-<td class="cl-d516a843"><p class="cl-a1958ec5"><span class="cl-5430bca3">80</span></p></td>
-<td class="cl-81f13298"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-09bd67be"><p class="cl-6477613b"><span class="cl-5430bca3">130/85</span></p></td>
-<td class="cl-dc5daa7e"><p class="cl-a1958ec5"><span class="cl-5430bca3">6.1</span></p></td>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-005</td>
+<td headers="Site-Name" class="gt_row gt_left">Melbourne</td>
+<td headers="trt_grp" class="gt_row gt_center">10 mg/day</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-02-28</td>
+<td headers="AGE_yrs" class="gt_row gt_right">57</td>
+<td headers="Sex" class="gt_row gt_left">Male</td>
+<td headers="Height-(cm)" class="gt_row gt_right">170.9</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">90.7</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">Y</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.9</td>
+<td headers="eGFR" class="gt_row gt_right">90</td>
+<td headers="HR_bpm" class="gt_row gt_right">59</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">148</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">84</td>
+<td headers="sbp.wk12" class="gt_row gt_right">131</td>
+<td headers="DBP_Week12" class="gt_row gt_right">86</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-1775e1de"><p class="cl-a1958ec5"><span class="cl-5430bca3">104</span></p></td>
-<td class="cl-33add827"><p class="cl-a1958ec5"><span class="cl-5430bca3">2000-01-01</span></p></td>
-<td class="cl-bc338343"><p class="cl-6477613b"><span class="cl-5430bca3">0</span></p></td>
-<td class="cl-a9708fd8"><p class="cl-a1958ec5"><span class="cl-5430bca3">165</span></p></td>
-<td class="cl-d516a843"><p class="cl-a1958ec5"><span class="cl-5430bca3">60</span></p></td>
-<td class="cl-81f13298"><p class="cl-a1958ec5"><span class="cl-5430bca3">true</span></p></td>
-<td class="cl-09bd67be"><p class="cl-6477613b"><span class="cl-5430bca3">115/75</span></p></td>
-<td class="cl-dc5daa7e"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.0</span></p></td>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-006</td>
+<td headers="Site-Name" class="gt_row gt_left">Perth</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-02-24</td>
+<td headers="AGE_yrs" class="gt_row gt_right">75</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">169.1</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">76.8</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">Y</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.4</td>
+<td headers="eGFR" class="gt_row gt_right">57</td>
+<td headers="HR_bpm" class="gt_row gt_right">76</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">150</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">86</td>
+<td headers="sbp.wk12" class="gt_row gt_right">149</td>
+<td headers="DBP_Week12" class="gt_row gt_right">82</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-d6b15299"><p class="cl-a1958ec5"><span class="cl-5430bca3">105</span></p></td>
-<td class="cl-f060f219"><p class="cl-a1958ec5"><span class="cl-5430bca3">1985-07-07</span></p></td>
-<td class="cl-44ffc55f"><p class="cl-6477613b"><span class="cl-5430bca3">1</span></p></td>
-<td class="cl-7af5b4e7"><p class="cl-a1958ec5"><span class="cl-5430bca3">170</span></p></td>
-<td class="cl-7677fbb2"><p class="cl-a1958ec5"><span class="cl-5430bca3">75</span></p></td>
-<td class="cl-5b855b4d"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-bb381c1e"><p class="cl-6477613b"><span class="cl-5430bca3">125/82</span></p></td>
-<td class="cl-9db0781d"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.5</span></p></td>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-007</td>
+<td headers="Site-Name" class="gt_row gt_left">Melbourne</td>
+<td headers="trt_grp" class="gt_row gt_center">5 mg/day</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-02-08</td>
+<td headers="AGE_yrs" class="gt_row gt_right">49</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">164.3</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">59.4</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.0</td>
+<td headers="eGFR" class="gt_row gt_right">78</td>
+<td headers="HR_bpm" class="gt_row gt_right">71</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">137</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">86</td>
+<td headers="sbp.wk12" class="gt_row gt_right">125</td>
+<td headers="DBP_Week12" class="gt_row gt_right">78</td>
+</tr>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-008</td>
+<td headers="Site-Name" class="gt_row gt_left">Brisbane</td>
+<td headers="trt_grp" class="gt_row gt_center">10 mg/day</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-06-24</td>
+<td headers="AGE_yrs" class="gt_row gt_right">66</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">173.6</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">78.1</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Current</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">5.0</td>
+<td headers="eGFR" class="gt_row gt_right">82</td>
+<td headers="HR_bpm" class="gt_row gt_right">73</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">141</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">88</td>
+<td headers="sbp.wk12" class="gt_row gt_right">132</td>
+<td headers="DBP_Week12" class="gt_row gt_right">85</td>
+</tr>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-009</td>
+<td headers="Site-Name" class="gt_row gt_left">Perth</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-04-06</td>
+<td headers="AGE_yrs" class="gt_row gt_right">52</td>
+<td headers="Sex" class="gt_row gt_left">Male</td>
+<td headers="Height-(cm)" class="gt_row gt_right">159.5</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">75.5</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Never</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">N</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">4.3</td>
+<td headers="eGFR" class="gt_row gt_right">71</td>
+<td headers="HR_bpm" class="gt_row gt_right">89</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">157</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">93</td>
+<td headers="sbp.wk12" class="gt_row gt_right">157</td>
+<td headers="DBP_Week12" class="gt_row gt_right">94</td>
+</tr>
+<tr>
+<td headers="Patient-ID" class="gt_row gt_left">BP-010</td>
+<td headers="Site-Name" class="gt_row gt_left">Melbourne</td>
+<td headers="trt_grp" class="gt_row gt_center">Control</td>
+<td headers="randomisation-date" class="gt_row gt_right">2025-07-30</td>
+<td headers="AGE_yrs" class="gt_row gt_right">55</td>
+<td headers="Sex" class="gt_row gt_left">Female</td>
+<td headers="Height-(cm)" class="gt_row gt_right">161.0</td>
+<td headers="WEIGHT_kg" class="gt_row gt_right">76.8</td>
+<td headers="Do-you-smoke-any-form-of-tabacco-product?" class="gt_row gt_left">Former</td>
+<td headers="Diabetes-(Y/N)" class="gt_row gt_left">Y</td>
+<td headers="Cholesterol-Total" class="gt_row gt_right">4.9</td>
+<td headers="eGFR" class="gt_row gt_right">84</td>
+<td headers="HR_bpm" class="gt_row gt_right">71</td>
+<td headers="SBP_baseline_mmHg" class="gt_row gt_right">160</td>
+<td headers="DBP-Baseline-(mmHg)" class="gt_row gt_right">105</td>
+<td headers="sbp.wk12" class="gt_row gt_right">142</td>
+<td headers="DBP_Week12" class="gt_row gt_right">104</td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-97cd7ee4"><p class="cl-6477613b"><span class="cl-5430bca3">n: 5</span></p></td></tr></tfoot>
 </table>
 </div>
-<p>Beyond this dataset visually looking messy, it can also be tricky to
-reference these column names when attempting to use them in operations.
-For example, let’s try to calculate the BMI of individuals and recode
-the <code>Sex</code> column by replacing <code>0/1</code> with
-<code>Male/Female</code>.</p>
+<p><br></p>
+<p>Beyond these names being inconsistent (mixed case, underscores, dots
+and spaces), they can also be tricky to reference when attempting to use
+them in coding operations. For example, let’s try to calculate the BMI
+of the patients.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_patient</span><span class="op">$</span><span class="va">`Sex (0=Male, 1=Female)`</span> <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
-<span>  <span class="va">data_patient</span><span class="op">$</span><span class="va">`Sex (0=Male, 1=Female)`</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"Male"</span>,</span>
-<span>  <span class="va">data_patient</span><span class="op">$</span><span class="va">`Sex (0=Male, 1=Female)`</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"Female"</span>,</span>
-<span>  <span class="cn">T</span> <span class="op">~</span> <span class="cn">NA_character_</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">patients_raw</span> <span class="op">&lt;-</span> <span class="va">patients_raw</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">WEIGHT_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">`Height (cm)`</span> <span class="op">/</span> <span class="fl">100.0</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bmi</span> <span class="op">=</span> <span class="va">data_patient</span><span class="op">$</span><span class="va">`WEIGHT (kg)`</span> <span class="op">/</span> <span class="op">(</span><span class="va">data_patient</span><span class="op">$</span><span class="va">`HEIGHT (cm)`</span> <span class="op">/</span> <span class="fl">100.0</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span></span>
-<span><span class="co">#&gt; numeric(0)</span></span></code></pre></div>
-<p>The <em>spaces</em>, <em>equal signs</em> and <em>parentheses</em> in
-the column names requires us to use backticks (` `) to avoid R
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">patients_raw</span><span class="op">$</span><span class="va">bmi</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 30.97696 34.77957 28.25426 31.24822 31.05440 26.85802</span></span></code></pre></div>
+<p>The <em>spaces</em>, <em>question marks</em> and <em>parentheses</em>
+in the column names require us to use backticks (` `) to avoid R
 interpreting these symbols literally. Functions such as
 <code><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">janitor::clean_names()</a></code> can be very useful for standardising
-such column names into syntactic names. However, for situations like our
-column
-<code>"Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?"</code>,
-the “cleaned” version is arguably just as unwieldy.</p>
+such column with syntactic names. However, for situations like the
+column <code>"Do you smoke any form of tabacco product?"</code>, the
+“cleaned” version
+(<code>do_you_smoke_any_form_of_tabacco_product</code>) is arguably just
+as unwieldy.</p>
 <p>Nonetheless, the consequence of renaming columns for easy
-manipulation in code is likely dropping any potentially useful
-formatting of the columns (e.g. units and symbols). Ideally, we want to
-both rename the columns and simultaneously retain their human-readable
-labels for presentation.</p>
+manipulation in code is that we will likely also drop potentially useful
+formatting stored in the columns (e.g. units and symbols). Ideally, we
+want the best of both worlds: clean column names and simultaneously
+retaining human-readable labels for presentation.</p>
 <p><br></p>
-<p>The solution is therefore to manually set up a dictionary that maps
-the old column names to newly formatted column names as well as apply
+<p>The solution is to manually set up a dictionary that maps the old
+column names to newly formatted column names as well as apply
 <code>$label</code> attributes to each column to be used for all visual
 presentation.</p>
 <p>The <strong><code><a href="../reference/make_column_dict.html">make_column_dict()</a></code></strong> function makes
-this process slightly easier by creating a ready-to-fill template based
-on the column names that exist with the data. For example:</p>
+this process easier by creating a ready-to-fill template based on the
+column names that exist within the data. For example:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_column_dict.html">make_column_dict</a></span><span class="op">(</span><span class="va">data_patient</span>, quiet<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="co"># note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.</span></span>
-<span><span class="co">#&gt; dict_patient &lt;- tribble(</span></span>
+<code class="sourceCode R"><span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_column_dict.html">make_column_dict</a></span><span class="op">(</span><span class="va">patients_raw</span>, quiet<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="co"># note: setting auto_clean=FALSE will stop the janitor::clean_names() from being performed.</span></span>
+<span><span class="co">#&gt; dict_patients_raw &lt;- tribble(</span></span>
 <span><span class="co">#&gt;   ~old, ~new, ~label,</span></span>
-<span><span class="co">#&gt;   "Patient ID#", "patient_id_number", "",</span></span>
-<span><span class="co">#&gt;   "DOB [YYYY-MM-DD]", "dob_yyyy_mm_dd", "",</span></span>
-<span><span class="co">#&gt;   "Sex (0=Male, 1=Female)", "sex_0_male_1_female", "",</span></span>
-<span><span class="co">#&gt;   "WHAT IS YOUR HEIGHT? (cm)", "what_is_your_height_cm", "",</span></span>
-<span><span class="co">#&gt;   "WHAT IS YOUR CURRENT WEIGHT? (kg)", "what_is_your_current_weight_kg", "",</span></span>
-<span><span class="co">#&gt;   "Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?", "do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis", "",</span></span>
-<span><span class="co">#&gt;   "bp (mmHg)", "bp_mm_hg", "",</span></span>
-<span><span class="co">#&gt;   "Cholesterol / mmolL", "cholesterol_mmol_l", "",</span></span>
+<span><span class="co">#&gt;   "Patient ID", "patient_id", "",</span></span>
+<span><span class="co">#&gt;   "Site Name", "site_name", "",</span></span>
+<span><span class="co">#&gt;   "trt_grp", "trt_grp", "",</span></span>
+<span><span class="co">#&gt;   "randomisation date", "randomisation_date", "",</span></span>
+<span><span class="co">#&gt;   "AGE_yrs", "age_yrs", "",</span></span>
+<span><span class="co">#&gt;   "Sex", "sex", "",</span></span>
+<span><span class="co">#&gt;   "Height (cm)", "height_cm", "",</span></span>
+<span><span class="co">#&gt;   "WEIGHT_kg", "weight_kg", "",</span></span>
+<span><span class="co">#&gt;   "Do you smoke any form of tabacco product?", "do_you_smoke_any_form_of_tabacco_product", "",</span></span>
+<span><span class="co">#&gt;   "Diabetes (Y/N)", "diabetes_y_n", "",</span></span>
+<span><span class="co">#&gt;   "Cholesterol-Total", "cholesterol_total", "",</span></span>
+<span><span class="co">#&gt;   "eGFR", "e_gfr", "",</span></span>
+<span><span class="co">#&gt;   "HR_bpm", "hr_bpm", "",</span></span>
+<span><span class="co">#&gt;   "SBP_baseline_mmHg", "sbp_baseline_mm_hg", "",</span></span>
+<span><span class="co">#&gt;   "DBP Baseline (mmHg)", "dbp_baseline_mm_hg", "",</span></span>
+<span><span class="co">#&gt;   "sbp.wk12", "sbp_wk12", "",</span></span>
+<span><span class="co">#&gt;   "DBP_Week12", "dbp_week12", "",</span></span>
+<span><span class="co">#&gt;   "bmi", "bmi", "",</span></span>
 <span><span class="co">#&gt; )</span></span></code></pre></div>
-<p>We can either directly add to the <code>dict</code> object assigned
+<p>We can either directly modify the <code>dict</code> object assigned
 above or copy-paste the printed output into our code and modify as
-needed:</p>
+needed. Here we fill in the <code>new</code> names with cleaned,
+syntactic names and add a human-readable <code>label</code> for each
+column:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dict_patient</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">dict_patients</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">old</span>, <span class="op">~</span><span class="va">new</span>, <span class="op">~</span><span class="va">label</span>,</span>
-<span>  <span class="st">'Patient ID#'</span>, <span class="st">'patient_id_number'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'DOB [YYYY-MM-DD]'</span>, <span class="st">'dob_yyyy_mm_dd'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'Sex (0=Male, 1=Female)'</span>, <span class="st">'sex_0_male_1_female'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'WHAT IS YOUR HEIGHT? (cm)'</span>, <span class="st">'what_is_your_height_cm'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'WHAT IS YOUR CURRENT WEIGHT? (kg)'</span>, <span class="st">'what_is_your_current_weight_kg'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'Do you currently smoke any form of tobacco products, including cigarettes, cigars, or pipes, on a regular basis?'</span>, <span class="st">'do_you_currently_smoke_any_form_of_tobacco_products_including_cigarettes_cigars_or_pipes_on_a_regular_basis'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'bp (mmHg)'</span>, <span class="st">'bp_mm_hg'</span>, <span class="st">''</span>,</span>
-<span>  <span class="st">'Cholesterol / mmolL'</span>, <span class="st">'cholesterol_mmol_l'</span>, <span class="st">''</span>,</span>
+<span>  <span class="st">'Patient ID'</span>, <span class="st">'patient_id'</span>, <span class="st">'Patient ID'</span>,</span>
+<span>  <span class="st">'Site Name'</span>, <span class="st">'site'</span>, <span class="st">'Site name'</span>,</span>
+<span>  <span class="st">'trt_grp'</span>, <span class="st">'treatment'</span>, <span class="st">'Treatment group'</span>,</span>
+<span>  <span class="st">'randomisation date'</span>, <span class="st">'rand_date'</span>, <span class="st">'Randomisation date'</span>,</span>
+<span>  <span class="st">'AGE_yrs'</span>, <span class="st">'age'</span>, <span class="st">'Age (years)'</span>,</span>
+<span>  <span class="st">'Sex'</span>, <span class="st">'sex'</span>, <span class="st">'Sex'</span>,</span>
+<span>  <span class="st">'Height (cm)'</span>, <span class="st">'height_cm'</span>, <span class="st">'Height (cm)'</span>,</span>
+<span>  <span class="st">'WEIGHT_kg'</span>, <span class="st">'weight_kg'</span>, <span class="st">'Weight (kg)'</span>,</span>
+<span>  <span class="st">'Do you smoke any form of tabacco product?'</span>, <span class="st">'smoking_status'</span>, <span class="st">'Smoking status'</span>,</span>
+<span>  <span class="st">'Diabetes (Y/N)'</span>, <span class="st">'diabetes'</span>, <span class="st">'Diabetes (Y/N)'</span>,</span>
+<span>  <span class="st">'Cholesterol-Total'</span>, <span class="st">'chol_total'</span>, <span class="st">'Total cholesterol (mmol/L)'</span>,</span>
+<span>  <span class="st">'eGFR'</span>, <span class="st">'egfr'</span>, <span class="st">'eGFR'</span>,</span>
+<span>  <span class="st">'HR_bpm'</span>, <span class="st">'heart_rate'</span>, <span class="st">'Heart rate (bpm)'</span>,</span>
+<span>  <span class="st">'SBP_baseline_mmHg'</span>, <span class="st">'sbp_baseline'</span>, <span class="st">'Systolic BP baseline (mmHg)'</span>,</span>
+<span>  <span class="st">'DBP Baseline (mmHg)'</span>, <span class="st">'dbp_baseline'</span>, <span class="st">'Diastolic BP baseline (mmHg)'</span>,</span>
+<span>  <span class="st">'sbp.wk12'</span>, <span class="st">'sbp_week12'</span>, <span class="st">'Systolic BP week 12 (mmHg)'</span>,</span>
+<span>  <span class="st">'DBP_Week12'</span>, <span class="st">'dbp_week12'</span>, <span class="st">'Diastolic BP week 12 (mmHg)'</span>,</span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 </div>
@@ -278,75 +878,683 @@ needed:</p>
 use the <strong><code><a href="../reference/update_columns.html">update_columns()</a></code></strong> function to apply
 these changes in a single line.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/update_columns.html">update_columns</a></span><span class="op">(</span><span class="va">data_patient</span>, dict <span class="op">=</span> <span class="va">dict_patient</span><span class="op">)</span></span>
-<span><span class="va">data_clean</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="tabwid">
-<style>.cl-d8bad469{}.cl-5430bca3{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a1958ec5{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6477613b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8e0ee45a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-150da73b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a18b2e34{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1c23095b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c9ec629b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45102fc2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d8bad469">
-<thead><tr style="overflow-wrap:break-word;">
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-150da73b"><p class="cl-6477613b"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-150da73b"><p class="cl-6477613b"><span class="cl-5430bca3"></span></p></th>
-<th class="cl-8e0ee45a"><p class="cl-a1958ec5"><span class="cl-5430bca3"></span></p></th>
-</tr></thead>
-<tbody>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">101</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">1980-05-12</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">Male</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">175</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">70</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">true</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">120/80</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.2</span></p></td>
+<code class="sourceCode R"><span><span class="va">patients_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/update_columns.html">update_columns</a></span><span class="op">(</span><span class="va">patients_raw</span>, dict <span class="op">=</span> <span class="va">dict_patients</span><span class="op">)</span></span>
+<span><span class="va">patients_clean</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div id="eexombwkke" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eexombwkke table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#eexombwkke thead, #eexombwkke tbody, #eexombwkke tfoot, #eexombwkke tr, #eexombwkke td, #eexombwkke th {
+  border-style: none;
+}
+
+#eexombwkke p {
+  margin: 0;
+  padding: 0;
+}
+
+#eexombwkke .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#eexombwkke .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#eexombwkke .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#eexombwkke .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#eexombwkke .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#eexombwkke .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eexombwkke .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#eexombwkke .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#eexombwkke .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#eexombwkke .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#eexombwkke .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#eexombwkke .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#eexombwkke .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#eexombwkke .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#eexombwkke .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#eexombwkke .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#eexombwkke .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#eexombwkke .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#eexombwkke .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eexombwkke .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#eexombwkke .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#eexombwkke .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#eexombwkke .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eexombwkke .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#eexombwkke .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#eexombwkke .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eexombwkke .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eexombwkke .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#eexombwkke .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eexombwkke .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#eexombwkke .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eexombwkke .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#eexombwkke .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eexombwkke .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#eexombwkke .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eexombwkke .gt_left {
+  text-align: left;
+}
+
+#eexombwkke .gt_center {
+  text-align: center;
+}
+
+#eexombwkke .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#eexombwkke .gt_font_normal {
+  font-weight: normal;
+}
+
+#eexombwkke .gt_font_bold {
+  font-weight: bold;
+}
+
+#eexombwkke .gt_font_italic {
+  font-style: italic;
+}
+
+#eexombwkke .gt_super {
+  font-size: 65%;
+}
+
+#eexombwkke .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#eexombwkke .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#eexombwkke .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#eexombwkke .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#eexombwkke .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#eexombwkke .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#eexombwkke .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#eexombwkke .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#eexombwkke div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="patient_id">Patient ID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="site">Site name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="treatment">Treatment group</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rand_date">Randomisation date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="age">Age (years)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="sex">Sex</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="height_cm">Height (cm)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="weight_kg">Weight (kg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="smoking_status">Smoking status</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="diabetes">Diabetes (Y/N)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="chol_total">Total cholesterol (mmol/L)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="egfr">eGFR</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="heart_rate">Heart rate (bpm)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sbp_baseline">Systolic BP baseline (mmHg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="dbp_baseline">Diastolic BP baseline (mmHg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sbp_week12">Systolic BP week 12 (mmHg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="dbp_week12">Diastolic BP week 12 (mmHg)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="bmi">bmi</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-001</td>
+<td headers="site" class="gt_row gt_left">Sydney</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-08-26</td>
+<td headers="age" class="gt_row gt_right">55</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">162.7</td>
+<td headers="weight_kg" class="gt_row gt_right">82.0</td>
+<td headers="smoking_status" class="gt_row gt_left">Former</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">5.7</td>
+<td headers="egfr" class="gt_row gt_right">70</td>
+<td headers="heart_rate" class="gt_row gt_right">64</td>
+<td headers="sbp_baseline" class="gt_row gt_right">159</td>
+<td headers="dbp_baseline" class="gt_row gt_right">96</td>
+<td headers="sbp_week12" class="gt_row gt_right">158</td>
+<td headers="dbp_week12" class="gt_row gt_right">98</td>
+<td headers="bmi" class="gt_row gt_right">30.97696</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">102</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">1992-08-03</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">Female</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">160</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">55</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">110/70</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">4.8</span></p></td>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-002</td>
+<td headers="site" class="gt_row gt_left">Melbourne</td>
+<td headers="treatment" class="gt_row gt_center">5 mg/day</td>
+<td headers="rand_date" class="gt_row gt_right">2025-03-14</td>
+<td headers="age" class="gt_row gt_right">76</td>
+<td headers="sex" class="gt_row gt_left">Male</td>
+<td headers="height_cm" class="gt_row gt_right">164.4</td>
+<td headers="weight_kg" class="gt_row gt_right">94.0</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">5.7</td>
+<td headers="egfr" class="gt_row gt_right">55</td>
+<td headers="heart_rate" class="gt_row gt_right">76</td>
+<td headers="sbp_baseline" class="gt_row gt_right">157</td>
+<td headers="dbp_baseline" class="gt_row gt_right">91</td>
+<td headers="sbp_week12" class="gt_row gt_right">145</td>
+<td headers="dbp_week12" class="gt_row gt_right">87</td>
+<td headers="bmi" class="gt_row gt_right">34.77957</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">103</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">1975-12-25</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">Female</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">180</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">80</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">130/85</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">6.1</span></p></td>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-003</td>
+<td headers="site" class="gt_row gt_left">Perth</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-08-19</td>
+<td headers="age" class="gt_row gt_right">54</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">163.9</td>
+<td headers="weight_kg" class="gt_row gt_right">75.9</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">4.0</td>
+<td headers="egfr" class="gt_row gt_right">93</td>
+<td headers="heart_rate" class="gt_row gt_right">59</td>
+<td headers="sbp_baseline" class="gt_row gt_right">153</td>
+<td headers="dbp_baseline" class="gt_row gt_right">97</td>
+<td headers="sbp_week12" class="gt_row gt_right">153</td>
+<td headers="dbp_week12" class="gt_row gt_right">96</td>
+<td headers="bmi" class="gt_row gt_right">28.25426</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">104</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">2000-01-01</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">Male</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">165</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">60</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">true</span></p></td>
-<td class="cl-1c23095b"><p class="cl-6477613b"><span class="cl-5430bca3">115/75</span></p></td>
-<td class="cl-a18b2e34"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.0</span></p></td>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-004</td>
+<td headers="site" class="gt_row gt_left">Perth</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-03-14</td>
+<td headers="age" class="gt_row gt_right">52</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">158.8</td>
+<td headers="weight_kg" class="gt_row gt_right">78.8</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">5.2</td>
+<td headers="egfr" class="gt_row gt_right">74</td>
+<td headers="heart_rate" class="gt_row gt_right">79</td>
+<td headers="sbp_baseline" class="gt_row gt_right">143</td>
+<td headers="dbp_baseline" class="gt_row gt_right">93</td>
+<td headers="sbp_week12" class="gt_row gt_right">132</td>
+<td headers="dbp_week12" class="gt_row gt_right">92</td>
+<td headers="bmi" class="gt_row gt_right">31.24822</td>
 </tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">105</span></p></td>
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">1985-07-07</span></p></td>
-<td class="cl-45102fc2"><p class="cl-6477613b"><span class="cl-5430bca3">Female</span></p></td>
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">170</span></p></td>
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">75</span></p></td>
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">false</span></p></td>
-<td class="cl-45102fc2"><p class="cl-6477613b"><span class="cl-5430bca3">125/82</span></p></td>
-<td class="cl-c9ec629b"><p class="cl-a1958ec5"><span class="cl-5430bca3">5.5</span></p></td>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-005</td>
+<td headers="site" class="gt_row gt_left">Melbourne</td>
+<td headers="treatment" class="gt_row gt_center">10 mg/day</td>
+<td headers="rand_date" class="gt_row gt_right">2025-02-28</td>
+<td headers="age" class="gt_row gt_right">57</td>
+<td headers="sex" class="gt_row gt_left">Male</td>
+<td headers="height_cm" class="gt_row gt_right">170.9</td>
+<td headers="weight_kg" class="gt_row gt_right">90.7</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">Y</td>
+<td headers="chol_total" class="gt_row gt_right">5.9</td>
+<td headers="egfr" class="gt_row gt_right">90</td>
+<td headers="heart_rate" class="gt_row gt_right">59</td>
+<td headers="sbp_baseline" class="gt_row gt_right">148</td>
+<td headers="dbp_baseline" class="gt_row gt_right">84</td>
+<td headers="sbp_week12" class="gt_row gt_right">131</td>
+<td headers="dbp_week12" class="gt_row gt_right">86</td>
+<td headers="bmi" class="gt_row gt_right">31.05440</td>
+</tr>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-006</td>
+<td headers="site" class="gt_row gt_left">Perth</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-02-24</td>
+<td headers="age" class="gt_row gt_right">75</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">169.1</td>
+<td headers="weight_kg" class="gt_row gt_right">76.8</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">Y</td>
+<td headers="chol_total" class="gt_row gt_right">5.4</td>
+<td headers="egfr" class="gt_row gt_right">57</td>
+<td headers="heart_rate" class="gt_row gt_right">76</td>
+<td headers="sbp_baseline" class="gt_row gt_right">150</td>
+<td headers="dbp_baseline" class="gt_row gt_right">86</td>
+<td headers="sbp_week12" class="gt_row gt_right">149</td>
+<td headers="dbp_week12" class="gt_row gt_right">82</td>
+<td headers="bmi" class="gt_row gt_right">26.85802</td>
+</tr>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-007</td>
+<td headers="site" class="gt_row gt_left">Melbourne</td>
+<td headers="treatment" class="gt_row gt_center">5 mg/day</td>
+<td headers="rand_date" class="gt_row gt_right">2025-02-08</td>
+<td headers="age" class="gt_row gt_right">49</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">164.3</td>
+<td headers="weight_kg" class="gt_row gt_right">59.4</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">5.0</td>
+<td headers="egfr" class="gt_row gt_right">78</td>
+<td headers="heart_rate" class="gt_row gt_right">71</td>
+<td headers="sbp_baseline" class="gt_row gt_right">137</td>
+<td headers="dbp_baseline" class="gt_row gt_right">86</td>
+<td headers="sbp_week12" class="gt_row gt_right">125</td>
+<td headers="dbp_week12" class="gt_row gt_right">78</td>
+<td headers="bmi" class="gt_row gt_right">22.00449</td>
+</tr>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-008</td>
+<td headers="site" class="gt_row gt_left">Brisbane</td>
+<td headers="treatment" class="gt_row gt_center">10 mg/day</td>
+<td headers="rand_date" class="gt_row gt_right">2025-06-24</td>
+<td headers="age" class="gt_row gt_right">66</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">173.6</td>
+<td headers="weight_kg" class="gt_row gt_right">78.1</td>
+<td headers="smoking_status" class="gt_row gt_left">Current</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">5.0</td>
+<td headers="egfr" class="gt_row gt_right">82</td>
+<td headers="heart_rate" class="gt_row gt_right">73</td>
+<td headers="sbp_baseline" class="gt_row gt_right">141</td>
+<td headers="dbp_baseline" class="gt_row gt_right">88</td>
+<td headers="sbp_week12" class="gt_row gt_right">132</td>
+<td headers="dbp_week12" class="gt_row gt_right">85</td>
+<td headers="bmi" class="gt_row gt_right">25.91502</td>
+</tr>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-009</td>
+<td headers="site" class="gt_row gt_left">Perth</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-04-06</td>
+<td headers="age" class="gt_row gt_right">52</td>
+<td headers="sex" class="gt_row gt_left">Male</td>
+<td headers="height_cm" class="gt_row gt_right">159.5</td>
+<td headers="weight_kg" class="gt_row gt_right">75.5</td>
+<td headers="smoking_status" class="gt_row gt_left">Never</td>
+<td headers="diabetes" class="gt_row gt_left">N</td>
+<td headers="chol_total" class="gt_row gt_right">4.3</td>
+<td headers="egfr" class="gt_row gt_right">71</td>
+<td headers="heart_rate" class="gt_row gt_right">89</td>
+<td headers="sbp_baseline" class="gt_row gt_right">157</td>
+<td headers="dbp_baseline" class="gt_row gt_right">93</td>
+<td headers="sbp_week12" class="gt_row gt_right">157</td>
+<td headers="dbp_week12" class="gt_row gt_right">94</td>
+<td headers="bmi" class="gt_row gt_right">29.67738</td>
+</tr>
+<tr>
+<td headers="patient_id" class="gt_row gt_left">BP-010</td>
+<td headers="site" class="gt_row gt_left">Melbourne</td>
+<td headers="treatment" class="gt_row gt_center">Control</td>
+<td headers="rand_date" class="gt_row gt_right">2025-07-30</td>
+<td headers="age" class="gt_row gt_right">55</td>
+<td headers="sex" class="gt_row gt_left">Female</td>
+<td headers="height_cm" class="gt_row gt_right">161.0</td>
+<td headers="weight_kg" class="gt_row gt_right">76.8</td>
+<td headers="smoking_status" class="gt_row gt_left">Former</td>
+<td headers="diabetes" class="gt_row gt_left">Y</td>
+<td headers="chol_total" class="gt_row gt_right">4.9</td>
+<td headers="egfr" class="gt_row gt_right">84</td>
+<td headers="heart_rate" class="gt_row gt_right">71</td>
+<td headers="sbp_baseline" class="gt_row gt_right">160</td>
+<td headers="dbp_baseline" class="gt_row gt_right">105</td>
+<td headers="sbp_week12" class="gt_row gt_right">142</td>
+<td headers="dbp_week12" class="gt_row gt_right">104</td>
+<td headers="bmi" class="gt_row gt_right">29.62849</td>
 </tr>
 </tbody>
 </table>
 </div>
+<p><br></p>
 <div class="section level3">
 <h3 id="writingloading-column-dictionaries-from-file">Writing/Loading column dictionaries from file<a class="anchor" aria-label="anchor" href="#writingloading-column-dictionaries-from-file"></a>
 </h3>
