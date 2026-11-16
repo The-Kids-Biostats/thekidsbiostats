@@ -78,11 +78,22 @@
 #' @format data.frame
 "layout_params"
 
-#' Example of a (fictional) uncleaned data set for analysis
+#' Mock blood pressure trial dataset with cleaned column names
 #'
-#' Includes variables that represent common patient information,
-#' with column names that would generally be problematic in an analytical setting
-#' without some form of cleaning.
+#' A simulated dataset of 120 patients from a blood pressure trial, with
+#' code-friendly column names. See `patients_raw` for the same data with the
+#' original, uncleaned column names.
 #'
-#' @format data.frame
-"data_patient"
+#' @format A data frame with 120 rows and 17 variables.
+#' @source Simulated in `data-raw/data_patients.R`.
+"patients"
+
+#' Mock blood pressure trial dataset with uncleaned column names
+#'
+#' The same simulated blood pressure trial data as `patients`, with the
+#' original column names that would generally be problematic in an analytical
+#' setting without some form of cleaning.
+#'
+#' @format A data frame with 120 rows and 17 variables.
+#' @source Simulated in `data-raw/data_patients.R`.
+"patients_raw"
