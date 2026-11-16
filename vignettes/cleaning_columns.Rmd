@@ -25,8 +25,7 @@ This vignette demonstrates how to use **column dictionaries** to expedite the pr
 -   `update_columns()` – rename and label columns using a column dictionary.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-# library(thekidsbiostats)
-devtools::load_all()
+library(thekidsbiostats)
 ```
 
 <br>
