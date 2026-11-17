@@ -1,5 +1,14 @@
 # Changelog
 
+## thekidsbiostats 1.9.5
+
+- Replaced `data_patient` with:
+  - `patients_raw`: a mock dataset of a blood pressure medication trial.
+    Column names are intentionally messy.
+  - `patients`: the above with cleaned column names.
+  - Updated vignettes and documentation to remove references to
+    `data_patient`.
+
 ## thekidsbiostats 1.9.4
 
 - Altered fallback font to Arial when Barlow is not found
