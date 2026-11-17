@@ -388,6 +388,41 @@ test_that("quiet controls console output", {
 })
 
 
+test_that("object name is taken from a variable name", {
+
+  df_patients <- data.frame(A = 1)
+
+  expect_output(
+    make_column_dict(df_patients, quiet = FALSE),
+    "dict_patients <- tribble"
+  )
+})
+
+
+test_that("piped or inline data does not attempt to extract a prefix", {
+
+  expect_output(
+    data.frame(A = 1) |> make_column_dict(quiet = FALSE),
+    "dict <- tribble"
+  )
+
+  expect_output(
+    make_column_dict(data.frame(A = 1, B = 2)[1, ], quiet = FALSE),
+    "dict <- tribble"
+  )
+})
+
+
+test_that("labels = 'keep' copies original names into the label column", {
+
+  data <- data.frame(`My Column` = 1, B = 2, check.names = FALSE)
+
+  out <- make_column_dict(data, labels = "keep", quiet = TRUE)
+
+  expect_equal(out$label, c("My Column", "B"))
+})
+
+
 test_that("labels is given as a vector of correct length", {
   
   data <- data.frame(A = 1, B = 2)
@@ -421,6 +456,26 @@ test_that("new_names is given as a vector of correct length", {
     make_column_dict(data, new_names=new_names),
     "`new_names` must be a vector of length equal"
   )
+})
+
+
+test_that("make_column_dict() does not overwrite an existing file by default", {
+
+  data <- data.frame(A = 1, B = 2)
+  tmp <- tempfile(fileext = ".R")
+  on.exit(unlink(tmp), add = TRUE)
+
+  make_column_dict(data, file = tmp, quiet = TRUE)
+  writeLines("# manual edit", tmp)
+
+  expect_error(
+    make_column_dict(data, file = tmp, quiet = TRUE),
+    "already exists"
+  )
+  expect_equal(readLines(tmp, warn = FALSE), "# manual edit")
+
+  make_column_dict(data, file = tmp, quiet = TRUE, overwrite = TRUE)
+  expect_false(identical(readLines(tmp, warn = FALSE), "# manual edit"))
 })
 
 
@@ -521,3 +576,173 @@ test_that("return value is invisible", {
 })
 
 
+
+test_that("relabel_columns() applies labels to matching columns without renaming", {
+
+  data <- data.frame(alpha = 1:3, beta = 4:6)
+
+  dict <- data.frame(
+    new = c("alpha", "beta"),
+    label = c("First variable", "Second variable")
+  )
+
+  out <- relabel_columns(data, dict)
+
+  expect_named(out, c("alpha", "beta"))
+  expect_equal(attr(out$alpha, "label"), "First variable")
+  expect_equal(attr(out$beta, "label"), "Second variable")
+
+})
+
+test_that("relabel_columns() uses the names and label arguments", {
+
+  data <- data.frame(alpha = 1:3)
+
+  dict <- data.frame(
+    current = "alpha",
+    description = "First variable"
+  )
+
+  out <- relabel_columns(data, dict, names = "current", label = "description")
+
+  expect_equal(attr(out$alpha, "label"), "First variable")
+
+})
+
+test_that("relabel_columns() works after update_columns()", {
+
+  data <- data.frame(a = 1:3, b = 4:6)
+
+  dict <- data.frame(
+    old = c("a", "b"),
+    new = c("alpha", "beta"),
+    label = c("First variable", "Second variable")
+  )
+
+  out <- data |> 
+    update_columns(dict) |>
+    mutate(alpha = as.integer(alpha)) |>
+    relabel_columns(dict)
+
+  expect_named(out, c("alpha", "beta"))
+  expect_equal(attr(out$alpha, "label"), "First variable")
+  expect_equal(attr(out$beta, "label"), "Second variable")
+
+})
+
+test_that("relabel_columns() leaves unlisted columns unchanged", {
+
+  data <- data.frame(alpha = 1:3, gamma = 7:9)
+
+  dict <- data.frame(
+    new = "alpha",
+    label = "First variable"
+  )
+
+  out <- relabel_columns(data, dict)
+
+  expect_null(attr(out$gamma, "label"))
+
+})
+
+test_that("relabel_columns() skips NA labels and applies empty labels", {
+
+  data <- data.frame(alpha = 1:3, beta = 4:6)
+
+  dict <- data.frame(
+    new = c("alpha", "beta"),
+    label = c(NA, "")
+  )
+
+  out <- relabel_columns(data, dict)
+
+  expect_null(attr(out$alpha, "label"))
+  expect_equal(attr(out$beta, "label"), "")
+
+})
+
+test_that("relabel_columns() warns on dictionary entries not found in data", {
+
+  data <- data.frame(alpha = 1:3)
+
+  dict <- data.frame(
+    new = c("alpha", "missing_col"),
+    label = c("First variable", "Missing")
+  )
+
+  expect_warning(relabel_columns(data, dict), "missing_col")
+
+})
+
+test_that("relabel_columns() errors on duplicate dictionary entries", {
+
+  data <- data.frame(alpha = 1:3)
+
+  dict <- data.frame(
+    new = c("alpha", "alpha"),
+    label = c("First", "Second")
+  )
+
+  expect_error(relabel_columns(data, dict), "Duplicate")
+
+})
+
+test_that("relabel_columns() errors when dictionary columns are missing", {
+
+  data <- data.frame(alpha = 1:3)
+
+  dict <- data.frame(old = "alpha", label = "First variable")
+
+  expect_error(relabel_columns(data, dict), "required columns")
+
+})
+
+test_that("relabel_columns() errors on non-data.frame inputs", {
+
+  dict <- data.frame(new = "alpha", label = "First variable")
+
+  expect_error(relabel_columns(list(alpha = 1:3), dict), "`data` must be")
+  expect_error(relabel_columns(data.frame(alpha = 1:3), c("alpha")), "`dict` must be")
+
+})
+
+test_that("relabel_columns() ignores NA entries in the names column", {
+
+  data <- data.frame(alpha = 1:3)
+
+  dict <- data.frame(
+    new = c("alpha", NA),
+    label = c("First variable", "Ignored")
+  )
+
+  expect_no_warning(out <- relabel_columns(data, dict))
+  expect_equal(attr(out$alpha, "label"), "First variable")
+
+})
+
+test_that("relabel_columns() overwrites existing labels", {
+
+  data <- data.frame(alpha = 1:3)
+  attr(data$alpha, "label") <- "Old label"
+
+  dict <- data.frame(new = "alpha", label = "New label")
+
+  out <- relabel_columns(data, dict)
+
+  expect_equal(attr(out$alpha, "label"), "New label")
+
+})
+
+test_that("relabel_columns() does not change column values or names", {
+
+  data <- data.frame(alpha = 1:3, beta = c("x", "y", "z"))
+
+  dict <- data.frame(new = c("alpha", "beta"), label = c("A", "B"))
+
+  out <- relabel_columns(data, dict)
+
+  expect_named(out, names(data))
+  expect_identical(as.vector(out$alpha), data$alpha)
+  expect_identical(as.vector(out$beta), data$beta)
+
+})
