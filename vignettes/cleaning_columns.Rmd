@@ -19,10 +19,11 @@ Datasets rarely come with cleaned, tidy formatting in their column names and hen
 Alongside the code-friendly renamed columns, it's also very practical to store `label` attributes, which act as a human-readable version of each column that can be used for displaying in tables and figures.
 Whilst there already exists functions for renaming columns (e.g. `dplyr::rename()`) and applying labels (e.g. `labelled` or `Hmisc`), there is much leg work that needs to be applied in setting up the inputs for these functions.
 
-This vignette demonstrates how to use **column dictionaries** to expedite the process of standardising and labelling columns in a dataset. We will use two main functions from `thekidsbiostats`:
+This vignette demonstrates how to use **column dictionaries** to expedite the process of standardising and labelling columns in a dataset. We will use three main functions from `thekidsbiostats`:
 
 -   `make_column_dict()` – create a copy-pasteable column dictionary template.
 -   `update_columns()` – rename and label columns using a column dictionary.
+-   `relabel_columns()` – reapply labels to columns using a column dictionary.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(thekidsbiostats)
@@ -35,7 +36,7 @@ library(thekidsbiostats)
 Suppose we use `patients_raw` from `thekidsbiostats` pacakge as an example:
 
 ```{r}
-data("patients_raw")
+data("patients_raw", package = "thekidsbiostats")
 
 patients_raw |> dplyr::slice_head(n=10) |> gt::gt()
 ```
@@ -105,7 +106,61 @@ patients_clean |> dplyr::slice_head(n=10) |> gt::gt()
 
 ### Writing/Loading column dictionaries from file
 
-Both of these helper functions can accept file paths as input or output for the column dictionary. This is handled slightly differently for each:
+Both the `make_column_dict()` and `update_columns()` functions can accept file paths as input or output for the column dictionary. This is handled slightly differently for each:
 
   + `make_column_dict()`: the `file` argument accepts a character string defining the file path to write the dictionary to. The extensions '.csv', '.txt', '.rds' and '.xlsx' are accepted.
   + `update_columns()`: providing a file path in the form of a character string to the `dict` argument will attempt to load the dictionary directly from the file. In addition, the `old`, `new` and `label` parameters can be used to explicitly specify the names of the relevant columns if they are named differently.
+
+<br> <br>
+
+## 3. Reapply labels: `relabel_columns()`
+
+When a data frame is modified, the `label` attributes do not always remain. Recoding or modifying a column can drop its label entirely, while other operations might carry a label over to a column where it no longer belongs. Either way, we often need to reapply labels after making changes to the data.
+
+For example, let's recode `sex` from `"Male"` and `"Female"` to `"M"` and `"F"`:
+
+```{r}
+patients_mod <- patients_clean |>
+  mutate(sex = if_else(sex == "Male", "M", "F"))
+
+attr(patients_mod$sex, "label")
+
+```
+
+The label has been lost.
+
+
+Labels can also be carried over where they do not belong. Calculating BMI from weight and height gives a new column that inherits the label of the first component, in this case `weight_kg`:
+
+```{r}
+patients_mod <- patients_mod |>
+  mutate(bmi = weight_kg / (height_cm / 100)^2)
+
+attr(patients_mod$bmi, "label")
+```
+
+
+Rather than setting these by hand, we can reapply the labels from our previous dictionary with **`relabel_columns()`**. Unlike `update_columns()`, this leaves the column names alone and only sets the `label` attribute:
+
+Note that `relabel_columns()` only labels columns that are listed in the dictionary, so the incorrect label will remain unless we add an entry for `bmi`:
+
+```{r}
+
+dict_patients <- dict_patients |> 
+  add_row(
+    old = "",  # as we created bmi afterwards, no `old` column exists
+    new = "bmi",
+    label = "BMI (kg/m^2)"
+  )
+
+
+patients_mod <- relabel_columns(patients_mod, dict_patients)
+
+attr(patients_mod$sex, "label")
+attr(patients_mod$bmi, "label")
+
+```
+
+
+
+
