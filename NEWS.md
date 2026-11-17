@@ -1,5 +1,21 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# thekidsbiostats 1.10.0
+
+Made significant updates to the shiny apps in the create_project_addin() and create_template_addin() functions.
+
+* Restructuring the location of default templates in the inst/
+* Reformatting the default visualisation of the example.html (which is used to view in the shiny previews) to reflect recent updates.
+* Modified the default.qmd to reflect recent updates.
+* Users now have separate code visualisation options in the report template creation panes (these update in the previews).
+* Added a positron-specific directory selector, which defaults back to the better rstudioapi:: function if in Rstudio.
+* Fixed bug where html template was not scrollable.
+* Added popup warnings when user attempts to create project/template without having first selected a file name or destination folder.
+* In create_project_addin(): Replaced the "create report template?" checkbox with an "Add" button to the Report tabs. the creation of a report.qmd responds dynamically to whether this is added or subsequently removed with the "Remove report" button.
+* Added an addins_helpers.R file to store useful helper functions, including a check of IDE (Positron or Rstudio or neither).
+* Added a .qmd suffix to the filename to reiterate that the output file will already have a .qmd attached.
+* General cleaning up of text and formatting across both addins
+
 # thekidsbiostats 1.9.5
 
 - Replaced `data_patient` with:
