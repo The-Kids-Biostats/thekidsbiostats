@@ -7,5 +7,5 @@
 create_project_addin()
 }
 \description{
-Launches a Shiny app to create a project with folders, report, and control over session state.
+Launches a Shiny app to create a project with a template of folders and reports.
 }

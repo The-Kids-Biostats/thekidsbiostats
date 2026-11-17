@@ -13,6 +13,9 @@ create_template(
   author = NULL,
   affiliation = NULL,
   include_reproducibility = TRUE,
+  echo = FALSE,
+  code_fold = TRUE,
+  code_tools = TRUE,
   open_file = TRUE
 )
 }
@@ -32,6 +35,12 @@ create_template(
 \item{affiliation}{Affiliation of the author.}
 
 \item{include_reproducibility}{Whether or not to include a 'Reproducibility Information' section, which outputs the R session information (default: TRUE).}
+
+\item{echo}{Whether code is shown in the rendered report (default: FALSE).}
+
+\item{code_fold}{Whether shown code is folded by default (default: TRUE).}
+
+\item{code_tools}{Whether the code tools menu is included (default: TRUE).}
 
 \item{open_file}{Whether to open the file after creation (default: TRUE).}
 }

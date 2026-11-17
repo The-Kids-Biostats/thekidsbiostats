@@ -30,6 +30,11 @@ body {
   }
 }
 
+/* Set fallback font */
+body {
+  font-family: 'Barlow', Arial, sans-serif;
+}
+
 /* Note Callout (Azure Blue) */
 .callout-note {
     background-color: #ecf1f6 !important; /* Azure Blue tint10 */

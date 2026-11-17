@@ -12,6 +12,9 @@
 #' @param author Author name (defaults to `Sys.info()[['user']]`).
 #' @param affiliation Affiliation of the author.
 #' @param include_reproducibility Whether or not to include a 'Reproducibility Information' section, which outputs the R session information (default: TRUE).
+#' @param echo Whether code is shown in the rendered report (default: FALSE).
+#' @param code_fold Whether shown code is folded by default (default: TRUE).
+#' @param code_tools Whether the code tools menu is included (default: TRUE).
 #'
 #' @return Invisibly returns path to created .qmd file, or NULL if skipped.
 #' @export
@@ -23,6 +26,9 @@ create_template <- function(file_name = NULL,
                             author = NULL,
                             affiliation = NULL,
                             include_reproducibility = TRUE,
+                            echo = FALSE,
+                            code_fold = TRUE,
+                            code_tools = TRUE,
                             open_file = TRUE) {
 
   if (!dir.exists(directory)) stop("Directory does not exist.")
@@ -55,14 +61,21 @@ create_template <- function(file_name = NULL,
     return(invisible(NULL))
   }
 
-  qmd_lines <- readLines(file.path(system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats"), 'template.qmd'))
+  template_src <- system.file(
+    file.path("quarto_templates", paste0("template_", ext_name, ".qmd")),
+    package = "thekidsbiostats"
+  )
+  qmd_lines <- readLines(template_src)
   qmd_lines <- update_qmd_template(
     lines = qmd_lines,
     title = title,
     subtitle = subtitle,
     author = author,
     affiliation = affiliation,
-    include_reproducibility = include_reproducibility
+    include_reproducibility = include_reproducibility,
+    echo = echo,
+    code_fold = code_fold,
+    code_tools = code_tools
   )
 
   writeLines(qmd_lines, qmd_file)
