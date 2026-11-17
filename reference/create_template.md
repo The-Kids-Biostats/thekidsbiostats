@@ -16,6 +16,9 @@ create_template(
   author = NULL,
   affiliation = NULL,
   include_reproducibility = TRUE,
+  echo = FALSE,
+  code_fold = TRUE,
+  code_tools = TRUE,
   open_file = TRUE
 )
 ```
@@ -54,6 +57,18 @@ create_template(
 
   Whether or not to include a 'Reproducibility Information' section,
   which outputs the R session information (default: TRUE).
+
+- echo:
+
+  Whether code is shown in the rendered report (default: FALSE).
+
+- code_fold:
+
+  Whether shown code is folded by default (default: TRUE).
+
+- code_tools:
+
+  Whether the code tools menu is included (default: TRUE).
 
 - open_file:
 

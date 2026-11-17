@@ -79,8 +79,8 @@ thekids_palettes$sequential$primary
 #>         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 #>     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 #> }
-#> <bytecode: 0x560ce30d15b8>
-#> <environment: 0x560ce30bff90>
+#> <bytecode: 0x6388e3ec29a8>
+#> <environment: 0x6388e3eac680>
 thekids_palettes$sequential$midnightblue
 #> function (n) 
 #> {
@@ -89,8 +89,8 @@ thekids_palettes$sequential$midnightblue
 #>         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 #>     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 #> }
-#> <bytecode: 0x560ce31589c8>
-#> <environment: 0x560ce3148f78>
+#> <bytecode: 0x6388e3f5d4c8>
+#> <environment: 0x6388e3f4da78>
 thekids_palettes$diverging$saffron2teal
 #> function (n) 
 #> {
@@ -99,6 +99,6 @@ thekids_palettes$diverging$saffron2teal
 #>         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 #>     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 #> }
-#> <bytecode: 0x560ce31a5c78>
-#> <environment: 0x560ce3196228>
+#> <bytecode: 0x6388e3fa1fc0>
+#> <environment: 0x6388e3f86370>
 ```

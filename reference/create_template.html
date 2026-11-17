@@ -66,6 +66,9 @@ Optionally opens the created file. If the file already exists, no overwrite occu
 <span>  author <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  affiliation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_reproducibility <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  echo <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  code_fold <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  code_tools <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  open_file <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -104,6 +107,18 @@ Optionally opens the created file. If the file already exists, no overwrite occu
 
 <dt id="arg-include-reproducibility">include_reproducibility<a class="anchor" aria-label="anchor" href="#arg-include-reproducibility"></a></dt>
 <dd><p>Whether or not to include a 'Reproducibility Information' section, which outputs the R session information (default: TRUE).</p></dd>
+
+
+<dt id="arg-echo">echo<a class="anchor" aria-label="anchor" href="#arg-echo"></a></dt>
+<dd><p>Whether code is shown in the rendered report (default: FALSE).</p></dd>
+
+
+<dt id="arg-code-fold">code_fold<a class="anchor" aria-label="anchor" href="#arg-code-fold"></a></dt>
+<dd><p>Whether shown code is folded by default (default: TRUE).</p></dd>
+
+
+<dt id="arg-code-tools">code_tools<a class="anchor" aria-label="anchor" href="#arg-code-tools"></a></dt>
+<dd><p>Whether the code tools menu is included (default: TRUE).</p></dd>
 
 
 <dt id="arg-open-file">open_file<a class="anchor" aria-label="anchor" href="#arg-open-file"></a></dt>

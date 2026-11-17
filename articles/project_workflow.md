@@ -149,6 +149,6 @@ sessionInfo()
 #> [55] shiny_1.14.0            evaluate_1.0.5          knitr_1.52             
 #> [58] rlang_1.3.0             Rcpp_1.1.2              xtable_1.8-8           
 #> [61] glue_1.8.1              xml2_1.6.0              rstudioapi_0.19.0      
-#> [64] jsonlite_2.0.0          R6_2.6.1                systemfonts_1.3.2      
+#> [64] jsonlite_2.0.0          R6_2.6.1                systemfonts_1.3.3      
 #> [67] fs_2.1.0                shinyFiles_0.9.4
 ```
