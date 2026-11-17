@@ -61,6 +61,7 @@
 <span>  new_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  file <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -82,15 +83,19 @@
 
 
 <dt id="arg-new-names">new_names<a class="anchor" aria-label="anchor" href="#arg-new-names"></a></dt>
-<dd><p>Optional character string, If specified, fills the <code>$new</code> column with these labels. Length must match the number of columns in <code>data</code>.</p></dd>
+<dd><p>Optional character vector. If specified, fills the <code>$new</code> column with these names. Length must match the number of columns in <code>data</code>.</p></dd>
 
 
 <dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
-<dd><p>Optional character string. If specified, fills the <code>$label</code> column with these labels. Length must match the number of columns in <code>data</code>.</p></dd>
+<dd><p>Optional character vector. If specified, fills the <code>$label</code> column with these labels. Length must match the number of columns in <code>data</code>. Set to <code>"keep"</code> to copy the original column names into the <code>$label</code> column.</p></dd>
 
 
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
 <dd><p>Optional character string. If specified, writes dictionary template to file path (available formats: .csv, .txt, .xlsx, .rds, .R)</p></dd>
+
+
+<dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
+<dd><p>Logical, default FALSE: if <code>file</code> already exists, an error is raised rather than overwriting it. Set to TRUE to replace an existing file.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -114,7 +119,8 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The default behaviour is to print a tribble template to the console. Set <code>quiet=TRUE</code> to suppress this output.
-If the file path has the extension .R, this writes the R code in the format of a <code>tribble</code> to the file.</p>
+If the file path has the extension .R, this writes the R code in the format of a <code>tribble</code> to the file.
+To protect manual edits, the function will not overwrite an existing <code>file</code> unless <code>overwrite=TRUE</code>.</p>
     </div>
 
     <div class="section level2">

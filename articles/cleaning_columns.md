@@ -16,12 +16,14 @@ that needs to be applied in setting up the inputs for these functions.
 
 This vignette demonstrates how to use **column dictionaries** to
 expedite the process of standardising and labelling columns in a
-dataset. We will use two main functions from `thekidsbiostats`:
+dataset. We will use three main functions from `thekidsbiostats`:
 
 - [`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md)
   – create a copy-pasteable column dictionary template.
 - [`update_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.md)
   – rename and label columns using a column dictionary.
+- [`relabel_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/relabel_columns.md)
+  – reapply labels to columns using a column dictionary.
 
 ``` r
 
@@ -37,7 +39,7 @@ example:
 
 ``` r
 
-data("patients_raw")
+data("patients_raw", package = "thekidsbiostats")
 
 patients_raw |> dplyr::slice_head(n=10) |> gt::gt()
 ```
@@ -186,9 +188,12 @@ patients_clean |> dplyr::slice_head(n=10) |> gt::gt()
 
 ### Writing/Loading column dictionaries from file
 
-Both of these helper functions can accept file paths as input or output
-for the column dictionary. This is handled slightly differently for
-each:
+Both the
+[`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md)
+and
+[`update_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.md)
+functions can accept file paths as input or output for the column
+dictionary. This is handled slightly differently for each:
 
 - [`make_column_dict()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/make_column_dict.md):
   the `file` argument accepts a character string defining the file path
@@ -200,3 +205,72 @@ each:
   In addition, the `old`, `new` and `label` parameters can be used to
   explicitly specify the names of the relevant columns if they are named
   differently.
+
+  
+  
+
+## 3. Reapply labels: `relabel_columns()`
+
+When a data frame is modified, the `label` attributes do not always
+remain. Recoding or modifying a column can drop its label entirely,
+while other operations might carry a label over to a column where it no
+longer belongs. Either way, we often need to reapply labels after making
+changes to the data.
+
+For example, let’s recode `sex` from `"Male"` and `"Female"` to `"M"`
+and `"F"`:
+
+``` r
+
+patients_mod <- patients_clean |>
+  mutate(sex = if_else(sex == "Male", "M", "F"))
+
+attr(patients_mod$sex, "label")
+#> NULL
+```
+
+The label has been lost.
+
+Labels can also be carried over where they do not belong. Calculating
+BMI from weight and height gives a new column that inherits the label of
+the first component, in this case `weight_kg`:
+
+``` r
+
+patients_mod <- patients_mod |>
+  mutate(bmi = weight_kg / (height_cm / 100)^2)
+
+attr(patients_mod$bmi, "label")
+#> [1] "Weight (kg)"
+```
+
+Rather than setting these by hand, we can reapply the labels from our
+previous dictionary with
+**[`relabel_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/relabel_columns.md)**.
+Unlike
+[`update_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/update_columns.md),
+this leaves the column names alone and only sets the `label` attribute:
+
+Note that
+[`relabel_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/relabel_columns.md)
+only labels columns that are listed in the dictionary, so the incorrect
+label will remain unless we add an entry for `bmi`:
+
+``` r
+
+
+dict_patients <- dict_patients |> 
+  add_row(
+    old = "",  # as we created bmi afterwards, no `old` column exists
+    new = "bmi",
+    label = "BMI (kg/m^2)"
+  )
+
+
+patients_mod <- relabel_columns(patients_mod, dict_patients)
+
+attr(patients_mod$sex, "label")
+#> [1] "Sex"
+attr(patients_mod$bmi, "label")
+#> [1] "BMI (kg/m^2)"
+```

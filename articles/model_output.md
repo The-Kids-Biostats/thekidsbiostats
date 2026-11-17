@@ -208,7 +208,7 @@ mod_bwt$model %>%
 
 [TABLE]
 
-Predicted values of bwt {#tinytable_z0q0ap2p6gvrak6dkgwq .table
+Predicted values of bwt {#tinytable_7bpj84gj92uguw8uohsx .table
 .tinytable style="width: auto; margin-left: auto; margin-right: auto;"
 quarto-disable-processing="true"}
 

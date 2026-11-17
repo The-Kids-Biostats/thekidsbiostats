@@ -100,7 +100,7 @@ work that needs to be applied in setting up the inputs for these
 functions.</p>
 <p>This vignette demonstrates how to use <strong>column
 dictionaries</strong> to expedite the process of standardising and
-labelling columns in a dataset. We will use two main functions from
+labelling columns in a dataset. We will use three main functions from
 <code>thekidsbiostats</code>:</p>
 <ul>
 <li>
@@ -108,6 +108,9 @@ labelling columns in a dataset. We will use two main functions from
 dictionary template.</li>
 <li>
 <code><a href="../reference/update_columns.html">update_columns()</a></code> – rename and label columns using a
+column dictionary.</li>
+<li>
+<code><a href="../reference/relabel_columns.html">relabel_columns()</a></code> – reapply labels to columns using a
 column dictionary.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -121,7 +124,7 @@ column dictionary.</li>
 <p>Suppose we use <code>patients_raw</code> from
 <code>thekidsbiostats</code> pacakge as an example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"patients_raw"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"patients_raw"</span>, package <span class="op">=</span> <span class="st">"thekidsbiostats"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">patients_raw</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div id="mwlefoodfi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -1558,9 +1561,10 @@ these changes in a single line.</p>
 <div class="section level3">
 <h3 id="writingloading-column-dictionaries-from-file">Writing/Loading column dictionaries from file<a class="anchor" aria-label="anchor" href="#writingloading-column-dictionaries-from-file"></a>
 </h3>
-<p>Both of these helper functions can accept file paths as input or
-output for the column dictionary. This is handled slightly differently
-for each:</p>
+<p>Both the <code><a href="../reference/make_column_dict.html">make_column_dict()</a></code> and
+<code><a href="../reference/update_columns.html">update_columns()</a></code> functions can accept file paths as input
+or output for the column dictionary. This is handled slightly
+differently for each:</p>
 <ul>
 <li>
 <code><a href="../reference/make_column_dict.html">make_column_dict()</a></code>: the <code>file</code> argument
@@ -1575,7 +1579,59 @@ load the dictionary directly from the file. In addition, the
 be used to explicitly specify the names of the relevant columns if they
 are named differently.</li>
 </ul>
+<p><br><br></p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="reapply-labels-relabel_columns">3. Reapply labels: <code>relabel_columns()</code><a class="anchor" aria-label="anchor" href="#reapply-labels-relabel_columns"></a>
+</h2>
+<p>When a data frame is modified, the <code>label</code> attributes do
+not always remain. Recoding or modifying a column can drop its label
+entirely, while other operations might carry a label over to a column
+where it no longer belongs. Either way, we often need to reapply labels
+after making changes to the data.</p>
+<p>For example, let’s recode <code>sex</code> from <code>"Male"</code>
+and <code>"Female"</code> to <code>"M"</code> and <code>"F"</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">patients_mod</span> <span class="op">&lt;-</span> <span class="va">patients_clean</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>sex <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"Male"</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">patients_mod</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>The label has been lost.</p>
+<p>Labels can also be carried over where they do not belong. Calculating
+BMI from weight and height gives a new column that inherits the label of
+the first component, in this case <code>weight_kg</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">patients_mod</span> <span class="op">&lt;-</span> <span class="va">patients_mod</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">weight_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">height_cm</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">patients_mod</span><span class="op">$</span><span class="va">bmi</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Weight (kg)"</span></span></code></pre></div>
+<p>Rather than setting these by hand, we can reapply the labels from our
+previous dictionary with
+<strong><code><a href="../reference/relabel_columns.html">relabel_columns()</a></code></strong>. Unlike
+<code><a href="../reference/update_columns.html">update_columns()</a></code>, this leaves the column names alone and
+only sets the <code>label</code> attribute:</p>
+<p>Note that <code><a href="../reference/relabel_columns.html">relabel_columns()</a></code> only labels columns that are
+listed in the dictionary, so the incorrect label will remain unless we
+add an entry for <code>bmi</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">dict_patients</span> <span class="op">&lt;-</span> <span class="va">dict_patients</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_row</span><span class="op">(</span></span>
+<span>    old <span class="op">=</span> <span class="st">""</span>,  <span class="co"># as we created bmi afterwards, no `old` column exists</span></span>
+<span>    new <span class="op">=</span> <span class="st">"bmi"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"BMI (kg/m^2)"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">patients_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/relabel_columns.html">relabel_columns</a></span><span class="op">(</span><span class="va">patients_mod</span>, <span class="va">dict_patients</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">patients_mod</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Sex"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">patients_mod</span><span class="op">$</span><span class="va">bmi</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "BMI (kg/m^2)"</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

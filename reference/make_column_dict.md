@@ -12,6 +12,7 @@ make_column_dict(
   new_names = NULL,
   labels = NULL,
   file = NULL,
+  overwrite = FALSE,
   ...
 )
 ```
@@ -35,18 +36,25 @@ make_column_dict(
 
 - new_names:
 
-  Optional character string, If specified, fills the `$new` column with
-  these labels. Length must match the number of columns in `data`.
+  Optional character vector. If specified, fills the `$new` column with
+  these names. Length must match the number of columns in `data`.
 
 - labels:
 
-  Optional character string. If specified, fills the `$label` column
+  Optional character vector. If specified, fills the `$label` column
   with these labels. Length must match the number of columns in `data`.
+  Set to `"keep"` to copy the original column names into the `$label`
+  column.
 
 - file:
 
   Optional character string. If specified, writes dictionary template to
   file path (available formats: .csv, .txt, .xlsx, .rds, .R)
+
+- overwrite:
+
+  Logical, default FALSE: if `file` already exists, an error is raised
+  rather than overwriting it. Set to TRUE to replace an existing file.
 
 - ...:
 
@@ -75,7 +83,9 @@ and three columns:
 
 The default behaviour is to print a tribble template to the console. Set
 `quiet=TRUE` to suppress this output. If the file path has the extension
-.R, this writes the R code in the format of a `tribble` to the file.
+.R, this writes the R code in the format of a `tribble` to the file. To
+protect manual edits, the function will not overwrite an existing `file`
+unless `overwrite=TRUE`.
 
 ## Examples
 

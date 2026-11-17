@@ -154,8 +154,14 @@ interpretation.
   : Create a copy-pasteable variable dictionary template
 - [`modify_labels()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/modify_labels.md)
   : Modify flextable Labels
+- [`patients`](https://the-kids-biostats.github.io/thekidsbiostats/reference/patients.md)
+  : Mock blood pressure trial dataset with cleaned column names
+- [`patients_raw`](https://the-kids-biostats.github.io/thekidsbiostats/reference/patients_raw.md)
+  : Mock blood pressure trial dataset with uncleaned column names
 - [`preprocess_qmd()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/preprocess_qmd.md)
   : Preprocess font changes to Quarto (.qmd) HTML reports
+- [`relabel_columns()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/relabel_columns.md)
+  : Apply labels to existing columns using a dictionary
 - [`round_df()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/round_df.md)
   : round_df
 - [`round_vec()`](https://the-kids-biostats.github.io/thekidsbiostats/reference/round_vec.md)
