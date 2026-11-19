@@ -1,5 +1,10 @@
 # Changelog
 
+## thekidsbiostats 1.10.1
+
+- Fixed Rstudio API folder selection
+- Fixed the fixed layout of create_template_addin()
+
 ## thekidsbiostats 1.10.0
 
 Made significant updates to the shiny apps in the create_project_addin()
