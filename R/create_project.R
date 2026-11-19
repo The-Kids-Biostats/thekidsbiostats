@@ -9,6 +9,7 @@
 #' @param ext_name Name of the report extension for `create_template()`.
 #' @param create_report Whether to create a report using `create_template()`.
 #' @param create_rproj Whether to include a .Rproj file.
+#' @param init_git Whether to run `git init` in the project folder and write a `.gitignore` suited to the current IDE.
 #' @param open_project Whether to open the new project in a new session. In RStudio the .Rproj file is opened; in Positron the project folder is opened.
 #' @param ... Additional arguments passed to `create_template()`.
 #'
@@ -20,6 +21,7 @@ create_project <- function(project_name,
                            ext_name = "html",
                            create_report = FALSE,
                            create_rproj = TRUE,
+                           init_git = FALSE,
                            open_project = TRUE,
                            ...) {
   if (missing(project_name) || project_name == "") stop("You must provide a project_name.")
@@ -30,6 +32,7 @@ create_project <- function(project_name,
     if (is.null(path)) stop("No directory selected.")
   }
 
+  path <- normalizePath(path, winslash = "/", mustWork = TRUE)
   proj_dir <- file.path(path, project_name)
   dir.create(proj_dir, recursive = TRUE, showWarnings = FALSE)
   message("\U0001F4C1 Project directory created: ", proj_dir)
@@ -43,7 +46,7 @@ create_project <- function(project_name,
   rproj_file <- file.path(proj_dir, paste0(project_name, ".Rproj"))
   if (create_rproj) {
     writeLines("Version: 1.0", con = rproj_file)
-    message("\U0001F4C4 .Rproj file created: ", basename(rproj_file))
+    message("\U2699\UFE0F '", basename(rproj_file), "' created")
   }
 
   qmd_file <- NULL
@@ -70,6 +73,8 @@ create_project <- function(project_name,
     }
   }
 
+  if (init_git) init_git_repo(proj_dir)
+
   message("\U00002705 Project setup complete!")
   invisible(proj_dir)
 }
@@ -79,4 +84,34 @@ create_project <- function(project_name,
 # the .Rproj file only opens that single file), RStudio opens the .Rproj file.
 project_open_path <- function(rproj_file) {
   if (is_ide("positron")) dirname(rproj_file) else rproj_file
+}
+
+# .gitignore entries shared by R projects, plus IDE-specific files
+gitignore_lines <- function() {
+  common <- c(".Rhistory", ".RData", ".Ruserdata")
+  if (is_ide("rstudio")) return(c(common, ".Rproj.user/"))
+  if (is_ide("positron")) return(c(common, ".positron/", ".vscode/"))
+  common
+}
+
+# Write a .gitignore and run `git init` in proj_dir. Returns TRUE on success.
+init_git_repo <- function(proj_dir) {
+  proj_dir <- normalizePath(proj_dir, winslash = "/", mustWork = TRUE)
+  git <- Sys.which("git")
+  if (!nzchar(git)) {
+    warning("\U26A0 git was not found on the PATH; skipping git initialisation.", call. = FALSE)
+    return(invisible(FALSE))
+  }
+
+  writeLines(gitignore_lines(), file.path(proj_dir, ".gitignore"))
+
+  out <- system2(git, c("-C", shQuote(proj_dir), "init"), stdout = TRUE, stderr = TRUE)
+  status <- attr(out, "status")
+  if (!is.null(status) && status != 0L) {
+    warning("\U274C git init failed: ", paste(out, collapse = "\n"), call. = FALSE)
+    return(invisible(FALSE))
+  }
+
+  message("\U0001F500 Git repository initialised")
+  invisible(TRUE)
 }

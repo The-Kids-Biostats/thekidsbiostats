@@ -313,7 +313,8 @@ create_project_addin <- function() {
               style = "margin-top: 30px;",
               shiny::actionButton("add_custom_folder", "Add", class = 'btn-secondary')
             )
-          )
+          ),
+          shiny::checkboxInput("init_git", "Initialise git repository", value = FALSE)
         ),
         shiny::div(id = 'report_side',
 
@@ -485,7 +486,7 @@ create_project_addin <- function() {
       }
     })
 
-    volumes <- c(Home = fs::path_home(), shinyFiles::getVolumes()())
+    volumes <- get_volumes()
     shinyFiles::shinyDirChoose(input, "browse", roots = volumes, defaultRoot = "Home", session = session)
 
     shiny::observeEvent(input$browse, {
@@ -664,6 +665,8 @@ create_project_addin <- function() {
           code_fold = input$code_fold,
           code_tools = input$code_tools,
 
+          init_git = isTRUE(input$init_git),
+
           open_project = FALSE
           #open_file = FALSE  # Already handled by create_project()
         )
@@ -737,7 +740,7 @@ create_project_addin <- function() {
 
   }
 
-  shiny::shinyApp(ui=ui, server=server)#, viewer=shiny::dialogViewer('thekidsbiostats: Create Project Addin', width=1600, height=900))
+  shiny::shinyApp(ui = ui, server = server)
 }
 
 
@@ -905,7 +908,7 @@ create_template_addin <- function() {
   )
 
   server <- function(input, output, session) {
-    volumes <- c(Home = fs::path_home(), shinyFiles::getVolumes()())
+    volumes <- get_volumes()
     shinyFiles::shinyDirChoose(input, "browse", roots = volumes, defaultRoot = "Home", session = session)
 
     output_path <- shiny::reactiveVal(NULL)
@@ -1152,7 +1155,7 @@ create_template_addin <- function() {
 
   }
 
-  shiny::shinyApp(ui=ui, server=server)
+  shiny::shinyApp(ui = ui, server = server)
 }
 
 
@@ -1244,6 +1247,5 @@ insert_model_tabset <- function() {
     })
   }
 
-  #viewer <- shiny::dialogViewer("Insert Model Tabs", width = 700, height = 700)
   shiny::shinyApp(ui = ui, server = server)
 }
