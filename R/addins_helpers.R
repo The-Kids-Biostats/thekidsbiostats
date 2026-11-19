@@ -20,3 +20,23 @@ select_folder <- function(caption = "Select folder", path = getwd()) {
   if (is.null(selected) || !nzchar(selected)) return(NULL)
   selected
 }
+
+# Folder-picker button: native RStudio dialog (plain action button) in RStudio,
+# shinyFiles browser elsewhere (e.g. Positron)
+folder_button <- function(id, label, title, ...) {
+  if (is_ide("rstudio") && rstudioapi::isAvailable()) {
+    shiny::actionButton(id, label, ...)
+  } else {
+    shinyFiles::shinyDirButton(id, label, title, ...)
+  }
+}
+
+# Server-side counterpart: returns the chosen folder (character(0) if none)
+folder_selected <- function(input_value, volumes) {
+  if (is_ide("rstudio") && rstudioapi::isAvailable()) {
+    sel <- rstudioapi::selectDirectory(caption = "Select folder")
+    if (is.null(sel)) character(0) else sel
+  } else {
+    shinyFiles::parseDirPath(volumes, input_value)
+  }
+}

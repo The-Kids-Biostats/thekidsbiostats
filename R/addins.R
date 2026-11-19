@@ -257,7 +257,7 @@ create_project_addin <- function() {
           shiny::h3("Project Customisation"),
           shiny::p("Modify the key project details and select an initial folder structure and files."),
           shiny::textInput("project_name", "Project Name:", value="", width='90%'),
-          shinyFiles::shinyDirButton("browse", "Select Destination Folder", "Choose destination folder", class = "btn-secondary"),
+          folder_button("browse", "Select Destination Folder", "Choose destination folder", class = "btn-secondary"),
           shiny::textOutput("selected_dir"),
           shiny::br(),
           shiny::checkboxGroupInput("folders", "Folders to Include:",
@@ -489,7 +489,7 @@ create_project_addin <- function() {
     shinyFiles::shinyDirChoose(input, "browse", roots = volumes, defaultRoot = "Home", session = session)
 
     shiny::observeEvent(input$browse, {
-      selected <- shinyFiles::parseDirPath(volumes, input$browse)
+      selected <- folder_selected(input$browse, volumes)
       if (length(selected) > 0) project_path(selected)
     }, ignoreInit = TRUE)
 
@@ -860,7 +860,7 @@ create_template_addin <- function() {
                                         choices = list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats")),
                                         selected = "html", width='80%'))
         ),
-        shinyFiles::shinyDirButton("browse", "Select Destination Folder", "Choose target directory"),
+        folder_button("browse", "Select Destination Folder", "Choose target directory"),
         shiny::textOutput("selected_dir"),
         shiny::br(),
         shiny::actionLink("toggle_header",
@@ -1022,7 +1022,7 @@ create_template_addin <- function() {
     shinyjs::disable("create")
 
     shiny::observeEvent(input$browse, {
-      selected <- shinyFiles::parseDirPath(volumes, input$browse)
+      selected <- folder_selected(input$browse, volumes)
       if (length(selected) > 0) output_path(selected)
 
       if (!nzchar(input$file_name)) {
@@ -1152,7 +1152,7 @@ create_template_addin <- function() {
 
   }
 
-  shiny::runGadget(ui, server, viewer=shiny::dialogViewer('thekidsbiostats: Create Template Addin', width=1600, height=900))
+  shiny::shinyApp(ui=ui, server=server)
 }
 
 
