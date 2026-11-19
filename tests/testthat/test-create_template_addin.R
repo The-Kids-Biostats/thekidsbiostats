@@ -1,56 +1,32 @@
 library(testthat)
-library(mockery)
 library(shiny)
 library(shinyjs)
 
-test_that("create_template_addin returns a shiny gadget object", {
-  stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) list(ui = ui, server = server, viewer = viewer))
+# Render the app's UI to an HTML string via its http handler
+render_app_html <- function(app) {
+  req <- list(PATH_INFO = "/", REQUEST_METHOD = "GET", HEADERS = c(), rook.errors = NULL)
+  res <- app$httpHandler(req)
+  if (is.character(res$content)) res$content else rawToChar(res$content)
+}
 
+test_that("create_template_addin returns a shiny app object", {
   app <- create_template_addin()
-  expect_type(app, "list")
-  expect_true(all(c("ui", "server", "viewer") %in% names(app)))
+  expect_s3_class(app, "shiny.appobj")
+  expect_true(is.function(app$httpHandler))
+  expect_true(is.function(app$serverFuncSource))
 })
 
 test_that("UI contains expected inputs and buttons", {
-  skip_if_not_installed("htmltools")
+  html <- render_app_html(create_template_addin())
 
-  stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) list(ui = ui, server = server, viewer = viewer))
-  app <- create_template_addin()
-
-  tags <- htmltools::renderTags(app$ui)$html
-  expect_true(grepl("Report File Name", tags))
-  expect_true(grepl("Format", tags))
-  expect_true(grepl("Select Destination Folder", tags))
-  expect_true(grepl("Report Header Options", tags))
-  expect_true(grepl("Create Report", tags))
+  expect_true(grepl("Report File Name", html))
+  expect_true(grepl("Format", html))
+  expect_true(grepl("Select Destination Folder", html))
+  expect_true(grepl("Report Header Options", html))
+  expect_true(grepl("Create Report", html))
 })
 
 test_that("Advanced section is initially hidden", {
-  skip_if_not_installed("htmltools")
-
-  stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) list(ui = ui, server = server, viewer = viewer))
-  app <- create_template_addin()
-
-  tags <- htmltools::renderTags(app$ui)$html
-  expect_true(grepl("display: none", tags))  # advanced_ui div hidden
-})
-
-test_that("External functions can be stubbed without opening the gadget", {
-  selected_dir <- NULL
-
-  # Stub the functions used inside the server
-  stub(create_template_addin, "rstudioapi::selectDirectory", function(...) selected_dir <<- "mock/dir")
-  stub(create_template_addin, "create_template", function(...) TRUE)
-  stub(create_template_addin, "shiny::showModal", function(...) NULL)
-  stub(create_template_addin, "shiny::stopApp", function(...) NULL)
-
-  # Stub runGadget to just return ui/server/viewer
-  stub(create_template_addin, "shiny::runGadget", function(ui, server, viewer) {
-    list(ui = ui, server = server, viewer = viewer)
-  })
-
-  app <- create_template_addin()
-
-  expect_type(app, "list")
-  expect_true(all(c("ui", "server", "viewer") %in% names(app)))
+  html <- render_app_html(create_template_addin())
+  expect_true(grepl("display: none", html))  # advanced_ui div hidden
 })
