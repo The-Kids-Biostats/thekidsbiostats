@@ -661,7 +661,7 @@ test_that("relabel_columns() skips NA labels and applies empty labels", {
 
 })
 
-test_that("relabel_columns() warns on dictionary entries not found in data", {
+test_that("relabel_columns() ignores dictionary entries not found in data", {
 
   data <- data.frame(alpha = 1:3)
 
@@ -670,7 +670,9 @@ test_that("relabel_columns() warns on dictionary entries not found in data", {
     label = c("First variable", "Missing")
   )
 
-  expect_warning(relabel_columns(data, dict), "missing_col")
+  expect_no_warning(out <- relabel_columns(data, dict))
+  expect_named(out, "alpha")
+  expect_equal(attr(out$alpha, "label"), "First variable")
 
 })
 
@@ -744,5 +746,58 @@ test_that("relabel_columns() does not change column values or names", {
   expect_named(out, names(data))
   expect_identical(as.vector(out$alpha), data$alpha)
   expect_identical(as.vector(out$beta), data$beta)
+
+})
+
+test_that("relabel_columns() reorder argument works as expected", {
+
+  data <- data.frame(a = c(1, 2, 3), b = c(4, 5, 6), c = c(7, 8, 9))
+
+  dict <- data.frame(
+    new = c("c", "a", "z"), # `z` not in data, `b` not in dictionary
+    label = c("C", "A", "Z")
+  )
+
+  # Default: no reorder
+  out <- relabel_columns(data, dict)
+  expect_named(out, c("a", "b", "c"))
+
+  # Reorder = TRUE
+  out2 <- relabel_columns(data, dict, reorder = TRUE)
+  expect_named(out2, c("c", "a", "b"))
+  expect_equal(attr(out2$c, "label"), "C")
+  expect_equal(attr(out2$a, "label"), "A")
+  expect_null(attr(out2$b, "label"))
+
+})
+
+test_that("relabel_columns() reorder honours custom names column", {
+
+  data <- data.frame(a = 1, b = 2)
+
+  dict <- data.frame(
+    current = c("b", "a"),
+    description = c("B", "A")
+  )
+
+  out <- relabel_columns(data, dict, names = "current", label = "description", reorder = TRUE)
+
+  expect_named(out, c("b", "a"))
+  expect_equal(attr(out$b, "label"), "B")
+
+})
+
+test_that("relabel_columns() reorder ignores NA entries in the names column", {
+
+  data <- data.frame(a = 1, b = 2)
+
+  dict <- data.frame(
+    new = c(NA, "b"),
+    label = c("Ignored", "B")
+  )
+
+  out <- relabel_columns(data, dict, reorder = TRUE)
+
+  expect_named(out, c("b", "a"))
 
 })

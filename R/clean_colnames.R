@@ -134,10 +134,12 @@ update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=F
 #' @param names Column name in `dict` that matches the current column names in
 #'    `data` (default `"new"`, which suits data already passed through [thekidsbiostats::update_columns()]).
 #' @param label Column name in `dict` with human-readable labels (default `"label"`).
+#' @param reorder Logical, default `FALSE`. If `TRUE`, columns listed in the dictionary will be
+#'    reordered according to the order they appear in the dictionary.
+#'    Columns not referenced in the dictionary remain at the end in their original order.
 #'
 #' @details
-#' Columns in `data` that are not listed in `dict` are left unchanged. Dictionary
-#' entries that do not match any column in `data` are reported with a warning.
+#' Columns in `data` that are not listed in `dict` are left unchanged.
 #' Empty labels (`""`) are applied, while `NA` labels are skipped.
 #'
 #' @return A data.frame with labels applied to the matching columns.
@@ -153,7 +155,7 @@ update_columns <- function(data, dict, old=NULL, new=NULL, label=NULL, reorder=F
 #' attr(df$age, "label")
 #'
 #' @export
-relabel_columns <- function(data, dict, names = NULL, label = NULL) {
+relabel_columns <- function(data, dict, names = NULL, label = NULL, reorder = FALSE) {
 
   if (!is.data.frame(data)) {
     stop("`data` must be a data.frame-like object", call. = FALSE)
@@ -178,22 +180,18 @@ relabel_columns <- function(data, dict, names = NULL, label = NULL) {
     stop("Duplicate entries in dictionary column '", names, "'", call. = FALSE)
   }
 
-  unmatched <- setdiff(stats::na.omit(dict[[names]]), colnames(data))
-  if (length(unmatched) > 0) {
-    warning(
-      "Dictionary entries not found in `data`: '",
-      paste(unmatched, collapse = "', '"),
-      "'",
-      call. = FALSE
-    )
-  }
-
   for (i in seq_len(nrow(dict))) {
     col <- dict[[names]][i]
     lab <- dict[[label]][i]
     if (!is.na(col) && col %in% colnames(data) && !is.na(lab)) {
       attr(data[[col]], "label") <- lab
     }
+  }
+
+  if (reorder) {
+    dict_order <- dict[[names]][dict[[names]] %in% colnames(data)]
+    other_cols <- setdiff(colnames(data), dict_order)
+    data <- data[, c(dict_order, other_cols), drop = FALSE]
   }
 
   return(data)

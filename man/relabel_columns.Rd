@@ -4,7 +4,7 @@
 \alias{relabel_columns}
 \title{Apply labels to existing columns using a dictionary}
 \usage{
-relabel_columns(data, dict, names = NULL, label = NULL)
+relabel_columns(data, dict, names = NULL, label = NULL, reorder = FALSE)
 }
 \arguments{
 \item{data}{A data.frame-like object.}
@@ -16,6 +16,10 @@ the current column names in \code{data}, and one with human-readable labels.}
 \code{data} (default \code{"new"}, which suits data already passed through \code{\link[=update_columns]{update_columns()}}).}
 
 \item{label}{Column name in \code{dict} with human-readable labels (default \code{"label"}).}
+
+\item{reorder}{Logical, default \code{FALSE}. If \code{TRUE}, columns listed in the dictionary will be
+reordered according to the order they appear in the dictionary.
+Columns not referenced in the dictionary remain at the end in their original order.}
 }
 \value{
 A data.frame with labels applied to the matching columns.
@@ -26,8 +30,7 @@ Sets the \code{label} attribute on columns that already exist in \code{data}. Un
 data.frame, whether or not it has been renamed beforehand.
 }
 \details{
-Columns in \code{data} that are not listed in \code{dict} are left unchanged. Dictionary
-entries that do not match any column in \code{data} are reported with a warning.
+Columns in \code{data} that are not listed in \code{dict} are left unchanged.
 Empty labels (\code{""}) are applied, while \code{NA} labels are skipped.
 }
 \examples{
