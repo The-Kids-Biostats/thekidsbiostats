@@ -8,7 +8,7 @@ author:
 date: "`r format(Sys.time(), '%d %B %Y')`"
 format:
   docx:
-    reference-doc: ../ext_qmd/_extensions/word/thekids_quarto_template.docx
+    reference-doc: _extensions/word/thekids_quarto_template.docx
     toc: false
     toc-depth: 3
     toc-title: Table of contents
