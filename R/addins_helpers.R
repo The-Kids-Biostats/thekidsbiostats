@@ -40,3 +40,23 @@ folder_selected <- function(input_value, volumes) {
     shinyFiles::parseDirPath(volumes, input_value)
   }
 }
+
+# Roots for shinyFiles. shinyFiles::getVolumes() shells out to `wmic` on
+# Windows, with fall back set to probing drive letters.
+get_volumes <- function() {
+  # RStudio uses its native dialog, so the shinyFiles roots are never used
+  if (is_ide("rstudio") && rstudioapi::isAvailable()) {
+    return(c(Home = fs::path_home()))
+  }
+
+  vols <- tryCatch(
+    suppressWarnings(shinyFiles::getVolumes()()),
+    error = function(e) NULL
+  )
+  if (is.null(vols) && .Platform$OS.type == "windows") {
+    drives <- paste0(LETTERS, ":/")
+    drives <- drives[dir.exists(drives)]
+    vols <- stats::setNames(drives, sub("/$", "", drives))
+  }
+  c(Home = fs::path_home(), vols)
+}

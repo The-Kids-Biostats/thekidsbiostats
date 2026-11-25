@@ -325,7 +325,7 @@ make_column_dict <- function(data, quiet=FALSE, auto_clean=TRUE, new_names=NULL,
     } else if (ext == "rds") {
       saveRDS(dict, file = file)
     } else if (tolower(ext) == "r") {
-      write_file(dict_text, file = file)
+      readr::write_file(dict_text, file = file)
     } else {
       stop("Unsupported file extension. Use .csv, .xls/.xlsx, .rds or .R", call. = FALSE)
     }

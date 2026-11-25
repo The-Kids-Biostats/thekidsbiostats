@@ -32,6 +32,7 @@ create_template <- function(file_name = NULL,
                             open_file = TRUE) {
 
   if (!dir.exists(directory)) stop("Directory does not exist.")
+  directory <- normalizePath(directory, winslash = "/", mustWork = TRUE)
   if (is.null(file_name)) stop("You must provide a file_name.")
 
   valid_ext <- list.files(system.file("ext_qmd/_extensions", package = "thekidsbiostats"))
@@ -43,16 +44,19 @@ create_template <- function(file_name = NULL,
   dir.create(extfolder, showWarnings = FALSE)
   dir.create(file.path(extfolder, ext_name), showWarnings = FALSE)
 
-  message("\U0001F4C1 _extensions folder created: ", extfolder)
-
-  file.copy(
+  copied <- file.copy(
     from = system.file(file.path("ext_qmd/_extensions", ext_name), package = "thekidsbiostats"),
     to = extfolder,
     overwrite = TRUE,
     recursive = TRUE,
     copy.mode = TRUE
   )
-  message("\U0001F4C4 Template extension files copied to: ", file.path(extfolder, ext_name))
+  ext_dest <- file.path(extfolder, ext_name)
+  if (all(copied)) {
+    message("  \U0001F4C4 Template extension files copied to: ", file.path(basename(directory), "_extensions", ext_name))
+  } else {
+    warning("\U26A0 Some template extension files could not be copied to: ", file.path(basename(directory), "_extensions", ext_name), call. = FALSE)
+  }
 
   qmd_file <- file.path(directory, ifelse(endsWith(file_name, ".qmd"), file_name, paste0(file_name, ".qmd")))
 
@@ -80,7 +84,7 @@ create_template <- function(file_name = NULL,
 
   writeLines(qmd_lines, qmd_file)
 
-  message("\U0001F4DD Report template created: ", qmd_file)
+  message("  \U0001F4DD Report template created: ", file.path(basename(directory), basename(qmd_file)))
 
   if (open_file && rstudioapi::isAvailable()) {
     message("\U0001F4C2 Opening report: ", qmd_file)
